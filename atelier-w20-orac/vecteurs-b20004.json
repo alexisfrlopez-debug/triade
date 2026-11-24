@@ -1,0 +1,76 @@
+{
+ "id": "b20004",
+ "spec": "m1/I/libc-04-itoa.md",
+ "sha256_bloc": "1c790e98582878d830309aa9d24823cb8a244b0a397d2a616631c70ddfe2aa4d",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 ecx contient la valeur à convertir (u32) ;",
+   "entree": [
+    8363986302046536644,
+    17220945481466701062,
+    3804111316163793992,
+    16518039507198852091
+   ],
+   "statut": "OK",
+   "rax": 5243904,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 le tampon contient la représentation décimale de la valeur, sans",
+   "entree": [
+    5186310179862742764,
+    394015802898328929,
+    15090966340243196792,
+    12643281673794996324
+   ],
+   "statut": "OK",
+   "rax": 5243904,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    6230143763433603077,
+    7165660852865663588,
+    12125237710786982818,
+    13710234657789018899
+   ],
+   "statut": "OK",
+   "rax": 5243904,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 aucune condition d'échec — la conversion est totale sur [0, 2^32-1].",
+   "entree": [
+    2591131302180851861,
+    3645603878892582955,
+    4355449427899966830,
+    14274137476320858886
+   ],
+   "statut": "OK",
+   "rax": 5243904,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 aucune condition d'échec — la conversion est totale sur [0, 2^32-1].",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

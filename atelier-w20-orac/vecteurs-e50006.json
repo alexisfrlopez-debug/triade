@@ -1,0 +1,98 @@
+{
+ "id": "e50006",
+ "spec": "m3/I/http-06-tete.md",
+ "sha256_bloc": "8bb936a00f993adfcd2ab1283aac5c04ef6db336a0fa4c0fbebe83cb0ff1d81a",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le tampon d'accumulation (octets réseau quelconques,",
+   "entree": [
+    6070929131792461771,
+    9616806221046378830,
+    8849043857983829828,
+    12045447377594918384
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 tête complète (rax = 0) : longueur de la tête, CRLF CRLF",
+   "entree": [
+    6700368875881259706,
+    17398698874495219352,
+    12470746010953358113,
+    17435158530564231698
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état, aucune",
+   "entree": [
+    17498896212465575582,
+    303598213311461541,
+    15579211123915066170,
+    7143179771736246025
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 tête > 8192 octets → rax = 2 : l'appelant (http-10) répond 431 et",
+   "entree": [
+    10608048367845085189,
+    1930703307882801312,
+    17935315984158236761,
+    14964460935859663695
+   ],
+   "statut": "OK",
+   "rax": 3,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 LF isolé → rax = 3 : réponse 400.",
+   "entree": [
+    982815566626101721,
+    12731554357989293238,
+    11316689005246190780,
+    10720669575243935058
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 tête > 8192 octets → rax = 2 : l'appelant (http-10) répond 431 et",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 LF isolé → rax = 3 : réponse 400.",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "id": "a10002",
+ "spec": "m0/I/hello-02-write.md",
+ "sha256_bloc": "ede393f59cceb70c7dd2fb04c40ffe4262608f7e2d826880bcc4b76d9ef6477f",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient un HANDLE de flux (valeur retournée par GetStdHandle) ;",
+   "entree": [
+    2612453126431042809,
+    8356444856677652661,
+    16213256717631170920,
+    13956448970943300348
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 eax contient le verdict BOOL de WriteFile, sans masquage ;",
+   "entree": [
+    18406990602845535797,
+    12995426012225003422,
+    16723719908327564050,
+    6502106862817250291
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le shadow space de 32 octets est alloué avant l'appel ;",
+   "entree": [
+    4623559161697557736,
+    1395381200575763020,
+    4686300735185029921,
+    11883373483010948178
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 WriteFile retourne FALSE → propagation du verdict (eax = 0) à l'appelant,",
+   "entree": [
+    8300656042667817595,
+    13689517086449955889,
+    4203722005673268259,
+    4783049882587299192
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 WriteFile retourne FALSE → propagation du verdict (eax = 0) à l'appelant,",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

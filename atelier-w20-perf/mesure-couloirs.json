@@ -1,0 +1,33 @@
+{
+ "environnement": {
+  "modele": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "mhz": "2793.438",
+  "nproc": 4,
+  "drapeaux": {
+   "aes": true,
+   "avx2": true,
+   "pclmulqdq": true,
+   "vaes": true,
+   "vpclmulqdq": true
+  },
+  "noyau_epingle": [
+   0
+  ]
+ },
+ "recherche": {
+  "n": 20,
+  "memchr_median_cycles": 93.40350000000001,
+  "memchr_iqr": 0.5005000000000166,
+  "avx2_median_cycles": 175.45100000000002,
+  "avx2_iqr": 0.1309999999999718,
+  "cible_cycles": 561,
+  "cible_tenue": true,
+  "ratio_avx2_sur_memchr": 1.8784199735555949
+ },
+ "aesgcm_reference": {
+  "n": 20,
+  "mediane_ns_4kio": 1001.5,
+  "cycles_par_octet_estimes": 0.684619140625,
+  "note": "référentiel OpenSSL mesuré ici (machine virtuelle) ; la spécialisation VAES/VPCLMULQDQ est PRÉ-ENREGISTRÉE et reste un geste machine réelle"
+ }
+}

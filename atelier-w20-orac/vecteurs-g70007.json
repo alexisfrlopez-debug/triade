@@ -1,0 +1,154 @@
+{
+ "id": "g70007",
+ "spec": "m4/I/tls-07-reception.md",
+ "sha256_bloc": "c8cfc3dbbbace961a4f0b276ac6255d3875ff70f4458a45f442ad3b8a5324975",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le cadre de session TLS (contexte établi ; zone de",
+   "entree": [
+    4897081841610174801,
+    14296739665264845163,
+    3353062728055444832,
+    13616006160612287485
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 enregistrement déchiffré : rax = 0 — Schannel réécrit les",
+   "entree": [
+    4638117358062579159,
+    8451859313667783148,
+    13865595010876380673,
+    9438075969975095633
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le résidu Extra n'appartient qu'à tls-07 (normalisation libc-01",
+   "entree": [
+    6067147926300167942,
+    2522181722414173192,
+    6219036640685352330,
+    3403171906446127939
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 verdict tls-02 non nul de DecryptMessageW → Q4 (altération : le",
+   "entree": [
+    5203600250354806231,
+    3268697599418930228,
+    425484463005304648,
+    1973168763495189012
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 longueur utile > capacité de zone (2 × MAX_JETON — résidu + reçus)",
+   "entree": [
+    3635698416389356766,
+    1255124282066718815,
+    6103634024533966165,
+    12914218169123427537
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:5",
+   "type": "echec",
+   "enonce": "E3 fin de contexte avec résidu (Q3) — état nommé, pas un échec : le",
+   "entree": [
+    14604171870901598409,
+    1699862913771655877,
+    3005263008333244921,
+    17056765916459575062
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:6",
+   "type": "echec",
+   "enonce": "E4 SEC_E_OK SANS aucun tampon reclassé SECBUFFER_DATA (bibliothèque",
+   "entree": [
+    13529093425688297251,
+    16455623182890886924,
+    15521933788675283274,
+    10678649952161166774
+   ],
+   "statut": "OK",
+   "rax": 5,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 verdict tls-02 non nul de DecryptMessageW → Q4 (altération : le",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 longueur utile > capacité de zone (2 × MAX_JETON — résidu + reçus)",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:2",
+   "type": "rejet",
+   "enonce": "E3 fin de contexte avec résidu (Q3) — état nommé, pas un échec : le",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "rejet",
+   "enonce": "E4 SEC_E_OK SANS aucun tampon reclassé SECBUFFER_DATA (bibliothèque",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

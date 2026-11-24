@@ -1,0 +1,102 @@
+{
+ "id": "g70001",
+ "spec": "m4/I/tls-01-nom-utf16.md",
+ "sha256_bloc": "d6455b90f7676947574c5875c0163bdac98ee74159fb0d755fd6a6f0e7dca8b9",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe l'hôte (octets réseau, jamais supposés terminés) ;",
+   "entree": [
+    15082896037641944255,
+    5474988477725649351,
+    9814127040290045488,
+    14729446890070419749
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès : rax = 0, la destination contient la séquence UTF-16",
+   "entree": [
+    11963103088128803022,
+    16215601272705520953,
+    2155151709866747845,
+    14145448520686892708
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état ; I2 écrit",
+   "entree": [
+    13662963573888696777,
+    6284248237626334132,
+    5500956082860003770,
+    8925163940555644102
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 hôte vide (longueur 0) → refus 1 de Q2 (l'autorité http-07 exclut",
+   "entree": [
+    5140265095614059955,
+    9259946839373623930,
+    3447729406441052471,
+    12409273793507171173
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 octet ≥ 0x80 → verdict 2 de Q3 — nommé « cible non traduisible »",
+   "entree": [
+    13007138232623865745,
+    6047580693580973937,
+    8731671241701912133,
+    12329201522696254212
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 hôte vide (longueur 0) → refus 1 de Q2 (l'autorité http-07 exclut",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 octet ≥ 0x80 → verdict 2 de Q3 — nommé « cible non traduisible »",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

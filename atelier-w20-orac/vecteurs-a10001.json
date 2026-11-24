@@ -1,0 +1,72 @@
+{
+ "id": "a10001",
+ "spec": "m0/I/hello-01-main.md",
+ "sha256_bloc": "a42974db782a42f5433b52a59805bd96e0c9fb1ca1b57bc3442785fffe5f3fc1",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 le bloc est le point d'entrée PE (AddressOfEntryPoint) ;",
+   "entree": [
+    3196829709110003970,
+    17566668070357936468,
+    821414522599259436,
+    14695939602172097829
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 le message de hello-02 a été soumis à WriteFile sur la sortie standard ;",
+   "entree": [
+    18169751886184871849,
+    16186967436900617235,
+    8580725707979086815,
+    17376592414975109974
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 aucun stockage sous RSP (zone shadow space incluse) ;",
+   "entree": [
+    14015392492810597095,
+    7831608729944823982,
+    15452065013078747542,
+    4543174562284323007
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 GetStdHandle retourne INVALID_HANDLE_VALUE → repli documenté : l'écriture",
+   "entree": [
+    14743701783426076026,
+    19308475268462529,
+    10361773217317757137,
+    1065937116316800339
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 GetStdHandle retourne INVALID_HANDLE_VALUE → repli documenté : l'écriture",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

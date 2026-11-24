@@ -5085,3 +5085,44 @@ Rapport `atelier-w19-lint.rapport.txt`.
 **Les limites.** La porte lit le texte extrait par `pdftotext` : un verdict dépend de la
 version de l'extracteur (défaut nommé depuis l'Entrée 397) ; les 1 991 tokens de l'ancienne
 extraction ne sont pas rejoués.
+
+## D269 — LA PORTE LIT LA PROSE : QUINZE CLASSES, QUATRE RÉSIDUS SOLDÉS (la vague 20, 24/11/2026 ; atelier W20LINT)
+
+**Le constat.** L'évaluation indépendante de v0.26.0 a trouvé un vrai trou de couverture : la
+C6 ne confrontait que la table §10 de la présentation au manifeste, et le Livre annonçait
+« l'édition courante v0.15.10 » et « révision v1.9 » dans sa prose. Trois autres résidus :
+la présentation citait une « vague 16 » sans entrée au changelog, le −35,7 % ne se
+recomposait pas depuis ses opérandes entiers, et le test du lecteur annonçait 7/7 en listant
+neuf cas.
+
+**Le geste.** Le linter passe à **quinze classes** : C12 VERSION-PROSE (toute « édition
+courante vX » / « révision vX » / « spécification vX » confrontée au manifeste, le Livre
+parlant de l'édition de la spécification), C13 WAVE-CONTINUITY (toute « vague N » de la
+présentation a son entrée datée), C14 ABSTRACT-LENGTH (≤ 250 mots, premier bloc imprimé),
+C15 READER-TEST-COUNT (le compte se recompose des cas énumérés). Les quatre résidus sont
+soldés à la source ; cinq pièces régénérées (v0.27.0 / spec v0.15.12 / Livre v1.11).
+
+**Les preuves.** Porte V1..V7 + L1..L15 : zéro rouge ; **8/8 mutations** refusées nommément
+(dont une par nouvelle classe).
+
+**Les limites.** La porte lit le texte extrait par `pdftotext` : un verdict dépend de
+l'extracteur (défaut nommé). La C14 mesure le premier bloc imprimé, convention nommée — le
+résumé complet du manuscrit reste long par choix éditorial, et la classe ne juge pas la
+prose hors de ce bloc.
+
+## D270 — L'ANCRAGE DE TRANSPARENCE EST APPLIQUÉ ; LE COFFRE DURCI SUR COPIES (la vague 20, 24/11/2026 ; atelier W20SEC)
+
+**Le geste.** (1) Le témoin d'époque de v0.27.0 (édition, sha256 des cinq pièces, empreinte
+d'état, date) est **ancré par horodatage RFC 3161** auprès d'une autorité publique ; le jeton
+est vérifié HORS LIGNE (`openssl ts -verify` : OK) et son empreinte confrontée au témoin ;
+la porte V6 ne passe que sur un reçu vérifié. Refus éprouvés : `ANCRE-INDISPONIBLE` (TSA
+injoignable), `TEMOIN-SANS-ANCHE` (jeton absent), `ANCRE-INCOHERENTE` (témoin muté).
+(2) Le coffre est durci **sur copies** : gate d'entropie ≥ 80 bits (6 mots = 77,5 refusés,
+7 = 90,5 admis), Argon2id 256 MiB / t=4 / p=1, rotation rendant l'ancienne phrase
+inopérante, falsification refusée nommément (6/6). (3) Les preuves symboliques (Tamarin,
+ProVerif) sont **refusées nommément** : binaires absents du bac, la commande du poste réel
+est imprimée, aucun verdict n'est fabriqué.
+
+**Les limites.** L'ancrage dépend d'un tiers (disponibilité, politique de l'opérateur) et
+publie des empreintes — c'est le delta écrit à D267 ; le chargement R10 reste sans réseau.
+Le média FIDO2 hmac-secret est décrit, non exécuté (aucun authentificateur dans le bac).

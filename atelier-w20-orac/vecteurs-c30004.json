@@ -1,0 +1,72 @@
+{
+ "id": "c30004",
+ "spec": "m2/I/tcp-04-send.md",
+ "sha256_bloc": "ef8340a829d50dbdc3128e7bd5bb21b793c26be45a4635fa1a9a414e75722ade",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient une socket connectée ;",
+   "entree": [
+    15475183248537871878,
+    17871247872696791255,
+    7614359376305943561,
+    14340287557360833965
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 rax contient le nombre d'octets effectivement émis (> 0) ou",
+   "entree": [
+    999748517485844401,
+    17306576438494734524,
+    621811795370126035,
+    5774171154101523437
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 unique appel système : IAT ws2_32 send ; I2 le bloc alloue 0x28",
+   "entree": [
+    1000829006314628878,
+    8571503362357829778,
+    11014262276684615288,
+    2355887853452691857
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 send échoue → rax = -1 propagé ; l'appelant ferme et termine.",
+   "entree": [
+    6480212400316590965,
+    4918721420179493493,
+    12632647679724804042,
+    15614403160590942434
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 send échoue → rax = -1 propagé ; l'appelant ferme et termine.",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

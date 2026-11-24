@@ -1,0 +1,76 @@
+{
+ "id": "e50005",
+ "spec": "m3/I/http-05-nombre.md",
+ "sha256_bloc": "58887b51bc6db917c89e0eb0dec9e7d59ed8693358b14e4f6abe5a4ff9cc445c",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le span (octets quelconques reçus) ;",
+   "entree": [
+    17381544806163478612,
+    9654406532115937598,
+    9455017350033325657,
+    11160856943250443905
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès (rax = 0) : edx contient la valeur u32 (de 0 à",
+   "entree": [
+    17598440897292691074,
+    2122292455538195380,
+    7383511104976732244,
+    6019441233339302323
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état, aucune",
+   "entree": [
+    2136656830463555283,
+    6629410559252003872,
+    1342215062504466847,
+    4685244674653486654
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 verdicts 1-6 (Q2-Q6) — l'appelant (http-10) répond 400 pour toute",
+   "entree": [
+    7195710552913462053,
+    14213342237924467919,
+    3228163067934697892,
+    15556109951144840875
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 verdicts 1-6 (Q2-Q6) — l'appelant (http-10) répond 400 pour toute",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

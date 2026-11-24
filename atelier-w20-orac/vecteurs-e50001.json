@@ -1,0 +1,76 @@
+{
+ "id": "e50001",
+ "spec": "m3/I/http-01-ligne.md",
+ "sha256_bloc": "87de9e486ad085e053ad41462a2a42ca97644e93bc99f9ca44bffe4cdad68ec1",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le tampon (octets réseau reçus, quelconques) ;",
+   "entree": [
+    12398373835041402627,
+    17720538483213119655,
+    677757146280262879,
+    1558354506410583957
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 ligne trouvée : rax = 0, rdx = longueur de la ligne SANS le",
+   "entree": [
+    7984968867334836732,
+    4127283213686549367,
+    1177835287164430977,
+    5019766491836756020
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille pure : aucun appel, aucun IAT, aucun",
+   "entree": [
+    1250936004688214029,
+    4975073369291144973,
+    4531958379561129347,
+    7035942718908726977
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 pas de CRLF jusqu'à la fin utile → verdict 1 (Q2) : ce n'est pas un",
+   "entree": [
+    11155879291534186420,
+    15162077165929437269,
+    10307518175059367425,
+    15194951979719477254
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 pas de CRLF jusqu'à la fin utile → verdict 1 (Q2) : ce n'est pas un",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

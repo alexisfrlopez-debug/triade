@@ -1,0 +1,25 @@
+ATELIER W20LINT — LE LINTER v4 À QUINZE CLASSES, LES QUATRE RÉSIDUS SOLDÉS (24/11/2026)
+=======================================================================================
+Instruction : Prompt 1 de l'évaluation v0.26.0. Append-only, aucune valeur mesurée modifiée.
+
+QUATRE CLASSES AJOUTÉES (`scripts/vague20/linter_v4.py`, la v3 demeurant pour l'histoire)
+- C12 VERSION-PROSE : toute mention « édition courante vX », « révision vX », « spécification
+  vX » des cinq pièces confrontée au manifeste ; toute version périmée du Livre refusée.
+  C'est le trou de couverture nommé par l'évaluation : la C6 ne lisait que la table §10.
+- C13 WAVE-CONTINUITY : toute « vague N » doit avoir son entrée datée au changelog gelé,
+  sauf mention explicite « sans édition ».
+- C14 ABSTRACT-LENGTH : résumé du manuscrit ≤ 250 mots (convention nommée).
+- C15 READER-TEST-COUNT : le compte annoncé se recompose depuis ses cas énumérés.
+
+LES QUATRE RÉSIDUS SOLDÉS À LA SOURCE
+(a) Livre du Coffre : couverture (« édition courante v0.15.12 »), page de titre (« révision
+    v1.11 »), §10.1 et légende de table 12 alignés sur la spec v0.15.12 ;
+(b) présentation §8 : « vague 15 » (les campagnes linguistiques) ; la vague 16 est la vague
+    corpus et kit — sans édition, donc sans entrée au changelog ;
+(c) manuscrit : le −35,7 % porte ses opérandes entiers (611/1 714 = 35,653 %, arrondi au
+    dixième) — la valeur publiée n'est PAS modifiée ;
+(d) preuves : le test du lecteur est décomposé en neuf cas numérotés (9/9).
+
+RÉSULTAT : porte V1..V7 + L1..L15, ZÉRO ROUGE sur les cinq pièces régénérées
+(v0.27.0 / spec v0.15.12 / Livre v1.11) ; huit mutations refusées nommément (les quatre de
+la vague 19 + une par nouvelle classe).

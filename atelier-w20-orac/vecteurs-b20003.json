@@ -1,0 +1,76 @@
+{
+ "id": "b20003",
+ "spec": "m1/I/libc-03-strlen.md",
+ "sha256_bloc": "c9a792429a2c9993d83d0988de4e403654437b38f1309d035208d7d90c87f8a0",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient l'adresse d'une chaîne NUL-terminée, accessible en",
+   "entree": [
+    1648174501372069764,
+    15517047680844724258,
+    5068415613290408054,
+    12677848250196831695
+   ],
+   "statut": "OK",
+   "rax": 176,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 rax contient l'offset du premier octet nul (longueur, u64) ;",
+   "entree": [
+    8029691798384199061,
+    9469163126274785645,
+    1403870671087382695,
+    631197263804113974
+   ],
+   "statut": "OK",
+   "rax": 176,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    16363401147074354710,
+    112724204385415830,
+    8594125193038534408,
+    12491928513534785846
+   ],
+   "statut": "OK",
+   "rax": 176,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 chaîne sans octet nul (P2 violée) → parcours hors contrat, jamais généré",
+   "entree": [
+    7196419703087999070,
+    14858927982599060169,
+    4041932701114231404,
+    17468849692225598667
+   ],
+   "statut": "OK",
+   "rax": 176,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 chaîne sans octet nul (P2 violée) → parcours hors contrat, jamais généré",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

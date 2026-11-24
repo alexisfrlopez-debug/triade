@@ -1,0 +1,102 @@
+{
+ "id": "e50003",
+ "spec": "m3/I/http-03-entete.md",
+ "sha256_bloc": "20b006d162841645b3027a1b5bd4e216f3618221900eaef8ac1a6c4ce2206f54",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe la ligne (sans CRLF — garantie par http-01:Q1) ;",
+   "entree": [
+    3555314381706165404,
+    2655474315677031017,
+    14268816516150522275,
+    16304924895111994543
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès (rax = 0) : la zone est remplie — le nom est le span",
+   "entree": [
+    8700955072454232430,
+    11171998958551761510,
+    7881774412806478032,
+    17671596777841306117
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état ; I2 aucune",
+   "entree": [
+    7059522554336144634,
+    10301029541730202095,
+    406693416828807049,
+    9364004862574700594
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 pas de deux-points → rax = 1 : l'appelant (http-10) répond 400 ;",
+   "entree": [
+    911926119436441376,
+    550598144822242970,
+    4838550558504358784,
+    2363448802468721335
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 nom vide ou blanc avant le deux-points → rax = 2 : réponse 400",
+   "entree": [
+    10429248167408023414,
+    17706938074778553155,
+    14148377224356124408,
+    16351691872457644908
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 pas de deux-points → rax = 1 : l'appelant (http-10) répond 400 ;",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 nom vide ou blanc avant le deux-points → rax = 2 : réponse 400",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

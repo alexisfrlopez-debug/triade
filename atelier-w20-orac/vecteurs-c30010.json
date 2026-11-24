@@ -1,0 +1,97 @@
+{
+ "id": "c30010",
+ "spec": "m2/I/tcp-10-console.md",
+ "sha256_bloc": "4b6dda098e0b4cb63034bd766957768b8e22fbb0ccc6cf7f4d183a96618d2cb6",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 le handle stdin est caché en .data (R_STDIN) par tcp-12 ;",
+   "entree": [
+    14166184185258139243,
+    8347241490440313424,
+    5321289440667479893,
+    6065047559905086079
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 pour chaque ligne lue (n octets > 0) : « patch\\r\\n » (n=7) →",
+   "entree": [
+    16592559181205812775,
+    14519864747101177520,
+    15147010165293163622,
+    11995121599061998231
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels système : IAT kernel32 ReadFile exclusivement ; appels",
+   "entree": [
+    16712514973294798485,
+    10291039550739264959,
+    6854865844243537660,
+    10186872995080265175
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 commande refusée par tcp-07 (staging absent/corrompu, état",
+   "entree": [
+    10929746085542303877,
+    16962331564223162719,
+    13094636067303572997,
+    1480680777692852097
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 fin de flux stdin → Q2 : le serveur devient incontrôlable depuis la",
+   "entree": [
+    13225459454679559743,
+    14049690276127927854,
+    3088451520061027621,
+    15861009789622029645
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 commande refusée par tcp-07 (staging absent/corrompu, état",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 fin de flux stdin → Q2 : le serveur devient incontrôlable depuis la",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

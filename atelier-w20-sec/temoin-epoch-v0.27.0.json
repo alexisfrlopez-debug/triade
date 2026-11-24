@@ -1,0 +1,12 @@
+{
+ "edition": "v0.27.0",
+ "cree_le": "2026-11-24T12:57:50Z",
+ "pieces": {
+  "manuscrit": "6c2d8853bc1652b20b41abdd6a1c3dce821bcbbb8746e4ece597cae0ee00b00c",
+  "specification": "8385e33ded75a73b4570fa5a963d0d0e85dd1ce0928252177ba477605191e01a",
+  "livre": "78797e4cf91bbc7a37780fce1eb18ca71ff3e8cbc4701d063fd6dfcd76fbf9ba",
+  "preuves": "c5a04e05a3f5cd1f38d03c384f62cdc69ed8dbee22b2a0df7b41e6bed94a7c22",
+  "presentation": "687add84a9fe81b619efa4308416bdc7f61aca4fedb6ebd8061d6313604a64ce"
+ },
+ "etat_sha256": "1b5fe866716cf3e9d4a3ad820617058258dcc9497ebfa1d54d3d76438ae82425"
+}

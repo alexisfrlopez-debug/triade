@@ -1,0 +1,76 @@
+{
+ "id": "g70009",
+ "spec": "m3/I/http-08-cible.md",
+ "sha256_bloc": "492ec2e75496224fc193112fdba60885bee77c2062ab8aafc90174e32b619353",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le span cible (issu de http-02, octets quelconques) ;",
+   "entree": [
+    4583475639403724777,
+    1210936055121156412,
+    4041557919737449590,
+    14589794757519090312
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès (rax = 0), la zone est remplie selon la forme :",
+   "entree": [
+    4538055429113502553,
+    7186112361719931032,
+    12543511271339432856,
+    15665600176721125059
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état, aucune",
+   "entree": [
+    15783358664274863815,
+    1553987012217359968,
+    6137973430848730904,
+    17900717268886251304
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 verdicts 1-3 (Q2-Q4) — l'appelant (http-10) répond : forme refusée",
+   "entree": [
+    9468635317802619279,
+    14275684409676941348,
+    10921825425627034004,
+    9426842245356050429
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 verdicts 1-3 (Q2-Q4) — l'appelant (http-10) répond : forme refusée",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

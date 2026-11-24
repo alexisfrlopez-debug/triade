@@ -1,0 +1,33 @@
+{
+ "graine": 20261124,
+ "n": 20,
+ "environnement": {
+  "modele": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "mhz": "2793.438",
+  "nproc": 4,
+  "drapeaux": {
+   "aes": true,
+   "avx2": true,
+   "pclmulqdq": true,
+   "vaes": true,
+   "vpclmulqdq": true
+  },
+  "noyau_epingle": [
+   0
+  ]
+ },
+ "couloirs": {
+  "a_aesgcm_vaes": {
+   "cible": "≤ 0,6 c/octet à 4 Kio",
+   "statut": "PRE-ENREGISTRE — mesure du seul référentiel"
+  },
+  "b_recherche_avx2": {
+   "cible": "≤ 561 cycles par recherche absente de 4 096 o",
+   "statut": "A MESURER"
+  },
+  "c_gardes_onze": {
+   "cible": "22→7 instructions/appel sans croissance du TCB",
+   "statut": "PRE-ENREGISTRE — EN ATTENTE (corridor scellé non modifié)"
+  }
+ }
+}

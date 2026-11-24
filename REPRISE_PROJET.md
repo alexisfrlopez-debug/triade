@@ -60,6 +60,13 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 20)** : l'édition **v0.27.0** est générée au
+bac (spec v0.15.12, Livre v1.11) sous la porte à **quinze classes** (D269), huit mutations
+refusées ; l'**ancrage de transparence est APPLIQUÉ** (témoin RFC 3161 vérifié, V6 vert,
+D270) ; les **50 blocs** ont leurs vecteurs d'oracle dérivés de I ; le coffre est durci sur
+copies (gate 80 bits, Argon2id 256 MiB/t=4) ; la campagne add structurée et les couloirs
+VAES/gardes restent pré-enregistrés EN ATTENTE. Rien n'est encore publié pour cette vague.
+
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 19)** : l'édition **v0.26.0** est
 générée au bac — manuscrit v0.26.0, spécification v0.15.11, Livre du Coffre v1.10,
 preuves v0.26.0, présentation v0.26.0 (`pack-v260/`, manifeste

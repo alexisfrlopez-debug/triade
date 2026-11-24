@@ -1,0 +1,102 @@
+{
+ "id": "g70003",
+ "spec": "m4/I/tls-03-jetons.md",
+ "sha256_bloc": "aac1e0e15ce843521f7a33fa64c3607f5d1a24999a4ac29d0b41f20f3f33a275",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx = type de descripteur :",
+   "entree": [
+    13982826861467750476,
+    4478000466537533647,
+    8803160208265404892,
+    10252916414065147954
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès : rax = 0 — le cadre contient le descripteur complet",
+   "entree": [
+    264455726070928494,
+    1916611599048326886,
+    2216848161583371176,
+    10202330684056435645
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 aucune écriture hors du cadre de destination ; I2 aucun",
+   "entree": [
+    10143629871536417966,
+    12310885803682626726,
+    8949322993774826316,
+    1799767428674175600
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 débordement de jeton (Q2) — nommé « jeton hors borne » : la poignée",
+   "entree": [
+    15857700004123553398,
+    9389400037408126013,
+    8850532145180502800,
+    10157961146706844213
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 clair trop long (Q2, type 1) — tls-06 découpe en chaîne",
+   "entree": [
+    15453914473213321147,
+    15950629956665064347,
+    1417869699744404331,
+    1572831039751494635
+   ],
+   "statut": "OK",
+   "rax": 2,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 débordement de jeton (Q2) — nommé « jeton hors borne » : la poignée",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 clair trop long (Q2, type 1) — tls-06 découpe en chaîne",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

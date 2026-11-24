@@ -1,0 +1,72 @@
+{
+ "id": "b20008",
+ "spec": "m1/I/libc-08-autotest.md",
+ "sha256_bloc": "44b5b8ac50df757526174bf6e92835f8b79c8eeae78a65cc8041f471ba200036",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 le bloc est le point d'entrée PE de selftest.exe ;",
+   "entree": [
+    10830920681121044249,
+    15113562136031336170,
+    13033085253904953929,
+    5949783734413308636
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 chaque vecteur doré est exécuté exactement une fois, dans l'ordre",
+   "entree": [
+    8867724097401956022,
+    13705725460653165986,
+    6296344717004882641,
+    9022792270391836225
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc n'appelle que les blocs libc-01…07, io-01 (write),",
+   "entree": [
+    1091275597074524314,
+    10703516854120298274,
+    11985504633353869735,
+    13153281808835692205
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 WriteFile échoue (sortie indisponible) → le verdict de sortie reste",
+   "entree": [
+    13666683942025558994,
+    1406973045392090243,
+    16431875142624119600,
+    13503570271497189943
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 WriteFile échoue (sortie indisponible) → le verdict de sortie reste",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

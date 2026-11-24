@@ -1,0 +1,72 @@
+{
+ "id": "c30001",
+ "spec": "m2/I/tcp-01-init.md",
+ "sha256_bloc": "2fbaa88cf4e9aa8c2cfbb1ca0f84155824418f60f9d718b0aaf114bc799ac920",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 le bloc n'est appelé qu'une fois par exécution, avant toute autre",
+   "entree": [
+    5657762012389042977,
+    12789043278272886390,
+    6244024381079015490,
+    11077095662505915102
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès : rax contient la socket d'écoute (valeur non nulle,",
+   "entree": [
+    8591392166637538505,
+    6405752928742941163,
+    7403052825154326023,
+    17529960668927819116
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 seules fonctions système appelées : IAT ws2_32 WSAStartup, socket,",
+   "entree": [
+    14775386419764902618,
+    4308143317448118458,
+    9197714058056617249,
+    13084099126994805837
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 WSAStartup/socket/bind/listen en échec → nettoyage (Q3) et retour 0 —",
+   "entree": [
+    18440773810074295018,
+    7876955645656999327,
+    11306532600894894916,
+    7807833671091807241
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 WSAStartup/socket/bind/listen en échec → nettoyage (Q3) et retour 0 —",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

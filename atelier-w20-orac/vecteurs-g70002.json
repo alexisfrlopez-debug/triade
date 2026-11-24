@@ -1,0 +1,76 @@
+{
+ "id": "g70002",
+ "spec": "m4/I/tls-02-verdicts.md",
+ "sha256_bloc": "54de34e4641b719dbd48b721392f4cd08ea310f1a1ec24b79ddab4cc13c80635",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient l'HRESULT (i64, valeur 32 bits signée étendue —",
+   "entree": [
+    1631405162139742394,
+    14852954804316779941,
+    17359452873411643529,
+    670703045629757882
+   ],
+   "statut": "OK",
+   "rax": 6,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 rax = verdict :",
+   "entree": [
+    2193297020424733314,
+    12280771470986847158,
+    16071661921409293713,
+    11501419937316631601
+   ],
+   "statut": "OK",
+   "rax": 6,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état, aucune",
+   "entree": [
+    8889270658945302950,
+    8637498708650417908,
+    17227971843176375884,
+    15876451961609396836
+   ],
+   "statut": "OK",
+   "rax": 6,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 il n'existe AUCUN échec de contrat — les verdicts 3, 5 et 6 SONT",
+   "entree": [
+    295909240431161366,
+    10786498593933646321,
+    13677810456878078067,
+    2652698781698037313
+   ],
+   "statut": "OK",
+   "rax": 6,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 il n'existe AUCUN échec de contrat — les verdicts 3, 5 et 6 SONT",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

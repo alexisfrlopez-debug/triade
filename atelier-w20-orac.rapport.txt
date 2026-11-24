@@ -1,0 +1,18 @@
+ATELIER W20ORAC — LES VECTEURS D'ORACLE DES 50 BLOCS, DÉRIVÉS DE LA COUCHE I (24/11/2026)
+========================================================================================
+Instruction : Prompt 2 de l'évaluation. R5 : l'oracle dérive de I, jamais de B.
+
+LIVRÉ (`scripts/vague20/vecteurs_oracle_50.py`)
+- 50 blocs résolus traités (c30012 et c30014 exclus, non résolus, nommés) ;
+- la spécification I de chaque bloc localisée (base sans révision) et ses exigences
+  énumérées (pre / post / inv / E) ;
+- 320 vecteurs produits à graine consignée 20261124 : un vecteur contrains par exigence,
+  plus un test de rejet par cas d'échec nommé ;
+- exécution du jumeau Unicorn : 81 vecteurs exécutés OK, les autres en FAULT nommé (contexte
+  d'exécution absent) — aucun résultat inventé ;
+- audit de traçabilité : 50/50 blocs avec vecteurs, 320 vecteurs, 0 orphelin, 0 bloc sans
+  vecteur, 0 spécification absente.
+
+STATUT : la MESURE NATIVE reste EN ATTENTE — le moteur natif exige mmap(0xC000), refusé par
+ce bac (vm.mmap_min_addr = 65536) ; la cible T < 10 s est pré-enregistrée (n ≥ 5, graine,
+chronomètre monotone, agrégateur fail-closed) et aucun temps n'est publié.

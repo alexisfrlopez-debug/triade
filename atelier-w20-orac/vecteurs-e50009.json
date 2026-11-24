@@ -1,0 +1,72 @@
+{
+ "id": "e50009",
+ "spec": "m3/I/http-09-pompe.md",
+ "sha256_bloc": "30b0b31aa7e0995cc4d7e5c5deb98ba3e20c164539457ad480fd61f9ac0405ec",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient la socket source (connectée, bloquante — la",
+   "entree": [
+    2229594907095471540,
+    9396037653023502247,
+    13031554839531327861,
+    10671294774516866276
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 boucle : n = tcp-03 (recv, capacité du tampon) ; n > 0 →",
+   "entree": [
+    5742919555702324734,
+    17901445834375022004,
+    1256955828978358428,
+    16939694590485834403
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels directs : tcp-03 (réception), tcp-04 (émission) —",
+   "entree": [
+    2849365914958664150,
+    12399089667331791667,
+    5410286682762676208,
+    12126605962723174853
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 verdict 1 (erreur source) ou 2 (erreur destination) → la session",
+   "entree": [
+    11827390841694196594,
+    6045333089337710690,
+    8533144794575307393,
+    18161426924884446246
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 verdict 1 (erreur source) ou 2 (erreur destination) → la session",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

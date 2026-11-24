@@ -1,0 +1,122 @@
+{
+ "id": "g80002",
+ "spec": "m3/I/http-10-session.md",
+ "sha256_bloc": "94833a57ec33d0e1058cfa591c6a56982dfc5b92f3447dd7063fceff6291b428",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient la socket cliente connectée (argument transmis",
+   "entree": [
+    3904556026039487385,
+    14147727585695022949,
+    2710736700755446691,
+    13142091666052703863
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q0 prologue : AVANT le sub rsp, 0x7100, une boucle de probing",
+   "entree": [
+    7969984234904152764,
+    18105384598621901458,
+    15680952426505915734,
+    17027250575911525616
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels directs : tcp-03, tcp-04, tcp-05, tcp-06, tcp-11,",
+   "entree": [
+    10710826790179560621,
+    7216736236060213441,
+    3478095544131079939,
+    14701405456601492734
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 défaut de format (http-01/02/03-via-04/05/07/08 non nuls, LF",
+   "entree": [
+    2566756785505446374,
+    8661006643928976312,
+    8933986488483121254,
+    5811646210589042865
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 tunnel sans port (http-07 avec défaut 0) ou cible mal formée →",
+   "entree": [
+    9883306148633472084,
+    11839611527039250097,
+    18014116228213823247,
+    1890244852772158427
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:5",
+   "type": "echec",
+   "enonce": "E6 version non supportée (http-02:3) → 505 ; E7 : amont injoignable",
+   "entree": [
+    16980758195331076388,
+    17317469797300137210,
+    14938688165309797406,
+    5434528057565323205
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 défaut de format (http-01/02/03-via-04/05/07/08 non nuls, LF",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 tunnel sans port (http-07 avec défaut 0) ou cible mal formée →",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:2",
+   "type": "rejet",
+   "enonce": "E6 version non supportée (http-02:3) → 505 ; E7 : amont injoignable",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

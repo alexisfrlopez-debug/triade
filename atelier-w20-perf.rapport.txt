@@ -1,0 +1,21 @@
+ATELIER W20PERF — LES COULOIRS DE PERFORMANCE, PRÉ-ENREGISTRÉS PUIS MESURÉS (24/11/2026)
+=======================================================================================
+Instruction : Prompt 4 de l'évaluation. R11 (avant/après), R4 (contrat stable), R7 (aucune
+adresse scellée déplacée).
+
+ENVIRONNEMENT CONSIGNÉ : Intel Xeon @ 2,80 GHz (machine virtuelle), 4 cœurs, drapeaux
+aes/avx2/pclmulqdq/vaes/vpclmulqdq PRÉSENTS, n = 20, cœur épinglé, graine 20261124.
+
+COULOIR (b) RECHERCHE — MESURÉ : balayage AVX2 32 octets 175,5 cycles (IQR 0,1) contre
+memchr 93,4 cycles (IQR 0,5) sur une recherche absente de 4 096 octets. La cible ≤ 561 est
+TENUE, mais le balayage écrit est DOMINÉ par memchr (1,88× plus lent) : la lecture
+défavorable est consignée — glibc bat le balayage naïf, la variante utile est l'idiome
+memchr lui-même.
+
+COULOIR (a) AES-GCM — référentiel mesuré ici : 1 002 ns pour 4 Kio ≈ 0,685 c/octet (machine
+virtuelle). La spécialisation VAES/VPCLMULQDQ (CPUID hissé, GHASH 8 blocs Karatsuba,
+entrelacement) est PRÉ-ENREGISTRÉE et reste un geste machine réelle : aucun code VAES n'est
+écrit dans ce bac, aucun gain n'est revendiqué.
+
+COULOIR (c) GARDES — PRÉ-ENREGISTRÉ, EN ATTENTE : le corridor scellé n'est pas modifié ici ;
+la cible 22→7 instructions/appel attend la machine réelle.

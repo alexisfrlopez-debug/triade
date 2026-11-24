@@ -1,0 +1,76 @@
+{
+ "id": "b20005",
+ "spec": "m1/I/libc-05-zone-alloc.md",
+ "sha256_bloc": "f711acf085240552ec930ee9bc65c0b9bfd94ec7bc7642f7c45dc45f26dd66b7",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient la taille demandée (u64) ;",
+   "entree": [
+    7484298476380127635,
+    1124335555816470111,
+    17756024425113161885,
+    3975034574699341956
+   ],
+   "statut": "OK",
+   "rax": 0,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès : rax contient un pointeur dans l'arène, aligné sur",
+   "entree": [
+    849066538767498915,
+    6590725076168043121,
+    18425894133681063904,
+    7990929894085871271
+   ],
+   "statut": "OK",
+   "rax": 0,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    6817668707917494889,
+    16011142043382691861,
+    5543473585467498005,
+    14567064442146013412
+   ],
+   "statut": "OK",
+   "rax": 0,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 demande invalide ou arène épuisée → retour 0, curseur inchangé, aucun",
+   "entree": [
+    14082601252262048673,
+    5597527158090324290,
+    10380607546322846953,
+    3723669095561782815
+   ],
+   "statut": "OK",
+   "rax": 0,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 demande invalide ou arène épuisée → retour 0, curseur inchangé, aucun",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

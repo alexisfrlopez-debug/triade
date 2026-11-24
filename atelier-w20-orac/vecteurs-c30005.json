@@ -1,0 +1,72 @@
+{
+ "id": "c30005",
+ "spec": "m2/I/tcp-05-close.md",
+ "sha256_bloc": "cddb4e1d24c220ec177269a171688752bcccb01ab71aeb93bf815e20bcc3e150",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient la socket à fermer (non nulle) ;",
+   "entree": [
+    17133502297591310274,
+    13894319618240347398,
+    17943502134730328912,
+    2104365769363710229
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 closesocket a été appelé une fois avec la socket transmise ; la",
+   "entree": [
+    17612406927688008307,
+    6554884032212673448,
+    6287699971573821459,
+    5269501668749510232
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 unique appel système : IAT ws2_32 closesocket ; I2 le bloc",
+   "entree": [
+    14167873792663193568,
+    14803294588317086965,
+    717419782400323514,
+    8746145317400379995
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 closesocket échoue → propagation silencieuse documentée (la socket",
+   "entree": [
+    12483957421851434741,
+    4463102228661232878,
+    12702490429030997002,
+    8915558610689530273
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 closesocket échoue → propagation silencieuse documentée (la socket",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "id": "b20001",
+ "spec": "m1/I/libc-01-memcpy.md",
+ "sha256_bloc": "f3b5f6170272ad24e80edf88a246b35417ce0058feb6941e8e5f799c55f2acd1",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient dst, région d'au moins n octets accessible en écriture ;",
+   "entree": [
+    3543521818766803614,
+    15682605508852786804,
+    2278917550771697574,
+    15342068909579957232
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 les n octets de dst sont égaux aux n octets de src ;",
+   "entree": [
+    9064362979564010041,
+    7326846410206626291,
+    13665062516097268500,
+    1408235650298282888
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    3073160530708116164,
+    10954572894138002154,
+    7952770498229489754,
+    9002649223891900264
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 chevauchement dst/src (P4 violée) → comportement hors contrat, jamais",
+   "entree": [
+    8508644029925958378,
+    8907740104500138775,
+    17203123317012853866,
+    10520586160709765755
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 chevauchement dst/src (P4 violée) → comportement hors contrat, jamais",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

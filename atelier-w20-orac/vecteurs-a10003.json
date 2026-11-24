@@ -1,0 +1,72 @@
+{
+ "id": "a10003",
+ "spec": "m0/I/hello-03-exit.md",
+ "sha256_bloc": "a1fe721f6c5206a0c91070b5d3a6db8d7619ee622f2f0edb5586092c26ebb9fe",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient le code de sortie du processus (u32, attendu : 0) ;",
+   "entree": [
+    12418981025058724286,
+    4965051425890187416,
+    14852653079054242291,
+    2579499412750651619
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 le processus est terminé à l'appel de ExitProcess — le bloc ne retourne",
+   "entree": [
+    6183659422616651959,
+    5556834863857894267,
+    2801596099238908616,
+    500769959199324896
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 aucun chemin d'exécution au-delà de l'appel : `ud2` défensif immédiat,",
+   "entree": [
+    5240546960747936776,
+    14375883491920851468,
+    14440530050954768157,
+    8836566734147038870
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 ExitProcess est interceptée ou échoue (chemin réputé inaccessible) → arrêt",
+   "entree": [
+    13601770534600261800,
+    9507410171056096901,
+    7888884000968650888,
+    5839721927801472266
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 ExitProcess est interceptée ou échoue (chemin réputé inaccessible) → arrêt",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "id": "e50007",
+ "spec": "m3/I/http-07-autorite.md",
+ "sha256_bloc": "b4d0e9ff65b755d95bab961caeb8a2a5d52f681d3794fc69d0902b1002814a52",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le span autorité (octets quelconques) ;",
+   "entree": [
+    5696552231648728093,
+    2208199285478124853,
+    744667975295917117,
+    652935022812496126
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès (rax = 0) : la zone contient le span hôte (crochets",
+   "entree": [
+    5321704780524579253,
+    1821310241689063698,
+    7486581745695029594,
+    3660771883647724761
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 feuille pure : aucun appel, aucun IAT, aucun état, aucune",
+   "entree": [
+    11906008101767590,
+    2155782461761706819,
+    11012304278851572126,
+    9252372496466505675
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 verdicts 1-3 (Q2-Q4) — l'appelant (http-10) répond 400 : aucune",
+   "entree": [
+    7427506338930826910,
+    6776604153376674418,
+    13721456569418744748,
+    17058233418392650157
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 verdicts 1-3 (Q2-Q4) — l'appelant (http-10) répond 400 : aucune",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

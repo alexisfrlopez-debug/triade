@@ -1,0 +1,72 @@
+{
+ "id": "c30011",
+ "spec": "m2/I/tcp-11-journal.md",
+ "sha256_bloc": "aa1b4eb2ac07559b4b66bcf3a658e988a80c37feeb9317f900a0ad65cab06fcb",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le préfixe (rdx = sa longueur, éventuellement 0) ;",
+   "entree": [
+    8647484399471903434,
+    15064420093439724755,
+    14422509869608265951,
+    12372629889984015191
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 une seule écriture WriteFile est effectuée, du tampon composé,",
+   "entree": [
+    8325910317348677258,
+    1716114143043585325,
+    16751870171123964098,
+    12554322648238868777
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels système : IAT kernel32 EnterCriticalSection,",
+   "entree": [
+    12480946105102994285,
+    1594373108912101960,
+    6053873551554016338,
+    11333475298851846797
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 WriteFile échoue → rax = 0 (Q2), section critique rendue (Q3) :",
+   "entree": [
+    1872454855934526883,
+    5903765172058768409,
+    7350474561636934998,
+    17808632890202386805
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 WriteFile échoue → rax = 0 (Q2), section critique rendue (Q3) :",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

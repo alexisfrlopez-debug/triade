@@ -1,0 +1,72 @@
+{
+ "id": "c30008",
+ "spec": "m2/I/tcp-08-echo.md",
+ "sha256_bloc": "b080c6b733530ac20cb3480f758edc9fc35d5084f3fd74fd2d635390316f7573",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le tampon de destination (au moins r8 octets en",
+   "entree": [
+    1199686101732780686,
+    4346056233934633854,
+    10311158620859167665,
+    9577350165166277976
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 rax = r8 (la longueur est préservée, quel que soit le",
+   "entree": [
+    7472823758636323822,
+    14405256179033830134,
+    3391094563808543865,
+    8232639239400789543
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une FEUILLE : aucun appel, aucun accès système, aucune",
+   "entree": [
+    12329383273177604891,
+    15395713260742125475,
+    14326144674591340324,
+    17854611670407295410
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 aucun échec défini — la transformation est totale (aucun octet",
+   "entree": [
+    11022432319209408743,
+    749925682168947752,
+    11980210250748453755,
+    6463108888690078745
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 aucun échec défini — la transformation est totale (aucun octet",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+ATELIER W20ADD — LA CAMPAGNE ADD STRUCTURÉE, PRÉ-ENREGISTRÉE (24/11/2026)
+=========================================================================
+Instruction : Prompt 3 de l'évaluation. Aucun juge affaibli, aucune cible re-tirée.
+
+LIVRÉ (`scripts/vague20/campagne_add_structuree.py`)
+- le client à décodage contraint : schéma JSON fermé {op, dst, src, offset}, 11 opcodes,
+  additionalProperties false — HORS-FORMAT impossible PAR CONSTRUCTION côté client ;
+- l'expandeur déterministe de la vague 19 IMPORTÉ (jamais recopié) ; son empreinte sha256
+  est consignée dans le pré-enregistrement (juge intact) ;
+- la boucle de réparation bornée à trois tours, conversions consignées par classe ;
+- la voie d'entraînement décrite (SFT/DPO/RLVR, récompense typée du juge, corpus v2.1,
+  TEST sans dorée) — sans run ;
+- pré-enregistrement AVANT mesure : ≥ 15/18 à ≤ 3 000 tokens, médiane sur 18 et sur les
+  vertes, graine, re-tokenisation ±1.
+
+PREUVES : fixtures 18/18 vertes, quatre refus nommés, rejeu bit-identique VERT, deux
+compteurs à écart 0.
+STATUT : EN ATTENTE — aucun serving à structured output dans ce bac ; la lecture défavorable
+(5/18 à la v5) demeure consignée telle quelle.

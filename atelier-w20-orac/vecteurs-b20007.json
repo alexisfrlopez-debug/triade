@@ -1,0 +1,72 @@
+{
+ "id": "b20007",
+ "spec": "m1/I/libc-07-memset.md",
+ "sha256_bloc": "2466f853aee8df80cf1c796f591290fa1a2341f08a96015b107095064a6bfca1",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient dst, région d'au moins n octets accessible en écriture ;",
+   "entree": [
+    9773745407664297174,
+    117520590778601280,
+    15975822604183016146,
+    2497395393807770444
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 les n octets de dst sont égaux à l'octet de remplissage ;",
+   "entree": [
+    16131505231573015896,
+    15992602910882261702,
+    13352206294884761593,
+    3322492893036965522
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    6064109678949129331,
+    6143648241078082993,
+    17112857714951628794,
+    15255048270629741770
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 aucune condition d'échec — le remplissage est total.",
+   "entree": [
+    15651617728292109874,
+    12328505988495150167,
+    3695415060024517159,
+    4390477658964081996
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 aucune condition d'échec — le remplissage est total.",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "id": "e50004",
+ "spec": "m3/I/http-04-chercher.md",
+ "sha256_bloc": "20aab9ec06401b242dc9578d94066d34054aadba6a8300916cfa4d1a8e8715a8",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le début du bloc d'en-têtes (première ligne",
+   "entree": [
+    3823558334866056638,
+    14361667810297910262,
+    2541342316478243641,
+    12472475843148656562
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 trouvé (rax = 0) : la zone contient les champs de la PREMIÈRE",
+   "entree": [
+    7049116994161972784,
+    3742484086673409827,
+    9946483421952580721,
+    7425466813224586278
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels directs : http-01 (itération de ligne — propriété T5 du",
+   "entree": [
+    10521661960212372829,
+    7013775653308206307,
+    9185480448489065246,
+    17490869261236043584
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 bloc d'en-têtes mal formé → rax = 2 : l'appelant (http-10) répond",
+   "entree": [
+    8197693351400955560,
+    4866667193433677802,
+    6463989577768610727,
+    16759862833459912772
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 bloc d'en-têtes mal formé → rax = 2 : l'appelant (http-10) répond",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

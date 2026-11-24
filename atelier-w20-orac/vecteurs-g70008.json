@@ -1,0 +1,147 @@
+{
+ "id": "g70008",
+ "spec": "m4/I/tls-08-session.md",
+ "sha256_bloc": "29b7c3efd9cd45c6d16d3c562af8e5962094bd73c0a1214832692cb13bb95b7a",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx pointe le cadre de session TLS (zone de travail complète :",
+   "entree": [
+    5307450877586155263,
+    4230992486027496027,
+    8005010666015336230,
+    12505756870788135636
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 succès complet : rax = 0 — connexion tcp-13, nom tls-01,",
+   "entree": [
+    15780719878741212105,
+    15244395209017445865,
+    5118639769903147400,
+    8032567635777982955
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 tls-08 est le SEUL propriétaire de fermeture de la socket",
+   "entree": [
+    9491864011065615305,
+    5105593189534234913,
+    3841862030402372175,
+    5368642694646493562
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 tcp-13 en échec (résolution/connexion) → « cible injoignable »,",
+   "entree": [
+    8851719806730186468,
+    10744910725947883926,
+    15285399672092967054,
+    13149876141973654739
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 verdict 3 de tls-04 → « certificat invalide » (I4) : réponse 502",
+   "entree": [
+    17113092998712409812,
+    4070871489305824356,
+    1400257165377559034,
+    3610003428915336199
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:5",
+   "type": "echec",
+   "enonce": "E3 verdict non nul de tls-06/07 en cours de relais → réponse",
+   "entree": [
+    9644124369909329128,
+    5624403064103877775,
+    5188696976312898546,
+    9813895540315396822
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:6",
+   "type": "echec",
+   "enonce": "E4 échec d'une libération (tls-05:Q4) → consigné (une ressaisie),",
+   "entree": [
+    13826591284481693719,
+    10802684757624453745,
+    9305431859227391376,
+    14181130897896068203
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 tcp-13 en échec (résolution/connexion) → « cible injoignable »,",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 verdict 3 de tls-04 → « certificat invalide » (I4) : réponse 502",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:2",
+   "type": "rejet",
+   "enonce": "E3 verdict non nul de tls-06/07 en cours de relais → réponse",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "rejet",
+   "enonce": "E4 échec d'une libération (tls-05:Q4) → consigné (une ressaisie),",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

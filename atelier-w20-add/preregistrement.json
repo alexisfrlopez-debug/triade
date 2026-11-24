@@ -1,0 +1,59 @@
+{
+  "objet": "campagne add structurée (décodage contraint par grammaire)",
+  "cible": "≥ 15/18 verts à ≤ 3 000 tokens par changement validé",
+  "mediane": [
+    "sur les 18 tâches",
+    "sur les seules vertes (deux conventions nommées)"
+  ],
+  "graine": 20261124,
+  "tokenisation": "indépendante, écart exigé ≤ 1 token",
+  "juge": {
+    "fichier": "scripts/vague19/expandeur_add.py",
+    "sha256": "9fc325e2b8eb40e7cc5c77b92ddfa92e23e6a036bd4ec68f0ec78619903389bd",
+    "intact": true
+  },
+  "schema_client": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "op",
+      "offset"
+    ],
+    "properties": {
+      "op": {
+        "enum": [
+          "mov",
+          "add",
+          "sub",
+          "xor",
+          "and",
+          "or",
+          "cmp",
+          "test",
+          "jcc",
+          "call",
+          "ret"
+        ]
+      },
+      "dst": {
+        "type": "object"
+      },
+      "src": {
+        "type": "object"
+      },
+      "offset": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65535
+      }
+    }
+  },
+  "reparation": "contre-exemple réinjecté, borné à 3 tours, conversions consignées par classe",
+  "voie_entrainement": {
+    "corpus": "TRIADE-CORPUS-v2.1 (127/24/19 triples, 48 paires DPO, splits par groupe-de-contrat, TEST sans dorée)",
+    "recompense": "verdict typé du juge : syntaxe → expansion → round-trip → oracle → mutation ; cumulative et stricte, anti-hacking",
+    "etape": "SFT (démonstrations), DPO (paires du corpus), RLVR (récompense = juge, échelle de capacité held-out)",
+    "interdit": "aucun juge affaibli ; aucune cible re-tirée ; aucune dorée au TEST"
+  },
+  "statut": "EN ATTENTE — aucun serving à structured output dans ce bac"
+}

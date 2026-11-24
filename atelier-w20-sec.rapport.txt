@@ -1,0 +1,22 @@
+ATELIER W20SEC — ANCRAGE DE TRANSPARENCE, PREUVES SYMBOLIQUES, DURCISSEMENT (24/11/2026)
+=======================================================================================
+Instruction : Prompt 5 de l'évaluation. Fail-closed, pré-enregistré, aucun résultat fabriqué.
+
+(a) ANCRAGE DE TRANSPARENCE — DÉPLOYÉ SUR LE TÉMOIN D'ÉPOQUE (`scripts/vague20/ancrage_transparence.py`)
+Le témoin v0.27.0 (édition, sha256 des cinq pièces, empreinte d'état, date) est ancré par
+horodatage RFC 3161 auprès d'une autorité publique ; le jeton est vérifié hors ligne
+(openssl ts -verify : OK) et son empreinte confrontée au témoin. Refus nommés et éprouvés :
+ANCRE-INDISPONIBLE (TSA injoignable), TEMOIN-SANS-ANCHE (jeton absent/invalide),
+ANCRE-INCOHERENTE (témoin muté). Le chargement R10 reste SANS appel réseau — l'ancrage est
+un geste de release.
+
+(b) PREUVES SYMBOLIQUES — REFUS NOMMÉ (`scripts/vague20/preuves_symboliques.py`) :
+tamarin-prover, proverif et maude sont ABSENTS du bac et la machine est à 7 Gio ; aucun
+verdict n'est fabriqué. Le script imprime la commande exacte du poste réel et refuse le run
+avec le motif TOOL-ABSENT / MEMOIRE-INSUFFISANTE.
+
+(c) DURCISSEMENT DU COFFRE SUR COPIES (`scripts/vague20/durcissement_coffre.py`) : gate
+d'entropie ≥ 80 bits (phrase de 6 mots = 77,5 bits REFUSÉE ; 7 mots = 90,5 ADMISE),
+Argon2id 256 MiB / t=4 / p=1 (0,83 s au bac), rotation (ancienne phrase INOPÉRANTE),
+corps falsifié refusé nommément. 6/6. Le prototype média FIDO2 hmac-secret est décrit, non
+exécuté (aucun authentificateur dans le bac).

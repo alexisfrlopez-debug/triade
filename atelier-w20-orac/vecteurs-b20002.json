@@ -1,0 +1,76 @@
+{
+ "id": "b20002",
+ "spec": "m1/I/libc-02-memcmp.md",
+ "sha256_bloc": "a839f95712415e3302f7660aad6bbed5a2171406ac41929adb588212f8512972",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 rcx contient ptr1, région d'au moins n octets accessible en lecture ;",
+   "entree": [
+    18088989424500633167,
+    1785108881494361308,
+    16067736537271948977,
+    3964053863388084209
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 eax contient -1 si le premier octet divergent de ptr1 est",
+   "entree": [
+    6712067063132356627,
+    3063330931451007709,
+    2634201933413843513,
+    13568008460668485030
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 le bloc est une feuille : aucun appel, aucun accès système ;",
+   "entree": [
+    14866089227556474893,
+    5972336745977335361,
+    4843073340085290025,
+    7439540563318777758
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 aucune condition d'échec — la comparaison est totale (n = 0 → verdict 0).",
+   "entree": [
+    6522716754770689818,
+    9231996150578809267,
+    6011288104825847326,
+    1642524019096142952
+   ],
+   "statut": "OK",
+   "rax": 1,
+   "sortie": "00000000000000000000000000000000"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 aucune condition d'échec — la comparaison est totale (n = 0 → verdict 0).",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}

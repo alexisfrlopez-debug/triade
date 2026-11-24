@@ -1,0 +1,122 @@
+{
+ "id": "g70011",
+ "spec": "m3/I/http-12-principal.md",
+ "sha256_bloc": "ea01cc52cb148ada2d63d6918f774fe3eaae91530f657fd6e1294cb6c44ee30d",
+ "graine": 20261124,
+ "vecteurs": [
+  {
+   "exigence": "pre:0",
+   "type": "pre",
+   "enonce": "P1 le bloc est le point d'entrée PE de proxy.exe ;",
+   "entree": [
+    8436736284861394903,
+    7834121263819592222,
+    10098252996762959611,
+    8386307979003307518
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "post:1",
+   "type": "post",
+   "enonce": "Q1 [porte R10] AVANT tout appel ws2_32, tout appel de journal et",
+   "entree": [
+    6274442823900577793,
+    2320839928525203235,
+    5507476766809262921,
+    11121247740837157728
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "inv:2",
+   "type": "inv",
+   "enonce": "I1 appels système : IAT kernel32 GetStdHandle,",
+   "entree": [
+    8821952078169996691,
+    16888619345477534380,
+    16420932438017288778,
+    12230596649801617744
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:3",
+   "type": "echec",
+   "enonce": "E1 intégrité KO → ExitProcess(1) avant tout effet (fail-closed",
+   "entree": [
+    16557634390343327875,
+    10026465935095307433,
+    6593056334033737003,
+    14756894689420020337
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:4",
+   "type": "echec",
+   "enonce": "E2 échec d'écoute ou de lancement de console → ExitProcess(2) avec",
+   "entree": [
+    562231874073492146,
+    9616382067648904698,
+    4920855386302115979,
+    13838876616356410270
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:5",
+   "type": "echec",
+   "enonce": "E3 acceptation en échec sans arrêt demandé → ExitProcess(2)",
+   "entree": [
+    625889697253685382,
+    918003956859069925,
+    4104457786746590489,
+    16397720487290964232
+   ],
+   "statut": "FAULT",
+   "motif": "UcError"
+  },
+  {
+   "exigence": "echec:0",
+   "type": "rejet",
+   "enonce": "E1 intégrité KO → ExitProcess(1) avant tout effet (fail-closed",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:1",
+   "type": "rejet",
+   "enonce": "E2 échec d'écoute ou de lancement de console → ExitProcess(2) avec",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  },
+  {
+   "exigence": "echec:2",
+   "type": "rejet",
+   "enonce": "E3 acceptation en échec sans arrêt demandé → ExitProcess(2)",
+   "entree": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "attendu": "refus nommé"
+  }
+ ]
+}
