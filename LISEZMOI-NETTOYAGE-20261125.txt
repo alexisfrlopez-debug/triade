@@ -1,0 +1,90 @@
+TRIADE — NETTOYAGE DU COFFRE DU 25/11/2026 (Entrée 414)
+=========================================================
+
+La commande du maître : « il faudrait nettoyer le drive en archivant tout
+ce qui n'est pas utile pour la suite ». Le même geste que D76 (le 28/10) et
+que le nettoyage du /test du 19/11 (l'Entrée 356) : RIEN N'EST JETÉ (D143)
+— chaque pièce est DÉPLACÉE (mêmes identifiants, mêmes octets), jamais
+supprimée. Les 184 déplacements sont recoupés UN PAR UN : parent d'arrivée
+constaté, md5 IDENTIQUE avant et après, nom inchangé — 184/184 VERT
+(journal : scripts/journal_nettoyage.json ; outil : scripts/nettoyer_coffre.py,
+le motif de drive_archiver.py étendu aux sous-dossiers).
+
+TROIS LOTS CRÉÉS DANS CE DOSSIER ARCHIVE/
+
+1. supersede-racine-20261125/ — QUINZE pièces parties de la racine
+   - les DEUX TRIADE_complet_v0.24.0.zip (doublons exacts) et le
+     TRIADE_complet_v0.23.3.zip : releases closées — la courante vit au
+     /livrables (v0.31.0), la dernière publiée sur Zenodo (v0.26.0,
+     10.5281/zenodo.24499428) ;
+   - empreintes_livrables_v0.23.3.txt et rapport_verification_v0.23.3.txt
+     (la vérification courante est celle de v0.31.0, au /livrables) ;
+   - rapport-release-v0234 et rapport-release-v0240 (copies ; les originaux
+     demeurent au dépôt git) ;
+   - les quatre rapports d'atelier de l'époque des vagues 6 à 17
+     (89488hblm, fkkqc7v8t, M4-vljfs6pcj, execution-vague6) — consignés au
+     worklog, pièces au dépôt git (atelier-cf3-89488hblm/, atelier-m4-
+     vljfs6pcj/, atelier-temps-constant-fkkqc7v8t/) ;
+   - CHANTIER-OPTIMISATION-TOKENS-v1.md et JOURNAL-OPTIMISATION-TOKENS.txt
+     (le chantier clos le 17/11 ; la voie courante : le jeton relais) ;
+   - les DOUBLONS PÉRIMÉS : OU-TROUVER-LES-LIVRABLES.md (226 Ko, 12:43) et
+     REPRISE_PROJET.md (27,5 Ko, 14:49) — les versions COURANTES (20:21,
+     synchronisées depuis le dépôt) demeurent à la racine.
+   LA RACINE APRÈS : 17 éléments — les sept dossiers (ARCHIVE, Cérémonie,
+   instructions, livrables, test, Tokens, TRIADE-sauvegarde-git) et dix
+   fichiers courants : worklog.md, OU-TROUVER-LES-LIVRABLES.md,
+   REPRISE_PROJET.md, PROTOCOLE_TRIADE_AGENT.md, LISEZMOI-PHRASE-CONTROLE.txt,
+   coffre_fort.bin, TRIADE-continuite-multiprofils-0.9.0 (5/11), et le
+   rendu P3 du 25/11 (manifeste, rapport d'exécution, tableau).
+
+2. livrables_supersedes_20261125/ — SOIXANTE-QUINZE pièces parties du
+   /livrables. Toutes les versions SUPERSÉDÉES — le LISEZMOI-livrables-
+   v0.31.0.txt dit : « SUPERSÉDÉES : v0.30.0 et antérieures » :
+   - les sets v0.23.3/v0.23.4, v0.24.0/v0.24.1, v0.25.0 (dont deux
+     doublons), v0.26.0 (PUBLIÉE : DOI 10.5281/zenodo.24499428, concept
+     24367343 — Zenodo demeure la référence), v0.28.0, v0.29.0, v0.30.0 —
+     pour chacun : manuscrit, spécification, Livre du Coffre, preuves et
+     calculs, présentation (zip + pdf), soumission, complet, empreintes,
+     LISEZMOI-livrables, rapport de vérification ;
+   - les kits développeur v1.1.0 et v1.2.0 (le courant v1.3.0 demeure,
+     Zenodo 24499840) ;
+   - les packs participation v1.0.0 (deux exemplaires — le courant v1.1.0
+     demeure, Zenodo 24499847).
+   LE /LIVRABLES APRÈS : 15 pièces — le set v0.31.0 COMPLET (évaluation en
+   cours, spec v0.15.16, Livre v1.15), les kits terrain Windows v0.15.0 et
+   leur LISEZMOI, le kit développeur v1.3.0, le pack participation v1.1.0.
+
+3. test-ateliers-20261125/ — QUATRE-VINGT-QUATORZE pièces parties du
+   /test :
+   - les rapports d'analyse des vagues 7 à 17 (une soixantaine :
+     rapports, campagnes PBT, audits, purges, Zenodo, releases, corpus) —
+     tous consignés au worklog, pièces au dépôt git ;
+   - les consoles du passage public du 19/11 et le contrôle négatif v2 ;
+   - les guides du livre D210 (GUIDE-CORRECTIONS-LIVRE-354, GUIDE-LIGNE-
+     CARNET) et LISEZMOI-KITS-UNITES-D204 : la campagne D210 est CLOSE
+     (Entrée 356), le Livre courant vit au /livrables (v1.15) ;
+   - l'atelier-campagne-d204 (les registres du livre : livraisons.csv,
+     defauts.csv, le carnet M3) ;
+   - le kit de cérémonie d183 v0.192 (dossier + kit complet + kit GUI) :
+     le kit UNIQUE DE CÉRÉMONIE courant vit au dossier /Cérémonie (D130,
+     rafraîchi à chaque commit) ;
+   - les empreintes et vérifications v0.22.1 à v0.23.3, le brouillon
+     d'entrée, le rappel .ics, la grille de réception, le tableau de bord ;
+   - LISEZMOI-NETTOYAGE-TEST-20261119.txt (supersédé par le présent) et
+     les copies /test des rapports de release v0.23.4/v0.24.0.
+   LE /TEST APRÈS : le rendu P3 (manifeste, rapport, tableau — Entrée 412)
+   + archives-livraisons/ et archives-preuves/ (elles DEMEURENT : les
+   scripts d'archivage de runs les référencent, rapatrier_index_archives.py)
+   + LISEZMOI-TEST-20261125.txt (le rôle courant du dossier : recevoir les
+   témoins du terrain).
+
+POURQUOI CE QUI DEMEURE EST UTILE À LA SUITE (l'Entrée 413) : les témoins
+du maître (kit-2 N60/N200/N400, loupe, shani) attendus AU /TEST ; la
+machine n° 2 des deux requises ; P4/P5/P6 au poste réel ; la cérémonie
+d'ère (dossier /Cérémonie) ; le miroir git (TRIADE-sauvegarde-git) ; les
+jetons (/Tokens) ; la file /instructions (vide, prête pour la vague 27).
+
+L'HISTOIRE N'EST PAS PERDUE : chaque pièce ci-dessous demeure accessible
+sous son MÊME identifiant (les liens Drive existants résolvent toujours) ;
+et l'historique complet vit dans git (miroir TRIADE-sauvegarde-git/ +
+triade-history.bundle), qui remplace ces fichiers pour toute reprise.

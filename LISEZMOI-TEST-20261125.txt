@@ -1,0 +1,24 @@
+TRIADE — LE /TEST AU 25/11/2026 (Entrée 414)
+=============================================
+
+Ce dossier est la ZONE DE RÉCEPTION DU TERRAIN.
+
+À DÉPOSER ICI : les TÉMOINS de vos runs des kits terrain v0.15.0 —
+kit-2-dudect (N60, N200, N400), kit-3-loupe, kit-1-shani. Les témoins
+naissent SUR VOTRE MACHINE : dans le dossier même du kit-2, dans
+preuves-loupe\ (kit-3), dans preuves-shani\ (kit-1) — glissez-les ici
+(tels quels ou zippés). Le LISEZMOI-KITS-TERRAIN-2026-11-24.txt au
+/livrables dit l'ordre de passage et l'emplacement exact des témoins.
+
+Y DEMEURENT :
+- le RENDU P3 (25/11) : manifeste-p3-20261125.txt,
+  rapport-execution-p3-20261125.txt, tableau-p3-harnais-image-20261125.txt
+  — 235/235 vecteurs exécutés, cible ≥ 200 tenue (Entrée 412 ; le rendu
+  complet vit au dépôt git, atelier-p3-exec/) ;
+- archives-livraisons/ et archives-preuves/ : les archives des campagnes
+  passées — elles ne bougent pas (référencées par les scripts
+  d'archivage de runs du dépôt).
+
+Le nettoyage du 25/11 (Entrée 414) a déplacé les anciens rapports
+d'atelier vers ARCHIVE/test-ateliers-20261125/ — rien n'a été supprimé,
+chaque déplacement recoupé par md5.
