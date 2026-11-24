@@ -256,6 +256,8 @@ def presentation():
         "Bascule concurrente au métal nu (kit pré-enregistré, agrégateur fail-closed), sentinelle Windows SACL/4663, IMA/Authenticode configurés.",
         "Compteur NV matériel (D263) et campagne structurée (D264) : simulateur et instrument verts, runs EN ATTENTE.",
         "Tamarin/ProVerif/Maude : outils absents, aucun verdict fabriqué.",
+        "Le registre unique des chantiers en attente porte 10 entrées (STATUTS-EN-ATTENTE.md) ; "
+        "la porte recompose ce compte (C16) et refuse tout écart.",
     ])
     h.append(PageBreak())
     h.append(Paragraph(f"10. L'édition {EDITION}", H2))
@@ -276,7 +278,17 @@ def presentation():
                f"TRIADE — présentation {EDITION}", EDITION, h)
 
 
+def reancrer():
+    """Le témoin d'époque est PÉRISSABLE : on le ré-ancre après chaque génération (D271)."""
+    import subprocess
+    r = subprocess.run([sys.executable, str(REPO / "scripts/vague20/ancrage_transparence.py")],
+                       capture_output=True, text=True)
+    print((r.stdout or r.stderr).strip().splitlines()[-1] if (r.stdout or r.stderr) else "[ancrage] ?")
+    return r.returncode == 0
+
+
 if __name__ == "__main__":
     preuves()
     presentation()
     print("pièces 4 et 5 générées")
+    reancrer()

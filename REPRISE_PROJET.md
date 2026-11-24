@@ -60,6 +60,8 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 21)** : porte à **seize classes** (C16 registre des statuts), audit oracle tiré par le CONTENU, résumé anglais à 235 mots, **ré-ancrage RFC 3161 automatique** à chaque génération (D271) ; édition v0.27.0 toujours NON publiée.
+
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 20)** : l'édition **v0.27.0** est générée au
 bac (spec v0.15.12, Livre v1.11) sous la porte à **quinze classes** (D269), huit mutations
 refusées ; l'**ancrage de transparence est APPLIQUÉ** (témoin RFC 3161 vérifié, V6 vert,

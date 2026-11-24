@@ -14264,3 +14264,10 @@ Work Log:
 - **W20PERF** : environnement consigné (Xeon 2,8 GHz virtuel, vaes/vpclmulqdq présents, n=20) ; recherche AVX2 **175,5 c** (IQR 0,1) contre memchr **93,4 c** (IQR 0,5) — cible ≤ 561 TENUE mais la lecture défavorable est consignée (le balayage écrit est dominé, 1,88×) ; référentiel AES-GCM 0,685 c/octet ; spécialisation VAES et gardes PRÉ-ENREGISTRÉES, EN ATTENTE.
 - **W20SEC (D270)** : **ancrage RFC 3161 APPLIQUÉ** — témoin d'époque de v0.27.0 ancré (freetsa), jeton vérifié hors ligne, trois refus éprouvés (ANCRE-INDISPONIBLE, TEMOIN-SANS-ANCHE, ANCRE-INCOHERENTE), **V6 de la porte vert sur pièce ancrée** ; coffre durci sur copies (gate 80 bits, Argon2id 256 MiB/t=4, rotation, falsification) **6/6** ; preuves symboliques REFUSÉES nommément (binaires absents, commande du poste réel imprimée).
 - GARDE : aucune valeur mesurée modifiée ; scellés v0.26.0 intactes ; aucun secret ; la lecture défavorable partout consignée telle quelle.
+
+### Entrée 405 — LES QUATRE AMÉLIORATIONS (D271) : AUDIT PAR CONTENU, RÉSUMÉ 235 MOTS, REGISTRE DES STATUTS (C16), RÉ-ANCRAGE AUTOMATIQUE (24/11/2026)
+- L'audit 1-sur-10 est CONTENT-ADDRESSÉ (sha256[:8] % 10 == 0) : six blocs, 6/6 verts, échantillon recomposable ; l'ancien tirage par indices se décalait à chaque ajout.
+- Le résumé anglais passe à 235 mots (français = traduction) ; C14 le mesure (métadonnées exclues) et refuse au-delà de 250.
+- `STATUTS-EN-ATTENTE.md` : dix chantiers, vocabulaire fermé, geste et décision par entrée ; C16 recompose le compte annoncé (mutation 11≠10 refusée).
+- La génération RÉ-ANCRE le témoin RFC 3161 à chaque passe ; V6 a refusé un témoin périmé en vraie grandeur avant de passer après ré-ancrage.
+- Porte : **L1..L16, zéro rouge, 9/9 mutations**.

@@ -1,0 +1,22 @@
+ATELIER W21IMPR — LES QUATRE AMÉLIORATIONS ISSUES DE LA VAGUE 20 (24/11/2026)
+=============================================================================
+Instruction : la commande du maître « go pour les 4 améliorations que tu proposes », plus ce
+que les mesures de la vague 20 commandent.
+
+1. AUDIT TIRÉ PAR LE CONTENU (D271). L'audit 1-sur-10 tirait des indices fixes : ajouter un
+   bloc déplaçait tout l'échantillon. Désormais un bloc entre s'il vérifie
+   sha256[:8] % 10 == 0 — six blocs tirés (b20003, b20004, b20008, c30007, e50013, g70010),
+   6/6 VERTS champ par champ, et l'échantillon se recompose depuis les empreintes.
+2. RÉSUMÉ À 250 MOTS ET C14 ÉTENDUE. Le résumé anglais est réécrit à 235 mots (le français
+   reste sa traduction) ; C14 mesure le résumé anglais, métadonnées exclues, et refuse > 250
+   (mutation : 535 mots → REFUSÉ).
+3. REGISTRE UNIQUE DES STATUTS ET C16. `STATUTS-EN-ATTENTE.md` porte dix entrées (id, statut
+   au vocabulaire fermé, geste, décision) ; C16 recompose le compte annoncé dans la
+   présentation (« dix entrées ») depuis le registre et refuse tout écart (mutation : 11
+   annoncées ≠ 10 → REFUSÉ).
+4. RÉ-ANCRAGE AUTOMATIQUE (D271). La génération appelle l'ancrage RFC 3161 à chaque passe ;
+   la porte V6 refuse tout témoin qui ne recouvre pas les pièces — constaté en vraie grandeur
+   (ANCRE-INCOHERENTE après la première régénération), puis vert après ré-ancrage automatique.
+
+RÉSULTAT : porte V1..V7 + L1..L16, zéro rouge ; NEUF mutations refusées nommément (les huit
+de la vague 20 + C16).

@@ -174,157 +174,39 @@ regenerated under it)}
 
 % ------------------------------------------------------------------
 \begin{abstract}
-\noindent Large language model (LLM) agents currently produce native code by
-generating high-level source and delegating to a compiler toolchain; the
-translation from intent to machine code passes through layers the agent
-neither writes nor verifies. We report on TRIADE, a development protocol in
-which an LLM agent writes native x86-64, RISC-V, and TLS~1.3 code
-\emph{directly as assembly notation}, governed by signed layer-I
-specifications, an encrypted and fragmented card binding intentions to byte
-ranges, and an epistemology separating \emph{oracle} evidence (differential
-emulation in the laboratory) from \emph{terrain} evidence (execution on the
-developer's real machine). A longitudinal single-case study validated the
-protocol across eleven milestones (M0--M10, 26 October -- 11 November 2026),
-delivering ``Loupe'', a real Windows hex-editor written entirely under the
-protocol, then a pre-registered two-arm field campaign (D204, 12--16
-November 2026; extension D210, 17--18 November) in which the same agent
-delivered every unit twice over shared layer-I contracts --- once as sealed
-hand notation (arm T), once as compiled C (arm C) --- closing green at both
-arms with every counted escape kit-side in the shared judge, the piece
-never at fault, and the empirical attribution (the same compiled piece
-re-delivered through a minimal standard kit) reading 14 VERT, 0 ROUGE.
-Four research questions are quantified on an append-only evidence base
-(a \nbLignesJournal-line engineering journal, a \nbLignesWorklog-line
-task log and a \nbLignesDecisions-line decision log, \plageDecisions):
-(RQ1) the escaped-defect rate of changes that had passed every laboratory
-control --- eleven of twelve field iterations surfaced at least one escaped
-defect, each named to a class and a mechanism before any fix, while the
-closing campaigns' 29 witnessed deliveries produced zero escapes
-attributable to the sealed notation itself; (RQ2) the measured token cost
-per validated change --- under the adopted formats a median of
-\gabaritLocaliserApres{} native request tokens to locate a block (the
-hierarchical locator adopted, $-40.5$ \gabaritLocaliserOpEN{};
-the epoch measurements 1{,}714 then 1{,}103 at pointer-alone remain
-labelled history), \gabaritEditerApres{} to edit one (the versioned
-template TPL-EDIT-v1 adopted, $-39.1$ \gabaritEditerOpEN{}, the
-prescription prose down 57\,\%) and \gabaritAjouterApres{} to add
-one (the skeleton, $-28.4$ \gabaritAjouterOpEN{}, its
-the 2026 feasibility record: 3/18 at waves 11-12, 6/18 at the
-thirteenth (2026), then 7/18 at the fourteenth --- the counter-example
-repair converting its first honest refusal; the fifth version's
-campaign (Nov 2026) at 5/18, its pre-registered target missed and the
-unfavourable reading consigned; the gap named by refusal class), every perimeter labelled --- every value
-carrying its decision ID, scope and status at the canonical
-adopted-budgets table, against a naive whole-disassembly baseline of
-300{,}304, with the historical perimeters (M1, v0.14.0 content-only,
-v0.17.0 round-trip, the v0.21.0 window perimeter) explicitly
-labelled; (RQ3) the defect classes structurally invisible to
-emulation --- loader and PE-format semantics, ABI conventions, harness
-assumptions --- enumerated with their evidence, the unbound import leaf
-killing the compiled arm's field runs twice at the same slot; and (RQ4)
-hot-patch safety --- zero post-patch regression across the milestones,
-signed version monotonicity, zero bytes of the sealed pieces moved by the
-closing campaign's remediations. The vault's four security properties are
-proved \emph{unbounded} over epochs by an inductive invariant preserved by
-every rule of the operational semantics, machine-checked on the
-independent TLC and Apalache engines (the earlier generative campaign's
-10{,}000-trace divergence class --- the under-approximating guard --- is
-dated history: the extended model re-plays 30{,}000 traces across three
-seeds to zero divergence, bit-identical twice); a coverage lemma is stated
-and discharged mechanically; the fault-injection battery kills 811 of 832
-mutants (97.5\%, the twenty-one remaining each named to a cause family;
-fifteen of them are excluded from the adjusted denominator as
-\emph{proved-argued-bounded} equivalents --- twelve by a named semantic
-argument on the notation (the empty read-set of the dying field, the
-adjacent sentinel, the converging guards, the unreachable off-table
-transfer site, the never-re-read RBP, the diverted target falling back)
-and three by a bounded sweep of the named scenario class (three border
-cells $\times$ ten scrolls, thirty scenarios at zero divergence on the
-complete observable) --- for an adjusted 811/817 = 99.3\%, never a
-mechanical unbounded proof; six non-equivalent survivors remaining,
-each named to a harness limit (three the blind shim, two the
-never-served failure path, one the never-served error code); and the inter-family independence question is answered in its tooled scope by
-derivation --- a second model family regenerates all 128 oracle constants
-from the mathematical definitions alone (zero divergence against the
-definitions and the plan), where pure recitation by the second, local model family reads only the public anchors --- and fails at 0/64, a named capacity gap, not a settled question. The study is single-case (N=1), its oracle derives from the same
-specifications it checks, and the compiled-reference comparison shares the
-laboratory harness; independent replication remains to be run. We state
-these limits explicitly. We claim as contributions the \emph{integration}
-of contract-first notation, signed-manifest governance and oracle/terrain
-verification into one pipeline for agent-first development --- not the
-underlying cryptographic or testing primitives, which are standard. The floor edition (v0.20.0) added the four-axis dashboard generated
-from the raw artifacts, the distance-to-the-floor section, the
-memory-safety discharge of 95.6\,\% of the 2{,}098 accesses by bounded
-model checking over the lifted notation, the CF3 inductive invariant
-mechanised in an independent proof assistant, the static
-non-interference proof on the covered crypto families, and the two
-performance lanes. The v0.21.0 edition reconciled the abstract with
-the body, corrected and re-measured the SSE2 variant on hardware
-against fair library baselines, closed the memory-safety
-classification at 100\,\% discharged-or-guarded, extended the
-non-interference proof to x25519 and MD5 under the stated
-lifter-soundness hypothesis, added the edit-window and third-arm
-measurements, and neutralised the register of the academic text. The
-v0.22.0 edition carried the eleventh instruction wave (the SIMD
-corridors measured on hardware, the AES-NI carrier loop under its
-twelve-cycle target, the fourth campaign arm, the lifter soundness,
-the versioned templates, the vault hardening with the D81 delivery
-instructions purged, the cross-piece numeric linter extended to
-every numeral of the prose), and v0.22.1 was the corrective release
-(the purged chains, the regenerated vault of ateliers). The present
-edition (v0.27.0) restates the programme in one voice and carries
-the twelfth to fifteenth waves: the GHASH corridor in PCLMULQDQ
-(the adopted schoolbook at 63.39 cycles [IQR 30] against the sealed
-806.35, a $12.7\times$ gain; the karatsuba variant delivered at 64.04
-cycles, the 0.65-cycle gap inside the IQR, both notations shipped) with
-the full AES-GCM composition measured against OpenSSL EVP, the
-four-arm ventilation at equalised volumes settling the
-intrinsic-notation share at 5.5\,\% (the wave-eleven ``notation
-effect'' was the verification implementation), the TPL-ADD-v3
-grammar with its repair loop (the 2026 record: 3/18, then 5/18, then
-6/18, then 7/18 at the fourth version --- the counter-example repair
-converting its first honest refusal; the fifth campaign (Nov 2026) at
-5/18, the target missed, the reading consigned), the three
-requalifications (the 58 memory-safety guards conditional
-assumption-discharged, the fifteen mutant exclusions
-proved-argued-bounded, the CF3 Tamarin model v2 without the adversary
-restriction), the semantic-perimeter purge
-carried to the Book of the Vault v1.7 and the specification
-v0.15.8, the exact partition of the 559-vector battery, and the
-EN/FR abstracts generated from the same canonical values. The
-fourteenth wave adds: the GHASH aggregation at four blocks with
-deferred reduction (19.66 cycles per multiplication [IQR 19] against
-the sealed 806.35 --- a $41.0\times$ gain on the seal, $3.22\times$ on
-the wave-13 corridor ($63.39/19.66$)), % ERRATUM v0.25.0 (D255) : 63,39/19,66 = 3,2243 -> 3,22 ; l'edition v0.23.3 imprimait 3,23 (le verbatim scelle demeure)
-the content-addressed memoisation of the
-verification regime ($-89.4$ per cent at the unrounded medians 24.163 $\to$
-2.555~s, no control removed), the
-drawn and signed H7 replication order (the campaign open to the 28
-units), the first effective Tamarin run (the implication lemma
-falsified by a named modelling defect, the amendment written, no
-verdict fabricated), and this corrective generation itself --- the ten
-sourced corrections (a)--(j) carried to the five documents, every
-published ratio at its unrounded operands. The fifteenth wave adds:
-the interleaved CTR$\times$GHASH composition measured at 0.7271
-cycles per byte at 4\,KiB (the median 2{,}978.2 cycles per 4{,}096-
-byte call; the pre-registered target of 2.0 held at 36 per cent;
-OpenSSL EVP at 0.5757 --- 2{,}357.9 cycles --- on the same silicon,
-the corridor within $1.26\times$ of the tuned library; the sealed
-per-block chain $68.7\times$ behind --- 204{,}544.5 against
-2{,}978.2 cycles --- no control removed); the guard TCB reduced $58\to34\to11$ with the eleven OS guards emitted as a
-real corridor at the virgin margin 0xFC00 (the falsified guard refused
-at both boundaries and on the index face, the harness 36/36); the
-native oracle engine line-identical to the Unicorn twin on both sealed
-crypto bodies (the medians 0.960\,ms $\to$ 0.000185\,ms at the hit,
-a $5189\times$ gain at the unrounded operands); the TPL-ADD-v5
-structured expansion diff (Nov 2026) at 5/18 greens (the pre-registered
-target missed, the unfavourable reading consigned --- the subject's CLI
-variance named, the judges intact); and the adoption-side ecosystem
-assembled by construction (the 109-triple corpus, the typed-reward
-gym, the capability ladder, the agent guide, the English doc core,
-the 156-piece kit --- no trust anchor shipped).
-
+\noindent Large language model agents write native code today by generating
+high-level source and delegating to a compiler; the layers between intent and
+machine code are neither written nor verified by the agent. TRIADE is a
+development protocol in which an agent writes x86-64, RISC-V and TLS~1.3
+assembly notation \emph{directly}, governed by signed layer-I specifications,
+an encrypted fragmented card binding intentions to byte ranges, and an
+epistemology separating \emph{oracle} evidence (differential emulation) from
+\emph{terrain} evidence (execution on the developer's machine). A longitudinal
+single-case study covers eleven milestones, a complete Windows hex-editor
+written under the protocol, and a pre-registered two-arm campaign in which the
+same agent delivered every unit twice, as sealed notation and as compiled C,
+both arms closing green with every counted escape attributed to the shared kit.
+On an append-only evidence base we quantify: escaped defects (eleven of twelve
+iterations surfaced at least one, each named before any fix, while the closing
+twenty-nine witnessed deliveries produced none attributable to the notation);
+the token cost per validated change (locate and edit at $-40.5$\,\% and
+$-39.1$\,\%, add at $-28.4$\,\% with its pre-registered target missed at 5/18,
+published as missed); and the limits of local guarantees (a coherent
+binary-plus-state restore escapes every local anchor, only off-machine witnesses
+see it). Formal invariants are proved unbounded under stated hypotheses;
+concurrent publication is atomic to eight bytes and requires quiescence. Every
+limit, awaiting run and negative result is named. The study is $N=1$ in agents,
+languages and operators.
 \end{abstract}
+\vspace{-2mm}
+\noindent\textbf{Keywords:} agent-written native code; signed-intent governance;
+oracle and terrain evidence; edition linter.\vspace{3mm}
+\vspace{-2mm}
+\noindent\textbf{Mots-clés :} code natif écrit par agent ; gouvernance à intention
+signée ; preuve d'oracle et de terrain ; linter d'édition.\vspace{3mm}
+\vspace{-2mm}
+\noindent\textbf{Keywords:} agent-written native code; signed-intent governance;
+oracle and terrain evidence; edition linter.\vspace{3mm}
 
 \begin{otherlanguage}{french}
 \begin{abstract}

@@ -30,7 +30,7 @@ import sys
 
 RACINE = pathlib.Path(__file__).resolve().parents[2]
 PACK_DEFAUT = RACINE / "pack-v270"
-DERNIERE_DECISION = 269          # la dernière décision réelle (D268, journal)
+DERNIERE_DECISION = 271          # la dernière décision réelle (D268, journal)
 CLASSES_ADV = ("ADV-LOCAL", "ADV-ADMIN", "ADV-MEDIA", "ADV-DISTANT")
 BORDS = ("EN-LIGNE", "HORS-LIGNE", "LES-DEUX")
 
@@ -266,23 +266,16 @@ def verifie(t, manifeste=None, recompte=None):
                 if "sans édition" not in ctx and "hors édition" not in ctx:
                     refus.append(("C13", piece, f"« vague {n} » sans entrée au changelog"))
 
-    # C14 — ABSTRACT-LENGTH (≤ 250 mots)
+    # C14 — ABSTRACT-LENGTH : résumé anglais ≤ 250 mots (métadonnées exclues ; le résumé
+    # français est sa traduction, la classe ne mesure pas deux fois la même prose)
     man = t["manuscrit"]
     i = man.find("Abstract")
-    # convention nommée : le résumé est le PREMIER bloc imprimé après le titre « Abstract »,
-    # jusqu'à la première ligne qui commence par « * » (l'appel de note)
-    j = -1
-    if i >= 0:
-        for k, ligne in enumerate(man[i + 8:].splitlines()):
-            if ligne.lstrip().startswith("*"):
-                j = i + 8 + sum(len(x) + 1 for x in man[i + 8:].splitlines()[:k])
-                break
-    if j < 0:
-        j = man.find("Introduction", i) if i >= 0 else -1
+    j = man.find("Keywords", i + 1) if i >= 0 else -1
     if i < 0 or j < 0:
-        refus.append(("C14", "manuscrit", "résumé introuvable"))
+        refus.append(("C14", "manuscrit", "résumé ou borne « Keywords » introuvable"))
     else:
-        mots_resume = len(re.findall(r"[A-Za-z][A-Za-z\-']+", man[i:j]))
+        lignes = [l for l in man[i:j].splitlines() if not l.lstrip().startswith("*")]
+        mots_resume = len(re.findall(r"[A-Za-z][A-Za-z\-']+", " ".join(lignes)))
         if mots_resume > 250:
             refus.append(("C14", "manuscrit", f"résumé {mots_resume} mots > 250"))
 
@@ -297,6 +290,33 @@ def verifie(t, manifeste=None, recompte=None):
         if annonces != trouves or m.group(1) != m.group(2):
             refus.append(("C15", "preuves",
                           f"compte {m.group(1)}/{m.group(2)} ≠ {trouves} cas énumérés"))
+    # C16 — STATUS-REGISTRY : le registre unique, et le compte annoncé recomposé
+    reg = RACINE / "STATUTS-EN-ATTENTE.md"
+    if not reg.exists():
+        refus.append(("C16", "registre", "STATUTS-EN-ATTENTE.md absent"))
+    else:
+        entrees = [l for l in reg.read_text(encoding="utf-8").splitlines() if l.startswith("| ATT-")]
+        import unicodedata
+        def _nu(x):
+            return "".join(c for c in unicodedata.normalize("NFD", x) if unicodedata.category(c) != "Mn")
+        vocab = {"EN ATTENTE", "MESURE", "REFUSE", "PARTIEL"}
+        for l in entrees:
+            cellules = [c.strip() for c in l.strip("|").split("|")]
+            if len(cellules) < 5:
+                refus.append(("C16", "registre", f"ligne incomplète : {cellules[0][:12]}"))
+                continue
+            statut = cellules[2]
+            if not any(_nu(statut).upper().startswith(v) for v in vocab):
+                refus.append(("C16", "registre", f"{cellules[0]} : statut hors vocabulaire « {statut} »"))
+            dec = re.search(r"D(\d{1,3})", cellules[4])
+            if dec and int(dec.group(1)) > DERNIERE_DECISION:
+                refus.append(("C16", "registre", f"{cellules[0]} : décision D{dec.group(1)} hors plage"))
+        annonce = re.search(r"registre unique des chantiers en attente porte (\d+) entrées", t["presentation"])
+        if not annonce:
+            refus.append(("C16", "presentation", "le compte du registre n'est pas annoncé"))
+        elif int(annonce.group(1)) != len(entrees):
+            refus.append(("C16", "presentation",
+                          f"annonce {annonce.group(1)} entrées ≠ registre {len(entrees)}"))
     return refus
 
 

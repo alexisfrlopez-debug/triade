@@ -133,8 +133,15 @@ def dedup():
 
 
 def audit_1sur10():
+    """Le tirage est CONTENT-ADDRESSÉ (D271) : un bloc entre dans l'échantillon si les 32
+    premiers bits de son sha256 sont congrus à 0 modulo 10 — ajouter un bloc ne décale plus
+    l'échantillon, et le tirage se recompose par quiconque lit les empreintes."""
     doc = manifeste()
-    ech = [doc["blocs"][i] for i in range(0, len(doc["blocs"]), 10)]
+    ech = [b for b in doc["blocs"]
+           if b.get("sha256") and int(b["sha256"][:8], 16) % 10 == 0]
+    if not ech:
+        print("[audit 1/10] ROUGE — aucun bloc tiré (échantillon vide)")
+        return 3
     m = _m5(); ks = m.Ks(m.KS_ARCH_X86, m.KS_MODE_64)
     verts = 0
     for b in ech:
@@ -142,7 +149,7 @@ def audit_1sur10():
         ok = hashlib.sha256(octets).hexdigest() == b.get("sha256")
         verts += 1 if ok else 0
         print(f"[audit 1/10] {b['id']} — {'VERT' if ok else 'ROUGE'}")
-    print(f"[audit 1/10] {verts}/{len(ech)} blocs rejoués, champ par champ (sha256, rva, taille)")
+    print(f"[audit 1/10] {verts}/{len(ech)} blocs tirés par CONTENU (sha256[:8] % 10 == 0), champ par champ")
     return 0 if verts == len(ech) else 3
 
 

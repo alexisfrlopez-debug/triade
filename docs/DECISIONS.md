@@ -5126,3 +5126,27 @@ est imprimée, aucun verdict n'est fabriqué.
 **Les limites.** L'ancrage dépend d'un tiers (disponibilité, politique de l'opérateur) et
 publie des empreintes — c'est le delta écrit à D267 ; le chargement R10 reste sans réseau.
 Le média FIDO2 hmac-secret est décrit, non exécuté (aucun authentificateur dans le bac).
+
+## D271 — L'AUDIT TIRÉ PAR LE CONTENU, LE REGISTRE DES STATUTS, LE RÉ-ANCRAGE (la vague 21, 24/11/2026 ; atelier W21IMPR)
+
+**Le constat, tiré des résultats de la vague 20.** (1) L'audit chaîné 1-sur-10 tirait des
+INDICES fixes (0, 10, 20…) : ajouter un bloc en tête déplaçait tout l'échantillon sans que
+personne ne le sache. (2) Le témoin d'époque ancré à D270 ne couvrait plus les pièces dès la
+première régénération — la porte l'a refusé, ce qui prouve que la garde fonctionne, mais le
+ré-ancrage dépendait d'un geste manuel. (3) Les statuts EN ATTENTE vivaient dispersés dans
+cinq pièces, sans registre unique ni recomposition.
+
+**Le geste.** (1) Le tirage devient CONTENT-ADDRESSÉ : un bloc entre dans l'échantillon si
+les 32 premiers bits de son sha256 sont congrus à 0 modulo 10 ; six blocs tirés, 6/6 verts,
+et quiconque lit les empreintes recompose l'échantillon. (2) La génération RÉ-ANCRE le
+témoin à chaque passe (`generer_pieces_v270.py` appelle l'ancrage), et la porte V6 continue
+de refuser tout témoin qui ne recouvre pas les pièces. (3) `STATUTS-EN-ATTENTE.md` devient le
+registre unique (dix entrées, vocabulaire fermé, décision et geste par entrée) et la classe
+**C16** recompose le compte annoncé dans la présentation depuis le registre.
+
+**Les preuves.** Audit 6/6 par contenu ; V6 vert sur un témoin ré-ancré automatiquement ;
+C16 : dix entrées == dix annoncées, dix refus de vocabulaire éprouvés hors vocabulaire.
+
+**Les limites.** Le registre est un fichier du dépôt : sa modification est un commit visible,
+non une propriété cryptographique. Le tirage par contenu ne garantit pas la couverture de
+chaque famille de blocs — il garantit seulement la reproductibilité de l'échantillon.
