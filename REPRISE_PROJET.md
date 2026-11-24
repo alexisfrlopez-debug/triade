@@ -27,6 +27,15 @@ corpus TRIADE-CORPUS-v2.1 au DOI 10.5281/zenodo.24479882 (concept
 v1.0.0 au DOI 10.5281/zenodo.24495492** (recettes SFT/DPO/RLVR, les 48
 paires DPO, la carte du corpus — il pointe le corpus, il ne le duplique pas).
 
+## 1 bis. LES CINQ AMÉLIORATIONS EN VIGUEUR (24/11/2026, D256–D260)
+
+Lire `docs/AMELIORATIONS.md`. Elles sont outillées et branchées :
+- `scripts/vague17/gouvernance_compressee.py` — le format canonique d'intention signée (D256) ;
+- `scripts/vague17/juge_grammaire.py` — l'écart juge/grammaire, mesuré sur le corpus (D257) ;
+- `scripts/vague17/verifier_trampoline.py` — le trampoline de 8 octets vérifié au build (D258) ;
+- `scripts/vague17/temoin_fraicheur.py` — le témoin hors machine, **porte V6 de l'édition, EN ATTENTE de la première consignation** (D259) ;
+- `provenance_tableaux.py --distance-plancher | --tableaux | --tableaux-verifier` — la distance au plancher et les tableaux engendrés à diff nul (D260).
+
 ## 2. LE RYTHME : LES VAGUES D'INSTRUCTIONS (le cœur de la reprise)
 
 Le maître dépose des instructions au dossier **`instructions`** du coffre
