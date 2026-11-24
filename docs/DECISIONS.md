@@ -4948,3 +4948,140 @@ originales, les cinq contrôles négatifs attrapés, le linter v194 16/16.
 **Les limites.** Un fichier laissé inerte demeure physiquement dans le dossier d'instructions ; le propriétaire peut le supprimer d'un seul geste dans son Drive (sélection multiple), sans carte ni clic par fichier. La preuve d'archivage ne protège pas d'une divergence FUTURE : si l'original est modifié après la copie, l'empreinte du reçu ne le couvre plus — le reçu porte l'empreinte du moment.
 
 **Alternatives rejetées.** Continuer à demander une carte par fichier (la friction sans gain de sûreté) ; supprimer sans preuve (une perte irréversible déguisée en rangement) ; élire le dossier d'instructions comme « prescriptif » (il prescrirait encore après archivage).
+
+## LES ENTRÉES RÉTABLIES DE LA VAGUE 18 (D261–D265) PUIS D267 (le 24/11/2026, la vague 19, atelier W19DEC)
+
+> Le journal sautait de D260 à D266 : les cinq décisions de la vague 18, annoncées au
+> changelog et portées par leurs ateliers, n'y avaient pas été consignées. Elles sont
+> rétablies ici, dans l'ordre de leur création, avec leurs preuves et leurs limites —
+> append-only, sans réécrire les entrées existantes. D267 est la décision nouvelle de la
+> présente vague.
+
+## D261 — LES CINQ ALÉAS RÉSIDUELS DU RENDEZ-VOUS DE QUIESCENCE (la vague 18, 24/11/2026 ; l'atelier BHQG73GZH)
+
+**Le constat.** Un rendez-vous de quiescence qui n'énumère pas ses cas de course est une
+affirmation, pas un mécanisme : cinq aléas peuvent rouvrir la fenêtre que la publication
+atomique est censée fermer.
+
+**Le geste.** Cinq aléas, chacun un refus nommé et un invariant d'état : (1) création d'un
+thread pendant le rendez-vous → `THREAD-CREE-PENDANT-RENDEZ-VOUS` ; (2) retour de pile
+pointant dans la plage remplacée → `RETOUR-PILE-DANS-PLAGE` ; (3) zone de croissance hors de
+la portée ±2 GiB du rel32 → `HORS-PORTEE-REL32` ; (4) slot de 16 octets non réservé au build
+→ `SLOT-NON-RESERVE` ; (5) verrou du patcheur détenu (deadlock `SuspendThread`) →
+`LOCK-DETENU`.
+
+**Les preuves.** `atelier-w17-patch-a-chaud/kit_bascule.py` : 16/16 = 7 cas de transaction
++ 1 rendez-vous nominal + 5 aléas + 3 invariants (recompté par
+`scripts/vague19/recompte_banc.py`, écart zéro). Spec § spec 7.6.
+
+**Les limites.** Le banc est un modèle ; aucun run au métal nu n'est revendiqué.
+
+## D262 — LA LISTE BLANCHE FERMÉE DU PRESCRIPTIF (la vague 18, 24/11/2026 ; l'atelier JEEWKX9G8)
+
+**Le constat.** Un document qui contient « commit » ou « remplacer » n'est pas pour autant
+une procédure active : classer par mots-clés confond l'histoire et la consigne.
+
+**Le geste.** `SOURCES-PRESCRIPTIVES.txt` énumère 64 sources autorisées, chemin + sha256.
+La classification se fait **par le chemin**, jamais par le vocabulaire ; toute autre source
+est refusée `SOURCE-NON-PRESCRIPTIVE`. La garde tourne au pre-commit AVANT la garde de
+secrets ; les chemins `instructions/` sont classés en lecture seule (D266).
+
+**Les preuves.** `scripts/vague18/garde_prescriptif.py`, scan 0 hors liste, fixtures 4/4.
+
+**Les limites.** La liste est un état daté : sa modification est un commit visible, non une
+propriété cryptographique. Spec § spec 7.8.
+
+## D263 — LE COMPTEUR NV COMME ANCRE DE FRÂCHEUR PAR PROFIL (la vague 18, 24/11/2026 ; l'atelier HETETZNTH)
+
+**Le constat.** Ni l'horloge du poste ni un horodatage de fichier ne résistent à un
+administrateur qui remet l'ensemble ; la fraîcheur de l'état a besoin d'un compteur que
+l'on ne peut pas faire reculer sans le dire.
+
+**Le geste.** Compteur NV monotone (TPM 2.0 lorsque le profil en dispose, RPMB sinon) comme
+plancher de fraîcheur par profil, comparé au plancher scellé du manifeste signé. Refus
+fail-closed nommés : `ANCRE-PERDUE`, `SCELAGE-NON-ENREGISTRE`, `RETOUR-EN-ARRIERE`,
+`INCREMENT-NON-MONOTONE`. L'agrégateur refuse le partiel.
+
+**Les preuves.** `scripts/vague18/kit_tpm_r10.py`, simulateur 12/12. **Run matériel EN
+ATTENTE** — aucun chiffre réel n'est publié.
+
+**Les limites.** L'effacement du TPM ou le remplacement du média remet le compteur à zéro
+(cérémonie de ré-enregistrement exigée) ; un TPM virtualisé ne prouve rien du silicium ; le
+compteur prouve un plancher, pas l'identité de la version fraîche — le couple binaire + état
+reste couvert par les témoins hors machine (D254, D267). Spec § spec 7.9.
+
+## D264 — L'EXPANSION SOUS SCHÉMA STRUCTURÉ ET LA RÉPARATION BORNÉE (la vague 18, 24/11/2026 ; l'atelier LSV9ITVNG)
+
+**Le constat.** La notation libre laissait au modèle la responsabilité de l'écriture ; la
+campagne v5 (5/18) montrait que la variance d'écriture dominait le coût et les refus.
+
+**Le geste.** Schéma fermé opcode / opérande / offset, rendu canonique unique, réduction
+ddmin du contre-exemple, boucle de réparation bornée à trois tours, chaque conversion
+consignée par classe de refus.
+
+**Les preuves.** `scripts/vague18/expansion_structuree.py`, instrument 9/9 ; pré-enregistrement
+(cible ≥ 15/18) consigné AVANT mesure. **Campagne servie EN ATTENTE.**
+
+**Les limites.** Le rendu canonique supprime la variance d'écriture, pas celle du modèle.
+Spec § spec 7.10.
+
+## D265 — LE LINTER D'ÉDITION v2 PORTÉ À LA GÉNÉRATION (la vague 18, 24/11/2026 ; l'atelier CMAH20ZA5)
+
+**Le geste.** Cinq classes falsifiables (phrases sémantiques, plages de décisions,
+revendications de version, gallicismes anglais, numéraux de la prose) portées à la
+génération v0.25.0 ; zéro résidu sur les cinq pièces, 5/5 contrôles négatifs, test du
+lecteur 7/7 ; les pièces v0.24.0 intactes.
+
+**Les limites.** L'extraction intégrale de l'ancien linter (1 991 tokens) n'est pas rejouée —
+elle est remplacée par les cinq classes et le test du lecteur, et le rapport le dit. La
+vague 19 porte ce linter dans la porte et l'étend de six classes (D268 ci-dessous).
+
+## D267 — L'ANCRAGE DE TRANSPARENCE DES TÉMOINS D'ÉPOQUE, À SON STATUT APPLIQUÉ (la vague 19, 24/11/2026 ; atelier W19DEC)
+
+**Le constat.** D254 nomme le trou : la restauration cohérente d'un couple binaire + état
+échappe à toute ancre locale. D259 a fait du témoin hors machine une porte de release, mais
+un témoin local (carte papier, journal Git poussé) reste une pièce privée : sa date est celle
+que son détenteur veut bien montrer.
+
+**Le geste.** Le témoin d'époque (édition, empreinte de l'artefact, empreinte de l'état,
+date) peut être ancré hors de la machine — entrée de journal de transparence (Rekor) ou
+horodatage qualifié (RFC 3161). **Statut appliqué : la règle est adoptée et outillée, le
+déploiement n'est pas fait** — aucun témoin ancré n'existe à cette édition, et la porte le
+déclare EN ATTENTE. Refus nommés : `ANCRE-INDISPONIBLE` (ancrage configuré, service
+injoignable → release refusée), `TEMOIN-SANS-ANCHE` (jamais promu), `ANCRE-INCOHERENTE`
+(empreinte ancrée ≠ témoin).
+
+**Le delta au modèle de menace, aux deux bords.** *En ligne* (geste de release seulement) :
+preuve indépendante d'existence et de temps, donc visibilité de la restauration cohérente ;
+en contrepartie fuite de métadonnées (empreintes, cadence), dépendance à un tiers
+(disponibilité, collusion de l'opérateur) et déplacement d'une part de confiance hors de la
+machine. *Hors ligne* (chargement) : rien ne change — R10 ne fait aucun appel réseau,
+l'absence de réseau est l'état normal, et un poste isolé conserve ses trois témoins locaux
+sans preuve de temps indépendante. L'ancrage est une propriété de **release**, jamais une
+condition de démarrage.
+
+**Les limites.** Aucun ancrage n'est déployé : la ligne M9 de la matrice R10 reste EN
+ATTENTE. Spec § spec 7.11.
+
+## D268 — LA PORTE DE GÉNÉRATION PORTE LE LINTER : ONZE CLASSES, SIX RÉSIDUS SOLDÉS (la vague 19, 24/11/2026 ; atelier W19LINT)
+
+**Le constat.** La porte d'édition v0.25.0 ne portait pas le linter : six résidus
+inter-pièces ont passé la génération (étiquettes v0.24.0 au tableau §10 de la présentation,
+§15.1 non qualifiée, D262–D264 annoncés-absents, « +1 » du banc 16/16, ordre du changelog,
+numérotation mixte des Preuves §2).
+
+**Le geste.** `scripts/vague19/porte_generation_v260.py` exécute le linter porté (cinq
+classes) et six classes fail-closed ajoutées : VERSION-TABLE (présentation §10 == manifeste),
+DECISION-RANGE (IDs ⊆ [D1, D267]), CHANGELOG-ORDER (dates croissantes), NUMEROTATION
+(convention unique « spec § x.y »), BENCH-COUNT (compte recomposé depuis les cas du kit),
+SEMANTIC-THREAT (chaque « détecté — refus » qualifié par classe d'adversaire et bord,
+confronté à D254/D267). Les six résidus sont soldés à la source ; les cinq pièces sont
+régénérées en v0.26.0 / spec v0.15.11 / Livre v1.10.
+
+**Les preuves.** Porte : zéro rouge, onze classes vertes ; quatre contrôles négatifs refusés
+nommément (libellé de version, ID hors plage, ligne de menace non qualifiée, compte de banc).
+Rapport `atelier-w19-lint.rapport.txt`.
+
+**Les limites.** La porte lit le texte extrait par `pdftotext` : un verdict dépend de la
+version de l'extracteur (défaut nommé depuis l'Entrée 397) ; les 1 991 tokens de l'ancienne
+extraction ne sont pas rejoués.

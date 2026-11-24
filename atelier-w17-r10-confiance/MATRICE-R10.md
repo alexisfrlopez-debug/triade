@@ -116,3 +116,19 @@ contre un adversaire non-administrateur, et la fraîcheur contre le rejeu du seu
 Il **ne garantit pas** la fraîcheur d'un couple binaire + état restauré ensemble, ni la
 résistance à un administrateur local, ni l'absence d'un binaire signé par une clé
 compromise. Ces trois limites sont nommées, non contournées.
+
+## 9. Confrontation à la vague 19 (W19DEC) — la ligne M9 et le delta D267
+
+La lignée D261–D267 ajoute une ancre et une preuve externe ; la matrice les reçoit sans en
+retirer aucune ligne.
+
+| # | Menace | Mécanisme | Ancre réelle, et son propriétaire | Preuve au banc | Limite nommée |
+|---|---|---|---|---|---|
+| M9 | Restauration cohérente d'un couple binaire + état (le trou de M5) | témoin d'époque ancré hors machine (Rekor / RFC 3161) **+** compteur NV monotone (D263) | le journal de transparence (tiers) et le compteur silicium (TPM/RPMB) — deux propriétaires distincts | simulateur NV 12/12 ; ancrage **EN ATTENTE** (aucun témoin ancré) | le compteur prouve un plancher, pas l'identité de la version ; l'ancre de transparence dépend d'un tiers et fuit des métadonnées (delta D267) |
+
+**Ce que la ligne M9 change, aux deux bords.** Au chargement (hors ligne), M9 n'ajoute que
+le compteur NV : R10 demeure sans appel réseau, et la restauration cohérente reste invisible
+si les témoins sont absents. Au geste de release (en ligne), l'ancrage rend la restauration
+visible d'un tiers — au prix d'une fuite d'empreintes et d'une dépendance de disponibilité.
+**Aucun statut de M1–M8 ne change** ; M9 est EN ATTENTE sur ses deux moitiés (run matériel
+du compteur, déploiement de l'ancrage), et la porte de release le dit.

@@ -1,0 +1,34 @@
+{
+  "source": "atelier-w17-patch-a-chaud/kit_bascule.py",
+  "cas_transaction": 7,
+  "aleas_nominal": 1,
+  "aleas_refus": 5,
+  "invariants": 3,
+  "total": 16,
+  "decomposition": "7 cas de transaction + 1 nominal + 5 aléas + 3 invariants = 16",
+  "controle_du_plus_un": "le cas NOMINAL du rendez-vous : il prouve que les cinq refus D261 n'ont pas fermé le chemin nominal — 7 CAS + 3 invariants = 10/10, puis 6 cas D261 (1 nominal + 5 refus) = 16/16",
+  "noms": {
+    "transaction": [
+      "mot de 8 octets aligné (E9 rel32 + 3 NOP)",
+      "mot de 8 octets NON aligné",
+      "trampoline de 12 octets au magasin simple (la promesse v0.15.x)",
+      "trampoline de 16 octets par LOCK CMPXCHG16B, CPUID présent",
+      "le même sans CPUID.CMPXCHG16B",
+      "magasin SSE de 16 octets",
+      "publication avec RIP d'un thread dans la plage"
+    ],
+    "aleas": [
+      "rendez-vous nominal",
+      "thread créé pendant le rendez-vous",
+      "retour de pile dans la plage remplacée",
+      "rel32 hors portée (±2 GiB)",
+      "slot de 16 octets non réservé",
+      "verrou du patcheur détenu (deadlock SuspendThread)"
+    ],
+    "invariants": [
+      "succès jusqu'à la reprise",
+      "publié-mais-non-vérifié rollbacké",
+      "refus sans publication"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+ATELIER W19DEC — LA CHAÎNE DE DÉCISIONS D261–D267 ET LE RECOMPTE DU BANC (24/11/2026)
+=====================================================================================
+Instruction : Prompt 2 — recomposer le compte du banc depuis le JSON du kit ; porter au
+journal et à la spécification les décisions annoncées-absentes (D262, D263, D264) ou corriger
+le changelog ; aligner la plage de l'annexe B sur la dernière décision réelle ; spécifier
+l'ancrage de transparence des témoins d'époque à son statut appliqué, avec le delta au modèle
+de menace aux deux bords.
+
+1. LE RECOMPTE DU BANC — LE « +1 » NOMMÉ
+   `scripts/vague19/recompte_banc.py` énumère les cas du kit (aucun compte retapé) :
+   7 cas de transaction + 1 rendez-vous nominal + 5 aléas D261 + 3 invariants = 16/16.
+   Le contrôle qui fait passer 10/10 + 5 aléas à 16/16 est LE CAS NOMINAL DU RENDEZ-VOUS :
+   il prouve que les cinq refus D261 n'ont pas fermé le chemin nominal.
+   Écart avec l'autotest du kit : ZÉRO (16/16, même énumération). JSON :
+   atelier-w19-dec/recompte_banc.json.
+
+2. LE JOURNAL RÉTABLI — D261 À D265, PUIS D267 ET D268
+   Le journal sautait de D260 à D266 : D261–D265 (vague 18), annoncées au changelog et
+   portées par leurs ateliers, n'y étaient pas consignées. Elles sont rétablies — append-only,
+   sans réécriture — avec preuves et limites. D267 consigne l'ancrage de transparence ;
+   D268 consigne la porte de génération à onze classes (atelier W19LINT).
+
+3. LA SPÉCIFICATION — § spec 7.8 à § spec 7.11, ANNEXE B D75--D268
+   § spec 7.8 : liste blanche fermée du prescriptif (D262), refus SOURCE-NON-PRESCRIPTIVE
+   par le chemin, 64 sources à empreinte, `instructions/` en lecture seule.
+   § spec 7.9 : compteur NV monotone (TPM/RPMB) comme plancher de fraîcheur par profil,
+   quatre refus fail-closed, simulateur 12/12, run matériel EN ATTENTE, limites écrites.
+   § spec 7.10 : expansion sous schéma fermé, rendu canonique, réparation bornée à 3 tours,
+   instrument 9/9, campagne EN ATTENTE, cible pré-enregistrée.
+   § spec 7.11 : ancrage de transparence (Rekor/RFC 3161), statut appliqué = adopté, outillé,
+   NON DÉPLOYÉ ; refus ANCRE-INDISPONIBLE / TEMOIN-SANS-ANCHE / ANCRE-INCOHERENTE ; delta au
+   modèle de menace aux deux bords (en ligne : preuve de temps indépendante, fuite de
+   métadonnées et dépendance de tiers ; hors ligne : rien ne change, R10 sans appel réseau).
+   Annexe B : la plage passe de D75--D255 à D75--D268, une ligne par décision D256 à D268.
+
+4. LA MATRICE R10 — LA LIGNE M9
+   `atelier-w17-r10-confiance/MATRICE-R10.md` § 9 : M9 (restauration cohérente d'un couple
+   binaire + état) reçoit ses deux ancres (compteur NV, témoin ancré), son statut (EN ATTENTE)
+   et son delta aux deux bords. Aucun statut M1–M8 ne change.
+
+5. LA GARDE PRESCRIPTIVE
+   `scripts/vague17/linter_v234.py` : 15 mentions historiques ADMISES, 0 consigne active
+   refusée. Les nouvelles entrées du journal ne prescrivent rien.
+
+STATUT : la chaîne de décisions est close côté dépôt ; les mesures matérielles (compteur NV,
+campagne structurée) et le déploiement de l'ancrage restent EN ATTENTE, nommés.
