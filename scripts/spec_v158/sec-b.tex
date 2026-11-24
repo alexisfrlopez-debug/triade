@@ -93,8 +93,11 @@ santé mesuré dès M0 (cible 95 \%).
 
 \paragraph{Patch à chaud du profil primaire.} Le mécanisme exact est spécifié par chaque
 profil ; pour x86-64 : le nouveau bloc est d’abord écrit dans une zone de croissance
-libre, puis un trampoline de 12 à 16 octets est installé à l’ancien point d’entrée et
-bascule par une écriture alignée unique, atomique pour le processeur. L’ancien trampoline
+libre, puis un trampoline est installé à l’ancien point d’entrée. La forme courte est un
+mot de \textbf{huit octets au plus}, naturellement atomique et aligné sur huit ; la forme
+absolue de douze octets n’est publiée que par un unique \texttt{LOCK CMPXCHG16B}, sous
+CPUID, dans un emplacement aligné sur seize. \textbf{Aucune écriture simple de douze ni
+de seize octets n’est atomique} (Intel SDM vol.~3 §~8.1.1 ; D253). L’ancien trampoline
 est conservé : le rollback copy-on-write consiste à rebasculer vers lui. Les adresses
 stables garantissent qu’aucun appelant ne référence l’intérieur d’un bloc : seuls les
 points d’entrée~— promis par R7~— sont trampolinés, et leur table est close et vérifiée
@@ -279,3 +282,61 @@ sont documentées dans frag-con de chaque bloc. La parité se \textbf{vérifie p
 exécution}, jamais par déduction : c’est le critère de sortie de M6 (inter-OS) et M7
 (inter-ISA). Aucune couche d’abstraction n’est introduite pour l’obtenir — un bytecode
 portable trahirait la fonction objectif Performance (rejet consigné, §\ref{sec:rejets}).
+
+
+\subsection{Ce que garantit réellement la primitive de publication (D253)}\label{sec:primitives}
+
+Quatre propriétés sont distinctes et ne se déduisent pas l’une de l’autre : l’\textbf{alignement}
+(condition d’atomicité, pas atomicité), l’\textbf{atomicité de l’accès mémoire} (un magasin naturel d’au
+plus huit octets, ou \texttt{LOCK CMPXCHG16B}), la \textbf{cohérence des instructions} (matérielle pour le
+cœur qui écrit sur x86-64 ; pour un autre cœur exécutant la zone, le SDM exige une synchronisation
+explicite) et l’\textbf{état des threads} (un thread dont RIP tombe dans la plage remplacée peut décoder
+un mélange des deux flux — l’atomicité du magasin ne le protège pas).
+
+\begin{table}[htbp]
+\centering\small
+\caption{La primitive de publication par profil (D253).}
+\label{tab:publication}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Profil} & \textbf{Primitive} & \textbf{Exigences} \\
+\midrule
+x86-64 & mot de 8 octets (\texttt{E9 rel32} + trois \texttt{NOP}) ; forme absolue de 12 octets par \texttt{LOCK CMPXCHG16B} & alignement 8 / 16, pages en écriture \emph{puis} exécution, \texttt{FlushInstructionCache}, CFG/IBT vérifiés \\
+RISC-V & magasin de 4 octets aligné, puis \texttt{fence.i} & synchronisation explicite des autres harts \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La transaction a six états — préparé, armé, rendez-vous, publication, invalidation, vérification,
+reprise — plus un rollback depuis publication/invalidation/vérification ; \textbf{aucun état partiel
+n’est exécutable}. Un échec en invalidation ou en vérification est « publié-mais-non-vérifié » :
+rollbacké, jamais toléré. Le rendez-vous de quiescence est obligatoire : suspension et lecture de RIP
+(Windows) ou arrêt par signal / \texttt{ptrace} (Linux), avec refus si un thread est immobilisé dans la
+plage. Les preuves sont séparées — banc, émulation, métal — et la bascule concurrente au métal nu reste
+\emph{en attente} : l’émulation ne valide pas la cohérence du cache d’instructions.
+
+\subsection{La racine de confiance au chargement — ce que R10 garantit, et ce qu’il ne garantit pas (D254)}\label{sec:racine}
+
+R10 est une règle locale et hors ligne : l’artefact vérifie ses checksums, la signature de son
+manifeste, sa version contre le plancher accepté et la conformité de l’environnement, avant toute entrée
+dans le chemin d’exécution. \textbf{La garantie de R10 vaut ce que vaut son ancre}, et l’ancre diffère par
+profil. Trois propriétés sont distinguées, jamais fondues : l’\textbf{intégrité} (les octets sont ceux qui
+ont été scellés), l’\textbf{authenticité} (le manifeste a été signé par la clé autorisée — la clé publique
+vit hors de l’artefact qu’elle authentifie) et la \textbf{frâcheur} (la version n’est ni ancienne ni
+révoquée).
+
+L’ancre réelle, par profil : signature Authenticode vérifiée par le système sous \texttt{x86-64-win11-pe} ;
+\emph{IMA appraisal} (clé du trousseau noyau) ou signature de paquet sous \texttt{x86-64-linux-elf64} ;
+chaîne de boot signée sous \texttt{riscv64-linux-elf64}. \textbf{Si l’ancre est modifiable avec l’artefact},
+la limite est écrite : R10 détecte la corruption et la falsification opportuniste, il ne détecte pas un
+administrateur local qui remplace ensemble binaire, clé et état.
+
+Le rollback est analysé séparément : le rejeu d’un binaire ancien seul est refusé par le plancher ; la
+\textbf{restauration cohérente d’un couple binaire + état} échappe à toute ancre locale — seuls les témoins
+hors machine du coffre (carte papier du sachet, journal Git poussé, ancre de transparence du témoin
+d’époque) la rendent visible. Le plancher R10, l’époque CF3 et les témoins d’époque du coffre sont
+\textbf{trois propriétés distinctes}. Rotation et révocation portent un identifiant de clé et un plancher
+d’époque ; une clé absente ou révoquée est un \textbf{refus nommé}, jamais une récupération. Aucun appel
+réseau au chargement : l’absence de réseau est l’état normal du vérificateur. La matrice complète par
+profil, avec les limites de chaque ligne, vit au dépôt (\texttt{atelier-w17-r10-confiance/MATRICE-R10.md},
+D254).

@@ -1,0 +1,38 @@
+TRIADE — LE PACK DE L'ÉDITION v0.24.0 (la vague 17, 24 novembre 2026)
+=====================================================================
+
+Ce pack porte les CINQ PIÈCES de l'édition v0.24.0, reconstruites ce jour sur la
+chaîne réelle (tectonic 0.17.0 pour les pièces LaTeX, weasyprint pour la couverture
+du Livre, ReportLab pour les preuves et la présentation) :
+
+  1-manuscrit/TRIADE_manuscrit_v0.24.0.pdf        l'édition académique (v0.24.0)
+  2-specification/Protocole_TRIADE_v0.15.9_Specification.pdf   la spécification (v0.15.9)
+  3-coffre-fort/Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf        le Livre du Coffre (v1.8)
+  4-preuves-calculs/TRIADE_preuves_et_calculs_v0.24.0.pdf      les preuves (v0.24.0)
+  5-presentation/TRIADE_presentation_v240.pdf                  la présentation (v0.24.0)
+
+CE QUE PORTE L'ÉDITION
+- Spécification §7.1.1 : la publication d'une bascule est atomique jusqu'à HUIT octets
+  naturels, pas au-delà ; la forme de 12 octets n'existe que par LOCK CMPXCHG16B ; la
+  quiescence des threads est obligatoire (D253).
+- Spécification §8.6 : la garantie de R10 vaut ce que vaut son ancre ; intégrité,
+  authenticité et fraîcheur sont trois propriétés ; l'ancre par profil et ses limites ;
+  la restauration cohérente binaire+état échappe à toute ancre locale (D254).
+- Manuscrit : le seul ratio qui ne se recomposait pas depuis ses opérandes imprimés
+  (63,39/19,66 = 3,2243, imprimé 3,23) est corrigé à 3,22 à la source (D255) ; la note
+  de la vague 17 est portée au corps. Aucune valeur mesurée n'est modifiée.
+- Livre du Coffre : la plage du chapitre 11 est alignée sur sa table (D75–D137) ; les
+  trois propriétés de fraîcheur sont nommées (D254).
+- Preuves : les quatre rapports d'atelier de la vague 17 lus VERBATIM + le registre de
+  provenance (11 lignes recomposées, 4/4 refus mutants).
+
+LES LIMITES, NOMMÉES
+- Aucune mesure au métal nu : la bascule concurrente réelle, la sentinelle Windows
+  (SACL/4663), IMA/Authenticode restent EN ATTENTE du poste réel.
+- tamarin-prover, proverif et maude sont absents du bac : aucun lemme nouveau.
+- Le linter d'édition v2 n'est pas porté à cette génération : la porte v0.24.0 couvre
+  les versions, les empreintes, la recomposition du ratio et la provenance — pas les
+  1 991 tokens du linter v2 (défaut nommé).
+
+LES EMPREINTES : empreintes_livrables_v0.24.0.txt (les cinq, recalculées des fichiers).
+Le rapport de vérification : rapport_verification_v0.24.0.txt.

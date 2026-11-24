@@ -15,13 +15,16 @@ B). Trois couches indissociables ; priorités lexicographiques
 **Sécurité > Performance > Optimisation > Coût en tokens**. Le dossier
 publie des ÉDITIONS académiques (manuscrit, spécification, Livre du
 Coffre, preuves, présentation) au DOI Zenodo
-**10.5281/zenodo.24367343** (concept ; v0.23.3 = record 24450872 —
-la version courante, les TROIS packs ; les records datés : 24420007 =
-v0.22.1, 24438614 = v0.23.0, 24442241 = v0.23.1, 24442951 = v0.23.2).
-LES DEUX ŒUVRES SÉPARÉES du protocole : le kit développeur v1.0.0 au
-DOI 10.5281/zenodo.24457515 (concept 10.5281/zenodo.24457514) et le
-corpus TRIADE-CORPUS-v1 au DOI 10.5281/zenodo.24457525 (concept
-10.5281/zenodo.24457524).
+**10.5281/zenodo.24367343** (concept ; **v0.24.0 = record 24494615 —
+la version courante, les TROIS packs** ; les records datés : 24480415 =
+v0.23.4, 24450872 = v0.23.3, 24442951 = v0.23.2, 24442241 = v0.23.1,
+24438614 = v0.23.0, 24420007 = v0.22.1).
+LES TROIS ŒUVRES SÉPARÉES du protocole : le kit développeur v1.0.0 au
+DOI 10.5281/zenodo.24457515 (concept 10.5281/zenodo.24457514) ; le
+corpus TRIADE-CORPUS-v2.1 au DOI 10.5281/zenodo.24479882 (concept
+10.5281/zenodo.24457524) ; **le pack d'entraînement LLM TRIADE-TRAIN
+v1.0.0 au DOI 10.5281/zenodo.24495492** (recettes SFT/DPO/RLVR, les 48
+paires DPO, la carte du corpus — il pointe le corpus, il ne le duplique pas).
 
 ## 2. LE RYTHME : LES VAGUES D'INSTRUCTIONS (le cœur de la reprise)
 

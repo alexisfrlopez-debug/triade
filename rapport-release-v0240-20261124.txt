@@ -1,0 +1,50 @@
+RAPPORT DE RELEASE — TRIADE v0.24.0 (la vague 17, 24 novembre 2026)
+===================================================================
+
+1. L'ÉDITION
+   Les cinq pièces RÉGÉNÉRÉES au bac (tectonic 0.17.0, weasyprint, ReportLab) :
+     manuscrit v0.24.0           sha256 acf544496d885cf883841e2c85e3649bf0fbb755ba50e171c13e4061cb839fe4
+     spécification v0.15.9       sha256 8cf0650453a09e8ddf22439725f505046c386ca83b187939241ee56b2a814450
+     Livre du Coffre v1.8        sha256 65ec2272014dee9504bbf0fefec5b7504c1a817ca2b4520b139e155a0d558177
+     preuves et calculs v0.24.0  sha256 d4a1d3cfdb9939017843e38f3d240ddcd033a1829745b9785ccff5c6754f1842
+     présentation v0.24.0        sha256 fd946244bd20f0c5ee12c3459dee55e7696276fcf5eb62842754e29e4aa99df0
+   (la table faisant foi : pack-v240/empreintes_livrables_v0.24.0.txt)
+   LA PORTE v0.24.0 : V1 empreintes, V2 versions, V3 ratio 3,22 recomposé,
+   V4 provenance, V5 aucun secret — VERTE ; CONTRÔLES NÉGATIFS 5/5.
+   LE LINTER D'ÉDITION v2 N'EST PAS PORTÉ (défaut nommé) : la porte v240 ne
+   couvre pas ses 1 991 tokens.
+
+2. LES ATELIERS (un commit chacun, sceau 14/14 avant/après)
+   01_D81_D223    f9560de  D252 — l'amendement daté, le linter v234 2/2
+   02_PATCH_A_CHAUD 484e260 D253 — 8 octets naturels, quiescence, kit 10/10
+   03_R10         a888f45  D254 — matrice ancre/limite, banc 11/11
+   04_PER         6a40343  D255 — provenance 11 lignes, 4/4 refus, 3,23 -> 3,22
+   05_RELEASE     (ce commit) — l'édition, les packs, les miroirs
+
+3. ZENODO
+   PROTOCOLE : DOI de version 10.5281/zenodo.24494615 (record 24494615, v0.24.0) ;
+               concept 10.5281/zenodo.24367343 (HTTP 200, résout sur v0.24.0).
+               Les 3 fichiers, md5 == les locaux.
+   ENTRAÎNEMENT LLM : DOI 10.5281/zenodo.24495492 (record 24495492, v1.0.0).
+   CORPUS : INCHANGÉ — v2.1, DOI 10.5281/zenodo.24479882 ; aucun mint de
+            synchronisation (la doctrine).
+   Un défaut d'outil nommé : l'API Zenodo a rendu des 504/500 en série ; les
+   publications ont abouti après reprises (les uploads par la nouvelle API).
+
+4. LE COFFRE (Drive)
+   /livrables : les cinq PDF v0.24.0, les trois packs v0.24.0, les empreintes,
+                le rapport de vérification — POSÉS.
+   ARCHIVE     : les trois anciennes archives y sont COPIÉES ; les originaux du
+                /livrables n'ont pas pu être mis à la corbeille (la carte
+                d'approbation du connecteur) — GESTE À CONFIRMER À LA MAIN.
+   /instructions : VIDE (les six fichiers retirés puis posés à ARCHIVE/
+                instructions_vague17_20261124).
+   /test       : ce rapport.
+
+5. CE QUI RESTE, NOMMÉ
+   - la corbeille des trois anciennes archives du /livrables (confirmation) ;
+   - le port du linter d'édition v2 à v0.24.0 ;
+   - les gestes au poste réel : métal nu (≥ 2 machines), sentinelle SACL/4663,
+     IMA/Authenticode, Tamarin/ProVerif (outils absents du bac) ;
+   - les propositions d'amélioration du protocole (sécurité, performance,
+     coût en tokens) — remises au maître avec ce rapport.

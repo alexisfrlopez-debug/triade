@@ -759,6 +759,17 @@ modèle de menace aux deux bords). D81 DEMEURE LA DÉCISION ACTIVE
 jusqu'à ce que la cérémonie soit vécue de bout en bout — le protocole
 prépare, le maître décide (D87).
 
+\subsection{Ce que change la v0.15.9}\label{sec:nouveautes159}
+
+La v0.15.9 est la révision de la \textbf{publication de bascule et de la racine de confiance} (D253,
+D254). Elle corrige une promesse fausse : aucun trampoline de douze à seize octets ne se publie par une
+« écriture alignée unique atomique » — l’atomicité d’un magasin naturel s’arrête à huit octets, et
+seize octets n’existent que par un unique \texttt{LOCK CMPXCHG16B} sous CPUID (§\ref{sec:primitives}).
+Elle sépare ensuite l’intégrité, l’authenticité et la fraîcheur de l’artefact, nomme l’ancre réelle par
+profil et ses limites, et borne ce que R10 garantit : le rejeu du seul binaire est refusé par le plancher,
+la restauration cohérente d’un couple binaire + état échappe à toute ancre locale
+(§\ref{sec:racine}). Aucune valeur mesurée n’est modifiée.
+
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
 La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —

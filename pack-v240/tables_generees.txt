@@ -1,0 +1,25 @@
+LES TABLEAUX DU MANUSCRIT v0.24.0 — GÉNÉRÉS DES REGISTRES BRUTS
+================================================================
+Les tableaux et macros du manuscrit sont produits depuis edition-v0230/donnees/ :
+les campagnes TPL-ADD (JSONL committés des ateliers), les mesures de la ventilation
+quatre bras, le corpus v2.1 (127/24/19 + 48 paires DPO), le registre de provenance
+(replication-v17/provenance-v17.json). Ce fichier porte l'inventaire et les empreintes
+des sources génératrices à la date de l'édition.
+
+Fichiers générateurs (empreintes recalculées) :
+43a953760814de80e43b7a73623ea03700c23c4a871769e59672d420ba2f5c97  edition-v0230/donnees/macros_v196.tex
+3d72b9a3e52f7ce2a46b931190e14bd57aea2dbd3e305097399b763410e2d565  edition-v0230/donnees/macros_v200.tex
+44126ed98b5c9cdc4054cc692464693fffcd45710e9912c07c38549336c45f5b  edition-v0230/donnees/macros_v210.tex
+128f821a312239f46cd0e0d97a4157a06517674c4607a051f91a275d17e9ecf5  edition-v0230/donnees/macros_v220.tex
+f2d812c67cd12cfcd5f0b5b7e12f397baff87d90bc8d1ce3730fc9af67eced1e  edition-v0230/donnees/macros_v230.tex
+8654f426e5b0438cc5fcb147c3481ea08fa0b1e54802aeb734ca5e62a80653db  edition-v0230/donnees/statuts_v190.tex
+8bb5a450710f989aeb95d704f35d38f8d25306a0f3b0cc386998a121ab8cca0f  edition-v0230/donnees/statuts_v230.tex
+4f065785477ba8fb58a06e1187941b007da31dfa841d3d57d32bae96021c579b  edition-v0230/donnees/table-campagne-d210.tex
+12e8257ac2b5d9d82e1d22aebb1835deb0f2e0a65b1a80807fcd4f84f504a585  edition-v0230/donnees/table-campagne.tex
+569ddb6fee9ba27a43958ff114f5b13ea809749d42cd84da9926da6024d8a48e  edition-v0230/donnees/tables_generees_v180.tex
+
+Le registre de provenance (source de la recomposition des tableaux) :
+faaacb6c46f661c601b4937149fd147949b0c7c11fa943d9172d0c5a6fa5fe44  replication-v17/provenance-v17.json
+
+Rappel : chaque ratio publié se recalcule depuis ses opérandes non arrondis (D244) ;
+le registre nomme les deux conventions de médiane (18 tâches / tâches vertes).

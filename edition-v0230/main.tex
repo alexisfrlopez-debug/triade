@@ -115,11 +115,11 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
             urlcolor=liaison, unicode=true,
-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.23.3)},
+            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.24.0)},
             pdfauthor={Alexis Lopez}]{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.23.3}
+\fancyhead[L]{\small\itshape TRIADE — academic edition v0.24.0}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 
@@ -136,7 +136,7 @@ Under Signed-Intent Governance\\
 fourteen-unit two-arm field campaign, and two sealed applications}}
 \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
 Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
-\date{23 November 2026 — Academic edition v0.23.3 (the present edition states the current state of the programme in one voice; the wave-by-wave changes live in the frozen edition changelog below; the release of
+\date{24 November 2026 — Academic edition v0.24.0 (the present edition states the current state of the programme in one voice; the wave-by-wave changes live in the frozen edition changelog below; the release of
 the fifteenth wave: the interleaved CTR$\times$GHASH composition
 measured at 0.7271 cycles per byte at 4\,KiB (the median 2{,}978.2
 cycles per 4{,}096-byte call; the pre-registered target of 2.0 held
@@ -2321,7 +2321,8 @@ gesture).
 \item v0.23.0 (22 Nov 2026) --- the thirteenth wave carried, the requalifications, the equalised ventilation, the exact partition, the aligned abstracts.
 \item v0.23.1 (22 Nov 2026) --- the corrective release: the corrected sources and the six ateliers of the fourteenth wave in the complete archive; the five documents unchanged (the soumission and presentation packs carried byte-byte).
 \item v0.23.2 (22 Nov 2026) --- the corrective generation: the ten sourced corrections (a)--(j) carried to the five documents, every published ratio at its unrounded operands, the F/L replication grid, the extended cross-piece linter; the fourteenth wave carried (the GHASH aggregation, the regime memoisation, TPL-ADD-v4, the H7 draw, the first effective Tamarin run).
-\item v0.23.3 (23 Nov 2026) --- the present edition, the fifteenth wave released: the five documents regenerated under the five-class linter (the semantic phrases, the decision ranges, the dated feasibility sequences, the post-deposit version claims, the English gallicisms); the wave carried (the composition measurement, the TCB reduction, the native oracle engine, TPL-ADD-v5 with its target missed, the H7 campaign served, CF3-v3 at the verdict machine, the adoption-side ecosystem).
+\item v0.24.0 (24 Nov 2026) --- the present edition, the seventeenth wave: the publication of a switch is atomic up to eight natural bytes and no further, quiescence mandatory (D253); the R10 guarantee bounded to what its anchor is worth, integrity, authenticity and freshness separated, the coherent binary+state restore named as invisible to any local anchor (D254); the provenance register (eleven lines recomposed from canonical sources, four living refusals), and the manuscript's one ratio that did not recompose (63.39/19.66 = 3.2243, published 3.23) corrected at the source (D255). No measured value changed.
+\item v0.23.3 (23 Nov 2026) --- the fifteenth wave released: the five documents regenerated under the five-class linter (the semantic phrases, the decision ranges, the dated feasibility sequences, the post-deposit version claims, the English gallicisms); the wave carried (the composition measurement, the TCB reduction, the native oracle engine, TPL-ADD-v5 with its target missed, the H7 campaign served, CF3-v3 at the verdict machine, the adoption-side ecosystem).
 \end{itemize}
 
 \section{Conclusion}\label{sec:conclusion}
@@ -2463,8 +2464,8 @@ the concept DOI is the citable reference, the version DOIs the dated
 records). This edition's own snapshot follows the developer's deposit
 gesture --- never minted without an explicit command. The two
 submission archives of the current deposit
-(\code{TRIADE\_soumission\_v0.23.3.zip} and
-\code{TRIADE\_complet\_v0.23.3.zip}) contain respectively the
+(\code{TRIADE\_soumission\_v0.24.0.zip} and
+\code{TRIADE\_complet\_v0.24.0.zip}) contain respectively the
 manuscript with its data tables, and the complete sources with raw
 extracts and fingerprints; every artifact of the claims tables was
 re-verified byte for byte against the regenerated archives (zero
@@ -2482,6 +2483,28 @@ the content of this manuscript.
 \paragraph{Acknowledgements.} The author thanks the Z.ai GLM agent
 (``the laboratory'') for eleven milestones of disciplined execution, and
 the TRIADE decision log for keeping everyone honest.
+
+\subsection{Post-edition note (v0.24.0): bounded guarantees, atomicity, provenance}
+
+This edition carries three consolidations of the seventeenth wave and no new
+measurement. First, the hot-patch guarantee is reduced to what the architecture
+actually provides: a naturally atomic store is at most eight bytes (Intel SDM
+vol.~3 \S~8.1.1), sixteen bytes are published only by a locked
+\texttt{CMPXCHG16B}, and an instruction-cache coherent publication for a
+cross-modifying core requires an explicit rendezvous --- the atomicity of the
+store alone protects no thread whose instruction pointer lies in the replaced
+range (D253). Second, the loading-time guarantee (R10) is stated for what it is
+worth: integrity, authenticity and freshness are three distinct properties, the
+real anchor differs per profile (Authenticode, IMA appraisal or package
+signature, signed boot chain), and a coherent restore of a binary together with
+its local state escapes every local anchor --- only the vault's off-machine
+witnesses see it (D254). Third, every number of the dossier is now traced to a
+canonical committed source by a provenance register, with four living refusals
+(value, ratio, count, status); the reader's test on the previous edition found
+one published ratio that did not recompose from its printed operands
+($63.39/19.66 = 3.2243$, printed $3.23$ instead of $3.22$), corrected here at
+the source (D255). The laboratory's measurements remain virtualised: no bare-metal
+claim is made in this edition.
 
 % ------------------------------------------------------------------
 \bibliography{refs}

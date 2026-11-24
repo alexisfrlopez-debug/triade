@@ -1,0 +1,17 @@
+INSTRUCTIONS DE LA VAGUE 17 — ARCHIVE D'EXÉCUTION (24/11/2026)
+==============================================================
+
+Six instructions déposées au /instructions le 23/11/2026 entre 23:10 et 23:12 UTC,
+toutes EXÉCUTÉES, chacune avec son plan gelé (commit 8853bcf, EMPREINTES-PLANS-VAGUE17)
+et son atelier commité seul :
+
+  00_REPRISE_ET_GEL.md        -> commit 8853bcf (plans) puis 7e85f6b (état de référence)
+  01_D81_D223.md              -> atelier-w17-d81-d223, commit f9560de (D252)
+  02_PATCH_A_CHAUD.md         -> atelier-w17-patch-a-chaud, commit 484e260 (D253)
+  03_R10_CONFIANCE.md         -> atelier-w17-r10-confiance, commit a888f45 (D254)
+  04_PERFORMANCE_REPLICATION.md -> atelier-w17-performance-replication, commit 6a40343 (D255)
+  05_RELEASE_MIROIRS_ZENODO.md  -> la release v0.24.0 (édition, packs, miroirs)
+
+Les fichiers ici sont les instructions ORIGINALES, octet pour octet, retirées du
+/instructions après exécution (l'archivage Drive en deux étapes : retrait puis ajout
+à ARCHIVE — l'appel combiné est refusé 403). Aucun secret n'y figure.

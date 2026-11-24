@@ -360,3 +360,12 @@ Entrées 251-304) et au worklog (`worklog.md`, Tasks 158-211).*
 
 
 
+
+## Mise à jour 398 (24/11/2026) — L'ÉDITION v0.24.0 ET LE PACK D'ENTRAÎNEMENT
+
+- **LE PROTOCOLE v0.24.0** : DOI de version **10.5281/zenodo.24494615**, concept 10.5281/zenodo.24367343 (résolvant sur v0.24.0) — les trois packs : `TRIADE_soumission_v0.24.0.zip`, `TRIADE_presentation_v0.24.0.zip`, `TRIADE_complet_v0.24.0.zip`.
+- **LES CINQ PIÈCES v0.24.0** : `pack-v240/` au dépôt — manuscrit v0.24.0, spécification v0.15.9, Livre du Coffre v1.8, preuves v0.24.0, présentation v0.24.0 ; les empreintes à `pack-v240/empreintes_livrables_v0.24.0.txt` ; le rapport de vérification à `pack-v240/rapport_verification_v0.24.0.txt` (porte 5/5, négatifs 5/5, provenance 11/11, sceau 14/14).
+- **LE PACK D'ENTRAÎNEMENT LLM** : DOI **10.5281/zenodo.24495492** (TRIADE-TRAIN v1.0.0) ; le corpus reste v2.1, **10.5281/zenodo.24479882** (aucun nouveau mint : contenu inchangé).
+- **AU COFFRE** : les livrables au `/livrables` (cinq PDF + trois packs + empreintes + rapport) ; les anciennes archives COPIÉES au dossier ARCHIVE (la corbeille des originaux du /livrables attend la confirmation de la carte d'approbation) ; les instructions de la vague 17 à `ARCHIVE/instructions_vague17_20261124/` (dépôt) et au dossier ARCHIVE du coffre ; le rapport de release `rapport-release-v0240-20261124.txt` à la racine du coffre et au `/test`.
+- **AU DÉPÔT** : les quatre ateliers `atelier-w17-*/`, `replication-v17/`, `scripts/vague17/` (provenance, porte d'édition, générateur des pièces), `docs/DECISIONS.md` D252–D255, `worklog.md` Entrée 398.
+- **LA REPRISE** : ce fichier (§ 1) porte les DOIs courants ; le prochain chantier nommé est le port du linter d'édition v2 sur v0.24.0, puis les propositions d'amélioration du protocole (sécurité, performance, coût en tokens).

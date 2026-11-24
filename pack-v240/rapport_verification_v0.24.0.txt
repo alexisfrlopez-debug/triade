@@ -1,0 +1,38 @@
+RAPPORT DE VÉRIFICATION — ÉDITION v0.24.0 (la vague 17, 24/11/2026)
+====================================================================
+
+1. LA PORTE D'ÉDITION
+==============================================================================
+PORTE DE L'ÉDITION v0.24.0
+==============================================================================
+[VERT] manuscrit      TRIADE_manuscrit_v0.24.0.pdf  acf544496d885cf8…
+[VERT] specification  Protocole_TRIADE_v0.15.9_Specification.pdf  8cf0650453a09e8d…
+[VERT] livre          Livre_du_Coffre_TRIADE_CF1-CF3_v1.8.pdf  65ec2272014dee95…
+[VERT] preuves        TRIADE_preuves_et_calculs_v0.24.0.pdf  d4a1d3cfdb993901…
+[VERT] presentation   TRIADE_presentation_v240.pdf  fd946244bd20f0c5…
+------------------------------------------------------------------------------
+[VERT] V1 empreintes · V2 chaînes de version · V3 ratio recomposé · V4 provenance · V5 aucun secret
+
+2. LES CONTRÔLES NÉGATIFS DE LA PORTE
+==============================================================================
+CONTRÔLES NÉGATIFS — CINQ MUTATIONS, CINQ REFUS ATTENDUS
+==============================================================================
+[VERT] EMPREINTE → [('V1', 'manuscrit', 'empreinte != table')]
+[VERT] VERSION → [('V2', 'preuves', 'chaîne v9.9.9 absente')]
+[VERT] RATIO → [('V3', 'manuscrit', 'le ratio corrigé 3.22 est absent'), ('V3', 'manuscrit', 'le ratio fautif 3.23 est encore publié comme valeur')]
+[VERT] COMPTE → [('COMPTE', 'registre', 'refus')]
+[VERT] STATUT → [('STATUT', 'registre', 'refus')]
+5/5 contrôles négatifs rendus
+
+3. LA PROVENANCE
+11 lignes — aucune grandeur (a)-(d) n'est additionnée ni comparée à une autre
+CONFORME — chaque ligne se recompose depuis sa source canonique
+------------------------------------------------------------------------------
+4/4 contrôles négatifs rendus
+
+4. LE LINTER D81/D223
+[linter-v234] 15 mention(s) historique(s) admise(s), 0 consigne(s) active(s) refusée(s)
+[linter-v234] contrôle négatif : 2/2
+
+5. LE SCEAU-I
+[sceau-I] verifier : 14 arbres VERTS — cle deposee reelle (ceremonie hors-ligne, D87)
