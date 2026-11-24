@@ -1,0 +1,14 @@
+EMPREINTES DES PLANS — LA VAGUE 17 (les six prompts du 23/11/2026, déposés au /instructions)
+Gelées AVANT toute donnée ; le présent commit précède la première collecte.
+Ordre d'exécution gelé ci-dessous (dépendances amont nommées) — JAMAIS re-tiré.
+
+PLAN-W17R0GEL.md       sha256:317e5c6f15b9274dd355d0500e5483718c0d50fcbac9787841227d1c5baa1421
+PLAN-W17R1D81.md       sha256:dccc89b25e8a975f0d64fc08f23689190fdebf1fa4e40cdb4089da38865fbbbf
+PLAN-W17R2PAT.md       sha256:5d7b2877977730aeefe31735bfd5a5f014281cb181af4b8f7092d0ba28920e62
+PLAN-W17R3R10.md       sha256:aad901fed767776d3ee2a6d88a3fac8f8a2acdffc43362160523b06aa9222813
+PLAN-W17R4PER.md       sha256:8768bee1a5bc3d93206bbd5b43e6a8fae78750a6eebd7423f074ec234291658c
+PLAN-W17R5REL.md       sha256:040135ee9b56f18a40842805b5cd7d20127dfb6065aaa9218e77f0e9e7a3159c
+
+Ordre : 00 (gel, préalable absolu) → 01 (D81/D223) → 02 (patch à chaud) → 03 (R10,
+qui dépend de 02 pour l'ordre mémoire et les permissions de page) → 04 (performance /
+réplication, indépendant) → 05 (release, conditionnel à la clôture de 01-04).
