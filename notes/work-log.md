@@ -1,0 +1,1 @@
+- 2026-11-24 : vague 17 close ; édition v0.24.0 publiée (protocole 24494615, TRAIN 24495492) ; linter v2 d'édition resté à porter ; corbeille des anciennes archives du /livrables + retrait des 6 instructions du /instructions en attente d'autorisation du maître.
