@@ -1,0 +1,17 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.31.0 (vague 24 de l'édition, 24 novembre 2026)
+====================================================================================
+COURANTS
+- TRIADE_manuscrit_v0.31.0.pdf · Protocole_TRIADE_v0.15.16_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.15.pdf · TRIADE_preuves_et_calculs_v0.31.0.pdf
+- TRIADE_presentation_v0310.pdf
+- TRIADE_soumission_v0.31.0.zip · TRIADE_presentation_v0.31.0.zip · TRIADE_complet_v0.31.0.zip
+- empreintes_livrables_v0.31.0.txt · rapport_verification_v0.31.0.txt
+CE QUE PORTE CETTE ÉDITION (D276) — LE REGISTRE DES CIBLES
+- CIBLES.md : onze cibles, une ligne chacune, verdicts portés tels que publiés (5/18, 4 604,
+  3,264, 95/235, budgets tenus 674 et 51), aucune cible re-tirée.
+- Le sujet de la cible AES-GCM 1,05 × est NOMMÉ : le couloir VAES, non écrit. Le couloir
+  entrelacé mesuré (0,7271 c/B, 1,26 × EVP) est HORS SUJET de cette cible, sans cible propre.
+- Les trois cibles « ajouter » sont dites à trois étages (budget, faisabilité, structurée).
+- Linter v7 : C25 recompose chaque ligne du registre publiée dans les preuves.
+- Porte L1..L25 zéro rouge ; contrôles négatifs 18/19 (le 19e : harnais C22, nommé).
+STATUT : NON PUBLIÉES (évaluation d'abord). SUPERSÉDÉES : v0.30.0 et antérieures.

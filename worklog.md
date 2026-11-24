@@ -14303,3 +14303,10 @@ Work Log:
 - **Linter v6** : C21 DOI, C22 prose anglaise, C23 statut de preuve, C24 ordre des opérandes ; annexe B recomposée de sa table. Porte **L1..L24 zéro rouge**, contrôles négatifs **16/17** (le 17e : la chaîne de mutation C22 ne s'applique pas à la couche texte du PDF — défaut du harnais, la classe a mordu en vrai pendant la construction).
 - **Édition v0.30.0** (spec v0.15.15, Livre v1.14) déposée au /livrables : dix pièces + le ZIP complet, tous téléversés (reçus vérifiés).
 - **Non commencé, nommé** : P2 (registre CIBLES.md + classe), P3 (harnais par bloc), P4 (add décodage contraint), P5 (VAES métal), P6 (Tamarin/ProVerif/métal) — gated hors bac ou nécessitant une vague dédiée.
+
+### Entrée 410 — LA VAGUE 26 (D276) : LE REGISTRE DES CIBLES, LE SUJET NOMMÉ, C25 ; v0.31.0 DÉPOSÉE (24/11/2026)
+- **CIBLES.md** : onze cibles, une ligne chacune (sujet, périmètre, cible, mesuré, verdict, décision, campagne), verdicts portés tels que publiés — 5/18, 4 604 contre 4 500 (manquée de 104), 3,264 contre 3,0, 95 contre 200, budgets tenus (674 ≤ 3 000 ; 51 ≤ 64), aes 1,05 × EN ATTENTE.
+- **Le sujet est nommé** : la cible 1,05 × EVP vise le couloir VAES (non écrit) ; le couloir entrelacé (0,7271 c/B, 1 978… non : 2 978,2 cycles, 1,26 × EVP) est HORS SUJET, sans cible propre — son « échec » contre 1,05 × est une lecture fausse, corrigée.
+- **C25** : recompose chaque ligne du registre publiée dans les preuves (mesure + verdict), refuse un verdict retourné. Porte **L1..L25 zéro rouge**, contrôles **18/19** (le 19e : harnais C22, nommé).
+- **Disponibilité des prouveurs précisée** : Tamarin/ProVerif ABSENTS du bac courant (vérifié) ; les verdicts L3/L1/L2 viennent des vagues 14-15.
+- **P3, P4, P5, P6 non exécutés** : carte par bloc (intégrité), serving à structured output, métal VAES, prouveurs absents.

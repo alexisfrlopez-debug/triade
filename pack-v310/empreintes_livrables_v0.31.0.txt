@@ -1,0 +1,8 @@
+LE MANIFESTE DES EMPREINTES — le pack TRIADE v0.31.0 (la vague 24 de l'édition, 24/11/2026)
+(chaque empreinte RECALCULÉE du fichier même)
+
+66ec9a2cab05e8c6f9a317db91978972307d9815dfeca77c0026be33a4cc6b98  TRIADE_manuscrit_v0.31.0.pdf
+3f82b779124fc16bfca8009364f09f093b908f5db5c2f9489689a6fa8a6ec7e1  Protocole_TRIADE_v0.15.16_Specification.pdf
+87e7d82b91144cab204896f094e1b765181a4675f790c7ccd2d80cc4692306ff  Livre_du_Coffre_TRIADE_CF1-CF3_v1.15.pdf
+fa8928d450350d404f50159d22b26486097cf0390df84420da5c01bfc83d1c16  TRIADE_preuves_et_calculs_v0.31.0.pdf
+8807662d8df4f9bae35e2d829af7ba01447b2c0c1fa22dd820748aff48132817  TRIADE_presentation_v0310.pdf

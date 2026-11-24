@@ -60,6 +60,8 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 26)** : édition **v0.31.0** (spec v0.15.16, Livre v1.15) au /livrables ; **CIBLES.md** (onze cibles, verdicts portés, sujet AES nommé), classe C25, linter 25 classes, porte L1..L25, 18/19. P3-P6 non exécutés (gated hors bac).
+
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 25)** : édition **v0.30.0** (spec v0.15.15, Livre v1.14) déposée au /livrables ; prose de statut DÉRIVÉE des registres DEPOTS.jsonl et PREUVES-STATUTS.json (D275) ; linter à **vingt-quatre classes** (C21-C24) ; porte L1..L24, 16/17 contrôles. Reste : P2 cibles, P3 harnais par bloc, P4 add contraint, P5 VAES métal, P6 Tamarin/métal.
 
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 24)** : édition **v0.29.0** (spec v0.15.14, Livre v1.13) déposée au /livrables pour évaluation ; statut d'ancrage DÉRIVÉ du journal, linter à **vingt classes** (C18-C20), six résidus soldés, forme nettoyée ; porte L1..L20, 13/13 mutations (D274). VAES, campagne add servie et 27 harnais restent hors bac.

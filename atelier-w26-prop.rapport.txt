@@ -1,0 +1,20 @@
+ATELIER W26CIBL — LE REGISTRE DES CIBLES, LE SUJET NOMMÉ, LA CLASSE C25 (24/11/2026)
+====================================================================================
+Évaluation de v0.30.0, prompt 2. Aucune cible re-tirée, aucune valeur ajustée.
+
+1. REGISTRE UNIQUE. `CIBLES.md` : onze cibles, une ligne chacune — id, sujet exact, périmètre de
+   mesure, valeur cible, valeur mesurée, verdict (TENUE / MANQUÉE / EN ATTENTE / HORS SUJET /
+   REPÈRE), décision, campagne. Les verdicts existants portés TELS QUELS : 5/18 et 4 604 contre
+   4 500 (manquée de 104), ratio 3,264 contre 3,0 (manquée de 0,264), 95 contre 200 vecteurs,
+   budgets tenus (éditer 674 ≤ 3 000 ; localiser 51 ≤ 64).
+2. LE SUJET DE LA CIBLE AES-GCM 1,05× EST NOMMÉ : le couloir VAES/VPCLMULQDQ, non écrit. Le
+   couloir entrelacé mesuré (0,7271 c/B, 2 978,2 cycles, 1,26 × EVP) est enregistré HORS SUJET de
+   cette cible — il ne porte aucune cible relative propre. Son « verdict » contre 1,05 × n'est donc
+   pas « manqué » : le dire ainsi n'est pas une indulgence, c'est le registre qui parle.
+3. LES TROIS CIBLES « AJOUTER » SONT À TROIS ÉTAGES, dites telles : le budget de l'opération
+   (4 500, campagne qui a tourné), la faisabilité (≥ 15/18), la faisabilité sous décodage contraint
+   (D264, jamais exécutée). Aucune ne remplace l'autre ; une seule est mesurée.
+4. CLASSE C25 CIBLES-VERDICT : le registre porte onze cibles, chaque mesure ancrée est publiée
+   dans les preuves, aucun verdict ne se retourne (une mesure manquée suivie de « tenue » est
+   refusée), et le couloir entrelacé ne peut pas être dit « manqué » contre 1,05 ×. Deux contrôles
+   négatifs : registre muté, verdict retourné.

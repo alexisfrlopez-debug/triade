@@ -1,0 +1,17 @@
+[V6] ancrage vérifié — témoin d'époque RFC 3161 recoupé
+==============================================================================
+PORTE DE GÉNÉRATION v0.31.0 — V1..V7 + L1..L25 (le linter est la porte)
+==============================================================================
+[VERT] manuscrit      TRIADE_manuscrit_v0.31.0.pdf
+[VERT] specification  Protocole_TRIADE_v0.15.16_Specification.pdf
+[VERT] livre          Livre_du_Coffre_TRIADE_CF1-CF3_v1.15.pdf
+[VERT] preuves        TRIADE_preuves_et_calculs_v0.31.0.pdf
+[VERT] presentation   TRIADE_presentation_v0310.pdf
+------------------------------------------------------------------------------
+[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · V6 témoin (EN ATTENTE si absent) · V7 tableau
+[VERT] L1..L25 — vingt-cinq classes, zéro résidu
+CONTRÔLES NÉGATIFS : 18/19. Le contrôle de C22 ne s'APPLIQUE pas (chaîne de mutation introuvable
+dans la couche texte du PDF) ; C22 a mordu en vrai pendant la construction (§2.1). Défaut du
+harnais, pas de la classe — nommé, non maquillé.
+DISponibilité des prouveurs : Tamarin et ProVerif sont ABSENTS du bac courant (vérifié le
+24/11/2026) ; les verdicts L3/L1/L2 viennent des vagues 14-15, dans le bac d'alors.

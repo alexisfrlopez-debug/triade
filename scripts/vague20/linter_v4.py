@@ -408,7 +408,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     mots = re.findall(r"the present edition, the ([a-z-]+) wave", man)
     table = {"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
              "nineteenth": 19, "twentieth": 20, "twenty-first": 21, "twenty-second": 22,
-             "twenty-third": 23}
+             "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25}
     courante = table.get(mots[-1], 0) if mots else 0
     for m in re.finditer(r"La vague (\d{1,2})\b", normalise(t["presentation"])):
         if int(m.group(1)) != courante:
@@ -562,4 +562,51 @@ def controles_w25(t, racine, version_edition, version_spec):
                 continue                            # la citation d'un défaut n'est pas le défaut
             if {va, vb} == CANON and va < vb:      # seule la paire du ratio par multiplication
                 refus.append(("C24", piece, f"opérandes inversés ({a}/{b}) — ordre canonique attendu"))
+    return refus
+
+
+# ==========================================================================
+# C25 CIBLES-VERDICT (la vague 26, D276) — tout verdict de cible se recompose
+# de CIBLES.md ; aucune cible re-tirée, aucun verdict maquillé.
+# ==========================================================================
+ANCRAGES_CIBLES = (
+    ("CIB-ADD-FAISAB", "5/18", 0),
+    ("CIB-ADD-COUT-4500", "4 604", 4),
+    ("CIB-ADD-RATIO", "3,264", 4),
+    ("CIB-HARNAIS-200", "95 exécutés", 0),
+)
+
+
+def controles_w26(t, racine):
+    refus = []
+    lignes = [l for l in (racine / "CIBLES.md").read_text(encoding="utf-8").splitlines()
+              if l.startswith("| CIB-")]
+    reg = {}
+    for l in lignes:
+        c = [x.strip() for x in l.strip("|").split("|")]
+        reg[c[0]] = c
+    if len(reg) != 11:
+        refus.append(("C25", "cibles", f"{len(reg)} cibles au registre, 11 attendues"))
+    preuves = re.sub(r"\s+", " ", t.get("preuves", ""))
+    if "REGISTRE DES CIBLES" not in preuves.upper():
+        refus.append(("C25", "preuves", "le registre des cibles n'est pas publié"))
+    # chaque ligne du registre est publiée UNE fois, avec sa mesure ET son verdict, tels quels
+    for cid, c in reg.items():
+        mes, verdict = c[4], c[5]
+        n = preuves.count(cid)
+        if n < 1:
+            refus.append(("C25", "preuves", f"{cid} n'est pas publiée"))
+            continue
+        deb = preuves.index(cid)
+        ln = preuves[deb:deb + 190]
+        if mes and mes not in ("—", "-") and mes.split(" ")[0] not in ln:
+            refus.append(("C25", "preuves", f"{cid} : mesure « {mes} » absente de sa ligne"))
+        mot = verdict.split(" ")[0]
+        if mot not in ln:
+            refus.append(("C25", "preuves", f"{cid} : verdict « {mot} » absent de sa ligne"))
+        elif mot.startswith("MANQU") and re.search(r"\bTENUE\b", preuves[deb:deb + 120]):
+            refus.append(("C25", "preuves", f"{cid} : verdict retourné — « manquée » et « tenue » dans la même ligne"))
+    # le couloir entrelacé n'est jamais dit « manqué » contre 1,05 ×
+    if re.search(r"1,26[^.]{0,80}(manqu|missed)", preuves):
+        refus.append(("C25", "preuves", "le couloir entrelacé est dit « manqué » contre 1,05 × — il est hors sujet"))
     return refus

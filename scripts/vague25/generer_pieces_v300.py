@@ -26,6 +26,13 @@ from reportlab.platypus import (BaseDocTemplate, Frame, PageTemplate, Paragraph,
                                 Spacer, PageBreak, Table, TableStyle)
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
+
+
+def _cibles():
+    """Lit CIBLES.md — la seule autorité sur les cibles (D276)."""
+    lignes = [l for l in (REPO / "CIBLES.md").read_text(encoding="utf-8").splitlines()
+              if l.startswith("| CIB-")]
+    return [[c.strip() for c in l.strip("|").split("|")] for l in lignes]
 import json as _json
 PREUVES = _json.loads((REPO / "PREUVES-STATUTS.json").read_text(encoding="utf-8"))
 STATUT_TAM = ("Tamarin " + PREUVES["tamarin"]["outil"].split("(")[0].strip()
@@ -207,6 +214,15 @@ def preuves():
         "(5) 49,12 = 78 888/1 606 (preuves) ; (6) 37,425 = 20,715+16,497+0,213 (preuves) ; "
         "(7) 712,5 médiane de l'éditeur (preuves) ; (8) 811/832 = 97,5 % (manuscrit et preuves) ; "
         "(9) 16/16 = 7+1+5+3 (présentation).", BODY))
+    h.append(Paragraph("4 bis. Le registre des cibles (D276)", H2))
+    h.append(Paragraph("Les cibles de ce programme vivent dans un registre unique (CIBLES.md) ; "
+                       "aucune n'est re-tirée. Les onze lignes, telles quelles :", BODY))
+    for c in _cibles():
+        h.append(Paragraph(f"<b>{c[0]}</b> — {c[1]} · cible {c[3]} · mesuré {c[4]} · "
+                           f"<b>{c[5]}</b> ({c[6]}).", BODY))
+    h.append(Paragraph("Le couloir AES-GCM entrelacé est mesuré (1,26 × EVP) et <b>hors sujet</b> "
+                       "de la cible 1,05 × : celle-ci vise le couloir VAES, qui n'est pas écrit — "
+                       "le verdict contre 1,05 × n'est donc pas « manqué ».", BODY))
     h.append(Paragraph("5. Les limites nommées", H2))
     h.append(Paragraph("Aucune mesure au métal nu ; la bascule concurrente réelle, le compteur NV "
                        "matériel et la campagne structurée restent EN ATTENTE ; la sentinelle "

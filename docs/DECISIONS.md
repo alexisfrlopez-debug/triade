@@ -5249,3 +5249,25 @@ sinon. La vague 24 avait corrigé deux fois la même chaîne sans la relire.
 **Les limites.** Les registres disent ce qu'on y met : DEPOTS.jsonl a été reconstitué depuis le
 journal de publication, pas depuis Zenodo (aucun réseau) — un DOI faux y resterait faux et C21
 le refuserait seulement s'il était dupliqué ou incohérent avec son voisin.
+
+## D276 — LE REGISTRE DES CIBLES, LE SUJET NOMMÉ, LA CLASSE C25 (la vague 26, 24/11/2026 ; atelier W26CIBL)
+
+**Le constat (l'évaluation de v0.30.0).** Trois cibles « ajouter » coexistaient sans table
+canonique (budget 4 500 de la cinquième campagne, manquée de 104 ; faisabilité ≥ 15/18, 5/18 ;
+D264 structurée, jamais servie) et la cible AES-GCM 1,05× ne nommait pas son sujet : le couloir
+VAES, non écrit, ou le couloir entrelacé, mesuré à 1,26×. Un lecteur ne pouvait pas savoir si
+1,26× était un échec contre 1,05×.
+
+**Le geste.** `CIBLES.md` — onze cibles, une ligne chacune (sujet exact, périmètre, cible,
+mesuré, verdict, décision, campagne), les verdicts PORTÉS tels que publiés, aucune cible
+re-tirée. Le sujet de CIB-AES-105 est nommé (couloir VAES) ; le couloir entrelacé est enregistré
+HORS SUJET avec ses mesures (0,7271 c/B, 2 978,2 cycles, 1,26 × EVP) et sans cible relative
+propre. Les trois cibles « ajouter » sont dites à trois étages. Les preuves publient le registre
+(section 4 bis) ; la classe **C25** refuse une mesure effacée, un verdict retourné (« manquée »
+suivie de « tenue ») ou un couloir entrelacé dit « manqué » contre 1,05×.
+
+**Les preuves.** Porte L1..L25 ; deux contrôles négatifs nouveaux (mesure effacée, verdict
+retourné).
+
+**Les limites.** C25 vérifie quatre ancrages publiés et l'unicité du registre, pas la véracité
+des mesures elles-mêmes : un chiffre faux porté au registre passerait toutes les classes.
