@@ -69,9 +69,11 @@ sont soldés (D268). La chaîne de décisions **D261–D267** est au journal et 
 spécification (annexe B **D75–D268**). Le kit métal est pré-enregistré et son agrégateur
 fail-closed (EN ATTENTE du run) ; le moteur d'oracle est étendu aux **52 blocs**
 (50/52 byte-identiques, mémo content-addressed, audit 1-sur-10, consoles du jumeau
-128/128) ; l'expandeur « add » à pointeur-seul est livré (18/18, 4 refus). **Aucune
-publication Zenodo n'a été faite pour cette vague : la doctrine « jamais de mint sans
-commande » tient.** Les gestes au poste réel demeurent nommés : métal nu (≥ 2 machines),
+128/128) ; l'expandeur « add » à pointeur-seul est livré (18/18, 4 refus). **Publication (Entrée 403)** : édition **v0.26.0 = 10.5281/zenodo.24499428**
+(concept 24367343), kit développeur **v1.3.0 = 10.5281/zenodo.24499840**, pack de
+participation **v1.1.0 = 10.5281/zenodo.24499847** ; corpus v2.1 et entraînement v1.0.0
+inchangés. Les packs sont dans `depot-zenodo-v0260/`, les livrables au `/livrables` du
+coffre (`LISEZMOI-livrables-v0.26.0.txt`), le miroir Drive et le bundle resynchronisés. Les gestes au poste réel demeurent nommés : métal nu (≥ 2 machines),
 compteur NV matériel (D263), campagne structurée (D264), déploiement de l'ancrage de
 transparence (D267), témoin hors machine (D259).
 

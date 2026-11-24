@@ -1,0 +1,12 @@
+[V6] EN ATTENTE — aucun témoin hors machine consigné (D259)
+==============================================================================
+PORTE DE GÉNÉRATION v0.26.0 — V1..V7 + L1..L11 (le linter est la porte)
+==============================================================================
+[VERT] manuscrit      TRIADE_manuscrit_v0.26.0.pdf
+[VERT] specification  Protocole_TRIADE_v0.15.11_Specification.pdf
+[VERT] livre          Livre_du_Coffre_TRIADE_CF1-CF3_v1.10.pdf
+[VERT] preuves        TRIADE_preuves_et_calculs_v0.26.0.pdf
+[VERT] presentation   TRIADE_presentation_v0260.pdf
+------------------------------------------------------------------------------
+[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · V6 témoin (EN ATTENTE si absent) · V7 tableau
+[VERT] L1..L11 — onze classes, zéro résidu

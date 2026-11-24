@@ -1,0 +1,22 @@
+LES LIVRABLES COURANTS — TRIADE, édition v0.26.0 (la vague 19, 24 novembre 2026)
+================================================================================
+COURANTS (cette édition)
+- TRIADE_manuscrit_v0.26.0.pdf
+- Protocole_TRIADE_v0.15.11_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.10.pdf
+- TRIADE_preuves_et_calculs_v0.26.0.pdf
+- TRIADE_presentation_v0260.pdf
+- TRIADE_soumission_v0.26.0.zip · TRIADE_presentation_v0.26.0.zip · TRIADE_complet_v0.26.0.zip
+- TRIADE_kit_developpement_v1.3.0.zip · TRIADE_participer_v1.1.0.zip
+- empreintes_livrables_v0.26.0.txt · rapport_verification_v0.26.0.txt
+
+DOI (vérifiés chez doi.org)
+- protocole v0.26.0 : 10.5281/zenodo.24499428 (concept 10.5281/zenodo.24367343)
+- kit développeur v1.3.0 : 10.5281/zenodo.24499840 (concept 10.5281/zenodo.24457514)
+- pack de participation v1.1.0 : 10.5281/zenodo.24499847 (concept 10.5281/zenodo.24497300)
+- corpus v2.1 : 10.5281/zenodo.24479882 (inchangé) · entraînement v1.0.0 : 10.5281/zenodo.24495492 (inchangé)
+
+SUPERSÉDÉS (conservés pour l'histoire ; l'édition courante est ci-dessus)
+- les cinq pièces v0.25.0, les trois packs v0.25.0, le kit v1.2.0, le pack participation v1.0.0
+- les cinq pièces v0.24.0, les packs v0.24.1, le kit v1.1.0
+- les archives v0.23.3 / v0.23.4 (antérieures à la session ; suppression à la main si souhaitée)

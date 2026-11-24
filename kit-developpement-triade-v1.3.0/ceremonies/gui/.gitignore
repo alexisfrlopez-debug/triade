@@ -1,0 +1,6 @@
+journal/
+archives/
+jetons-importes/
+config/
+__pycache__/
+*.pyc
