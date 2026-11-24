@@ -1,0 +1,79 @@
+PLAN DU HARNAIS PAR BLOC — EXÉCUTION P3 (v2, « image entière »)
+Date : 25/11/2026 · Atelier : atelier-p3-exec · Commande du maître (session Z.ai,
+25/11/2026) : « P3 n'a finalement pas pu été exécuté par Claude, il faudra que
+tu t'en occupes » — le lot lot-p3-claude.zip (vérifié 95/235, 27 blocs) n'a pas
+pu être exécuté au poste Claude ; la présente session l'exécute au bac.
+
+DIAGNOSTIC (pré-enregistré AVANT mesure, reproduit du diagnostic du 25/11)
+Le harnais générique (scripts/vague23/harnais_par_bloc.py) chargeait chaque
+bloc assemblé à son RVA à l'adresse fixe 0xC000 : TOUTES les références
+absolues de la notation (slots d'IAT en RIP-relatif, appels inter-blocs aux
+RVA des voisins, globales .rdata) se trouvaient décalées de (0xC000 - rva) et
+tombaient hors pages mappées. Trois familles de fautes constatées :
+  F1  FETCH à 0x0 — lecture d'un slot d'IAT déplacé dans la page de code,
+      l'octet lu formant une adresse nulle (a10001-3, b20008, c30013, e50012) ;
+  F2  READ au premier quart du bloc — lecture RIP-relative d'un slot IAT ou
+      d'une globale hors page (c30001-11, e50002/04/06/07/09/10/11,
+      g70004/06/08/10/11, g80002-3) ;
+  F3  FETCH sous 0xC000 — appel inter-bloc à la RVA absolue du voisin,
+      déplacée sous la page de code (e50004, e50009, e50010, g70004, g70006,
+      g70008).
+
+CONCEPTION DU HARNAIS v2 (l'image entière à sa vraie base)
+  H1  L'image est chargée à la BASE RÉELLE du profil : B = 0x140000000
+      (L.IMAGE_BASE, m3/layout.py:62) — Unicorn mappe cette plage sans
+      restriction ; AUCUNE hypothèse du profil n'est cassée, aucune adresse
+      scellée déplacée (la notation est assemblée à son RVA exact, comme au
+      build : m5/build_m5.py assembler_bloc).
+  H2  La plage [B+0x1000, B+0xB000) est mappée. Les ZONES DE CODE de la carte
+      (io 0x1000-0x10ff, libc 0x1100-0x143f, app 0x1800-0x1fff, net
+      0x4000-0x42ff, thr 0x4300-0x43ff, cli 0x4400-0x45bf, srv 0x4b00-0x4bff,
+      http 0x4c00-0x5e7f, tls 0x6000-0x733f, revisions 0x7340-0x7fbf,
+      reserve-t3 0x7fc0-0x7fff, revisions-m5 0x8000-0x8fbf, reserve-t4
+      0x8fc0-0x9fff) sont pré-remplies du motif de stub « xor eax,eax ; ret »
+      (31 c0 c3 + 13× 90 — le même que le harnais v1), puis CHAQUE bloc de la
+      carte est assemblé et écrit à B+son RVA : les appels inter-blocs
+      exécutent le code réel du voisin (F3 soldée), les zones sans bloc
+      retombent sur le stub.
+  H3  Les TROIS IAT déclarées de la carte reçoivent l'adresse du stub
+      B+0x20000 dans CHAQUE slot (la « politique absente » de v1 est
+      reconduite : retour zéro) :
+        kernel32  0x20B0..0x2110 (R_IAT, m3/layout.py:162),
+        ws2_32    0x2300..0x2368 (R_IAT_WS2, m3/layout.py:172),
+        secur32   0x2A00..0x2A38 (R_IAT_SEC32, m4/layout.py:408),
+        M5        0x2E30..0x2E38 (R_IAT_M5, m5/layout.py:177).
+      La page de stub est mappée à [B+0x20000, B+0x21000) et remplie du motif.
+      Le reste de .rdata/.data (0x2000-0x3FFF hors slots IAT) reste à zéro :
+      lecture froide de l'état initial (F2 soldée, F1 soldée).
+  H4  La CONVENTION D'ARGUMENTS de v1 est reconduite À L'IDENTIQUE (aucune
+      re-tirée) : pages 0x500000-0x521000 (calendrier 176 o à 0x500200,
+      entrées du vecteur à 0x500400 et copie 16 o à 0x500A00, 16 o zéro à
+      0x503000), page de données 0x620000 (64 Kio zéro), pile 0x70000-0x80000
+      avec rsp=0x78000 et [rsp]=0x60000 (sentinelle de fin), registres
+      msx64 : rcx=0x500200, rdx=0x500400, r8=0x503000, r9=0x620000 ;
+      sysv : rdi=0x500200, rsi=0x500400, rdx=0x503000 ; r10=0x620000 ;
+      emu_start(B+rva, until=0x60000, timeout=2 s).
+  H5  Le moteur parcourt les vecteurs de atelier-w20-orac/vecteurs-*.json
+      (les MÊMES que v1, type « rejet » exclu), essaie msx64 puis sysv, et
+      compte « exécuté » si l'émulation atteint la sentinelle sans exception.
+
+AGRÉGATION (fail-closed, contrainte n°3)
+  A1  Le compte total, le compte exécuté et le compte par bloc sont RECOMPOSÉS
+      depuis le fichier de résultats (resultat-image.json) par un agrégateur
+      séparé qui REFUSE : un bloc annoncé non mesuré, un compte annoncé qui
+      diffère du recomposé, un total différent de 235.
+  A2  RÉGRESSION = REFUS : chaque vecteur exécuté de v1
+      (atelier-w23-harnais/harnais-resultat.json, 95) doit rester exécuté en
+      v2 ; toute perte est nommée et la campagne est déclarée REFUSÉE.
+  A3  La cible demeure ≥ 200/235 (pré-enregistrée vague 23, NON re-tirable).
+      Si elle est manquée : le manque et la cause par bloc sont publiés.
+
+CE QUI N'EST PAS TOUCHÉ
+m*/notation/, les binaires scellés, pack-v310/, atelier-w23-harnais/ (le
+« avant » fait foi), atelier-w20-orac/ (les vecteurs font foi). Le harnais
+vit dans atelier-p3-exec/ (copie de laboratoire).
+
+RENDU ATTENDU
+resultat-image.json (par vecteur et par bloc), tableau par bloc (identifiant,
+vecteurs, exécutés, fautes, cause nommée), comptes recomposés + delta contre
+95, sha256 des fichiers produits, commandes exactes, rapport 10-20 lignes.
