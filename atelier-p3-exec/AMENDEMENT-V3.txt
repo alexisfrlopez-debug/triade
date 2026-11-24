@@ -1,0 +1,53 @@
+AMENDEMENT V3 DU PLAN DU HARNAIS IMAGE (append-only, 25/11/2026)
+Le plan gelé PLAN-HARNAIS-IMAGE.txt (sha256 5cc5da39…31da6) demeure : ce
+fichier le complète de trois dispositions, chacune nommée avec sa cause.
+Le résultat intermédiaire v2 (mesuré puis consigné) : 161/235 exécutés,
+zéro régression, 13 blocs sans exécution — recomposition
+atelier-p3-exec/recomposition-image.json (v2).
+
+V3-1  L'ÉTAT INITIAL DES DONNÉES VIENT DU BINAIRE SCELLÉ (lecture seule)
+  Cause : les blocs restants fautent en déréférençant des globales .data
+  nulles (rep movsb destination invalide ; recherche d'en-tête dans un
+  tampon nul). Le brief P3 nomme le contexte attendu : « les globales
+  .data/.rdata » que la spécification I cite. Leur état initial RÉEL vit
+  dans le binaire scellé m5/proxy.exe (sections .rdata VA 0x2000 et .data
+  VA 0x3000) — le harnais v3 CHARGE ces sections à leur RVA (lecture
+  seule, le fichier n'est jamais ouvert en écriture ; précédent : le
+  jumeau de la vague 15 lisait les pièces scellées). La « lecture froide
+  de l'état initial » du plan (H3) devient l'état initial AUTHENTIQUE :
+  plus fidèle, jamais moins.
+  Disposition : sections .text/.rdata/.data/.text2/.text3/.text4 de
+  m5/proxy.exe chargées à B+VirtualAddress (taille VirtualSize, le flanc
+  au-delà de SizeOfRawData à zéro) ; LE BLOC MESURÉ est ensuite écrit à
+  B+son RVA depuis sa notation assemblée (le moteur de v1/v2 demeure) —
+  ce qui corrige AUSSI la collision des slots partagés constatée en v2
+  (b20008, c30013 et e50012 partagent le slot 0x1800 : en v2 le dernier
+  trié écrasait les autres ; en v3 seul le bloc mesuré occupe son slot).
+
+V3-2  LE SLOT ExitProcess EST UN TERMINATEUR, PAS UN RETOUR ZÉRO
+  Cause : hello-03 (io-02 exit) appelle ExitProcess puis porte un ud2
+  défensif — INATTEIGNABLE dans le processus réel (ExitProcess ne rend
+  jamais la main). Le stub « retour zéro » de v1/v2 le rendait atteignable
+  et l'émulation fautait en instruction invalide. Modéliser la sémantique
+  réelle (« le processus est terminé ») est plus fidèle que le retour
+  zéro.
+  Disposition : le slot kernel32 0x20C0 (ExitProcess — ordre GSH/WF/EP
+  figé, m3/layout.py:162 et KERNEL32_IMPORTS) reçoit l'adresse d'un
+  TERMINATEUR à PAGE_STUB+0x800 : « mov rax, 0x60000 ; jmp rax » —
+  l'émulation s'arrête PROPRES sur la sentinelle du harnais (le même
+  until que le retour du bloc) : le vecteur est compté exécuté.
+  TOUS LES AUTRES SLOTS des quatre IAT demeurent au stub retour zéro
+  (la « politique absente » reconduite).
+
+V3-3  LES QUALETTES DU PLAN (H2) DEVIENNENT RÉSIDUELLES
+  Les zones de code pré-remplies de stubs ne servent plus : .text/.text2/
+  .text3/.text4 du binaire scellé couvrent les zones de la carte (les
+  blocs y sont, byte-identiques pour les 50 — preuve vague 20). Le
+  moteur assemble toujours depuis la notation (jamais depuis le binaire)
+  et écrit le bloc mesuré à son slot : la propriété « harnais synthétisé
+  depuis la notation » demeure, le binaire ne fournit que le CONTEXTE.
+
+Rien d'autre ne change : mêmes vecteurs, même convention d'arguments,
+même timeout, même agrégateur fail-closed, même cible ≥ 200/235 non
+re-tirable, mêmes interdits (m*/notation/, binaires scellés, pack-v310/,
+atelier-w23-harnais/, atelier-w20-orac/ intouchés).
