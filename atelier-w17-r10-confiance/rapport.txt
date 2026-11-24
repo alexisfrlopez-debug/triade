@@ -1,0 +1,79 @@
+ATELIER W17R3R10 — RACINE DE CONFIANCE AU CHARGEMENT ET ANTI-ROLLBACK
+(la vague 17, le 24/11/2026 ; le plan gelé au commit 8853bcf, la décision D254)
+================================================================================
+
+1. LA QUESTION POSÉE
+---------------------
+L'instruction 03 demande ce que R10 garantit CONTRE CHAQUE CLASSE D'ATTAQUANT, sans
+transformer une vérification locale en garantie universelle : cartographie de ce qui
+est vérifié au chargement par profil, ancre d'authenticité réelle et son propriétaire,
+distinction intégrité / authenticité / fraîcheur, rotation et révocation, rollback
+(restauration binaire+état, administrateur local, snapshots, panne hors ligne), et
+séparation du plancher R10, de l'époque CF3 et des témoins d'époque du coffre.
+
+2. CE QUI EST CONSTATÉ
+----------------------
+- R10 (§ 6) énonce quatre volets (checksums, signature du manifeste, monotonie de
+  version, conformité de l'environnement) et un arrêt propre. Il ne dit RIEN de la clé
+  de signature, du lieu du plancher, ni de ce qui empêche un administrateur de remplacer
+  l'ensemble binaire + clé + état.
+- Les deux fiches de profil déclinaient la règle en trois lignes, sans nommer l'ancre
+  réelle ni ses limites ; la fiche RISC-V disait « le mécanisme est le même, seuls les
+  octets changent ».
+- Le modèle de menace (§ 15.1) annonçait « Détecté — refus » pour le binaire altéré et
+  le rollback, sans qualifier l'adversaire : vrai contre un non-administrateur, FAUX
+  contre un administrateur local ou une restauration cohérente du couple.
+- Les hypothèses A1-A5 du modèle formel CF3 ne sont PAS rejouées : tamarin, proverif et
+  maude sont absents du bac ; leur statut reste « prouvés sous hypothèses ».
+- Aucune exécution matérielle n'est possible ici (TEE, secure boot, FIDO2, sentinelle
+  SACL/4663) : ces mécanismes sont nommés EN ATTENTE, jamais simulés ni activés.
+
+3. CE QUI EST LIVRÉ
+-------------------
+(a) atelier-w17-r10-confiance/MATRICE-R10.md — la matrice menace → mécanisme → ancre →
+    preuve → limite, neuf lignes, une par classe d'attaquant, chaque ligne nommant
+    l'ancre et SA LIMITE ; plus la séparation des trois propriétés et les quatre
+    scénarios de rollback.
+(b) docs/PROTOCOLE_TRIADE.md § 8.6 (nouveau) — les trois propriétés, l'ancre par profil,
+    la limite de l'ancre modifiable, le rollback cohérent, la rotation/révocation,
+    l'absence réseau comme état normal, et le renvoi à la matrice.
+(c) docs/FORMAT_CARTE.md § 12 (nouveau) — plancher signé, état local, clé hors artefact,
+    ordre exact des sept portes de vérification et les huit refus nommés.
+(d) docs/PROFIL_x86-64-linux-elf64.md et docs/PROFIL_riscv64-linux-elf64.md § 8 — un
+    point « ancre et limite » par fiche (IMA/signature de paquet ; chaîne de boot
+    signée), l'un et l'autre EN ATTENTE du poste réel.
+(e) docs/DECISIONS.md D254 — la décision append-only, alternatives rejetées comprises.
+(f) atelier-w17-r10-confiance/controles_fail_closed.py — le banc falsifiable.
+
+4. LES PREUVES (ce qui est réellement exécuté)
+----------------------------------------------
+Le banc rend 11/11 contrôles :
+  [1] nominal (carte signée Ed25519, état à l'époque, hors ligne) ......... OUVERT
+  [2] carte absente ....................................................... CARTE ABSENTE
+  [3] signature d'une autre clé ........................................... SIGNATURE INVALIDE
+  [4] corps muté après signature .......................................... SIGNATURE INVALIDE
+  [5] manifeste divergent (signé sur une carte mutée) ..................... MANIFESTE DIVERGENT
+  [6] version 0.6.0 sous le plancher 0.7.0 ................................ VERSION SOUS LE PLANCHER
+  [7] état restauré (époque 9 < état 12) .................................. RETOUR EN ARRIERE
+  [8] état absent sans déclaration ........................................ ETAT ABSENT
+  [9] première ouverture déclarée ......................................... OUVERT
+  [10] clé d'ancre absente ................................................ CLE D'ANCRE ABSENTE
+  [11] tentative réseau au chargement ..................................... RESEAU AU CHARGEMENT
+La clé Ed25519 est engendrée EN MÉMOIRE au début du run ; aucun secret n'est lu, écrit
+ni affiché. Le banc ne revendique AUCUNE exécution matérielle.
+
+5. CE QUI RESTE AU POSTE RÉEL (nommé, jamais simulé)
+----------------------------------------------------
+- L'ancre d'exploitation par profil : Authenticode (Windows), IMA appraisal ou
+  signature de paquet (Linux), chaîne de boot signée (RISC-V) — configuration au poste.
+- La sentinelle Windows de production (SACL + journal 4663 ou ETW).
+- La conformité d'environnement au métal (R10 d) sur ≥ 2 machines.
+- L'activation de tout TEE / FIDO2 : geste explicite du maître, jamais au laboratoire.
+- Les preuves Tamarin/ProVerif : le poste réel (outils absents du bac) ; statut inchangé.
+
+6. LES REFUS TENUS
+------------------
+Jamais de garantie universelle tirée d'une vérification locale ; jamais d'ancre simulée ;
+jamais de clé récupérée en silence ; jamais de propagation réseau au chargement ; jamais
+un lemme annoté sans outil ; jamais le coffre réel approché (D105) ; aucun mécanisme
+activé sans geste du maître.

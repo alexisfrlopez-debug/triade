@@ -403,3 +403,30 @@ destruction = acte explicite) ; falsifiabilité : `python3 v06/test_cf2.py`
 (43 contrôles : Shamir contre témoin indépendant — somme de puissances et
 Gauss, tout M′ compatible sous T, fail-closed nommé, fausses alertes nulles,
 exfiltration simulée avec latence bornée, atomicité des remises, santé).
+
+## 12. La carte et la fraîcheur — plancher, état, ancre (D254)
+
+La carte porte les empreintes (frag-bld) et la signature qui les couvre (R8, R9) ; elle
+ne porte ni le plancher de version ni l'état local, et c'est volontaire : un plancher
+inscrit **dans** la carte serait signé par la même clé que ce qu'il contrôle, et se
+déplacerait avec une carte rejouée.
+
+Trois emplacements, trois propriétés :
+
+| Objet | Emplacement | Propriété | Ce qu'il ne protège pas |
+|---|---|---|---|
+| **plancher de version** | champ `plancher` du manifeste de build, **signé**, recoupé à l'état local | fraîcheur de l'**artefact** | une restauration cohérente du couple binaire + état |
+| **état local** (époque, version admise) | fichier local, écriture atomique, 0600 | monotonie de l'époque | un administrateur qui abaisse le plancher |
+| **clé publique de vérification** | fichier local root-owned hors arborescence inscriptible (ou magasin protégé du système) | authenticité du manifeste | une clé compromise avant publication |
+
+**Ordre de vérification au chargement** (aucune porte sautée, aucun chemin dégradé) :
+présence de la carte → présence de la clé → signature du manifeste → recomposition de
+l'empreinte du manifeste → version ≥ plancher → époque ≥ état local → aucun accès réseau.
+Chaque échec est un refus **nommé** (les huit noms sont fixés par la matrice R10 de la
+vague 17) et l'arrêt précède toute entrée dans le chemin d'exécution.
+
+**La clé n'est jamais dans l'artefact.** Une clé publique logée dans le binaire ou dans un
+fichier que le même utilisateur peut réécrire transforme R10 en contrôle d'intégrité
+seulement : l'attaquant remplace la clé avec l'artefact et signe. La distribution de la
+clé est un acte hors bande ; la rotation porte un identifiant (`kid`) et un plancher
+d'époque, dans le manifeste signé.

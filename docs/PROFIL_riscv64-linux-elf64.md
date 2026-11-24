@@ -157,6 +157,11 @@ R10/R11 des profils x86-64 ; la table de correspondance vit dans frag-con.
 - Porte R10 identique au profil M6 (checksums des blocs scellés au lancement,
   R_VERSION ≥ plancher, conformité environnement, arrêt propre fail-closed) —
   l'image est ELF64, le mécanisme est le même, seuls les octets changent.
+- **L'ancre et sa limite (D254, atelier W17R3R10)** : même porte que M6 ; l'ancre
+  d'exploitation serait la **chaîne de boot signée** (FIT/U-Boot) sur silicium —
+  **EN ATTENTE** (exécution QEMU seulement au bac). Le plancher signé et l'époque de
+  l'état local ne protègent ni d'un administrateur local ni d'une restauration
+  cohérente du couple binaire + état.
 - Balise du jalon M7 = **0.8.0** (rc.1 → finale après validation) ; LICENSE
   anti-rollback amendé à chaque scellage, modèle D147. La 0.8.0-dev.1
   (chantier (a)), la 0.8.0-dev.2 (chantier (b)) — des gestes de BUILD ;

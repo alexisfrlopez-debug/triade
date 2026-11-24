@@ -1209,6 +1209,49 @@ terrain couvre l'espace des environnements au coût d'un run. Le protocole exige
 deux : R5 (vérifie-puis-écrit) pour la première, la boucle d'évidence (§ 8.4) pour la
 seconde.
 
+### 8.6 La racine de confiance au chargement — ce que R10 garantit, et ce qu'il ne garantit pas (D254)
+
+R10 est une règle locale et hors ligne : l'artefact vérifie ses checksums, la signature
+de son manifeste, sa version contre le plancher accepté et la conformité de
+l'environnement, avant toute entrée dans le chemin d'exécution. La v0.24.0 rend explicite
+ce que la règle supposait : **la garantie de R10 vaut ce que vaut son ancre**, et l'ancre
+diffère par profil.
+
+Trois propriétés sont distinguées, jamais fondues l'une dans l'autre :
+
+- **intégrité** — les octets sont ceux qui ont été scellés (checksums, empreinte du
+  manifeste recomposée) ;
+- **authenticité** — le manifeste a été signé par la clé autorisée (Ed25519 sous la clé
+  publique épinglée hors de l'artefact qu'elle authentifie) ;
+- **fraîcheur** — la version n'est ni ancienne ni révoquée (plancher signé, époque de
+  l'état local, monotonie de la clé).
+
+L'ancre réelle, par profil : sous `x86-64-win11-pe`, la signature Authenticode vérifiée
+par le système ; sous `x86-64-linux-elf64`, l'appraisal IMA (clé du trousseau noyau) ou
+la signature de paquet ; sous `riscv64-linux-elf64`, la chaîne de boot signée. **Si l'ancre
+est modifiable avec l'artefact — le cas nominal d'un dépôt inscriptible —, la limite est
+écrite** : R10 détecte la corruption et la falsification opportuniste, il ne détecte pas un
+administrateur local qui remplace ensemble binaire, clé et état.
+
+Le rollback est analysé séparément : le rejeu d'un binaire ancien seul est refusé par le
+plancher ; la **restauration cohérente d'un couple binaire + état** échappe à toute ancre
+locale — seuls les témoins hors machine du coffre (carte papier du sachet, journal Git
+poussé, ancre de transparence du témoin d'époque, § 12.3) la rendent visible. Le plancher
+R10, l'époque CF3 et les témoins d'époque du coffre sont **trois propriétés distinctes** :
+le premier protège l'artefact, la seconde la clé du coffre, les troisièmes la fraîcheur de
+l'état.
+
+Rotation et révocation : la clé neuve est distribuée hors bande avec son identifiant
+(`kid`) et son plancher d'époque ; une clé absente ou révoquée est un **refus nommé**,
+jamais une récupération. Aucun appel réseau au chargement : `--reseau` est refusé à
+l'entrée, l'absence de réseau est l'état normal du vérificateur. Les refus sont énumérés
+(carte absente, clé absente, signature invalide, manifeste divergent, version sous
+plancher, état absent non déclaré, retour en arrière, tentative réseau) et éprouvés au banc
+— onze contrôles, aucune exécution matérielle revendiquée. La matrice complète, profil par
+profil, vit à `atelier-w17-r10-confiance/MATRICE-R10.md` ; les mécanismes d'exploitation
+(Authenticode, IMA, secure boot, sentinelle SACL/4663) restent **en attente du poste réel**
+et ne sont ni activés ni simulés ici.
+
 ## 9. Cristallisation et pré-versions
 
 La v0.3 connaissait les balises de version sans en fixer la sémantique ; la démonstration

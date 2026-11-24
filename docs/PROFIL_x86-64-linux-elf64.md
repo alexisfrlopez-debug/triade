@@ -153,6 +153,14 @@ est donc désappris sélectivement, jamais globalement.
   conformité minimale de l'environnement au profil ; tout écart = arrêt propre
   immédiat, fail-closed explicite (le modèle m5/m4 transposé : mêmes qwords de
   garde, image ELF).
+- **L'ancre et sa limite (D254, atelier W17R3R10)** : l'authenticité de l'artefact repose
+  sur la clé publique épinglée hors de l'arborescence inscriptible ; la fraîcheur sur le
+  plancher signé et l'époque de l'état local. L'ancre d'exploitation du poste est
+  l'**appraisal IMA** (clé du trousseau noyau) ou la signature de paquet — **non
+  configurée au bac : EN ATTENTE du poste réel**. Sans elle, R10 détecte la corruption
+  et la falsification opportuniste ; il ne détecte pas un administrateur local qui
+  remplace ensemble binaire, clé et état, ni la restauration cohérente d'un couple
+  binaire + état (seuls les témoins hors machine du coffre la voient).
 - **Registre des versions acceptées** : LICENSE anti-rollback amendé à chaque scellage
   (modèle D147) ; plancher posé à `0.7.0-dev.1`, balise du jalon M6 = **`0.7.0` SCELLÉE**
   (rc.1 au chantier (c) ; la FINALE posée le 05/11/2026 sur run terrain WSL2 vert
