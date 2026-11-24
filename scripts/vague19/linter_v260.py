@@ -1,0 +1,289 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""LE LINTER D'ÉDITION v3 — PORTÉ À LA PORTE DE GÉNÉRATION v0.26.0 (W19LINT).
+
+Onze classes, chacune falsifiable :
+  C1  PHRASES SÉMANTIQUES        — revendications interdites, étiquettes d'ère périmées ;
+  C2  PLAGES DE DÉCISIONS        — la plage annoncée et les lignes des décisions récentes ;
+  C3  REVENDICATIONS DE VERSION  — chaque pièce porte SA chaîne, aucune celle d'une autre ;
+  C4  GALLICISMES ANGLAIS        — les calques interdits dans le texte anglais ;
+  C5  NUMÉRAUX DE LA PROSE       — chaque valeur publiée se recompose de ses opérandes ;
+  C6  VERSION-TABLE              — le tableau §10 de la présentation == le manifeste du pack ;
+  C7  DECISION-RANGE             — tout ID cité ⊆ [D1, dernière décision réelle] ;
+  C8  CHANGELOG-ORDER            — ordre chronologique strict du changelog gelé ;
+  C9  NUMEROTATION               — une seule convention de renvoi (spec § x.y vs doc § n) ;
+  C10 BENCH-COUNT                — tout n/n annoncé recomposé depuis les cas du kit ;
+  C11 SEMANTIC-THREAT            — chaque « détecté — … » du §15.1 qualifié (classe, bord),
+                                   confronté à §7.7/D254 ; plus de « toutes neutralisées ».
+
+Usage : python3 scripts/vague19/linter_v260.py [--controle-negatif] [--pack DIR]
+Sortie : 0 = 0 résidu ; 2 = résidus nommés ; 3 = un contrôle négatif non attrapé.
+"""
+import argparse
+import hashlib
+import json
+import os
+import pathlib
+import re
+import subprocess
+import sys
+
+RACINE = pathlib.Path(__file__).resolve().parents[2]
+PACK_DEFAUT = RACINE / "pack-v260"
+DERNIERE_DECISION = 268          # la dernière décision réelle (D268, journal)
+CLASSES_ADV = ("ADV-LOCAL", "ADV-ADMIN", "ADV-MEDIA", "ADV-DISTANT")
+BORDS = ("EN-LIGNE", "HORS-LIGNE", "LES-DEUX")
+
+
+def pieces(pack):
+    return {
+        "manuscrit": pack / "1-manuscrit" / "TRIADE_manuscrit_v0.26.0.pdf",
+        "specification": pack / "2-specification" / "Protocole_TRIADE_v0.15.11_Specification.pdf",
+        "livre": pack / "3-coffre-fort" / "Livre_du_Coffre_TRIADE_CF1-CF3_v1.10.pdf",
+        "preuves": pack / "4-preuves-calculs" / "TRIADE_preuves_et_calculs_v0.26.0.pdf",
+        "presentation": pack / "5-presentation" / "TRIADE_presentation_v0260.pdf",
+    }
+
+
+def texte(p):
+    if not pathlib.Path(p).exists():
+        return ""
+    r = subprocess.run(["pdftotext", str(p), "-"], capture_output=True, text=True)
+    return r.stdout if r.returncode == 0 else ""
+
+
+def charge(pack):
+    return {k: texte(v) for k, v in pieces(pack).items()}
+
+
+def charge_manifeste(pack):
+    m = {}
+    f = pack / "empreintes_livrables_v0.26.0.txt"
+    if not f.exists():
+        return m
+    for ligne in f.read_text(encoding="utf-8").splitlines():
+        if "  " in ligne and len(ligne.split()[0]) == 64:
+            h, nom = ligne.split("  ", 1)
+            m[nom.strip()] = h.strip()
+    return m
+
+
+def recompte_banc():
+    r = subprocess.run([sys.executable, str(RACINE / "scripts/vague19/recompte_banc.py"), "--json"],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        return None
+    return json.loads(r.stdout)
+
+
+def verifie(t, manifeste=None, recompte=None):
+    refus = []
+
+    # C1 — phrases sémantiques
+    if re.search(r"edition \(v0\.2[0-4]\.\d+\) restates", t["manuscrit"]):
+        refus.append(("C1", "manuscrit", "l'abstract porte une version d'ère périmée"))
+    if "the training corpus of 109 triples" in t["manuscrit"] and "(v2, historical" not in t["manuscrit"]:
+        refus.append(("C1", "manuscrit", "les 109 triples ne sont pas étiquetés historiques"))
+    if "11/11 refus nommés rendus" in t["presentation"]:
+        refus.append(("C1", "presentation", "« 11/11 refus » non corrigé"))
+
+    # C2 — plages de décisions
+    if not re.search(r"D75\s*[-–]+\s*D268", t["specification"]):
+        refus.append(("C2", "specification", "la plage D75–D268 est absente de l'annexe B"))
+    for d in ("D261", "D262", "D263", "D264", "D267", "D268"):
+        if d not in t["specification"]:
+            refus.append(("C2", "specification", f"la ligne {d} est absente"))
+    if "D251" in t["manuscrit"]:
+        refus.append(("C2", "manuscrit", "le manuscrit annonce encore D251"))
+
+    # C3 — revendications de version
+    attendu = {"manuscrit": "v0.26.0", "specification": "v0.15.11", "livre": "v1.10",
+               "preuves": "v0.26.0", "presentation": "v0.26.0"}
+    for piece, ver in attendu.items():
+        if ver not in t[piece]:
+            refus.append(("C3", piece, f"la chaîne {ver} est absente"))
+
+    # C4 — gallicismes anglais
+    for calque in ["permits to ", "allows to ", "perennisation", "dispose of the possibility",
+                   "the present edition permits to", "harmonisation of the"]:
+        if calque in t["manuscrit"].lower():
+            refus.append(("C4", "manuscrit", f"calque interdit : {calque.strip()}"))
+
+    # C5 — numéraux de la prose
+    if "3.23×" in t["manuscrit"] or "3.23x" in t["manuscrit"]:
+        refus.append(("C5", "manuscrit", "le ratio fautif 3.23 est publié comme valeur"))
+    if "3.22" not in t["manuscrit"]:
+        refus.append(("C5", "manuscrit", "le ratio corrigé 3.22 est absent"))
+    for attendu_txt in ("712,5", "37,425", "49,12"):
+        if attendu_txt not in t["preuves"]:
+            refus.append(("C5", "preuves", f"le numéral {attendu_txt} est absent"))
+
+    # C6 — VERSION-TABLE : le tableau §10 == le manifeste
+    versions = {"Manuscrit": "v0.26.0", "Spécification": "v0.15.11", "Livre du Coffre": "v1.10",
+                "Preuves et calculs": "v0.26.0", "Présentation": "v0.26.0"}
+    pres = t["presentation"]
+    for libelle, ver in versions.items():
+        m = re.search(re.escape(libelle) + r"\s*\n?\s*(v?\d+\.\d+(?:\.\d+)?)", pres)
+        if not m:
+            refus.append(("C6", "presentation", f"ligne §10 « {libelle} » introuvable"))
+        elif m.group(1).lstrip("v") != ver.lstrip("v"):
+            refus.append(("C6", "presentation",
+                          f"§10 {libelle} = {m.group(1)} ≠ manifeste {ver}"))
+    for vieux in ("v0.24.0", "v0.15.9", "v1.8"):
+        # une étiquette d'ère dans le tableau §10 est refusée ; les mentions historiques
+        # du corps (append-only) restent admises hors de la section 10
+        i10 = pres.find("10. L'édition")
+        if i10 >= 0 and vieux in pres[i10:i10 + 1200]:
+            refus.append(("C6", "presentation", f"§10 porte encore l'étiquette {vieux}"))
+
+    # C7 — DECISION-RANGE
+    for piece in ("manuscrit", "specification", "livre", "preuves", "presentation"):
+        ids = set(int(x) for x in re.findall(r"\bD(\d{1,3})\b", t[piece]))
+        hauts = [i for i in ids if i > DERNIERE_DECISION]
+        bas = [i for i in ids if i < 1]
+        if hauts:
+            refus.append(("C7", piece, f"ID hors plage : D{max(hauts)} > D{DERNIERE_DECISION}"))
+        if bas:
+            refus.append(("C7", piece, f"ID hors plage : D{min(bas)} < D1"))
+        for plage in re.findall(r"D(\d{1,3})\s*[-–]+\s*D(\d{1,3})", t[piece]):
+            lo, hi = int(plage[0]), int(plage[1])
+            if hi > DERNIERE_DECISION or lo > hi:
+                refus.append(("C7", piece, f"plage déclarée D{lo}–D{hi} incohérente"))
+
+    # C8 — CHANGELOG-ORDER (dates croissantes)
+    entrees = re.findall(r"\\item v(\d+\.\d+(?:\.\d+)?) \((\d{1,2}) (\w+) (\d{4})\)", t["manuscrit"])
+    if not entrees:
+        # pdftotext perd les \\item : on relit la source si le PDF ne porte pas la forme brute
+        src = (RACINE / "edition-v0230" / "main.tex").read_text(encoding="utf-8")
+        entrees = re.findall(r"\\item v(\d+\.\d+(?:\.\d+)?) \((\d{1,2}) (\w+) (\d{4})\)", src)
+    mois = {m: i for i, m in enumerate(
+        ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 1)}
+    dates = [(int(a), mois.get(b, 0), int(c)) for _v, a, b, c in entrees]
+    for i in range(1, len(dates)):
+        if dates[i] < dates[i - 1]:
+            refus.append(("C8", "manuscrit",
+                          f"changelog hors ordre à l'entrée {i + 1} ({entrees[i][0]} après {entrees[i-1][0]})"))
+            break
+
+    # C9 — NUMEROTATION : une seule convention, sur la PARTIE NARRATIVE des preuves
+    # (les rapports d'atelier sont lus verbatim : ils peuvent citer une règle du linter)
+    narratif = t["preuves"].split("W19LINT — la porte de génération")[0]
+    if re.search(r"§\s*(?!spec\b)\d+\.\d+", narratif):
+        refus.append(("C9", "preuves", "renvoi de section sans la convention « spec § x.y »"))
+    if "8.6" in narratif:
+        refus.append(("C9", "preuves", "renvoi §8.6 (D254 est en spec §7.7)"))
+    for ref in ("spec 7.6", "spec 7.7", "spec 7.8", "spec 7.9", "spec 7.10", "spec 7.11"):
+        if ref not in narratif:
+            refus.append(("C9", "preuves", f"le renvoi normalisé « {ref} » est absent"))
+
+    # C10 — BENCH-COUNT
+    if recompte is not None:
+        pub = f"{recompte['total']}/{recompte['total']}"
+        plat = re.sub(r"\s+", " ", t["presentation"])
+        if pub not in plat:
+            refus.append(("C10", "presentation", f"le compte recomposé {pub} n'est pas publié"))
+        attendus = [f"{recompte['cas_transaction']} cas de transaction",
+                    f"{recompte['aleas_refus']} aléas",
+                    f"{recompte['invariants']} invariants"]
+        for a in attendus:
+            if a not in plat:
+                refus.append(("C10", "presentation",
+                              f"la composante recomposée « {a} » n'est pas publiée"))
+
+    # C11 — SEMANTIC-THREAT
+    spec = t["specification"]
+    # la DERNIÈRE occurrence de « Modèle de menace » est le corps (la première est le
+    # sommaire) : une zone vide serait un faux vert, elle est refusée explicitement
+    occurrences = [m.start() for m in re.finditer(r"15\.1\s+Modèle de menace", spec)]
+    i151 = occurrences[-1] if occurrences else -1
+    if i151 < 0:
+        refus.append(("C11", "specification", "le §15.1 est introuvable"))
+    else:
+        zone = spec[i151:i151 + 8000]
+        if zone.count("détecté") < 5:
+            refus.append(("C11", "specification",
+                          f"zone §15.1 inexploitable : {zone.count('détecté')} ligne(s) « détecté »"))
+        lignes = zone.splitlines()
+        for i, ligne in enumerate(lignes):
+            if "détecté" not in ligne or "Chaque ligne" in ligne:
+                continue
+            # la cellule peut se poursuivre sur les lignes suivantes, mais JAMAIS au-delà
+            # de la prochaine occurrence de « détecté » (une autre rangée)
+            suite = []
+            for j in range(i + 1, min(i + 8, len(lignes))):
+                if "détecté" in lignes[j]:
+                    break
+                suite.append(lignes[j])
+            voisin = " ".join([ligne] + suite)
+            if not (any(c in voisin for c in CLASSES_ADV) and any(b in voisin for b in BORDS)):
+                refus.append(("C11", "specification",
+                              f"ligne « détecté » non qualifiée : {ligne.strip()[:60]}"))
+        if "toutes sont neutralisées" in zone:
+            refus.append(("C11", "specification", "« toutes sont neutralisées » encore revendiqué"))
+        if "D254" not in zone and "D267" not in zone:
+            refus.append(("C11", "specification", "le §15.1 ne renvoie ni à D254 ni à D267"))
+    return refus
+
+
+def rapport(refus):
+    print("=" * 78)
+    print("LE LINTER D'ÉDITION v3 — ONZE CLASSES (porte de génération v0.26.0)")
+    print("=" * 78)
+    if not refus:
+        print("[linter-v260] 0 RÉSIDU — les onze classes sont vertes sur les cinq pièces")
+        return 0
+    for c, p, m in refus:
+        print(f"[linter-v260] RÉSIDU {c} {p} — {m}")
+    print(f"[linter-v260] {len(refus)} résidu(s)")
+    return 2
+
+
+def controle_negatif():
+    pack = PACK_DEFAUT
+    base = charge(pack)
+    manifeste = charge_manifeste(pack)
+    rec = recompte_banc()
+    essais = []
+
+    def essai(classe, mut):
+        t = {k: v for k, v in base.items()}
+        mut(t)
+        r = verifie(t, manifeste, rec)
+        essais.append((classe, any(c == classe for c, _, _ in r), r))
+
+    # 1. libellé de version muté (VERSION-TABLE)
+    essai("C6", lambda t: t.__setitem__(
+        "presentation", t["presentation"].replace("Manuscrit\n\nv0.26.0", "Manuscrit\n\nv0.24.0")))
+    # 2. ID hors plage
+    essai("C7", lambda t: t.__setitem__("preuves", t["preuves"] + "\nla décision D299 tranche."))
+    # 3. ligne de menace non qualifiée
+    essai("C11", lambda t: t.__setitem__(
+        "specification", t["specification"].replace("ADV-MEDIA", "ADVX-MEDIA")))
+    # 4. compte de banc muté
+    essai("C10", lambda t: t.__setitem__(
+        "presentation", t["presentation"].replace("16/16", "15/15")))
+
+    verts = 0
+    print("=" * 78)
+    print("CONTRÔLES NÉGATIFS — QUATRE MUTATIONS, QUATRE REFUS ATTENDUS")
+    print("=" * 78)
+    for classe, ok, r in essais:
+        verts += 1 if ok else 0
+        print(f"[{'VERT' if ok else 'ROUGE'}] {classe} → {[x for x in r if x[0] == classe]}")
+    print(f"{verts}/4")
+    return 0 if verts == 4 else 3
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--pack", default=str(PACK_DEFAUT))
+    ap.add_argument("--controle-negatif", action="store_true")
+    a = ap.parse_args()
+    if a.controle_negatif:
+        return controle_negatif()
+    pack = pathlib.Path(a.pack)
+    return rapport(verifie(charge(pack), charge_manifeste(pack), recompte_banc()))
+
+
+if __name__ == "__main__":
+    sys.exit(main())

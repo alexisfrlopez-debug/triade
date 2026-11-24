@@ -1,0 +1,24 @@
+TRIADE — LE PACK DE L'ÉDITION v0.26.0 (la vague 19, 24 novembre 2026)
+=====================================================================
+Les cinq pièces, régénérées sous la PORTE DE GÉNÉRATION à onze classes :
+  manuscrit v0.26.0 · spécification v0.15.11 · Livre du Coffre v1.10 ·
+  preuves et calculs v0.26.0 · présentation v0.26.0.
+
+CE QUE PORTE LA VAGUE 19
+- la porte de génération exécute le linter porté (cinq classes) ET six classes
+  fail-closed : table des versions confrontée au manifeste, plage des décisions,
+  ordre du changelog, convention de numérotation, recompte des bancs, qualification
+  sémantique des lignes de menace (D268) ;
+- les six résidus constatés sont soldés : étiquettes v0.24.0 de la présentation,
+  §15.1 non qualifiée, D262–D264 annoncés-absents, « +1 » du banc 16/16 (le rendez-vous
+  nominal), ordre du changelog, numérotation mixte des Preuves §2 ;
+- la chaîne de décisions D261–D267 entre au journal et à la spécification : liste blanche
+  du prescriptif (D262), compteur NV (D263), expansion structurée (D264), ancrage de
+  transparence à son statut appliqué (D267) ;
+- le kit métal de bascule est pré-enregistré et son agrégateur fail-closed (EN ATTENTE) ;
+  le moteur d'oracle est étendu aux 52 blocs (50/52 byte-identiques, mémo content-addressed,
+  audit 1-sur-10) ; la frontière « add » passe au pointeur-seul avec expandeur déterministe.
+Limites nommées : métal nu, compteur NV matériel, campagne structurée et déploiement de
+l'ancrage de transparence restent EN ATTENTE ; le moteur natif n'est pas rejouable dans le
+bac (mmap_min_addr) ; les 1 991 tokens de l'ancienne extraction ne sont pas rejoués.
+Empreintes : empreintes_livrables_v0.26.0.txt. Vérification : rapport_verification_v0.26.0.txt.

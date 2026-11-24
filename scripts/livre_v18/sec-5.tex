@@ -336,3 +336,24 @@ poussé, l'ancre de transparence — protègent la fraîcheur de l'état. Aucun 
 l'autre : un plancher à jour ne dit rien de l'état du coffre, et une époque à jour ne
 dit rien de la version du binaire. La restauration cohérente d'un couple binaire + état
 échappe à toute ancre locale : seuls les témoins hors machine la rendent visible.
+
+\paragraph{Le compteur NV comme plancher de fraîcheur par profil (D263, v1.10).} Le plancher
+de version vit dans le manifeste signé ; le compteur NV monotone — TPM 2.0 lorsque le profil
+en dispose, RPMB sinon — donne la preuve qu'aucune version antérieure n'a été chargée. La
+porte de chargement est fail-closed : \code{ANCRE-PERDUE}, \code{SCELAGE-NON-ENREGISTRE},
+\code{RETOUR-EN-ARRIERE}, \code{INCREMENT-NON-MONOTONE} sont des refus nommés, et
+l'agrégateur refuse le partiel. Limites écrites : l'effacement du TPM ou le remplacement du
+média remet le compteur à zéro et exige une cérémonie de ré-enregistrement ; un TPM
+virtualisé ne prouve rien du silicium ; le compteur prouve un plancher, pas l'identité de la
+version fraîche. Le simulateur du kit rend 12/12 ; le run matériel est EN ATTENTE.
+
+\paragraph{L'ancrage de transparence, à son statut appliqué (D267, v1.10).} Un témoin
+d'époque (édition, empreinte de l'artefact, empreinte de l'état, date) peut être ancré hors
+de la machine : une entrée de journal de transparence (Rekor) ou un horodatage qualifié
+(RFC 3161). La règle est adoptée et outillée, le déploiement n'est pas fait : aucun témoin
+ancré n'existe à cette révision, et la porte de release le dit EN ATTENTE. Les refus sont
+nommés (\code{ANCRE-INDISPONIBLE}, \code{TEMOIN-SANS-ANCHE}, \code{ANCRE-INCOHERENTE}).
+Le delta est écrit : au bord EN LIGNE (geste de release seulement), l'ancre voit la
+restauration cohérente que nulle ancre locale ne voit, au prix d'une fuite de métadonnées
+et d'une dépendance à un tiers ; au bord HORS LIGNE (chargement), rien ne change — R10 ne
+fait aucun appel réseau.

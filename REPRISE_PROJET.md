@@ -60,6 +60,21 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 19)** : l'édition **v0.26.0** est
+générée au bac — manuscrit v0.26.0, spécification v0.15.11, Livre du Coffre v1.10,
+preuves v0.26.0, présentation v0.26.0 (`pack-v260/`, manifeste
+`empreintes_livrables_v0.26.0.txt`) ; la **porte de génération** à onze classes est verte
+(`scripts/vague19/porte_generation_v260.py`, 4/4 contrôles négatifs) et les **six résidus**
+sont soldés (D268). La chaîne de décisions **D261–D267** est au journal et à la
+spécification (annexe B **D75–D268**). Le kit métal est pré-enregistré et son agrégateur
+fail-closed (EN ATTENTE du run) ; le moteur d'oracle est étendu aux **52 blocs**
+(50/52 byte-identiques, mémo content-addressed, audit 1-sur-10, consoles du jumeau
+128/128) ; l'expandeur « add » à pointeur-seul est livré (18/18, 4 refus). **Aucune
+publication Zenodo n'a été faite pour cette vague : la doctrine « jamais de mint sans
+commande » tient.** Les gestes au poste réel demeurent nommés : métal nu (≥ 2 machines),
+compteur NV matériel (D263), campagne structurée (D264), déploiement de l'ancrage de
+transparence (D267), témoin hors machine (D259).
+
 **L'ÉTAT PRÉSENT** : LE CORPUS v2 MINTÉ AU CONCEPT — LES 60 APPELS
 v6 AJOUTÉS (Entrée 393, 23/11/2026 — la commande du maître « ajoute les
 60 appels v6 au corpus et mets a jour tous les kits dans les depots git
