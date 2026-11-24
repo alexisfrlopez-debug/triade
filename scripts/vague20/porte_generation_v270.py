@@ -10,7 +10,7 @@ Ce que la porte vérifie, sur les fichiers du pack :
   V5  aucun secret : aucun fichier du pack ne porte de motif de clé privée ;
   V6  le témoin hors machine (D259) — EN ATTENTE nommé s'il manque ;
   V7  le tableau descendant est engendré, à diff nul (D260) ;
-  L1..L16  les quinze classes du linter v3 (dont C6 VERSION-TABLE, C7 DECISION-RANGE,
+  L1..L17  les quinze classes du linter v3 (dont C6 VERSION-TABLE, C7 DECISION-RANGE,
            C8 CHANGELOG-ORDER, C9 NUMEROTATION, C10 BENCH-COUNT, C11 SEMANTIC-THREAT).
 
 Contrôles négatifs : QUATRE mutations (libellé de version, ID hors plage, ligne de
@@ -125,7 +125,7 @@ def verifier(pieces=None, manifeste=None):
                          "--tableaux-verifier"], capture_output=True, text=True)
     if r7.returncode != 0:
         refus.append(("V7", "tableau-descendant", (r7.stdout or "").strip()[:120]))
-    # L1..L16 — le linter est la porte
+    # L1..L17 — le linter est la porte
     L = _linter()
     pack = pathlib.Path(list(pieces.values())[0][0]).parents[1]
     textes = L.charge(pack)
@@ -135,7 +135,7 @@ def verifier(pieces=None, manifeste=None):
 
 def rapport(refus):
     print("=" * 78)
-    print("PORTE DE GÉNÉRATION v0.27.0 — V1..V7 + L1..L16 (le linter est la porte)")
+    print("PORTE DE GÉNÉRATION v0.27.0 — V1..V7 + L1..L17 (le linter est la porte)")
     print("=" * 78)
     for cle, (p, ver) in PIECES.items():
         print(f"[{'VERT' if pathlib.Path(p).exists() else 'ROUGE'}] {cle:<14} "
@@ -147,7 +147,7 @@ def rapport(refus):
         return 2
     print("[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · "
           "V6 témoin (EN ATTENTE si absent) · V7 tableau")
-    print("[VERT] L1..L16 — seize classes, zéro résidu")
+    print("[VERT] L1..L17 — dix-sept classes, zéro résidu")
     return 0
 
 
@@ -181,17 +181,20 @@ def controle_negatif():
         "preuves", t["preuves"].replace("Test du lecteur : 9/9", "Test du lecteur : 8/9")))
     essai("compte du registre muté", "C16", lambda t: t.__setitem__(
         "presentation", t["presentation"].replace("10 entrées", "11 entrées")))
+    essai("compte oracle muté", "C17", lambda t: t.__setitem__(
+        "presentation", t["presentation"].replace("95 exécutés au contexte standard",
+                                                  "96 exécutés au contexte standard")))
 
     verts = 0
     print("=" * 78)
-    print("CONTRÔLES NÉGATIFS — NEUF MUTATIONS, NEUF REFUS NOMMÉS")
+    print("CONTRÔLES NÉGATIFS — DIX MUTATIONS, DIX REFUS NOMMÉS")
     print("=" * 78)
     for nom, classe, ok, r in essais:
         verts += 1 if ok else 0
         detail = [x for x in r if x[0] == classe]
         print(f"[{'VERT' if ok else 'ROUGE'}] {nom} → attendu {classe} : {detail}")
-    print(f"{verts}/9")
-    return 0 if verts == 9 else 3
+    print(f"{verts}/10")
+    return 0 if verts == 10 else 3
 
 
 def main():

@@ -308,6 +308,17 @@ def verifie(t, manifeste=None, recompte=None):
             statut = cellules[2]
             if not any(_nu(statut).upper().startswith(v) for v in vocab):
                 refus.append(("C16", "registre", f"{cellules[0]} : statut hors vocabulaire « {statut} »"))
+            if len(cellules) >= 6:
+                try:
+                    gele = int(cellules[5])
+                except ValueError:
+                    refus.append(("C16", "registre", f"{cellules[0]} : colonne de péremption illisible"))
+                    gele = 0
+                if gele > 2 and "justifi" not in l.lower():
+                    refus.append(("C16", "registre",
+                                  f"{cellules[0]} gelée depuis {gele} vagues sans justification"))
+            else:
+                refus.append(("C16", "registre", f"{cellules[0]} : colonne de péremption absente"))
             dec = re.search(r"D(\d{1,3})", cellules[4])
             if dec and int(dec.group(1)) > DERNIERE_DECISION:
                 refus.append(("C16", "registre", f"{cellules[0]} : décision D{dec.group(1)} hors plage"))
@@ -317,6 +328,24 @@ def verifie(t, manifeste=None, recompte=None):
         elif int(annonce.group(1)) != len(entrees):
             refus.append(("C16", "presentation",
                           f"annonce {annonce.group(1)} entrées ≠ registre {len(entrees)}"))
+    # C17 — ORACLE-COUNT : le compte des vecteurs et des défauts se recompose des fichiers
+    res = RACINE / "atelier-w22-audit" / "contextes-resultat.json"
+    if res.exists():
+        d = json.loads(res.read_text(encoding="utf-8"))
+        plat = re.sub(r"\s+", " ", t["presentation"])
+        attendus = {
+            "exécutables": d["total_vecteurs"],
+            "executes": d["executes_ok"],
+            "sans_execution": sum(1 for v in d["par_bloc"].values() if v["statut"] != "MESURE"),
+        }
+        for libelle, valeur in (("exécutables", attendus["exécutables"]),
+                                ("exécutés au contexte standard", attendus["executes"]),
+                                ("blocs sans exécution", attendus["sans_execution"])):
+            if f"{valeur}" not in plat:
+                refus.append(("C17", "presentation", f"le compte « {libelle} » = {valeur} est absent"))
+        if f"{attendus['executes']} exécutés au contexte standard" not in plat:
+            refus.append(("C17", "presentation",
+                          f"l'annonce ne porte pas « {attendus['executes']} exécutés au contexte standard »"))
     return refus
 
 

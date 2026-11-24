@@ -90,6 +90,8 @@ def preuves():
     pieces = [(f"Le manuscrit académique {EDITION}", p1), (f"La spécification {SPECVER}", p2),
               (f"Le Livre du Coffre {BOOKVER}", p3)]
     ateliers = [
+        ("W22AUDT — cible relative, contextes d'exécution, C17, péremption (D272)",
+         REPO / "atelier-w22-audit.rapport.txt"),
         ("W21IMPR — les quatre améliorations issues de la vague 20 (D271)",
          REPO / "atelier-w21-impr.rapport.txt"),
         ("W20LINT — le linter v4 à quinze classes, les quatre résidus soldés",
@@ -261,6 +263,8 @@ def presentation():
         "Bascule concurrente au métal nu (kit pré-enregistré, agrégateur fail-closed), sentinelle Windows SACL/4663, IMA/Authenticode configurés.",
         "Compteur NV matériel (D263) et campagne structurée (D264) : simulateur et instrument verts, runs EN ATTENTE.",
         "Tamarin/ProVerif/Maude : outils absents, aucun verdict fabriqué.",
+        "Vecteurs d'oracle : 235 exécutables, 95 exécutés au contexte standard (IAT bouchonnée, "
+        "deux ABI), 27 blocs sans exécution — recomposé depuis les fichiers (C17).",
         "Le registre unique des chantiers en attente porte 10 entrées (STATUTS-EN-ATTENTE.md) ; "
         "la porte recompose ce compte (C16) et refuse tout écart.",
     ])

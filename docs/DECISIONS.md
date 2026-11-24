@@ -5150,3 +5150,24 @@ C16 : dix entrées == dix annoncées, dix refus de vocabulaire éprouvés hors v
 **Les limites.** Le registre est un fichier du dépôt : sa modification est un commit visible,
 non une propriété cryptographique. Le tirage par contenu ne garantit pas la couverture de
 chaque famille de blocs — il garantit seulement la reproductibilité de l'échantillon.
+
+## D272 — LA CIBLE RELATIVE, LES CONTEXTES D'EXÉCUTION, LE COMPTE DES FAULT, LA PÉREMPTION (la vague 22, 24/11/2026 ; atelier W22AUDT)
+
+**Le constat, tiré de l'audit de la vague 21.** (1) La cible absolue de la recherche
+(≤ 561 cycles) est déjà tenue par glibc : elle ne discrimine plus aucune implémentation.
+(2) 239 des 320 vecteurs d'oracle fautaient faute de contexte, et aucune pièce ne publiait ce
+compte. (3) Le registre des statuts pouvait grossir sans que rien ne signale une entrée
+immobile.
+
+**Le geste.** (1) La cible devient RELATIVE (≤ 0,90 × memchr) ; le balayage écrit est mesuré
+à 1,88× memchr et le couloir est REFUSÉ NOM MÉ (COULOIR-DOMINE) — memchr est la référence.
+(2) Un contexte standard (IAT bouchonnée, deux ABI, pile gardée, calendrier réel) porte les
+vecteurs exécutés de 81 à 95 sur 235 (delta +14), 27 blocs restant sans exécution ; la classe
+C17 recompose les trois comptes annoncés. (3) Chaque entrée du registre porte « inchangée
+depuis N vagues » et C16 refuse au-delà de deux vagues sans justification.
+
+**Les preuves.** Porte L1..L17, zéro rouge ; dix mutations refusées (dont C16 et C17).
+
+**Les limites.** Le contexte générique ne remplace pas un harnais par bloc : les 27 blocs qui
+fautent demandent leurs globals et leur IAT nommée — c'est porté au registre. La cible
+relative dépend du memchr de la plateforme : elle mesure un écart, pas une vitesse absolue.

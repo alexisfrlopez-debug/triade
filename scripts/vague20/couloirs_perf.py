@@ -19,7 +19,8 @@ R = pathlib.Path(__file__).resolve().parents[2]
 DOSSIER = R / "atelier-w20-perf"
 GRAINE = 20261124
 N = 20
-CIBLE_RECHERCHE = 561      # cycles, recherche absente de 4 096 octets (idiome memchr)
+CIBLE_RELATIVE = 0.90      # la cible ABSOLUE ≤ 561 est déjà tenue par glibc : elle ne
+                           # discrimine plus. La cible devient RELATIVE à memchr (D272).
 
 
 def environnement():
@@ -54,8 +55,6 @@ def mesurer_recherche():
     m1, i1 = med_iqr(memchr); m2, i2 = med_iqr(avx2)
     return {"n": N, "memchr_median_cycles": m1, "memchr_iqr": i1,
             "avx2_median_cycles": m2, "avx2_iqr": i2,
-            "cible_cycles": CIBLE_RECHERCHE,
-            "cible_tenue": m2 <= CIBLE_RECHERCHE,
             "ratio_avx2_sur_memchr": m2 / m1}
 
 
@@ -83,7 +82,7 @@ def preregistrer():
     doc = {"graine": GRAINE, "n": N, "environnement": environnement(),
            "couloirs": {
                "a_aesgcm_vaes": {"cible": "≤ 0,6 c/octet à 4 Kio", "statut": "PRE-ENREGISTRE — mesure du seul référentiel"},
-               "b_recherche_avx2": {"cible": f"≤ {CIBLE_RECHERCHE} cycles par recherche absente de 4 096 o", "statut": "A MESURER"},
+               "b_recherche_avx2": {"cible": f"≤ {CIBLE_RELATIVE:.2f} × memchr (recherche absente de 4 096 o)", "statut": "A MESURER"},
                "c_gardes_onze": {"cible": "22→7 instructions/appel sans croissance du TCB", "statut": "PRE-ENREGISTRE — EN ATTENTE (corridor scellé non modifié)"}}}
     f = DOSSIER / "preregistrement.json"
     f.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -97,9 +96,14 @@ def mesurer():
     rec = {"environnement": env, "recherche": mesurer_recherche(), "aesgcm_reference": reference_aesgcm()}
     (DOSSIER / "mesure-couloirs.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
     r = rec["recherche"]
+    relatif = r["ratio_avx2_sur_memchr"] <= CIBLE_RELATIVE
+    r["cible_relative"] = CIBLE_RELATIVE
+    r["cible_relative_tenue"] = relatif
+    r["verdict"] = "COULOIR-ADOPTE" if relatif else "COULOIR-DOMINE (refusé : memchr est la référence)"
+    (DOSSIER / "mesure-couloirs.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"[couloir b] AVX2 {r['avx2_median_cycles']:.1f} c (IQR {r['avx2_iqr']:.1f}) vs memchr "
-          f"{r['memchr_median_cycles']:.1f} c (IQR {r['memchr_iqr']:.1f}) · cible ≤{CIBLE_RECHERCHE} → "
-          f"{'TENUE' if r['cible_tenue'] else 'MANQUÉE'} · ratio {r['ratio_avx2_sur_memchr']:.2f}×")
+          f"{r['memchr_median_cycles']:.1f} c (IQR {r['memchr_iqr']:.1f}) · cible relative "
+          f"≤{CIBLE_RELATIVE:.2f}× → {r['verdict']} · ratio {r['ratio_avx2_sur_memchr']:.2f}×")
     a = rec["aesgcm_reference"]
     if "mediane_ns_4kio" in a:
         print(f"[couloir a] référentiel OpenSSL 4 Kio : médiane {a['mediane_ns_4kio']:.0f} ns ≈ "

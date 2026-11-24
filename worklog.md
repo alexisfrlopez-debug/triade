@@ -14272,3 +14272,11 @@ Work Log:
 - La génération RÉ-ANCRE le témoin RFC 3161 à chaque passe ; V6 a refusé un témoin périmé en vraie grandeur avant de passer après ré-ancrage.
 - Cinquième geste : un JOURNAL APPEND-ONLY des ancrages (`ancrage-journal.jsonl`) — un ré-ancrage n'efface plus l'histoire (TSA, empreinte du témoin, empreinte du jeton, date).
 - Porte : **L1..L16, zéro rouge, 9/9 mutations**.
+
+### Entrée 406 — LA VAGUE 22 : CIBLE RELATIVE (COULOIR REFUSÉ), CONTEXTES D'EXÉCUTION (+14 VECTEURS), C17, PÉREMPTION DU REGISTRE (24/11/2026 ; plan gelé 2d29312)
+- (a) Le couloir recherche passe à une cible RELATIVE ≤ 0,90× memchr ; mesure n=20 au bac : AVX2 175,5 c (IQR 16,7) contre memchr 93,4 c (IQR 3,6), ratio 1,88× → **COULOIR-DOMINE, refusé**, aucun gain revendiqué (D272).
+- (b) Contexte standard des 50 blocs (IAT bouchonnée 256 entrées, deux ABI, pile à sentinelle, calendrier réel) : **95/235 vecteurs exécutés** (vague 20 : 81), delta **+14**, **27 blocs sans exécution** — le générique ne remplace pas un harnais par bloc, nommé.
+- (c) **C17 ORACLE-COUNT** : les trois comptes sont annoncés dans la présentation et recomposés depuis les fichiers ; mutation refusée.
+- (d) **Péremption du registre** : colonne « inchangée depuis N vagues », C16 refuse > 2 sans justification.
+- Porte **L1..L17, zéro rouge, 10/10 mutations** ; témoin ré-ancré automatiquement.
+- RÈGLE PERMANENTE consignée (commande du maître) : audit après chaque vague, améliorations vers sécurité/optimisation/performance/tokens.

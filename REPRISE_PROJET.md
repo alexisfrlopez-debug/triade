@@ -60,6 +60,8 @@ exécution »). Chaque vague = 6 instructions environ (fichiers
 6. **CONSIGNER** : l'Entrée au `worklog.md`, `OU-TROUVER-LES-LIVRABLES.md`,
    et LE PRÉSENT FICHIER mis à jour.
 
+**L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 22)** : porte à **dix-sept classes** (C16 registre, C17 compte oracle), couloir recherche REFUSÉ sur mesure relative (memchr gagne), vecteurs d'oracle portés à **95/235** par un contexte standard, péremption du registre ; **règle permanente** : audit après chaque vague (D272). Édition v0.27.0 toujours NON publiée.
+
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 21)** : porte à **seize classes** (C16 registre des statuts), audit oracle tiré par le CONTENU, résumé anglais à 235 mots, **ré-ancrage RFC 3161 automatique** à chaque génération (D271) ; édition v0.27.0 toujours NON publiée.
 
 **L'ÉTAT PRÉSENT AU 24/11/2026 (après la vague 20)** : l'édition **v0.27.0** est générée au

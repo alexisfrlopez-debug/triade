@@ -1,0 +1,36 @@
+ATELIER W22AUDT — LES QUATRE AMÉLIORATIONS ET L'AUDIT DE LA VAGUE (24/11/2026)
+==============================================================================
+
+(a) COULOIR RECHERCHE — CIBLE RELATIVE, COULOIR REFUSÉ (D272). La cible absolue ≤ 561 c était
+déjà tenue par glibc : elle ne discriminait plus. La cible devient ≤ 0,90 × memchr. Mesure au
+bac (n=20, IQR) : balayage AVX2 **175,5 c** (IQR 16,7) contre memchr **93,4 c** (IQR 3,6) —
+ratio 1,88×. Verdict : **COULOIR-DOMINE**, refusé ; memchr est la référence adoptée, aucun
+gain revendiqué.
+
+(b) CONTEXTES D'EXÉCUTION DES 50 BLOCS. Contexte standard fourni (IAT bouchonnée de 256
+entrées, deux ABI essayées — msx64 rcx/rdx/r8 et sysv rdi/rsi/rdx —, pile à sentinelle,
+calendrier réel). Résultat : **95 des 235 vecteurs exécutables** (vague 20 : 81), **delta
++14**, **27 blocs sans exécution**. Le gain est réel mais partiel : les blocs qui fautent
+attendent un harnais PAR BLOC (globals, pointeurs, IAT nommée), pas un contexte générique —
+c'est nommé et porté au registre.
+
+(c) C17 ORACLE-COUNT. La présentation annonce les trois comptes (235 exécutables, 95 exécutés,
+27 blocs sans exécution) et la classe les RECOMPOSE depuis les fichiers de vecteurs ; une
+mutation du compte est refusée nommément.
+
+(d) PÉREMPTION DU REGISTRE. Chaque entrée porte « inchangée depuis N vagues » ; C16 refuse une
+entrée gelée plus de deux vagues sans justification écrite — la pile d'attente ne peut plus
+grossir en silence.
+
+PORTE : V1..V7 + L1..L17, ZÉRO ROUGE ; dix mutations refusées nommément (C6, C7, C10, C11,
+C12, C13, C14, C15, C16, C17).
+
+AUDIT DE LA VAGUE, PAR OBJECTIF
+- Sécurité : ancrage RFC 3161 appliqué et ré-ancré automatiquement, journal append-only des
+  ancrages, trois refus éprouvés ; restent au poste réel le métal, le compteur NV, Tamarin.
+- Performance : le seul gain mesuré de la vague est un gain de COUVERTURE (+14 vecteurs), pas
+  de vitesse ; le couloir de recherche est refusé sur mesure — l'honnêteté coûte un « non ».
+- Optimisation : le résumé à 235 mots et le registre réduisent la charge de lecture ; aucune
+  optimisation de débit n'est revendiquée.
+- Tokens : aucun changement de la frontière add (5/18, cible manquée, campagne EN ATTENTE) ;
+  les comptes de tokens restent ceux des fixtures, jamais présentés comme campagne.

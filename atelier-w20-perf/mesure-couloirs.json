@@ -16,18 +16,19 @@
  },
  "recherche": {
   "n": 20,
-  "memchr_median_cycles": 93.40350000000001,
-  "memchr_iqr": 0.5005000000000166,
-  "avx2_median_cycles": 175.45100000000002,
-  "avx2_iqr": 0.1309999999999718,
-  "cible_cycles": 561,
-  "cible_tenue": true,
-  "ratio_avx2_sur_memchr": 1.8784199735555949
+  "memchr_median_cycles": 93.4265,
+  "memchr_iqr": 3.5999999999999943,
+  "avx2_median_cycles": 175.493,
+  "avx2_iqr": 16.658500000000032,
+  "ratio_avx2_sur_memchr": 1.8784070900654524,
+  "cible_relative": 0.9,
+  "cible_relative_tenue": false,
+  "verdict": "COULOIR-DOMINE (refusé : memchr est la référence)"
  },
  "aesgcm_reference": {
   "n": 20,
-  "mediane_ns_4kio": 1001.5,
-  "cycles_par_octet_estimes": 0.684619140625,
+  "mediane_ns_4kio": 985.0,
+  "cycles_par_octet_estimes": 0.67333984375,
   "note": "référentiel OpenSSL mesuré ici (machine virtuelle) ; la spécialisation VAES/VPCLMULQDQ est PRÉ-ENREGISTRÉE et reste un geste machine réelle"
  }
 }
