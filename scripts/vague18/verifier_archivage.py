@@ -61,8 +61,13 @@ def verifier(inventaire, dossier):
             lignes.append(f"REFUS {c} — {n}")
         return ("REFUS", lignes)
     lignes.append("")
-    lignes.append(f"{len(inventaire)} fichier(s) : copie identique à l'original. "
-                  "Les originaux restants sont INERTES (lecture seule, jamais prescriptifs).")
+    restants = [e["nom"] for e in inventaire if not e.get("supprime")]
+    if restants:
+        lignes.append(f"{len(inventaire)} fichier(s) : copie identique à l'original. "
+                      f"Originaux laissés inertes : {', '.join(restants)} (lecture seule, jamais prescriptifs).")
+    else:
+        lignes.append(f"{len(inventaire)} fichier(s) : copie identique à l'original. "
+                      "Tous les originaux ont été retirés — le dossier d'instructions est vide.")
     return ("ARCHIVAGE-PROUVE", lignes)
 
 

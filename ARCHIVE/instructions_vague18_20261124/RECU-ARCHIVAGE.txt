@@ -6,4 +6,4 @@ ef5693ebb7e33fa4b1feb0e8fc13484165d46d4e8a093c395ed690c67ac67b6c  Qwen__20261124
 2e0693b2fffc360e323be7b69b6f666fe6cf88f17d5ee5dc77e73a51d09b8510  Qwen__20261124_jeewkx9g8.txt  SUPPRIMEE
 41908bcdb989af807e9fbfead0f317449448a04cb81481de7be0b6b06eb9cf95  Qwen__20261124_lsv9itvng.txt  SUPPRIMEE
 
-5 fichier(s) : copie identique à l'original. Les originaux restants sont INERTES (lecture seule, jamais prescriptifs).
+5 fichier(s) : copie identique à l'original. Tous les originaux ont été retirés — le dossier d'instructions est vide.
