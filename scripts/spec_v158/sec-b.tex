@@ -351,3 +351,75 @@ d’époque ; une clé absente ou révoquée est un \textbf{refus nommé}, jamai
 réseau au chargement : l’absence de réseau est l’état normal du vérificateur. La matrice complète par
 profil, avec les limites de chaque ligne, vit au dépôt (\texttt{atelier-w17-r10-confiance/MATRICE-R10.md},
 D254).
+
+\subsection{La liste blanche fermée du prescriptif (D262)}\label{sec:prescriptif}
+
+Une consigne n'est prescriptive que si sa \textbf{source} est déclarée telle : le fichier
+\code{SOURCES-PRESCRIPTIVES.txt} énumère les sources autorisées à porter une consigne
+opératoire, chacune avec son chemin et son empreinte sha256 — soixante-quatre sources à
+l'état de la vague 18. La classification est \textbf{par le chemin, jamais par les mots-clés} :
+un document hors liste qui contient « commit », « push » ou « remplacer » ne prescrit rien,
+et la garde le refuse par \code{SOURCE-NON-PRESCRIPTIVE}, un refus nommé indépendant du
+vocabulaire employé. Le scan de la vague 18 rend zéro source hors liste. La garde est
+branchée au pre-commit AVANT la garde de secrets : une consigne non autorisée arrête le
+commit avant qu'une valeur ne soit examinée. Les chemins \code{instructions/} sont classés
+en lecture seule (D266) : une instruction archivée ne prescrit plus, qu'elle soit encore
+présente physiquement ou non. \textbf{Limites nommées} : la liste est un état daté — une
+source ajoutée sans empreinte est refusée, une source modifiée après inscription est
+refusée par l'empreinte, mais la liste elle-même est un fichier du dépôt dont la
+modification est un geste de commit visible, non une propriété cryptographique.
+
+\subsection{Le compteur NV comme ancre de fraîcheur (D263)}\label{sec:nv}
+
+La fraîcheur de l'état ne peut pas reposer sur l'horloge du poste ni sur un horodatage de
+fichier : un administrateur les remet ensemble. Le \textbf{compteur NV monotone} — compteur
+NV TPM 2.0 lorsque le profil en dispose, compteur monotone RPMB (eMMC/UFS) sinon — devient
+l'ancre de fraîcheur \textbf{par profil}. Au chargement, le vérificateur lit le compteur,
+le compare au plancher scellé dans le manifeste signé et refuse, nommément, tout écart :
+\code{ANCRE-PERDUE} (compteur illisible ou absent), \code{SCELAGE-NON-ENREGISTRE} (aucun
+plancher scellé pour ce profil), \code{RETOUR-EN-ARRIERE} (compteur inférieur au plancher),
+\code{INCREMENT-NON-MONOTONE} (incrément qui ne progresse pas). L'agrégateur refuse le
+partiel : un profil non mesuré n'est pas un profil vert. Le simulateur du kit rend 12/12
+(les quatre refus, le nominal, les invariants) ; \textbf{le run matériel est EN ATTENTE},
+aucun chiffre réel n'est publié. \textbf{Limites nommées} : un compteur NV se remet à zéro
+par effacement du TPM ou remplacement du média — le scellement doit être ré-enregistré par
+une cérémonie, sinon \code{SCELAGE-NON-ENREGISTRE} refuse ; un TPM virtualisé ne prouve
+rien du silicium ; le compteur ne prouve pas \emph{quelle} version est fraîche, seulement
+qu'aucune n'est antérieure au plancher — la restauration cohérente d'un couple binaire +
+état reste couverte par les témoins hors machine (D254, D267).
+
+\subsection{L'expansion sous schéma structuré (D264)}\label{sec:expansion}
+
+Le mode ajouter n'émet plus de notation libre : l'agent produit un \textbf{diff sémantique
+structuré} — opcode, opérande, offset au point exact — et le rendu canonique est unique.
+Le schéma est fermé : un champ hors schéma, un opcode hors domaine ou un offset hors de la
+plage déclarée sont des refus nommés. La \textbf{boucle de réparation} réinjecte le refus
+exact du juge (classe, position, attendu) et est \textbf{bornée à trois tours} ; au-delà,
+le changement est refusé, jamais accepté par lassitude. Chaque conversion est consignée par
+classe de refus. L'instrument rend 9/9 sur ses fixtures ; \textbf{la campagne servie est EN
+ATTENTE} d'un serving à structured output, et la cible (≥ 15/18 à ≤ 3 000 tokens par
+changement validé) a été pré-enregistrée AVANT toute mesure — elle n'est pas re-tirée après.
+\textbf{Limite nommée} : le rendu canonique supprime la variance d'écriture, il ne supprime
+pas la variance du modèle ; une conversion consignée n'est pas une conversion garantie.
+
+\subsection{L'ancrage de transparence des témoins d'époque (D267)}\label{sec:transparence}
+
+Un témoin d'époque consigne l'édition, l'empreinte de l'artefact, l'empreinte de l'état et
+la date. L'ancrage de transparence le rend \textbf{public et horodaté hors de la machine} :
+une entrée dans un journal de transparence (Rekor) ou un horodatage qualifié (RFC 3161)
+reliant l'empreinte du témoin à un temps vérifiable. \textbf{Statut appliqué} : la règle est
+adoptée et outillée (D267), le déploiement est \textbf{non effectué} — aucun témoin ancré
+n'est consigné à cette édition, et la porte de release le déclare EN ATTENTE au lieu de le
+simuler. Les refus sont nommés : \code{ANCRE-INDISPONIBLE} (ancrage configuré, service
+injoignable — la release est refusée, jamais poursuivie en silence), \code{TEMOIN-SANS-ANCHE}
+(un témoin non ancré reste marqué non ancré, jamais promu), \code{ANCRE-INCOHERENTE}
+(l'empreinte ancrée ne recoupe pas le témoin). \textbf{Delta au modèle de menace, aux deux
+bords} : \emph{en ligne}, au geste de release seulement, l'ancre donne une preuve
+indépendante d'existence et de temps — elle voit la restauration cohérente d'un couple
+binaire + état que nulle ancre locale ne voit ; en contrepartie elle publie des empreintes
+et une cadence (fuite de métadonnées), dépend d'un service tiers (disponibilité, collusion
+de l'opérateur, panne) et déplace une part de confiance hors de la machine. \emph{Hors
+ligne}, au chargement, rien ne change : R10 ne fait aucun appel réseau, l'absence de réseau
+reste l'état normal, et un poste sans accès conserve ses trois témoins locaux — sans preuve
+de temps indépendante. L'ancrage est donc une propriété de \textbf{release}, jamais une
+condition de démarrage.

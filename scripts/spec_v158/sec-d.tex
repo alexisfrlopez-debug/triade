@@ -132,9 +132,9 @@ divulgation.
 Rétro-ingénierie de l'IP & carte privée ; binaire sémantiquement muet ; variantes par
 build & temps acheté — s'érode avec les LLM de décompilation \\
 Empoisonnement de carte & signature ; refus de carte non signée ; verrou croisé (R8, R9)
-& détecté — session bloquée \\
+& détecté — session bloquée (classe ADV-MEDIA, bord HORS-LIGNE) \\
 Corruption de carte (accidentelle) & AEAD par fragment + signature + verrou & détecté au
-chargement \\
+chargement (classe ADV-MEDIA, bord HORS-LIGNE) \\
 Fuite de la carte & chiffrement ; sharding ; escrow & perte limitée à un fragment \\
 Vol de l'export de continuité & chiffrement intégral + signature & indéchiffrable sans
 la phrase \\
@@ -153,20 +153,24 @@ signée par la clé hors-ligne (sceau I, axe 3), serrure piégée à média sép
 l'évolution du code volé est bloquée, son exécution ne l'est pas ; l'axe 1 (TEE) reste une
 exigence consignée \\
 \textbf{Binaire altéré} & checksums par bloc + signature du manifeste au lancement
-(R10 a, b) & détecté — arrêt avant tout effet \\
+(R10 a, b) & détecté — arrêt avant tout effet (classe ADV-ADMIN si l'ancre est
+modifiable avec l'artefact ; classe ADV-MEDIA sinon ; bord HORS-LIGNE) \\
 \textbf{Rollback non autorisé} & monotonie de version signée, plancher anti-rollback
-(R10 c) & détecté — refus \\
+(R10 c) & détecté — refus (classe ADV-MEDIA, bord HORS-LIGNE ; le rejeu du seul
+binaire, D254) \\
 \textbf{Evil maid sur le conteneur ou le média du piège} & tag du piège, époques
 croisées conteneur/piège, AEAD + étiquette, champ \code{verif} indérivable (CF3
-§ 5) & détecté — refus nommé ; la falsification prouvée détruit côté machine,
-jamais le média \\
+§ 5) & détecté — refus nommé (classe ADV-MEDIA, bord HORS-LIGNE) ; la falsification
+prouvée détruit côté machine, jamais le média \\
 \textbf{Roll-back du couple conteneur + piège} & trois témoins d'époque : journal
 local, carte papier du sachet (à la main), journal Git poussé (CF3 § 9) & détecté —
-« RETOUR EN ARRIÈRE » nommé ; recoupement humain à froid \\
+« RETOUR EN ARRIÈRE » nommé (classe ADV-ADMIN, bord LES-DEUX : les trois témoins,
+dont deux hors machine, sont la condition — l'ancre locale seule ne le voit pas,
+D254/D267) ; recoupement humain à froid \\
 \textbf{Agent défaillant} & R2 ; R5 ; oracle dérivé de I ; budgets & l'erreur ne devient
 jamais permanente sans vérification \\
 \textbf{Données embarquées modifiées} & empreintes dans la carte ; vérification au
-lancement (R10 b) & détecté — arrêt propre \\
+lancement (R10 b) & détecté — arrêt propre (classe ADV-MEDIA, bord HORS-LIGNE) \\
 \textbf{Environnement non conforme} & contrôles de conformité au profil (R10 d) ;
 fail-closed & refus propre avant exécution \\
 Fuzzing boîte noire & contrats, oracle, tests par propriétés & indépendant du secret de
@@ -178,10 +182,19 @@ Instrumentation dynamique & anti-debug léger par mesure de temps & assumé \\
 \end{table}
 
 Les six menaces en gras sont les additions de la v0.4.0, le vol du coffre-fort (D75)
-celle de la v0.5.1 ; toutes sont neutralisées par des mécanismes \textbf{locaux et
-vérifiables} — la contre-mesure anti-rollback ne dépend d'aucun service en ligne (le
-chargement doit échouer proprement hors ligne), et les vérifications de R10 s'exécutent
-avant toute entrée dans le chemin d'exécution.
+celle de la v0.5.1. \textbf{Chaque ligne « détecté — \emph{refus} » est désormais qualifiée par sa
+classe d'adversaire} — ADV-LOCAL (utilisateur local non privilégié), ADV-ADMIN
+(administrateur local ou root), ADV-MEDIA (accès au média ou au conteneur), ADV-DISTANT
+(réseau, fournisseur de mise à jour) — \textbf{et par son bord de modèle} : EN-LIGNE,
+HORS-LIGNE ou LES-DEUX. Les contre-mesures demeurent locales et vérifiables, la
+contre-mesure anti-rollback ne dépendant d'aucun service en ligne (le chargement doit
+échouer proprement hors ligne) et les vérifications de R10 s'exécutant avant toute entrée
+dans le chemin d'exécution. \textbf{La neutralisation n'est pas uniforme et ne se revendique
+plus telle} (D254, D267) : contre ADV-MEDIA et ADV-DISTANT les mécanismes locaux suffisent ;
+contre ADV-ADMIN ils ne valent que si l'ancre n'est pas modifiable avec l'artefact ; et la
+restauration cohérente d'un couple binaire + état échappe à toute ancre locale — seuls les
+témoins hors machine (carte papier, journal Git poussé, ancre de transparence) la rendent
+visible. Le §\ref{sec:racine} et le §\ref{sec:transparence} portent ces deux bornes.
 
 \subsection{Limites assumées}\label{sec:limites}
 
@@ -1556,7 +1569,7 @@ falsifiabilité du maître de cérémonie \\
 \end{tabularx}
 \end{table}
 
-\section{Tableau décisionnel du coffre-fort (D75--D255)}\label{sec:annexedecisions}
+\section{Tableau décisionnel du coffre-fort (D75--D268)}\label{sec:annexedecisions}
 
 Le journal complet vit dans \code{docs/DECISIONS.md} ; les entrées ci-dessous sont
 celles qui touchent le coffre, sa garde et ses cérémonies — une ligne chacune, la
@@ -1817,4 +1830,17 @@ D252 & 24 nov. 2026 & L'amendement D81 daté et la garde active D223 nommée au 
 D253 & 24 nov. 2026 & La publication d'une bascule bornée à huit octets naturels, LOCK CMPXCHG16B pour seize, la quiescence obligatoire \\
 D254 & 24 nov. 2026 & La garantie de R10 bornée à son ancre : intégrité, authenticité et fraîcheur séparées ; le rollback cohérent invisible aux ancres locales \\
 D255 & 24 nov. 2026 & La provenance comme contrôle : onze lignes recomposées, quatre refus mutants, le ratio 3,23 corrigé à 3,22 à la source \\
+D256 & 24 nov. 2026 & La gouvernance compressée par défaut : un format canonique signé, 108 octets contre 154 \\
+D257 & 24 nov. 2026 & Un seul juge : la grammaire est la règle publiée, l'écart se mesure (21 vertes, 3 acceptées, 18 refusées) \\
+D258 & 24 nov. 2026 & Le trampoline de huit octets vérifié au build ; la forme absolue réservée au CMPXCHG16B aligné 16 \\
+D259 & 24 nov. 2026 & Le témoin hors machine comme porte de release ; V6 EN ATTENTE tant qu'aucun témoin n'est consigné \\
+D260 & 24 nov. 2026 & La performance en distance au plancher (1,055$\times$) et les tableaux engendrés à diff nul \\
+D261 & 24 nov. 2026 & Les cinq aléas résiduels du rendez-vous de quiescence : un refus nommé et un invariant chacun ; kit 16/16 \\
+D262 & 24 nov. 2026 & La liste blanche fermée du prescriptif : 64 sources à empreinte, refus SOURCE-NON-PRESCRIPTIVE par le chemin \\
+D263 & 24 nov. 2026 & Le compteur NV monotone comme ancre de fraîcheur par profil, refus fail-closed ; simulateur 12/12, matériel EN ATTENTE \\
+D264 & 24 nov. 2026 & L'expansion sous schéma structuré et la boucle de réparation bornée à trois tours ; campagne EN ATTENTE \\
+D265 & 24 nov. 2026 & Le linter d'édition v2 porté à la génération : cinq classes, zéro résidu, cinq contrôles négatifs \\
+D266 & 24 nov. 2026 & L'archivage se prouve : la copie vérifiée par sha256 et son reçu remplacent la suppression comme condition de fin de vague \\
+D267 & 24 nov. 2026 & L'ancrage de transparence des témoins d'époque (Rekor/RFC 3161) au statut appliqué, avec le delta au modèle de menace aux deux bords \\
+D268 & 24 nov. 2026 & La porte de génération porte le linter : onze classes fail-closed, six résidus soldés, quatre contrôles négatifs \\
 \end{longtable}

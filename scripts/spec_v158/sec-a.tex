@@ -770,6 +770,20 @@ profil et ses limites, et borne ce que R10 garantit : le rejeu du seul binaire e
 la restauration cohérente d’un couple binaire + état échappe à toute ancre locale
 (§\ref{sec:racine}). Aucune valeur mesurée n’est modifiée.
 
+\subsection{Ce que change la v0.15.11}\label{sec:nouveautes1511}
+
+La v0.15.11 est la révision de la \textbf{chaîne de décisions} : les décisions D261 à D267,
+annoncées au changelog de l'édition mais absentes du journal et de la spécification, y sont
+portées avec leurs limites et leurs statuts. Le §\ref{sec:prescriptif} établit la liste
+blanche fermée du prescriptif (D262) ; le §\ref{sec:nv} le compteur NV monotone comme ancre
+de fraîcheur par profil, avec ses refus fail-closed et son run matériel EN ATTENTE (D263) ;
+le §\ref{sec:expansion} l'expansion sous schéma structuré et sa boucle de réparation bornée
+(D264) ; le §\ref{sec:transparence} l'ancrage de transparence des témoins d'époque à son
+statut appliqué, avec le delta au modèle de menace aux deux bords (D267). Le §15.1 qualifie
+chaque ligne « détecté — refus » par sa classe d'adversaire et son bord, et cesse de
+revendiquer une neutralisation uniforme (D254). L'annexe B couvre D75--D268. Aucune valeur
+mesurée n'est modifiée.
+
 \section{La couche I : format normalisé des spécifications}\label{sec:coucheI}
 
 La v0.3 décrivait la couche I comme « contrats légers » (D3), sans en fixer le gabarit —
