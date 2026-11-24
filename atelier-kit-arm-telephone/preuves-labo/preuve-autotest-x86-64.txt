@@ -1,0 +1,33 @@
+=== PREUVE LABORATOIRE 1/2 — L'AUTOTEST NATIF x86-64 (le mécanisme seul) ===
+La commande : gcc -O2 -Wall -Wextra -o run/dudect_arm_x64 dudect_arm.c -lm
+gcc (Debian 14.2.0-19) 14.2.0
+x86_64
+
+=== dudect_arm - LE TESTEUR DU TROISIEME SILICIUM (edition TELEPHONE, v1.0.0) ===
+[config] arch=non-aarch64 (l'hote du laboratoire)  compteur=TSC (l'autotest du laboratoire x86-64)
+[config] N=60/classe  seuil |t|>5  echantillons ENTRELACES (le protocole TELEPHONE-ARM-1)
+[ETIQUETTE] AUTOTEST LABORATOIRE - la mecanique seule : AUCUN statut terrain n'en decoule (le run materiel appartient au developpeur)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[silicium] le drapeau « sha2 » est ABSENT des Features : la cible materielle sera REFUSEE, nommee
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[affinite] coeur 0 : posee
+[eq-constant] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 26021.6 ticks, med 30342 (par appel : 59.26)
+  divergent      : moy 26003.3 ticks, med 30192 (par appel : 58.97)
+  t de Welch = 0.02 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[eq-branchue] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 24933.2 ticks, med 24628 (par appel : 48.10)
+  divergent      : moy 2716.2 ticks, med 2666 (par appel : 5.21)
+  t de Welch = 92.84 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[sha256-logiciel] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4 appels par echantillon)
+  fixe           : moy 2983.1 ticks, med 2990 (par appel : 747.50)
+  aleatoire      : moy 3345.3 ticks, med 2998 (par appel : 749.50)
+  t de Welch = -1.05 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-arm-1795560597509505717.csv — joignez-le au temoin (la synthese le fait)
+[verdict] LE RUN VECU : 3/3 cible(s) consignee(s), 0 refus nomme(s)
+[verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+[verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
+code de sortie : 0

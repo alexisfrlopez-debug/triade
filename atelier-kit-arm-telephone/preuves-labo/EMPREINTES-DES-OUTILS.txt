@@ -1,0 +1,14 @@
+EMPREINTES-DES-OUTILS.txt — les instruments du laboratoire (l'éprouvage du kit-B, 25/11/2026)
+==========================================================================
+L'hôte du labo : x86_64 — Linux 5.10.134-013.15.kangaroo.al8.x86_64
+Le compilateur natif : gcc (Debian 14.2.0-19) 14.2.0
+La chaîne croisée : aarch64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0
+  - commande : aarch64-linux-gnu-gcc -O2 -Wall -Wextra -march=armv8-a+sha2 --static --sysroot=/tmp/crossroot
+L'émulateur : qemu-aarch64 version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1)
+
+LES BINAIRES ÉPROUVÉS AU LABO (Ils ne vivent PAS dans le kit livré :
+le terrain recompile depuis la source — la source est la vérité) :
+  run/dudect_arm_x64  c2039dd5ac245b6fb6ce7ae2d9679da38bb5e6ab3214c8ee5cf8037559439d7e
+  run/dudect_arm_a64  90f1cef44d320474c823cfb4293ac973abddd3f3fec296545f8cb24861f86a20
+
+La source unique : dudect_arm.c sha256 08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32

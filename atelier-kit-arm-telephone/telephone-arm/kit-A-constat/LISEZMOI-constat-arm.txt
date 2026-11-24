@@ -1,0 +1,77 @@
+LISEZMOI — LE KIT CONSTAT-ARM (le téléphone, le troisième silicium)
+====================================================================
+
+LA COMMANDE (le développeur, 12/11/2026) : « un zip avec les kits
+terrain que je peux exécuter sur mes machines (téléphone ARM, PC
+Windows 10 et 11, QEMU ou autre si besoin sur Windows) ».
+
+L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 12/11/2026, HORS DU
+PÉRIMÈTRE SCELLÉ v0.15.0 (il n'existe ni dans les trois kits de mesure
+ni dans le kit-shani D205 — il est le chaînon qui manquait pour que LE
+TÉLÉPHONE puisse lui aussi vivre son geste terrain). La mécanique fut
+éprouvée au labo sur un hôte Linux x86-64 — où le script a constaté
+honnêtement « ceci n'est pas un téléphone ARM » sans faillir : tout
+lecteur manquant est un constat nommé, jamais un crash muet.
+
+L'HONNÊTETÉ DU KIT (ce qu'il fait, ce qu'il refuse de faire) :
+  — IL CONSTATE : la machine nommée à l'ouverture (le geste D206 vécu
+    au terrain ALEKPC), le silicium lu par ses PROPRES canaux
+    (/proc/cpuinfo : les cœurs, les extensions cryptographiques ARMv8 ;
+    getprop : le modèle, le SoC, l'Android), le refus des pièces x86-64
+    NOMMÉ avec leurs empreintes ;
+  — IL ÉPROUVE LE LECTEUR : le FIPS 180-4 « abc » en SHA-256 et
+    SHA-512 par le Python du téléphone (un LECTEUR — comme les trois
+    lecteurs du kit-shani — l'exactitude, JAMAIS une mesure de temps) ;
+  — IL NE MESURE RIEN : aucun protocole pré-enregistré n'existe pour
+    ce silicium, aucun chiffre ne sera fabriqué. Si le téléphone porte
+    FEAT_SHA256 (SHA256H/SHA256H2, l'extension cryptographique ARM),
+    le constat le DIT — et dit AUSSI que c'est une AUTRE famille
+    d'instructions que la SHA-NI x86 : les deux mondes se constatent,
+    aucun ne se déguise.
+
+LE PROTOCOLE (le run, sur le téléphone) :
+  L'ÉDITION AUTOMATISÉE : sur le téléphone, tapez
+  « bash lancer-kit-constat-arm.sh » — le lanceur INSTALLE PYTHON
+  TOUT SEUL s'il manque (pkg), puis vit le run et vous dit où sont
+  les preuves. Les étapes ci-dessous demeurent la référence.
+ (F-Droid ou le Play Store) puis Python :
+       pkg update && pkg install python
+     (Termux seul exécute ce kit : iOS ne porte pas de Python libre).
+  2. Copiez le dossier kit-constat-arm/ sur le téléphone (le stockage
+     partagé puis `cp -r /sdcard/Download/kit-constat-arm .` dans
+     Termux, ou tout autre transfert — les deux fichiers ne pèsent
+     que quelques kilo-octets).
+  3. LE RUN : depuis le dossier du kit :
+       python constat-arm.py
+     — quelques secondes, aucun réseau, aucun droit particulier ;
+     — le script dit tout à l'écran ; chaque refus est NOMMÉ.
+  4. LES TÉMOINS : le réceptacle ./preuves-constat-arm/ naît tout seul :
+       constat-arm-journal.log    le run entier, ligne par ligne ;
+       constat-arm-verdict.txt    le verdict auto-portant.
+     Datez et signez le verdict de votre main, puis renvoyez le
+     dossier ENTIER au coffre /test (dossier Drive « Triade » →
+     « test », par exemple sous preuves-constat-arm-<votre-nom>/).
+     Le labo recoupe et consigne : JAMAIS avant le run, jamais sans
+     pièces.
+
+LA QUESTION DU KIT (la réponse attendue dans le témoin) : que dit CE
+silicium de lui-même — quels cœurs, quelles extensions cryptographiques,
+quel monde — et le lecteur Python du téléphone est-il EXACT ? Chaque
+écart nommé est un RÉSULTAT (jamais un échec à maquiller — D189).
+
+LE GESTE OPTIONNEL SUR LE TÉLÉPHONE (si le cœur en dit) : le kit M7D
+(la voie QEMU de ce même paquet) peut SE REJOUER sur le téléphone si
+Termux propose un qemu-riscv64 utilisateur — le scénario M7D accepte
+l'environnement $QEMU_RISCV64 ou un qemu-riscv64 au PATH (la version
+et le md5 de l'instrument y sont consignés de même). LE LABO N'A PAS
+ÉPROUVÉ CETTE VOIE (aucun Android au labo) : elle est nommée comme
+possibilité, jamais comme promesse — les assertions sha256 du scénario
+M7D protègent le run de toute pièce corrompue, le verdict fail-closed
+protège le geste.
+
+LA RÉFÉRENCE CROISÉE : le refus auto-portant du terrain ALEKPC (le
+geste A du correctif n° 2 du kit-shani, l'Entrée 245 — « GenuineIntel »
+famille 6 modèle 142 pas 12, SHA-NI ABSENT : le kit a refusé de mesurer
+exactement comme conçu). Le présent kit est le miroir de ce geste pour
+le monde ARM : la machine qui NOMME ce qu'elle est et ce qu'elle ne
+peut pas exécuter.

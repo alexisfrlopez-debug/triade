@@ -1,0 +1,103 @@
+RAPPORT-KIT-ARM-TELEPHONE.txt — L'ATELIER DU KIT DE TEST DU TROISIÈME SILICIUM
+================================================================================
+(25/11/2026 — la commande du maître : « tu peux me faire un kit de test
+arm/pour téléphone si nécessaire »)
+
+LE FAIT. Le téléphone était le silicium CONSTATÉ (kit-constat-arm du
+correctif n° 3, 12/11) : identité, lecteur FIPS, refus nommé des pièces
+x86-64 — mais AUCUN test, aucun protocole pré-enregistré, aucun chiffre.
+Cet atelier livre le kit qui l'ÉPROUVE : le protocole TELEPHONE-ARM-1,
+pré-enregistré au LISEZMOI-dudect-arm.txt AVANT tout run, et
+l'instrument dudect_arm.c. La « machine n° 2 » attendue depuis les
+Entrées 413/414 trouve ici sa voie : le téléphone, mesuré sur SES
+propres instructions.
+
+LE PROTOCOLE TELEPHONE-ARM-1 (l'équation figée — le LISEZMOI fait foi).
+Quatre cibles dans cet ordre : eq-constant (le CONTRÔLE POSITIF — la
+comparaison 32 octets par OU masqué, aucun branchement sur le secret) ;
+eq-branchue (le CONTRÔLE NÉGATIF — la sortie au premier octet divergent,
+LE FAUX PATRON : l'instrument doit DÉTECTER la fuite, sinon il se
+conteste lui-même) ; sha256-logiciel (la compression de dudect_v150.c —
+la cible tls13-02 : état AMONT l'IV, bloc 64 LE SECRET) ; sha256-arm-sha2
+(les instructions MATÉRIELLES FEAT_SHA256, SHA256H/SHA256H2 — UNE AUTRE
+famille que la SHA-NI x86 ; elle ne vit que si le noyau expose « sha2 »
+ET que le compilateur a accepté -march=armv8-a+sha2 : la double garde,
+REFUS NOMMÉ sinon). Les classes : EGAL (le secret, copie de l'étalon)
+contre DIVERGENT (le secret frais) pour les comparaisons — le cas
+canonique de la divulgation par comparaison ; SECRET-FIXE contre
+SECRET-ALÉATOIRE pour les compressions. Les échantillons ENTRELACÉS (à
+chaque itération la première classe puis la seconde : le téléphone
+gouverne sa fréquence, les deux classes vivent les mêmes fenêtres — la
+différence nommée avec le kit-2 aux classes séquentielles). L'équation :
+échauffement 100 paires ; LOT=512 (comparaisons) / LOT=4 (compressions) —
+l'amplification, les compteurs de téléphone étant grossiers (CNTVCT_EL0,
+≈52 ns le tick : la grandeur est « ticks », jamais « cycles », le repli
+horloge est NOMMÉ si la lecture est refusée) ; N=60 puis 200 puis 400
+dans cet ordre ; le t de Welch au seuil |t|>5 ; l'épreuve FIPS 180-4
+« abc » EXACTE exigée des deux lecteurs AVANT toute mesure (fail-closed).
+
+L'INSTRUMENT. dudect_arm.c, source ouverte, AUCUN exe précompilé : le
+terrain compile SUR LE TÉLÉPHONE par le clang que le lanceur installe
+par pkg (la source est la vérité ; RIEN ne peut être retiré par un
+scanner — la réponse structurelle au faux positif « malware or spam »
+des Entrées 248/413). scenario-dudect-arm.py orchestre : le scellé de
+la source ASSERTÉ (sha256 08681278e0efe013ff9e6379eff8ea02219f04a6b…
+— la pièce a bougé = REFUS), la compilation (+sha2 d'abord, sobre en
+repli : la cible matérielle refusée par nature, nommée), l'épreuve
+d'appel, les trois runs N=60/200/400, les témoins composés tout seuls
+(l'automatisation du correctif n° 3 conduite jusqu'au bout : plus rien
+à renommer à la main), la synthèse à dater et à signer.
+
+LA PREUVE DU LABORATOIRE — L'INSTRUMENT S'EST CONTESTÉ LUI-MÊME, DEUX
+FOIS (le récit entier : preuves-labo/LA-CONTESTATION-NOMMEE.txt).
+Première mouture (classes aléatoires indépendantes, la structure du
+kit-2) : l'autotest x86-64 rendit « INSTRUMENT CONTESTÉ » — eq-branchue
+t=0,99 : deux tampons aléatoires divergent au premier octet dans les
+DEUX classes, le faux patron y vit identiquement, invisible au t-test.
+Correction : les classes EGAL/DIVERGENT. Seconde mouture : la copie
+egal n'était restaurée qu'avant la boucle — t=1,00, CONTESTÉ encore
+(la classe « egal » mesurait le reste aléatoire de l'itération amont).
+Le micro-test isola la faute du harnais de celle de la fonction (la
+fonction seule : egal 33,9 ticks par appel, divergent 6,9 — le signal
+vivait). Correction : la restauration à chaque itération, hors mesure.
+LA PREUVE RENDUE : x86-64 natif (gcc 14.2) — eq-branchue t=104,55
+(autotest) puis t=128,71 (N=400 du run simulé), eq-constant et
+sha256-logiciel sans divergence ; LA VOIE QEMU — la pièce croisée
+aarch64 (aarch64-linux-gnu-gcc 14.2, -march=armv8-a+sha2, --static)
+éprouvée sous qemu-aarch64 10.0.13 : le FIPS « abc » EXACT des DEUX
+lecteurs (logiciel ET matériel — les intrinsics SHA256H/H2/SU0/SU1
+prouvés par le condensé), les quatre cibles vécues, t=136,73 au
+contrôle négatif, 0 refus. LES CONSOLES : preuves-labo/. L'ÉMULATION
+PROUVE LA MÉCANIQUE, JAMAIS LE SILICIUM : aucun statut terrain n'en
+découle — le run matériel appartient au développeur.
+
+LE PAQUET LIVRÉ. TRIADE_kit_test_ARM_telephone_v100.zip — 17 pièces,
+142 681 octets déployés, sha256 634c403bb0011b5a99b9817ba9afe5268de
+2dbce7f0413153791c16b6682a90f. Contenu : kit-A-constat (le correctif
+n° 3 BYTE POUR BYTE — constat-arm.py, son lanceur, son LISEZMOI) ;
+kit-B-dudect-arm (la source, le scénario, le lanceur, le LISEZMOI du
+protocole) ; preuves-labo (les deux autotests + leurs csv +
+EMPREINTES-DES-OUTILS + LA-CONTESTATION-NOMMEE) ; la racine
+(COMMENCER-ICI.sh le menu-recoup-lanceurs, verifier-kit-arm.sh le
+recoup de la table EMPREINTES-KIT-ARM.txt, A-LIRE-EDITION-TELEPHONE).
+Le terrain : décompresser, « bash COMMENCER-ICI.sh » sous Termux.
+
+LA GARDE. Les pièces scellées v0.15.0 (loupe.exe, proxy-image.bin,
+moteur-shani.bin) sont REFUSÉES PAR NATURE sur ARM64 — empreintes
+CITÉES dans le binaire, jamais mesurées : le périmètre scellé est
+intact. Le kit-A est inchangé octet pour octet (recoupé à l'assemblage
+par EMPREINTES-KIT-ARM.txt). Aucun exe dans le paquet (aucun sujet de
+scanner). Aucun réseau hors l'installation éventuelle des paquets.
+Aucun secret affiché. Le rapport médian logiciel/matériel, s'il vit,
+est LE CONSTAT DE CE SILICIUM — jamais une cible : aucune cible
+pré-enregistrée n'existe pour ARM.
+
+LA CONSIGNATION. worklog Entrée 415 ; OU-TROUVER mise à jour 415 ; le
+zip au /livrables du coffre (recoupé par re-téléchargement byte-byte) ;
+LISEZMOI-KITS-TERRAIN-2026-11-24.txt mis à jour (la section téléphone) ;
+le présent atelier au dépôt.
+
+LA SUITE. Les témoins du maître attendus au /test : kit-A (constat) et
+kit-B (N60/N200/N400) du téléphone — en sus des témoins Windows des
+Entrées 413/414. P4 (serving structured output), P5 (métal VAES),
+P6 (Tamarin/ProVerif) demeurent au poste réel, inchangés.

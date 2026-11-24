@@ -1,0 +1,20 @@
+# EMPREINTES-KIT-ARM.txt — la table des pièces de l'édition TÉLÉPHONE v1.0.0
+# (posée par le labo à l'assemblage du paquet, 25/11/2026 — le
+#  vérificateur : bash verifier-kit-arm.sh)
+#
+320c2e442c0e6ec5e06b1953a28c8b04c518566032631a5704086d4169c91598  A-LIRE-EDITION-TELEPHONE.txt
+e2a81aa918df77f87f00f8489e35756ac1aa4523357603cd1a20fc2c9c85766a  COMMENCER-ICI.sh
+7ffa4594290b58714baf916a4aa112d146de5c161cae228e8a718cd11d101938  preuves-labo/EMPREINTES-DES-OUTILS.txt
+c3f30366bee78683f071902904e64e67f14f1d0db5aac0438900c4c2fd6222c6  preuves-labo/LA-CONTESTATION-NOMMEE.txt
+fad79c92125b5e27d22f8bd0e82cef890cb4fd70fe0c7726cc8e016663792967  preuves-labo/autotest-aarch64-qemu-journal.csv
+e30b7c6e1062cd6fdc16b43d5d119252543d7f4d85377ebf775a5ac311d6badf  preuves-labo/autotest-x86-64-journal.csv
+ef8a5cca50a4aa475d199158ac5c481f5cfc8d80c823afbd7199a878b1d23e2f  preuves-labo/preuve-autotest-aarch64-qemu.txt
+8c4cbfa7a22dfd7b2b5c07d086de672a741b6aa2cec85cc80f09303debb68f80  preuves-labo/preuve-autotest-x86-64.txt
+7509e593b1db352dee12be33e3420d4620809a2e57121c23f05e29d97b3f8817  telephone-arm/kit-A-constat/LISEZMOI-constat-arm.txt
+cfaf4473cd5c40d6ef6159dc85dc23ce92e48a5983baa0f3875bef1d8189fb6e  telephone-arm/kit-A-constat/constat-arm.py
+830793014fa2b56eb02296a8672cfafe1ee46944042bbc51ba018f060aac1081  telephone-arm/kit-A-constat/lancer-kit-constat-arm.sh
+723cac64f697dc40da07643941816a62ea29636765ebc1aeeb12cccae47514e8  telephone-arm/kit-B-dudect-arm/LISEZMOI-dudect-arm.txt
+08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32  telephone-arm/kit-B-dudect-arm/dudect_arm.c
+d00ea6e2bbf573da219d7d502c7b4d9289b437a58a5f91b56805547dcf5483b1  telephone-arm/kit-B-dudect-arm/lancer-kit-B-dudect-arm.sh
+84093bb4ab25a480be87b89b6411e973a3895eaaef3fa44c6d26dbad868405fc  telephone-arm/kit-B-dudect-arm/scenario-dudect-arm.py
+add542132982c43672485b0ae17fbddb902a4c5644bc562ad9aa17d28fe4a107  verifier-kit-arm.sh

@@ -1,0 +1,56 @@
+LA-CONTESTATION-NOMMEE.txt — LE RÉCIT DE LABORATOIRE DU KIT-B (25/11/2026)
+===========================================================================
+
+CE QUE CE FICHIER EST : la consignation des écarts que le laboratoire a
+LUI-MÊME vécus en éprouvant l'instrument du kit-B, AVANT toute
+livraison. La doctrine du projet (D189 : chaque écart nommé est un
+résultat, jamais un échec à maquiller) s'applique AUSSI au labo —
+surtout au labo : un instrument de mesure qui cacherait ses propres
+déboires ne mériterait pas la confiance du terrain.
+
+LE PREMIER ÉCART (la structure des classes, l'instrument se conteste
+lui-même). La première mouture mesurait les comparaisons avec deux
+classes de secrets ALÉATOIRES INDÉPENDANTS (secret-fixe contre
+secret-aléatoire, la structure du kit-2 pour ses cibles scellées).
+L'autotest x86-64 rendit son verdict : eq-branchue t = 0,99 —
+AUCUNE divergence, « L'INSTRUMENT EST CONTESTÉ » (le message
+nommé du binaire lui-même). LE DIAGNOSTIC : deux tampons aléatoires
+indépendants divergent au premier octet dans les DEUX classes — le
+faux patron (la sortie précoce) y vit IDENTIQUEMENT, invisible au
+t-test. La structure était fausse POUR CETTE CIBLE : le kit-2 mesure
+des pièces scellées où le secret traverse la fonction entière ; une
+comparaison à sortie précoce exige que la DIFFÉRENCE elle-même soit
+l'objet des classes. LA CORRECTION : les classes EGAL (le secret est
+la copie de l'étalon — la comparaison court les 32 octets) contre
+DIVERGENT (un secret frais — la sortie au premier octet divergent,
+presque sûr) : le cas d'usage CANONIQUE de la divulgation par
+comparaison de secret.
+
+LE SECOND ÉCART (la restauration oubliée, l'instrument se conteste
+encore). La seconde mouture portait les classes corrigées — mais la
+copie EGAL n'était restaurée qu'AVANT la boucle de mesure, pas À
+CHAQUE itération : dès la deuxième itération, la classe « egal »
+mesurait le reste aléatoire de l'itération amont. L'autotest rendit
+le même verdict honnête : t = 1,00 — AUCUNE divergence, INSTRUMENT
+CONTESTÉ (les médianes des deux classes, 2810 contre 2810 ticks,
+trahissaient l'identité des secrets mesurés). LE DIAGNOSTIC : un
+micro-test isolé (la fonction seule : egal 33,9 ticks par appel,
+divergent 6,9 — le signal VIT) a séparé la faute de la fonction de
+la faute du harnais. LA CORRECTION : la restauration du secret de
+première classe à CHAQUE itération, hors de la région mesurée.
+
+LA PREUVE (les autotests consignés aux pièces voisines) : après la
+double correction, l'instrument a rendu sa preuve sur les deux mondes
+— x86-64 natif : eq-branchue t = 104,55 (DIVERGENCE attendue, le
+contrôle négatif vivant) ; aarch64 croisé sous QEMU : t = 136,73 ;
+et le contrôle positif, comme le SHA-256 logiciel et le SHA-256
+matériel FEAT_SHA256, SANS divergence au seuil. Les consoles entières
+vivent à preuve-autotest-x86-64.txt et preuve-autotest-aarch64-qemu.txt.
+
+LA LEÇON (consignée pour les vagues à venir) : les deux écarts furent
+détectés PAR L'INSTRUMENT LUI-MÊME — le message « INSTRUMENT CONTESTÉ »
+imprimé par le binaire quand le contrôle négatif refuse de diverger.
+C'était le dessin du kit (un instrument non éprouvé ne mesure rien) ;
+le dessin a fonctionné exactement comme prévu, sur son propre auteur.
+Aucun des deux écarts n'est arrivé au terrain : la contestation s'est
+vécue et s'est close au laboratoire, avant l'assemblage du paquet.

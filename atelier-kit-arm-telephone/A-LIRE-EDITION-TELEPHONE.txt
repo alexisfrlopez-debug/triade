@@ -1,0 +1,66 @@
+A-LIRE-EDITION-TELEPHONE.txt — L'ÉDITION TÉLÉPHONE DU KIT DE TEST ARM v1.0.0
+============================================================================
+(25/11/2026 — la commande du développeur : « tu peux me faire un kit de
+test arm/pour téléphone si nécessaire »)
+
+POURQUOI CETTE ÉDITION. Le kit-constat-arm du correctif n° 3 (12/11)
+CONSTATAIT le téléphone — l'identité, le silicium, le refus des pièces
+x86-64, l'exactitude du lecteur Python — mais ne TESTAIT RIEN : aucun
+protocole pré-enregistré n'existait pour ce silicium, aucun chiffre ne
+pouvait être fabriqué. Le présent paquet comble ce manque : le kit-B
+DÉPOSE UN PROTOCOLE (TELEPHONE-ARM-1, pré-enregistré au LISEZMOI
+dudect-arm AVANT tout run) et livre l'instrument pour le vivre. Le
+téléphone cesse d'être le silicium seulement constaté : il devient le
+silicium ÉPROUVÉ.
+
+CE QUE CONTIENT LE PAQUET :
+  kit-A-constat/     le kit du correctif n° 3, BYTE-POUR-BYTE : la
+                     machine nommée, le silicium lu par ses propres
+                     canaux, le lecteur FIPS. AUCUNE modification ;
+  kit-B-dudect-arm/  LE NOUVEAU : les contrôles de l'instrument
+                     (positif : la comparaison sans branche ; négatif :
+                     la comparaison à sortie précoce), l'invariance de
+                     SHA-256 logiciel, et — si le noyau expose « sha2 » —
+                     des instructions matérielles FEAT_SHA256
+                     (SHA256H/SHA256H2 : UNE AUTRE famille que la
+                     SHA-NI x86, les deux mondes se constatent, aucun ne
+                     se déguise). Le tout compilé SUR LE TÉLÉPHONE
+                     depuis la source ouverte : la source est la
+                     vérité ;
+  preuves-labo/      les consoles des runs d'éprouvage du laboratoire
+                     (x86-64 natif ; aarch64 croisé sous QEMU avec
+                     +sha2) — l'émulation prouve la MÉCANIQUE, jamais
+                     le silicium : aucun statut terrain n'en découle.
+
+CE QUE CETTE ÉDITION REFUSE (le périmètre demeure intouché) : les
+pièces scellées v0.15.0 sont x86-64 Windows — REFUSÉES PAR NATURE sur
+ARM64, leurs empreintes citées, jamais mesurées ici. Le couloir
+VAES/AES-GCM (P5), le moteur d'oracle, les harnais par bloc : le
+poste réel x86-64, pas ce silicium. Le rapport médian
+logiciel/matériel, s'il vit, est LE CONSTAT DE CE SILICIUM — jamais
+une cible : aucune cible pré-enregistrée n'existe pour ARM.
+
+POURQUOI AUCUN EXE PRÉCOMPILÉ. Le kit compile sa pièce sur place
+( Termux installe clang par le lanceur si besoin) : rien ne peut être
+retiré par un scanner ou un antivirus — le coffre Drive a déjà vécu le
+faux positif « malware or spam » sur les exe de mesure de timing
+(12/11, Entrée 248 ; 25/11 sur le paquet complet). Sur ce silicium,
+la source EST l'exécutable.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) — l'instrument du kit-B s'est lui-même contesté au labo
+    avant livraison (voyez preuves-labo/ : la contestation nommée,
+    puis la correction, puis la preuve) ;
+  — datez et signez les témoins DE VOTRE MAIN ;
+  — renvoyez les dossiers de preuves ENTIERS au coffre /test (dossier
+    Drive « Triade » → « test ») — le labo recoupe sur pièces, JAMAIS
+    avant le run, jamais sans pièces ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'ORDRE DE PASSAGE : COMMENCER-ICI.sh vérifie les empreintes, puis
+vous propose kit-A (le constat — quelques secondes) puis kit-B (le
+test — quelques minutes). Si le kit-A a déjà été vécu sur CE
+téléphone, kit-B seul suffit : son témoin porte sa propre identité.

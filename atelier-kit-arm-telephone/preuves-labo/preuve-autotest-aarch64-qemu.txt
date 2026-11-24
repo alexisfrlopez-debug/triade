@@ -1,0 +1,54 @@
+=== PREUVE LABORATOIRE 2/2 — LA VOIE QEMU AARCH64 (+sha2, le mécanisme seul) ===
+La compilation croisée : aarch64-linux-gnu-gcc 14.2.0 -O2 -march=armv8-a+sha2 --static
+L'émulateur : qemu-aarch64 10.0.13 (Debian) — l'émulation prouve la MÉCANIQUE,
+              jamais le silicium : AUCUN statut terrain n'en découle.
+
+--- L'ÉPREUVE FIPS (les deux lecteurs) ---
+=== dudect_arm - LE TESTEUR DU TROISIEME SILICIUM (edition TELEPHONE, v1.0.0) ===
+[config] arch=aarch64  compteur=CNTVCT_EL0 (le compteur virtuel du SoC — PAS le cycle CPU)
+[config] N=200/classe  seuil |t|>5  echantillons ENTRELACES (le protocole TELEPHONE-ARM-1)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[silicium] le drapeau « sha2 » EST expose par le noyau : FEAT_SHA256 (SHA256H/SHA256H2) - UNE AUTRE famille que la SHA-NI x86
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-arm-sha2(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] l'epreuve est vecue seule (l'option --fips) - code 0
+code de sortie : 0
+
+--- L'AUTOTEST COMPLET (les quatre cibles) ---
+=== dudect_arm - LE TESTEUR DU TROISIEME SILICIUM (edition TELEPHONE, v1.0.0) ===
+[config] arch=aarch64  compteur=CNTVCT_EL0 (le compteur virtuel du SoC — PAS le cycle CPU)
+[config] N=60/classe  seuil |t|>5  echantillons ENTRELACES (le protocole TELEPHONE-ARM-1)
+[ETIQUETTE] AUTOTEST LABORATOIRE - la mecanique seule : AUCUN statut terrain n'en decoule (le run materiel appartient au developpeur)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[silicium] le drapeau « sha2 » EST expose par le noyau : FEAT_SHA256 (SHA256H/SHA256H2) - UNE AUTRE famille que la SHA-NI x86
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-arm-sha2(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[affinite] coeur 0 : posee
+[eq-constant] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 54283.3 ticks, med 52000 (par appel : 101.56)
+  divergent      : moy 53566.7 ticks, med 52000 (par appel : 101.56)
+  t de Welch = 0.75 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[eq-branchue] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 67050.0 ticks, med 66000 (par appel : 128.91)
+  divergent      : moy 14566.7 ticks, med 14000 (par appel : 27.34)
+  t de Welch = 136.73 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[sha256-logiciel] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4 appels par echantillon)
+  fixe           : moy 4600.0 ticks, med 5000 (par appel : 1250.00)
+  aleatoire      : moy 4583.3 ticks, med 5000 (par appel : 1250.00)
+  t de Welch = 0.18 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sha256-arm-sha2] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4 appels par echantillon)
+  fixe           : moy 5533.3 ticks, med 5000 (par appel : 1250.00)
+  aleatoire      : moy 5400.0 ticks, med 5000 (par appel : 1250.00)
+  t de Welch = 0.95 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-arm-1795560609455792991.csv — joignez-le au temoin (la synthese le fait)
+[constat] le rapport median logiciel/materiel = 1.00 — LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pre-enregistree n'existe pour ARM)
+[verdict] LE RUN VECU : 4/4 cible(s) consignee(s), 0 refus nomme(s)
+[verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+[verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
+code de sortie : 0
