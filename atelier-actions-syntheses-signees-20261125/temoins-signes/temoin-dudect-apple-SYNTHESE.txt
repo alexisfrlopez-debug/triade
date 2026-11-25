@@ -1,0 +1,27 @@
+LA SYNTHÈSE DUDECT-APPLE — édition APPLE-SILICON, kit-G, v1.0.0
+================================================================
+La machine    : sjc22-be108-407d6215-ff9c-4c84-86a0-4ae44d163778-4603D40A3051.local · arm64 · Python 3.15.2 · Darwin sjc22-be108-407d6215-ff9c-4c84-86a0-4ae44d163778-4603D40A3051.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:39:04 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_VMAPPLE arm64
+Le silicium   : le CPU : Apple M1 (Virtual) · le modèle : VirtualMac2,1 · les cœurs : 3 (le canal sysctl — /proc absent sur macOS, nommé)
+La pièce      : dudect_apple.c sha256 6af573f6f30632e5a7538a2ad8f002b70e1bf3b0a4926b01652a4a962999a08b
+Le binaire    : run/dudect_apple sha256 96ccc107e7be6beeb2414c960c3d67be7f3ccc31aa792886a7dc85bdb6591e43
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (clang -O2 -march=armv8-a+sha2 -o run/dudect_apple dudect_apple.c -lm — la source est la vérité)
+Le compilateur: Apple clang version 21.0.0 (clang-2100.1.1.101)
+
+LES TROIS RUNS (l'ordre imposé du protocole) :
+  N=60 — code 0 (sortie-run-N60.txt, journal-dudect-apple-N60.csv, temoin-dudect-apple-N60.txt)
+  N=200 — code 0 (sortie-run-N200.txt, journal-dudect-apple-N200.csv, temoin-dudect-apple-N200.txt)
+  N=400 — code 0 (sortie-run-N400.txt, journal-dudect-apple-N400.csv, temoin-dudect-apple-N400.txt)
+
+LA LECTURE HONNÊTE (le protocole entier vit au LISEZMOI-dudect-apple.txt) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE machine — jamais « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument est CONTESTÉ — nommé) ;
+  — le rapport médian logiciel/materiel est LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pré-enregistrée n'existe pour Apple Silicon) ;
+  — l'affinité n'est PAS posable sur macOS (nommée) : le t sera bruité, constaté tel quel.
+
+LES RÉFÉRENCES : le kit-B du téléphone (le même instrument sur le Cortex-A78, FEAT_SHA256, rapport 4,36 — Entrée 424) ; le kit-C COLLAB (Entrée 426) ; le coffre /test pour le retour des preuves.
+
+signature du geste : à dater et à signer de la main du développeur.
+
+Faite le 25/11/2026
+Alexis Lopez

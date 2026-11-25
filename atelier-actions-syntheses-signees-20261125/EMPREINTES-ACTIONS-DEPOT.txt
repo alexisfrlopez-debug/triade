@@ -1,0 +1,52 @@
+EMPREINTES DU DÉPÔT /LIVRABLES/preuves-actions-campagne-20261125 (43 pièces)
+Le dépôt du maître du 25/11/2026 (15:25Z) — la collecte ENTIÈRE du run
+45625277486 (seconde vague de la campagne ACTIONS, l'Entrée 427) ; les CINQ
+témoins signés (kit-C : temoin-N60/N200/N400 + SYNTHESE ; kit-D, kit-G :
+SYNTHESE) portent la signature append-only de 33 octets « Faite le 25/11/2026 /
+Alexis Lopez » — les préfixes byte-byte INTACTS (la preuve vit au
+recoup_actions_20261125.py). sha256 des 43 pièces, telles que re-téléchargées
+du coffre au bac (le geste de la 426 : aucun chiffre repris sans son témoin).
+
+597b94836a0f3b50c46fbaef6ff071fb9d19b17c0c1124f55dfe25b39d439fa7  kit-C-x86-serveur/ETIQUETTE-AUTOTEST-DISTANT.txt
+deac32719636932209c4e46c9e2ac6f57d7d2506ee01ef1b2255d59c81ef4129  kit-C-x86-serveur/journal-dudect-collab-N200.csv
+811653390f831fd40067008b1df0113c784235711cb6b8bd0997c656ca3b66b5  kit-C-x86-serveur/journal-dudect-collab-N400.csv
+a89edc01297f3071290b793335121aebf79c572cbdabb3d3d83cf4c41b4d31c1  kit-C-x86-serveur/journal-dudect-collab-N60.csv
+d2f17e42768b1f7891cf16fd5561b77eaae97174c2a7a3e012b1c8dca8e79d99  kit-C-x86-serveur/preuves-collab-20261125T133630Z.zip
+15252290d53c933419c171bac0049d2b3ddc5cc3927ab18821fea3522f4b7ac7  kit-C-x86-serveur/scenario-collab-journal.log
+8a19a7df6bdc42709967acdef16aa6741df697b834ef31f9cb456ba91928f138  kit-C-x86-serveur/sortie-epreuve-fips.txt
+f886dd5e1c150088fbd9d4b384a624ff68bb2a9a100566b263f98926d9280de4  kit-C-x86-serveur/sortie-run-N200.txt
+bd5e3d280ab3ef3e66f7664750cc842c0b4d135886de1b9333defa4e42cfdad9  kit-C-x86-serveur/sortie-run-N400.txt
+270c2eeaeb173be6ce7a3f3f129cf625e0fb80bd262dadf979a78c34998e1eea  kit-C-x86-serveur/sortie-run-N60.txt
+dadd016204844c312eebb52668a534d8c885b2d0a7247533931fb9d09062334d  kit-C-x86-serveur/temoin-dudect-collab-N200.txt
+a0072a1cc9e4ca11f747588391cff3e3baa0643df98beb813418fceb95aebd5f  kit-C-x86-serveur/temoin-dudect-collab-N400.txt
+472d1bfcbdb444c2865da2e46a027af543259da849aeaf838deffcf77362bc6f  kit-C-x86-serveur/temoin-dudect-collab-N60.txt
+7cbba44a79524c28406c6f174d4c070e72d6cf8d234915b449c99a26fe214ad9  kit-C-x86-serveur/temoin-dudect-collab-SYNTHESE.txt
+a93aa17b1ed4605f0089b12a01d95ea6ad55b093ff62e0dd3bcb7d4a616f988b  kit-D-arm64-serveur/ETIQUETTE-AUTOTEST-DISTANT.txt
+0ba336e7acd7cb113df5ea8e238d3b181903b14cf7101030aaf50520d69cd3a5  kit-D-arm64-serveur/journal-dudect-arm-N200.csv
+93c8c22166de31d9bd730e19df08c0ca2d700233d9528c5a0079b0e3672e3537  kit-D-arm64-serveur/journal-dudect-arm-N400.csv
+7ba634bc685945c5a25889fcadc1918882341fdc44b991a8e51c3069013cc842  kit-D-arm64-serveur/journal-dudect-arm-N60.csv
+2e05bef78edf327247005c7359a8f8edf365afae4948b03b8f6961e6ceb566a1  kit-D-arm64-serveur/scenario-dudect-arm-journal.log
+08662a3b3f587079637c0b3a35c920f0d68134f8227a42e3cb56e92b86312734  kit-D-arm64-serveur/sortie-epreuve-fips.txt
+aa72e442b129c135bf803c35b3e2f22be129f578966681410d83cb094c7e3881  kit-D-arm64-serveur/sortie-run-N200.txt
+66fe486612491d70e67add183719c24f7d8c572295f94aeb172dd17350edf327  kit-D-arm64-serveur/sortie-run-N400.txt
+839fa929344877fa6bf0dbb7b653399851869a8d7cb50bc00823fbbd3fea230b  kit-D-arm64-serveur/sortie-run-N60.txt
+8a867349f5ba60fc3bf127fb39334de83fd7a13842a64de8b857bfd34c702fda  kit-D-arm64-serveur/temoin-dudect-arm-N200.txt
+0786caa1c3cf217a5db49a83aab8084d72e3ba2aad9a1cbdb5c932d2f31c50b0  kit-D-arm64-serveur/temoin-dudect-arm-N400.txt
+4c8d0dfee2154c44d782afb141f68d8fec88e27c8a9d57e63061fc86358ed4a1  kit-D-arm64-serveur/temoin-dudect-arm-N60.txt
+96b692725d651802b8a7c3f1f25fd9377aae39625ceb325a920e3b9bae80ad55  kit-D-arm64-serveur/temoin-dudect-arm-SYNTHESE.txt
+f309f5c72f2c3eb655f6d5ff9a2925f869521ecde4f0d835fd759f77365517a9  kit-G-apple-silicon/ETIQUETTE-AUTOTEST-DISTANT.txt
+115ce7bd6e13ae09ee3a073ab7822242ad74a541a1596caa320f3534bffc856d  kit-G-apple-silicon/journal-dudect-apple-N200.csv
+3de0105a96d1b4e82cc2291dbb30ccf30cbecadfa908094120aeb644eb083c94  kit-G-apple-silicon/journal-dudect-apple-N400.csv
+a1e8bac7145b528c8af8a15e37a2169317b03bea5a5398cd2b96ff83ced4d02d  kit-G-apple-silicon/journal-dudect-apple-N60.csv
+5e6cb914b5166cfaf6eea7e023716dcda3084f1d2a01351f51993478f21acd01  kit-G-apple-silicon/scenario-dudect-apple-journal.log
+92e7a22b817f84647649f486e02642ce68585cb686438a6ea638ceaf292da185  kit-G-apple-silicon/sortie-epreuve-fips.txt
+701bc26ebb03519adca1b148cc06d205bc5eda368f43cd861b1024b48e1048c3  kit-G-apple-silicon/sortie-run-N200.txt
+006e7c12cb7850c961d4044bffe96387776211378699996ac4116ae7f4ac0249  kit-G-apple-silicon/sortie-run-N400.txt
+2847c00ed2d271bd3350f006d5a9d13129176e34877582066e6086e546456f53  kit-G-apple-silicon/sortie-run-N60.txt
+b3fff9040e3820bcc3417b9f81f504fe648150518a4a52c72a7407c81c780da5  kit-G-apple-silicon/temoin-dudect-apple-N200.txt
+c8f0d5a26c0c1e28062dba7dcb1dee99888f9ca0a6859b355387de98b112a090  kit-G-apple-silicon/temoin-dudect-apple-N400.txt
+0bfefb82458f90f93c1e2993d0b3d4817ee5ebfdbf436143eccc0222986d0964  kit-G-apple-silicon/temoin-dudect-apple-N60.txt
+c2c45a289e4f21c082c44f7b1e8ab5e7239af61aea58e1bb255d74c485565b8f  kit-G-apple-silicon/temoin-dudect-apple-SYNTHESE.txt
+6e1909e834115607b3b16e4382f79ce7250a6ab0ca0bf01de5f4f2493e3b9c96  vague1-annulee-macos/LA-PREMIERE-VAGUE.txt
+c11ccfec695699aed67b7a611958aec9fb1d337afddd1785fadb272d5bf8d8d9  vague1-annulee-macos/run-45622766831-job-kit-C-x86-EPYC7763.txt
+4a23873b45ef71e9f66bc994e95bf9de1fdb37179d0e1aa65796d21cf1557c91  vague1-annulee-macos/run-45622766831-job-kit-D-arm64.txt

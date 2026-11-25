@@ -1,0 +1,41 @@
+LE TÉMOIN DUDECT-COLLAB — N400 (édition COLLAB x86-64, kit-C, v1.0.0)
+================================================================
+L'horodatage  : 2026-11-25T13:36:30
+La pièce      : dudect_collab.c sha256 ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d
+Le scellé     : cibles/proxy-image.bin sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+Le protocole  : COLLAB-X86-1 (pré-enregistré au LISEZMOI-dudect-collab.txt AVANT tout run)
+Les cibles    : eq-constant (contrôle positif), eq-branchue (contrôle négatif), sha256-logiciel, sha256-x86-shani (si le noyau expose « sha_ni » et le compilateur -msha), tls13-02 / tls13-13 / tls13-16 / tls13-17 (LES SCELLÉES de proxy-image.bin, recoupées avant exécution)
+Le run        : N=400 par classe (le protocole COLLAB-X86-1 — échantillons entrelacés)
+Code du run   : 0
+Le binaire    : run/dudect_collab (sha256 68b61e5ef4fe1640…)
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (gcc -O2 -msha -mssse3 -msse4.1 -o run/dudect_collab dudect_collab.c -lm — la source est la vérité)
+La machine    : runnervm0hi8g · x86_64 · Python 3.14.4 · Linux runnervm0hi8g 7.0.0-1020-azure #21-Ubuntu SMP PREEMPT Tue Oct 27 22:34:38 UTC 2026 x86_64
+Le silicium   : 4 cœur(s) · AMD EPYC 9V74 80-Core Processor · drapeaux : sha_ni, hypervisor, constant_tsc, nonstop_tsc
+
+LA MUTUALISATION (la machine de commodité se nomme, D206) : le silicium de la session est PARTAGÉ aux voisins INCONNUS — le t mesure AUSSI eux ; le DVFS sous l'hyperviseur est opaque (aucun cadre de fréquence cockpit : la cadence se constate aux temps eux-mêmes) ; la hiérarchie d'évidence est INCHANGÉE — le banc contrôlé (portable, téléphone) demeure la référence.
+
+LES DERNIÈRES LIGNES DE LA CONSOLE (la sortie complète vit dans sortie-run-N400.txt) :
+
+    t de Welch = -0.47 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  [tls13-17] echauffement 100 paires, puis 400 iterations entrelacees (LOT=512 appels par echantillon)
+    fixe       : moy 336724.9 ticks, med 332878 (par appel : 650.15)
+    aleatoire  : moy 335501.1 ticks, med 332670 (par appel : 649.75)
+    t de Welch = 2.20 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  [sortie] journal-dudect-collab-1795613790467701098.csv — joignez-le au temoin (la synthese le fait)
+  [constat] le rapport median logiciel/SHA-NI = 4.14 — LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pre-enregistree n'existe pour ce silicium)
+  [constat] tls13-02 SCELLEE : 673.56 ticks par appel — la piece du coffre, mesuree sur CE silicium (le labo la relira contre le kit-2 du 24/11)
+  [verdict] LE RUN VECU : 8/8 cible(s) consignee(s), 0 refus nomme(s)
+  [la question] les trois divergences |t|>5 du 24/11 au portable (tls13-02 : -10,64 ; tls13-13 : +9,65 ; tls13-16 : +9,19 — l'Entree 416 les lut comme DVFS aux classes SEQUENTIELLES) : CE run, sur CE silicium, classes ENTRELACEES, dit ce qu'il dit. La lecture appartient au labo, sur pieces — jamais avant le run, jamais sans pieces
+  [verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, CETTE machine mutualisee, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon — jamais « temps constant prouve »
+  [verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
+
+LA LECTURE HONNÊTE : |t| > 5 = dépendance AU SEUIL sur CET échantillon, CETTE machine mutualisée, consignée telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet échantillon — jamais « temps constant prouvé ».
+
+À COMPLÉTER DE VOTRE MAIN (le mesureur ne peut pas le lire à votre place) :
+  - l'état EFFECTIF du gouverneur de fréquence pendant le run, si vous le connaissez (sous l'hyperviseur, il est probablement opaque — constatez-le tel quel) ;
+  - vos observations, mêmes défavorables (D189 : rapporter tel quel).
+
+PUIS : datez et signez la synthèse de votre main, et RÉCUPÉREZ le zip de retour preuves-collab-<horodatage>.zip AVANT LA FIN DE LA SESSION (la session est ÉPHÉMÈRE), puis téléversez-le au coffre /test (dossier Drive « Triade » → « test »). Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces.
+
+Faite le 25/11/2026
+Alexis Lopez

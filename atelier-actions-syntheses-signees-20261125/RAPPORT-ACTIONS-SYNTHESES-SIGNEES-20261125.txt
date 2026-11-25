@@ -1,0 +1,87 @@
+RAPPORT — LES SYNTHÈSES DES TÉMOINS DE LA CAMPAGNE ACTIONS SIGNÉES (Entrée 428, 25/11/2026)
+================================================================================================
+
+LA NOUVELLE DU MAÎTRE (reçue tronquée au canal) : « les synthèses des témoins
+de la campagne Action sont signées et déposées dans » — la fin manquante. Le
+dossier nommé SUR PIÈCES : le seul dépôt nouveau au /livrables du coffre,
+preuves-actions-campagne-20261125/ (créé 15:25Z), la collecte ENTIÈRE du run
+45625277486 (la seconde vague de la campagne ACTIONS, l'Entrée 427).
+
+LE DÉPÔT (43 pièces, re-téléchargées au bac, sha256 consignées à
+EMPREINTES-ACTIONS-DEPOT.txt) :
+  kit-C-x86-serveur/   14 pièces  (EPYC 9V74, le kit COLLAB byte-byte)
+  kit-D-arm64-serveur/ 13 pièces  (ARM64 serveur, le kit-B byte-byte)
+  kit-G-apple-silicon/ 13 pièces  (Apple M1 virtualisée VirtualMac2,1)
+  vague1-annulee-macos/ 3 pièces  (les journaux de la première vague annulée)
+
+LES SIX SIGNÉES DE LA MAIN DU MAÎTRE (la même main que la 426) — préfixes
+byte-byte INTACTS + la signature append-only de 33 octets « Faite le
+25/11/2026 / Alexis Lopez » :
+  kit-C  temoin-dudect-collab-N60.txt      472d1bfc… = 96813132… + la main
+  kit-C  temoin-dudect-collab-N200.txt     dadd0162… = 69b030d5… + la main
+  kit-C  temoin-dudect-collab-N400.txt     a0072a1c… = f4535231… + la main
+  kit-C  temoin-dudect-collab-SYNTHESE.txt 7cbba44a… = 2930 o + la main
+  kit-D  temoin-dudect-arm-SYNTHESE.txt    96b69272… = 1807 o + la main
+  kit-G  temoin-dudect-apple-SYNTHESE.txt  c2c45a28… = 2278 o + la main
+La mention « signature du geste : à dater et à signer de la main du
+développeur » SOLDÉE sur les trois synthèses — le rite des 421/424/426 étendu
+à la campagne ACTIONS.
+
+LE RECROUP (recoup_actions_20261125.py, tout rejouable au bac) :
+  1. LES SIGNATURES : 6/6 — préfixes intacts, signature append-only exacte ;
+  2. LES EMPREINTES : 43/43 pièces du dépôt == pièces de l'atelier
+     (37 non signées byte-byte, 6 signées à préfixe intact ; le zip
+     preuves-collab-20261125T133630Z.zip 71 287 o d2f17e42… == le dépôt) ;
+  3. LE WELCH RECALCULÉ DU CSV BRUT : 48/48 t VERT (écart ≤ 0,005 —
+     l'arrondi d'impression) :
+       kit-C  eq-constant    −1,11/+0,17/+0,50   eq-branchue +3010,24/+50,30/+66,01
+              sha256-logiciel +1,30/+0,22/−1,21   sha256-x86-shani +4,71/+1,59/−3,12
+              tls13-02  −0,33/−0,15/−0,41   tls13-13  −0,91/+0,06/+0,14
+              tls13-16  +0,27/+1,32/−0,47   tls13-17  +1,08/+1,58/+2,20
+              → LES QUATRE SCELLÉES SILENCIEUSES aux trois N sur l'EPYC 9V74,
+                l'instrument PROUVÉ (eq-branchue divergente aux trois N)
+       kit-D  eq-constant  −0,02/+1,39/+0,63   eq-branchue +11,83/+152,88/+492,48
+              sha256-logiciel −1,01/+0,93/−0,80
+              sha256-arm-sha2 −2,66/−3,91/−7,00 → DIVERGENTE à N=400 (le run
+                la consigna « a consigner telle quelle », le bac la REPROUVE ;
+                jamais maquillée)
+       kit-G  eq-constant  −0,14/−1,48/−0,78   eq-branchue +5,98/+3,88/+2,76
+              sha256-logiciel +0,83/−0,35/−0,09
+              sha256-arm-sha2 +0,68/+0,71/−0,91
+              → l'instrument CONTESTÉ à N=200/400 sur la VM sans goupille
+                (l'écart (c) de la 427 reprové — jamais maquillé)
+
+LA LECTURE (sur pièces, jamais un verdict) : les lectures de la 427 reçoivent
+leur preuve du dépôt du maître — les csv déposés sont byte-byte ceux du dépôt,
+leurs t recompute exactement. tls13-16 SILENCIEUSE sur les TROIS serveurs
+x86-64 (Xeon Colab 426, EPYC 7763, EPYC 9V74) : le partage machine-ou-code
+demeure le partage. La hiérarchie inchangée : le banc contrôlé référence.
+
+LES ÉCARTS NOMMÉS :
+  (a) la nouvelle tronquée au canal — l'emplacement nommé sur pièces ;
+  (b) les TROIS journaux de scénario (scenario-collab-journal.log 15252290…,
+      scenario-dudect-arm-journal.log 2e05bef7…, scenario-dudect-apple-
+      journal.log 5e6cb914…) mangés par le .gitignore *.log à la collecte
+      (l'écart (f) de la 426 vécu ici) — COMMIS au git add -f : le dépôt
+      détient 43/43 ;
+  (c) le journal kit-C porte UNE LIGNE DE PLUS que le membre du zip (la ligne
+      T4.retour, composée APRÈS le zip — un zip ne peut contenir sa propre
+      ligne de fermeture) : le dépôt du maître détient le journal COMPLET ;
+  (d) le rite INÉGAL nommé : QUATRE pièces signées au kit-C, SEULEMENT la
+      synthèse aux kit-D/kit-G — les temoins-N kit-D/kit-G demeurent non
+      datés-signés (le précédent 426(b) — le dépôt tient lieu).
+
+LA CLÔTURE DE LA 427 (le geste de reprise) : la session précédente morte
+avant sa consignation — le worklog et l'OU-TROUVER de la racine repris
+byte-byte et committés (f9eabf2), le manifeste prescriptif régénéré, le
+REPRISE rattrapé à l'état 427.
+
+LA GARDE : les pièces scellées jamais modifiées sur disque ; le /livrables LU
+sans y écrire ; le verbatim des témoins jamais retouché (copies byte-byte,
+sha256 consignés) ; aucun secret affiché ; aucun chiffre fabriqué (48/48
+recomputés au bac depuis les csv bruts du dépôt) ; le sceau-I 14/14 avant
+et après.
+
+LA CHAÎNE : le commit, le push GitHub, la sync du miroir (le bundle, la
+racine du coffre, le worklog racine), LE TROIS-BORDS (verifier_trois_
+bords_v428.py à l'atelier).
