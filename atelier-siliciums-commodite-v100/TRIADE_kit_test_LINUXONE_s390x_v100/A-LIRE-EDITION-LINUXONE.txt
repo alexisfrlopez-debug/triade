@@ -1,0 +1,94 @@
+A-LIRE-EDITION-LINUXONE.txt — L'ÉDITION LINUXONE s390x DU KIT DE TEST v1.0.0
+============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+POURQUOI CETTE ÉDITION. Après les serveurs x86-64 (Colab, Kaggle) et
+les ARM (téléphone Cortex, Ampere A1), le silicium LE PLUS DIFFÉRENT
+accessible en ligne : IBM Z (s390x) — une ISA de mainframe, des coeurs
+à cadence élevée et à gouvernance propre. SI la divergence tls13-16
+suit le CODE, elle devrait se comporter de façon comparable partout (le
+kit s390x ne peut pas la mesurer — REFUSÉE PAR NATURE, l'ISA diverge —
+mais l'instrument lui-même, les contrôles et SHA-256 logiciel, s'y
+éprouvent) ; SI elle suit la MACHINE, chaque silicium raconte autre
+chose. Le kit-E porte l'instrument sur ce CINQUIÈME silicium : x86
+portable, x86 serveur Colab, ARM téléphone, ARM Ampere, Z s390x —
+la famille étendue de la campagne.
+
+LES PORTES GRATUITES (nommées honnêtement, vérifiées par le labo le
+25/11/2026) :
+  — IBM Z XPLORE (ibmzxplore.influitive.com) : la plateforme mondiale
+    d'apprentissage d'IBM, « available globally at no cost », donne
+    accès à des environnements Z réels (z/OS et Linux, Python, USS) ;
+    c'est LA PORTE GRATUITE VIVANTE ;
+  — le « LinuxONE Community Cloud » historique (community.ibm.com) :
+    la page est INACCESSIBLE (le labo l'a constaté) ; le portail
+    linuxone.cloud.ibm.com répond mais son contenu ne put être vérifié
+    (portail JavaScript) — SI la porte vit encore pour vous, elle vaut
+    pareil ;
+  — TOUTE autre porte s390x que le maître possède (université,
+    employeur, essai) vaut PAREIL : le kit exige seulement un shell
+    Linux s390x avec gcc et python3 ;
+  — SI gcc est absent de la porte choisie : REFUS NOMMÉ (D122/D189) —
+    le kit ne mesure rien, il refuse ; l'écran se renvoie tel quel.
+
+CE QUE CONTIENT LE PAQUET :
+  linuxone-s390x/kit-E-dudect-s390x/   LE KIT : la source ouverte du
+      mesureur (dudect_s390x.c — DÉRIVÉ NOMMÉ de dudect_arm.c, le
+      kit-B téléphone : la même mécanique, les écarts nommés au
+      LISEZMOI — compilée SUR PLACE : la source est la vérité, aucun
+      exe précompilé ne vit ici), l'orchestrateur
+      (scenario-dudect-s390x.py), le lanceur, et le LISEZMOI du
+      protocole LINUXONE-S390X-1 PRÉ-ENREGISTRÉ avant tout run
+      (échauffement 100, LOT=4096/64, N=60/200/400, t de Welch, |t|>5,
+      compteur = l'horloge du noyau en NANOSECONDES, nommée) ;
+  preuves-labo/      la console et le csv de l'autotest du laboratoire
+      (l'hôte x86-64 du bac, la voie TSC de la même source : l'épreuve
+      FIPS EXACTE, le run N=60, l'instrument PROUVÉ — le contrôle
+      négatif diverge — code 0). L'AUTOTEST PROUVE LA MÉCANIQUE, JAMAIS
+      LE SILICIUM : aucun statut terrain n'en découle.
+
+LES TROIS CIBLES (l'ordre pré-enregistré) : eq-constant (contrôle
+positif), eq-branchue (contrôle négatif — DOIT diverger), et
+sha256-logiciel. LA CIBLE MATÉRIELLE EST REFUSÉE PAR NATURE : les
+instructions KIMD/KLMD (Message Digest Assist) du Z sont SUPERVISEUR —
+l'espace utilisateur ne peut pas les émettre ; nommée, jamais muette
+(une itération future pré-enregistrerait la voie OpenSSL/EVP si le
+labo la veut).
+
+CE QUE CETTE ÉDITION REFUSE (le périmètre demeure intouché) : les
+pièces scellées v0.15.0 (loupe.exe, proxy-image.bin, moteur-shani.bin)
+sont x86-64 Windows — REFUSÉES PAR NATURE sur s390x, leurs empreintes
+citées, jamais mesurées ici. Le couloir VAES/AES-GCM (P5), le moteur
+d'oracle, les harnais par bloc : le poste réel x86-64. Le rapport
+logiciel d'un Z sera LE CONSTAT DE CE SILICIUM — jamais une cible.
+
+DANS LE SHELL s390x (l'ordre exact) :
+  1. copiez le dossier TRIADE_kit_test_LINUXONE_s390x_v100/ ENTIER dans
+     votre dossier du shell (trois fichiers du kit suffisent au
+     voyage : dudect_s390x.c, scenario-dudect-s390x.py,
+     lancer-kit-E-dudect-s390x.sh — AUCUN binaire) ;
+  2. tapez :  bash TRIADE_kit_test_LINUXONE_s390x_v100/COMMENCER-ICI.sh
+     (le lanceur vérifie les empreintes, tente d'installer gcc s'il
+     manque — REFUS NOMMÉ sinon, compile la pièce SUR CETTE MACHINE,
+     vit l'épreuve FIPS, puis les trois runs N=60/200/400) ;
+  3. à la fin : renvoyez le dossier preuves-dudect-s390x/ ENTIER au
+     coffre /test (dossier Drive « Triade » → « test »), avec le scan
+     de la synthèse datée et signée de votre main.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) — y compris le REFUS gcc d'une porte figée ;
+  — datez et signez les témoins DE VOTRE MAIN ;
+  — renvoyez les dossiers de preuves ENTIERS au coffre /test — le labo
+    recoupe sur pièces, JAMAIS avant le run, jamais sans pièces ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'ORDRE DE PASSAGE : COMMENCER-ICI.sh vérifie les empreintes du paquet
+puis lance le kit-E-s390x (l'unique kit de cette édition — le constat
+d'identité vit dans le témoin du run : machine, silicium, la porte
+nommée par ses propres canaux).

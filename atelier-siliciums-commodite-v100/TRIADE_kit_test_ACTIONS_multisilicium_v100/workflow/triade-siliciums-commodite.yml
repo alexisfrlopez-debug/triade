@@ -1,0 +1,126 @@
+# triade-siliciums-commodite.yml — LE WORKFLOW DE L'ÉDITION ACTIONS v1.0.0
+# (25/11/2026 — la commande du développeur : « si tu as des idées pour des
+# siliciums supplémentaires du même type que google collab (environnement
+# gratuit en ligne, mais hardware différent) fais moi les packs de test
+# correspondants »)
+#
+# TROIS siliciums RÉELS, gratuits (dépôt public : les runners standards
+# de GitHub sont gratuits et sans limite de minutes) :
+#   — ubuntu-latest      le serveur x86-64 (le kit-C, la pièce COLLAB
+#                         byte-pour-byte : la question machine-ou-code) ;
+#   — ubuntu-24.04-arm   le serveur ARM64 (le kit-D, la pièce kit-B
+#                         téléphone byte-pour-byte : l'équation
+#                         TELEPHONE-ARM-1 sur un silicium serveur) ;
+#   — macos-14           l'APPLE SILICON M1 (le kit-G, la pièce neuve :
+#                         le protocole APPLE-ARM-1, FEAT_SHA256 possible
+#                         — l'épreuve FIPS décidera, fail-closed).
+#
+# L'ÉTIQUETTE de tous les runs : AUTOTEST-DISTANT — le silicium est
+# réel, le geste est celui du LABO : AUCUN statut terrain n'en découle
+# (le banc contrôlé demeure la référence ; les runs Colab/Kaggle/
+# téléphone/ORACLE du maître demeurent les siens). Les preuves sont
+# committées au dépôt avec [skip ci] — jamais de boucle.
+#
+# LE DÉCLENCHEMENT : workflow_dispatch (à la main) OU push sur main qui
+# touche l'atelier. Le commit des preuves porte [skip ci] : la boucle
+# ne vit pas.
+
+name: "TRIADE — siliciums de commodité (édition ACTIONS v1.0.0)"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'atelier-siliciums-commodite-v100/**'
+
+permissions:
+  contents: write
+
+jobs:
+  kit-C-x86-serveur:
+    name: "kit-C — le serveur x86-64 (la question machine-ou-code)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Le kit-C vit (AUTOTEST-DISTANT)"
+        run: |
+          bash atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-x86/kit-C-actions-dudect/lancer-kit-C-CI.sh
+      - name: "La collecte au réceptacle"
+        run: |
+          KIT="atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-x86/kit-C-actions-dudect"
+          DEST="atelier-siliciums-commodite-v100/preuves-actions/kit-C-x86-serveur"
+          mkdir -p "$DEST"
+          cp -r "$KIT"/preuves-collab/. "$DEST"/
+          cp "$KIT"/preuves-collab-*.zip "$DEST"/ 2>/dev/null || true
+          echo "--- le réceptacle ---"
+          ls -la "$DEST"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kit-C-x86-serveur
+          path: atelier-siliciums-commodite-v100/preuves-actions/
+
+  kit-D-arm64-serveur:
+    name: "kit-D — le serveur ARM64 (l'équation téléphone, autre silicium)"
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Le kit-D vit (AUTOTEST-DISTANT)"
+        run: |
+          bash atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-arm64/kit-D-actions-dudect/lancer-kit-D-CI.sh
+      - name: "La collecte au réceptacle"
+        run: |
+          KIT="atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-arm64/kit-D-actions-dudect"
+          DEST="atelier-siliciums-commodite-v100/preuves-actions/kit-D-arm64-serveur"
+          mkdir -p "$DEST"
+          cp -r "$KIT"/preuves-dudect-arm/. "$DEST"/
+          echo "--- le réceptacle ---"
+          ls -la "$DEST"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kit-D-arm64-serveur
+          path: atelier-siliciums-commodite-v100/preuves-actions/
+
+  kit-G-apple-silicon:
+    name: "kit-G — l'Apple Silicon M1 (la première fois du silicium Apple)"
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Le kit-G vit (AUTOTEST-DISTANT)"
+        run: |
+          bash atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-arm64/kit-G-apple-dudect/lancer-kit-G-CI.sh
+      - name: "La collecte au réceptacle"
+        run: |
+          KIT="atelier-siliciums-commodite-v100/TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-arm64/kit-G-apple-dudect"
+          DEST="atelier-siliciums-commodite-v100/preuves-actions/kit-G-apple-silicon"
+          mkdir -p "$DEST"
+          cp -r "$KIT"/preuves-dudect-apple/. "$DEST"/
+          echo "--- le réceptacle ---"
+          ls -la "$DEST"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kit-G-apple-silicon
+          path: atelier-siliciums-commodite-v100/preuves-actions/
+
+  depot-des-preuves:
+    name: "le dépôt des preuves au dépôt git ([skip ci])"
+    needs: [kit-C-x86-serveur, kit-D-arm64-serveur, kit-G-apple-silicon]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: /tmp/artefacts
+      - name: "La collecte au dossier preuves-actions/"
+        run: |
+          mkdir -p atelier-siliciums-commodite-v100/preuves-actions
+          cp -r /tmp/artefacts/* atelier-siliciums-commodite-v100/preuves-actions/ 2>/dev/null || true
+          echo "--- la collecte ---"
+          find atelier-siliciums-commodite-v100/preuves-actions -type f -printf "%p\n" | sort | head -60
+      - name: "Commit [skip ci] — les preuves au dépôt"
+        run: |
+          git config user.name "TRIADE labo (Actions)"
+          git config user.email "alexis.fr.lopez@gmail.com"
+          git add -f atelier-siliciums-commodite-v100/preuves-actions
+          git commit -m "Entrée 427 (suite Actions) — les preuves AUTOTEST-DISTANT des trois siliciums (x86-64 serveur, ARM64 serveur, Apple Silicon M1) committées par le workflow [skip ci]" || echo "rien à committer"
+          git push

@@ -1,0 +1,149 @@
+LISEZMOI — LE KIT-B DUDECT-ARM (le test du téléphone, le troisième silicium)
+==============================================================================
+
+LA COMMANDE (le développeur, 25/11/2026) : « tu peux me faire un kit de
+test arm/pour téléphone si nécessaire ». Le kit-A (kit-constat-arm, le
+correctif n° 3 du 12/11) CONSTATE le téléphone ; le présent kit-B
+L'ÉPROUVE. C'est la première mesure VIVANTE proposée au troisième
+silicium de la campagne.
+
+L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 25/11/2026, HORS DU
+PÉRIMÈTRE SCELLÉ v0.15.0. Le protocole TELEPHONE-ARM-1 ci-dessous est
+PRÉ-ENREGISTRÉ dans ce LISEZMOI AVANT tout run : l'équation exacte est
+figée, AUCUN paramètre ne se règle au terrain, aucun chiffre ne sera
+fabriqué hors de cette équation.
+
+CE QUE CE KIT REFUSE (dit d'abord, pour qu'aucune déception ne naisse) :
+  — les pièces scellées v0.15.0 (loupe.exe, proxy-image.bin,
+    moteur-shani.bin) sont x86-64 Windows : CE silicium ARM64 ne les
+    exécute PAS (l'ISA diverge, la convention d'appel diverge,
+    sha256rnds2 n'existe pas ici). REFUSÉES PAR NATURE — leurs
+    empreintes sont citées dans le binaire, jamais mesurées ici ;
+  — les cibles VAES/AES-GCM de la campagne (P5) : c'est le couloir du
+    PC x86-64, hors de ce kit ;
+  — le moteur d'oracle et les 27 harnais par bloc : ils demandent le
+    poste réel x86-64, pas ce silicium.
+
+LE PROTOCOLE TÉLÉPHONE-ARM-1 (l'équation pré-enregistrée) :
+  Les CIBLES, dans cet ordre :
+    1. eq-constant     le CONTRÔLE POSITIF de l'instrument : la
+                       comparaison de 32 octets par OU masqué — aucun
+                       branchement sur le secret. ATTENDU : aucune
+                       divergence au seuil. (Une divergence serait un
+                       RÉSULTAT précieux, pas un échec à maquiller :
+                       le compilateur du téléphone a-t-il détruit le
+                       temps constant ? D189 : consigner tel quel.)
+    2. eq-branchue     le CONTRÔLE NÉGATIF : la comparaison à sortie au
+                       premier octet divergent — LE FAUX PATRON. ATTENDU :
+                       DIVERGENCE — la preuve que l'instrument détecte
+                       les fuites. Si elle ne diverge PAS : l'instrument
+                       est CONTESTÉ sur cet échantillon, le verdict le
+                       nomme (un instrument non éprouvé ne mesure rien).
+    3. sha256-logiciel la compression SHA-256 logicielle d'un bloc de
+                       64 octets (la même mécanique que la cible
+                       tls13-02 du kit-2 : l'état AMONT est l'IV, le
+                       bloc est LE SECRET). ATTENDU : aucune divergence.
+    4. sha256-arm-sha2 la compression par les INSTRUCTIONS MATÉRIELLES
+                       FEAT_SHA256 (SHA256H/SHA256H2 — UNE AUTRE famille
+                       que la SHA-NI x86 : les deux mondes se constatent,
+                       aucun ne se déguise). VIT SEULEMENT si le noyau
+                       expose le drapeau « sha2 » aux Features de
+                       /proc/cpuinfo ET que le compilateur a accepté
+                       -march=armv8-a+sha2 — sinon REFUS NOMMÉ, le
+                       reste du run vit. ATTENDU : aucune divergence.
+  Les CLASSES, deux par cible, ÉCHANTRILLONS ENTRELACÉS (à CHAQUE
+  itération la première classe vit puis la seconde — le téléphone
+  gouverne sa fréquence, les deux classes vivent les mêmes fenêtres
+  thermiques ; c'est la différence nommée avec le kit-2, aux classes
+  séquentielles : un protocole NOUVEAU se définit juste) :
+    — comparaisons : la classe EGAL (le secret est la copie de
+      l'étalon — la comparaison court les 32 octets) contre la classe
+      DIVERGENT (un secret frais — la sortie au premier octet divergent,
+      presque sûr). C'est le cas d'usage CANONIQUE de la divulgation :
+      le temps révèle combien d'octets ont concordé ;
+    — compressions : la classe SECRET-FIXE contre la classe
+      SECRET-ALÉATOIRE (l'invariance de données).
+  L'ÉQUATION : échauffement 100 paires par cible (résultats jetés) ;
+  un échantillon mesure un LOT d'appels (l'amplification — les
+  compteurs des téléphones sont grossiers, ~52 ns le tick) : LOT=512
+  pour les comparaisons, LOT=4 pour les compressions ; N échantillons
+  par classe, N=60 puis N=200 puis N=400 DANS CET ORDRE (trois runs
+  complets — l'ordre du LISEZMOI-KITS-TERRAIN) ; la statistique est le
+  t de Welch sur les ticks, le seuil |t| > 5 (les mêmes paramètres que
+  le kit-2 et l'édition structurelle v0.11.0).
+  LE COMPTEUR : CNTVCT_EL0 sur aarch64 — le compteur virtuel du SoC,
+  PAS le cycle CPU (sa fréquence varie selon le silicium : la grandeur
+  est nommée « ticks », jamais « cycles ») ; si la lecture est refusée
+  (SIGILL), le repli CLOCK_MONOTONIC est NOMMÉ, jamais muet. Contrepoint
+  CLOCK_MONOTONIC en secondes (la colonne « secondes » du csv).
+  L'ÉPREUVE PRÉALABLE : le condensé FIPS 180-4 « abc » EXACT exigé du
+  lecteur logiciel ET du lecteur matériel (si présent) AVANT toute
+  mesure — un lecteur faux est un REFUS : rien n'est mesuré.
+
+LE RUN (sur le téléphone, Termux — F-Droid ou le Play Store ; iOS ne
+porte pas de Python libre) :
+  1. copiez le dossier kit-B-dudect-arm/ sur le téléphone (le stockage
+     partagé puis « cp -r /sdcard/Download/kit-B-dudect-arm . » dans
+     Termux, ou tout autre transfert) ;
+  2. tapez   bash lancer-kit-B-dudect-arm.sh
+     — le lanceur INSTALLE Python ET clang TOUT SEUL s'ils manquent
+     (pkg), COMPILE la pièce sur cette machine depuis la source (la
+     source est la vérité : aucun exe précompilé ne vit dans ce kit,
+     rien ne peut être retiré par un antivirus), vit l'épreuve FIPS,
+     puis les TROIS runs N=60, N=200, N=400 dans l'ordre imposé ;
+  3. quelques minutes ; le réseau ne sert qu'à l'installation éventuelle
+     des paquets ; aucun droit particulier.
+
+LES TÉMOINS : le réceptacle ./preuves-dudect-arm/ naît tout seul :
+  scenario-dudect-arm-journal.log     le scénario entier, pas à pas ;
+  sortie-epreuve-fips.txt             l'épreuve d'appel ;
+  sortie-run-N60/200/400.txt          la console de chaque run ;
+  journal-dudect-arm-N60/200/400.csv  les échantillons (cible, classe,
+                                      itération, ticks, secondes) ;
+  temoin-dudect-arm-N60/200/400.txt   le témoin de chaque run (machine,
+                                      silicium, compilateur, empreintes,
+                                      code de sortie) ;
+  temoin-dudect-arm-SYNTHESE.txt      la synthèse des trois runs.
+Datez et signez la synthèse de votre main, puis renvoyez le dossier
+ENTIER au coffre /test (dossier Drive « Triade » → « test », par
+exemple sous preuves-dudect-arm-<votre-nom>/). Le labo recoupe sur
+pièces : jamais avant le run, jamais sans pièces. CE QUE LE LABO FERA
+DES TÉMOINS : recomposer les comptes depuis leurs contenus, vérifier
+l'empreinte de la source contre le scellé, confronter les verdicts à
+l'équation pré-enregistrée — aucun chiffre n'est repris sans son témoin.
+
+LA LECTURE HONNÊTE (à lire AVANT de s'inquiéter d'un verdict) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle
+    quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE
+    machine — jamais « temps constant prouvé » ;
+  — le rapport médian logiciel/matériel (s'il vit) est LE CONSTAT DE CE
+    SILICIUM — jamais une cible : aucune cible pré-enregistrée n'existe
+    pour ARM ;
+  — un écart nommé est un RÉSULTAT aussi précieux qu'un vert (D189) :
+    rapportez-le tel quel.
+
+LA PREUVE DU LABORATOIRE (ce que le labo a vécu AVANT de livrer) :
+  la mécanique fut éprouvée de deux mains — l'autotest natif sur un
+  hôte Linux x86-64 (gcc 14.2, TSC), où l'instrument s'est D'ABORD
+  contesté lui-même : le contrôle négatif ne divergeait pas (deux
+  tampons aléatoires indépendants divergent au premier octet dans les
+  DEUX classes — le faux patron invisible) ; l'écart fut nommé, la
+  structure des classes corrigée (EGAL contre DIVERGENT), et l'instrument
+  rendu à sa preuve (t=104,55 sur l'hôte). PUIS la voie QEMU : la pièce
+  croisée aarch64 (gcc 14.2, -march=armv8-a+sha2, statique) éprouvée
+  sous qemu-aarch64 10.0.13 — le FIPS « abc » EXACT des DEUX lecteurs
+  (logiciel ET matériel SHA256H/SHA256H2), les quatre cibles vécues,
+  le contrôle négatif divergent (t=179,90). Les consoles de ces runs
+  vivent au dossier preuves-labo/ de ce kit. L'ÉMULATION PROUVE LA
+  MÉCANIQUE, JAMAIS LE SILICIUM : aucun statut terrain n'en découle —
+  le run matériel appartient au développeur.
+
+LA RÉFÉRENCE CROISÉE : le kit-2-dudect (la machine n° 1, le PC
+Windows) mesure les QUATRE familles crypto de la pièce scellée
+x86-64 ; le présent kit-B est le geste du même esprit sur le
+troisième silicium — les pièces testées y sont compilées SUR PLACE
+depuis la source ouverte du kit (aucune pièce scellée n'est touchée :
+le périmètre v0.15.0 demeure intact). Le kit-A (constat-arm.py)
+demeure la porte d'entrée : lancez-le d'abord si ce n'est pas déjà
+fait — l'identité complète du téléphone vit dans son témoin.

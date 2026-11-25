@@ -1,0 +1,10 @@
+e94c126b9bec2e9572e16a9883f698a6c79207902c0358d22c8ae36cbfffb30c  A-LIRE-EDITION-LINUXONE.txt
+2964aafc6937ecad0eeaf661daf6c2022d3ed514f127468b8f0d997f8a3d139e  COMMENCER-ICI.sh
+619b1fe9882f39461caa4a6c08192ed3ca9c85929dec5d284b577ce505af3098  linuxone-s390x/kit-E-dudect-s390x/LISEZMOI-dudect-s390x.txt
+a9f702a3c2d337bb50217f134a7535f16e1da0ad7afd53ba4b0cac9e56a67301  linuxone-s390x/kit-E-dudect-s390x/dudect_s390x.c
+512d10633b5ab2c16a4c7d4abf67be2a890c0eec88a3a9d6b5dff59cf31337fa  linuxone-s390x/kit-E-dudect-s390x/lancer-kit-E-dudect-s390x.sh
+26a8ac90cac62a131037bdedfcf43fd923f42da36e7f752db2d0b4f30a3884b8  linuxone-s390x/kit-E-dudect-s390x/scenario-dudect-s390x.py
+71e6b7d7e33d76b596ebe92661b3f21e0a5ebf4c1b912f2ddb11ce4c76add86d  preuves-labo/EMPREINTES-DES-OUTILS.txt
+66cf142fea7bc48118cbd642d06bec3ee0c6be23b8d12e9413d9dfeec7f73469  preuves-labo/autotest-x86-64-journal.csv
+6c9e959e3675e71d5d3be5ea18cf2b480d0d7c73029d0e81cd7ba079f3a55dfa  preuves-labo/preuve-autotest-x86-64.txt
+d1b04e9bbf8804d0296347b2fcfb876f20b07e57ccb307cc415903fe183ff791  verifier-kit-linuxone.sh

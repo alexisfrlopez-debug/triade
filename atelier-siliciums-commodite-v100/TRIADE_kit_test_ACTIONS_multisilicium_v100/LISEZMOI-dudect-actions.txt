@@ -1,0 +1,162 @@
+LISEZMOI — L'ÉDITION ACTIONS (trois siliciums réels, gratuits, en ligne :
+le serveur x86-64, le serveur ARM64, l'Apple Silicon M1)
+==============================================================================
+
+LA COMMANDE (le développeur, 25/11/2026) : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants ». GitHub Actions EST ce type d'environnement : gratuit,
+en ligne, et les runners du dépôt PUBLIC sont gratuits sans limite de
+minutes — avec un hardware VRAIMENT différent par job :
+  — ubuntu-latest      le serveur x86-64 (le kit-C vit la question
+                        machine-ou-code de l'Entrée 421 sur UN AUTRE
+                        Xeon/EPYC que le Colab de l'Entrée 426) ;
+  — ubuntu-24.04-arm   le serveur ARM64 (le kit-D vit l'équation du
+                        kit-B téléphone sur un silicium serveur : la
+                        famille ARM64-SERVEUR, une AUTRE que le
+                        Cortex-A55/A78 du téléphone) ;
+  — macos-14           l'APPLE SILICON M1 (le kit-G, la pièce NEUVE :
+                        les coeurs Firestorm/Icestorm — la PREMIÈRE
+                        fois du silicium Apple dans la campagne).
+
+L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 25/11/2026, HORS DU
+PÉRIMÈTRE SCELLÉ v0.15.0. DEUX PIÈCES SONT BYTE-POUR-BYTE les pièces
+livrées d'avant ; UNE PIÈCE EST NEUVE :
+  — actions-x86/kit-C-actions-dudect/    dudect_collab.c,
+    scenario-collab.py et cibles/ sont la pièce COLLAB byte-pour-byte
+    (Entrée 425 : le scénario ASSERTE les scellés ae698c29… /
+    0782d7e2… / 7293cd86…) ; SEULE l'enveloppe lancer-kit-C-CI.sh est
+    neuve (l'étiquette AUTOTEST-DISTANT, la collecte) ;
+  — actions-arm64/kit-D-actions-dudect/  dudect_arm.c et
+    scenario-dudect-arm.py sont la pièce du kit-B TÉLÉPHONE
+    byte-pour-byte (Entrées 424/425 : le scénario ASSERTE le scellé
+    08681278…) ; SEULE l'enveloppe lancer-kit-D-CI.sh est neuve ;
+  — actions-arm64/kit-G-apple-dudect/    dudect_apple.c est un DÉRIVÉ
+    NOMMÉ de dudect_arm.c (la même mécanique : alea, contrôles,
+    compression, FIPS, Welch, csv — les ÉCARTS du portage NOMMÉS :
+    l'affinité est un geste Linux, sur macOS elle est REFUSÉE PAR
+    NATURE et nommée ; le canal /proc/cpuinfo est ABSENT sur macOS, la
+    garde noyau ne peut pas s'y exprimer : L'ÉPREUVE FIPS DÉCIDE SEULE,
+    fail-closed) ; scenario-dudect-apple.py orchestre pareil (le
+    réceptacle preuves-dudect-apple/, le sysctl pour l'identité).
+
+LE WORKFLOW : workflow/triade-siliciums-commodite.yml vit AUSSI au
+dépôt (.github/workflows/triade-siliciums-commodite.yml — la copie au
+workflow/ du paquet est la MÊME pièce pour le recoup). Il se déclenche
+à la main (workflow_dispatch) ou au push qui touche l'atelier ; le
+commit des preuves porte [skip ci] : jamais de boucle. Chaque job vit
+SON kit, puis le job « depot-des-preuves » collecte les trois
+réceptacles et les COMMITTE au dépôt sous
+atelier-siliciums-commodite-v100/preuves-actions/<job>/.
+
+L'ÉTIQUETTE (dite d'abord, pour qu'aucune lecture ne naisse grandie) :
+AUTOTEST-DISTANT — le silicium est RÉEL, le geste est celui du LABO.
+Les runners sont MUTUALISÉS aux voisins inconnus (D206 : le t mesure
+AUSSI eux) ; le DVFS sous l'hyperviseur est opaque ; sur macOS
+l'affinité n'est pas posable (le t sera bruité, constaté) ; la
+hiérarchie d'évidence est INCHANGÉE : le banc contrôlé (portable,
+téléphone) demeure la référence ; ces runs sont des lectures de
+commodité, JAMAIS le run terrain du développeur, JAMAIS des preuves.
+
+LE PROTOCOLE ACTIONS-ARM-1 (l'équation pré-enregistrée du kit-D sur le
+silicium serveur ARM64 — l'ÉGALATION du TELEPHONE-ARM-1, re-enregistrée
+ici AVANT tout run) :
+  Les CIBLES, dans cet ordre : eq-constant (contrôle positif — aucune
+  divergence attendue), eq-branchue (contrôle négatif — DIVERGENCE
+  attendue : la preuve que l'instrument détecte les fuites), 
+  sha256-logiciel (aucune divergence attendue), sha256-arm-sha2 (VIT
+  seulement si le noyau expose « sha2 » ET que le compilateur a accepté
+  -march=armv8-a+sha2 — sinon REFUS NOMMÉ, le reste du run vit).
+  Les CLASSES, deux par cible, ÉCHANTILLONS ENTRELACÉS : EGAL contre
+  DIVERGENT (comparaisons), SECRET-FIXE contre SECRET-ALÉATOIRE
+  (compressions).
+  L'ÉQUATION : échauffement 100 paires par cible ; LOT=512 pour les
+  comparaisons, LOT=4 pour les compressions ; N=60 puis N=200 puis
+  N=400 DANS CET ORDRE ; le t de Welch sur les ticks, le seuil |t|>5.
+  LE COMPTEUR : CNTVCT_EL0 (le compteur virtuel du SoC, « ticks »,
+  jamais « cycles ») ; le repli CLOCK_MONOTONIC est NOMMÉ s'il vit.
+  L'ÉPREUVE FIPS « abc » EXACT exigée avant toute mesure (fail-closed).
+
+LE PROTOCOLE APPLE-ARM-1 (l'équation pré-enregistrée du kit-G sur
+l'Apple Silicon — l'ÉGALATION du TELEPHONE-ARM-1, re-enregistrée ici
+AVANT tout run) :
+  Les CIBLES, dans cet ordre : eq-constant, eq-branchue,
+  sha256-logiciel (les mêmes attentes), sha256-arm-sha2 (VIT si le
+  compilateur expose +sha2 — sur Apple Silicon le défaut du clang
+  d'Apple porte FEAT_SHA256 de facto — ET QUE L'ÉPREUVE FIPS l'accepte :
+  sur macOS le canal noyau manque, l'épreuve décide seule, nommé).
+  Les CLASSES, l'ÉQUATION, LE COMPTEUR, LE SEUIL, L'ÉPREUVE : les
+  MÊMES que TELEPHONE-ARM-1 (LOT=512/4, N=60/200/400, Welch |t|>5,
+  CNTVCT_EL0).
+  LES ÉCARTS NOMMÉS du portage (jamais muets) : l'affinité REFUSÉE sur
+  macOS ; l'identité au sysctl (machdep.cpu.brand_string, hw.model),
+  pas au /proc ; le rapport médian logiciel/matériel, s'il vit, est LE
+  CONSTAT DE CE SILICIUM (le téléphone a rendu 4,36 — CE silicium dira
+  ce qu'il dit).
+
+LE PROTOCOLE du kit-C (le job x86-64) : le COLLAB-X86-1 INCHANGÉ —
+huit cibles (les contrôles, sha256-logiciel, sha256-x86-shani, et LES
+QUATRE SCELLÉES de proxy-image.bin recoupées avant exécution avec
+l'épreuve FIPS des trois lecteurs et l'adversaire de mutation K),
+classes ENTRELACÉES, LOT=512/64/1, N=60/200/400, RDTSC en « ticks »,
+|t|>5. La référence vit au LISEZMOI-dudect-collab.txt de l'édition
+COLLAB (la pièce byte-pour-byte emporte sa référence — les écrans
+finaux du scénario parleront des cellules Colab : au CI ils ne vivent
+pas, nommé, jamais muet).
+
+LES REFUS DE L'ÉDITION (le périmètre demeure intouché) :
+  — les pièces scellées v0.15.0 sont x86-64 Windows : REFUSÉES PAR
+    NATURE sur les siliciums ARM64 (empreintes citées aux binaires,
+    jamais mesurées) ; sur le job x86-64, SEULE proxy-image.bin vit
+    (recoupée, lecture seule, le périmètre v0.15.0 intact) ;
+  — Windows ARM64 (runner windows-11-arm, gratuit en préversion
+    publique) : REFUS NOMMÉ pour cette édition v1.0.0 — le kit
+    demanderait le portage msys2/mingw, une itération future si le
+    labo la veut ;
+  — macOS Intel (macos-13) : les runners existent, REFUS NOMMÉ
+    v1.0.0 (le geste prioritaire était le silicium APPLE, pas un
+    quatrième x86) ;
+  — les cibles VAES/AES-GCM (P5), le moteur d'oracle, les harnais par
+    bloc : le poste réel x86-64.
+
+LES TÉMOINS : chaque job laisse SON réceptacle dans son dossier de kit
+  preuves-collab/ (journal, épreuve FIPS, trois sorties, trois csv,
+    trois témoins, synthèse, ET le zip de retour + l'étiquette
+    AUTOTEST-DISTANT) ;
+  preuves-dudect-arm/ (journal, épreuve, trois sorties, trois csv,
+    trois témoins, synthèse, étiquette) ;
+  preuves-dudect-apple/ (pareil).
+Le job « depot-des-preuves » les collecte et les COMMITTE au dépôt
+sous preuves-actions/<nom-du-job>/ — le maître les lit dans le dépôt
+OU les télécharge depuis la page Actions du dépôt (artefacts). Le
+labo recoupe sur pièces : jamais avant le run, jamais sans pièces.
+
+LA LECTURE HONNÊTE (à lire AVANT de s'inquiéter d'un verdict) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, CETTE machine
+    mutualisée, consignée telle quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon — jamais
+    « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument
+    est CONTESTÉ — nommé) ;
+  — les rapports médians (logiciel/SHA-NI, logiciel/FEAT_SHA256) sont
+    LES CONSTATS DE CES SILICIUMS — jamais des cibles ;
+  — un écart nommé est un RÉSULTAT aussi précieux qu'un vert (D189) :
+    rapportez-le tel quel.
+
+LA PREUVE DU LABORATOIRE (ce que le labo a vécu AVANT de livrer) :
+  les MÉCANIQUES des trois kits furent éprouvées au bac (l'hôte x86-64
+  du labo, la voie TSC) : le kit-C COMPLET (l'édition COLLAB l'a vécu
+  trois fois, Entrée 425 — les consoles vivent au preuves-labo-kit-C/),
+  le kit-D (l'édition TÉLÉPHONE, Entrées 424/425 — consoles au
+  preuves-labo-kit-D/), et le kit-G NEUF (l'autotest de dudect_apple.c
+  ci-dessous : l'épreuve FIPS EXACTE, le contrôle négatif divergent
+  t=40,43, code 0 — console au preuves-labo-kit-G/). L'AUTOTEST PROUVE
+  LA MÉCANIQUE, JAMAIS LE SILICIUM — et les runs Actions prouveront le
+  silicium, en tant que lectures de commodité étiquetées
+  AUTOTEST-DISTANT.
+
+LA RÉFÉRENCE CROISÉE : le kit-2 du 24/11 (machine n° 1) ; le kit-B
+téléphone (rapport 4,36) ; le kit-C COLLAB (Entrée 426 — les quatre
+scellées silencieuses au Xeon Colab) ; les éditions KAGGLE, ORACLE et
+LINUXONE (les autres paquets de cette livraison — le guide
+TRIADE_guide_siliciums_de_commodite_v100.txt dit la famille entière).

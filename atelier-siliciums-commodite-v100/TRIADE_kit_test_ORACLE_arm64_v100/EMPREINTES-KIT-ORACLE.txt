@@ -1,0 +1,14 @@
+d879bccca730029e43cf9366b8803ef38935e4f484d9ae59fe845c9224aa9424  A-LIRE-EDITION-ORACLE.txt
+8f2c6c31c6833c0b96f42bdab88a69f51e4122f6412234c3435d215dfde571e3  COMMENCER-ICI.sh
+723cac64f697dc40da07643941816a62ea29636765ebc1aeeb12cccae47514e8  oracle-arm64/kit-B-dudect-arm-oracle/LISEZMOI-du-KIT-B-reference.txt
+f20690f6851a544fff86ed293bdb3abd56ef6f9de51074a0d6404064d8decd75  oracle-arm64/kit-B-dudect-arm-oracle/LISEZMOI-dudect-oracle.txt
+08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32  oracle-arm64/kit-B-dudect-arm-oracle/dudect_arm.c
+21dcef7f2190e99f97721c8c685a46ef6fc2a4c2a8d70889056a7abf598d7203  oracle-arm64/kit-B-dudect-arm-oracle/lancer-kit-B-dudect-ORACLE.sh
+84093bb4ab25a480be87b89b6411e973a3895eaaef3fa44c6d26dbad868405fc  oracle-arm64/kit-B-dudect-arm-oracle/scenario-dudect-arm.py
+7ffa4594290b58714baf916a4aa112d146de5c161cae228e8a718cd11d101938  preuves-labo/EMPREINTES-DES-OUTILS.txt
+c3f30366bee78683f071902904e64e67f14f1d0db5aac0438900c4c2fd6222c6  preuves-labo/LA-CONTESTATION-NOMMEE.txt
+fad79c92125b5e27d22f8bd0e82cef890cb4fd70fe0c7726cc8e016663792967  preuves-labo/autotest-aarch64-qemu-journal.csv
+e30b7c6e1062cd6fdc16b43d5d119252543d7f4d85377ebf775a5ac311d6badf  preuves-labo/autotest-x86-64-journal.csv
+ef8a5cca50a4aa475d199158ac5c481f5cfc8d80c823afbd7199a878b1d23e2f  preuves-labo/preuve-autotest-aarch64-qemu.txt
+8c4cbfa7a22dfd7b2b5c07d086de672a741b6aa2cec85cc80f09303debb68f80  preuves-labo/preuve-autotest-x86-64.txt
+ce2d37362985d465b4e659f33e36d01a2fa409921338469c6b74d9a776896bfc  verifier-kit-oracle.sh

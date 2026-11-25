@@ -1,0 +1,10 @@
+EMPREINTES-SILICIUMS-COMMODITE.txt — la table des QUATRE zips et du
+guide (l'atelier-siliciums-commodite-v100, assemblé le 2026-11-25)
+Chaque zip porte AUSSI sa table interne : EMPREINTES-KIT-<édition>.txt
+(le recoup du terrain vit dans le zip, au geste de chaque lanceur).
+
+0d3f1c88850356516aae1d8e7d72fc57ef5a1a4057a85ded9c616ac57234c648  TRIADE_kit_test_KAGGLE_x86_v100.zip
+931b0046ebeefffbf2fc22af360a84222551be973962095f15b46f3580eeb88d  TRIADE_kit_test_ACTIONS_multisilicium_v100.zip
+a437df79eeebdd9768c5dfe8715a0e4b39ed3c8697ef63dfb9a287fc49078296  TRIADE_kit_test_ORACLE_arm64_v100.zip
+7ea136ee716250c95dbe1c3f71a97b99897d24f6785dbaa6c269ef964c5866af  TRIADE_kit_test_LINUXONE_s390x_v100.zip
+24feae20d42ded08c3fd5fc491f5117d57234b7864cd1f43861b9ff4c505e629  TRIADE_guide_siliciums_de_commodite_v100.txt

@@ -1,0 +1,84 @@
+A-LIRE-EDITION-SILICIUMS.txt — LA LIVRAISON DES SILICIUMS DE COMMODITÉ
+v1.0.0 (QUATRE packs + le guide)
+============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+LA LIVRAISON EN UNE PHRASE : QUATRE paquets de test, UN guide — cinq
+siliciums nouveaux (x86-64 Kaggle, x86-64 Actions, ARM64 serveur
+Actions, ARM64 Ampere Oracle, ARM64 Apple M1, s390x Z Xplore — six
+portes de lecture, le guide dit la famille), chacun au rite de la
+campagne : protocole PRÉ-ENREGISTRÉ, scellés recoupés, source ouverte
+compilée sur place, témoins auto-portants, épreuve FIPS fail-closed,
+RETOUR au coffre /test.
+
+LES QUATRE PAQUETS (chacun un zip au /livrables du coffre ET à
+l'atelier du dépôt) :
+  1. TRIADE_kit_test_KAGGLE_x86_v100.zip
+     l'édition KAGGLE — le MÊME kit-C que Colab, byte-pour-byte (la
+     question machine-ou-code de l'Entrée 421 sur UN AUTRE serveur
+     x86-64, l'accélérateur GPU/TPU CONSTATÉ au témoin) ;
+  2. TRIADE_kit_test_ACTIONS_multisilicium_v100.zip
+     l'édition ACTIONS — le kit-C (x86-64), le kit-D (ARM64 serveur,
+     la pièce kit-B téléphone byte-pour-byte), le kit-G NEUF (Apple
+     Silicon M1), ET le workflow qui vit au dépôt : le labo PEUT y
+     vivre les runs lui-même (AUTOTEST-DISTANT, étiquette nommée) ;
+  3. TRIADE_kit_test_ORACLE_arm64_v100.zip
+     l'édition ORACLE — le kit-B téléphone byte-pour-byte sur
+     l'AMPERE A1 DÉDIÉ de l'offre Always Free (2 OCPU/12 Go en
+     continu, carte bancaire exigée, sans prélèvement) ;
+  4. TRIADE_kit_test_LINUXONE_s390x_v100.zip
+     l'édition LINUXONE — le kit-E NEUF (dérivé nommé de dudect_arm.c)
+     sur le silicium IBM Z par la porte Z XPLORE (gratuite) — la
+     cible matérielle REFUSÉE PAR NATURE (KIMD/KLMD SUPERVISEUR),
+     nommée, jamais muette.
+
+ET LE GUIDE : TRIADE_guide_siliciums_de_commodite_v100.txt — la table
+des portes (vivantes ET fermées : le Minicloud POWER est FERMÉ, nommé ;
+le GPU est constaté jamais mesuré, nommé ; le RISC-V émulé n'est pas
+une porte silicium, nommé), les gestes d'inscription, les sources
+consultées le 25/11/2026, et l'ordre conseillé.
+
+LES SCELLÉS QUI NE BOUGENT PAS (la continuité de la campagne) :
+dudect_collab.c (ae698c29…), cibles/proxy-image.bin (0782d7e2…),
+cibles/manifeste-c.txt (7293cd86…) et dudect_arm.c (08681278…) sont
+les MÊMES pièces que les éditions COLLAB et TÉLÉPHONE — les packs les
+emportent byte-pour-byte, les scénarios les ASSERTENT. Les pièces
+NEUVES : scenario-kaggle.py, dudect_apple.c (34402a53…) +
+scenario-dudect-apple.py, dudect_s390x.c (a9f702a3…) +
+scenario-dudect-s390x.py, les enveloppes CI, les LISEZMOI et A-LIRE de
+chaque édition. La table complète vit à
+EMPREINTES-SILICIUMS-COMMODITE.txt de l'atelier.
+
+LA PREUVE DU LABORATOIRE (vécue AVANT livraison, l'étiquette
+AUTOTEST) : le kit-KAGGLE COMPLET au bac (l'épreuve FIPS des trois
+lecteurs, la pièce scellée comprise, puis N=60/200/400 — code 0 aux
+trois runs, console au preuves-labo/ du paquet) ; le kit-E et le kit-G
+au bac (l'épreuve FIPS EXACTE, le contrôle négatif divergent —
+t=7,45 s390x, t=40,43 apple — code 0) ; les mécaniques kit-C et
+kit-D éprouvées aux Entrées 425 et 424 (consoles reprises aux
+preuves-labo des paquets). L'AUTOTEST PROUVE LA MÉCANIQUE, JAMAIS LE
+SILICIUM : aucun statut terrain n'en découle.
+
+LES RÈGLES QUI NE CHANGENT PAS (le rite de la campagne) :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) — y compris le REFUS gcc d'une porte figée (D122) ;
+  — datez et signez les témoins DE VOTRE MAIN ;
+  — renvoyez les dossiers de preuves ENTIERS au coffre /test (dossier
+    Drive « Triade » → « test ») — le labo recoupe sur pièces, JAMAIS
+    avant le run, jamais sans pièces ;
+  — la hiérarchie d'évidence est INCHANGÉE : le banc contrôlé
+    (portable, téléphone) demeure la référence ; ces runs sont des
+    lectures de commodité ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+LES SUITES NOMMABLES : le run KAGGLE du maître (la question tls13-16
+pèse son deuxième point serveur) ; le workflow Actions déclenché (les
+preuves AUTOTEST-DISTANT au dépôt) ; le run ORACLE (l'Ampere A1 à
+vous seuls) ; le run LINUXONE (le Z par Z Xplore) ; la voie GPU si le
+labo pré-enregistre son instrument ; le portage Windows ARM64 si la
+porte Actions-Windows veut vivre.

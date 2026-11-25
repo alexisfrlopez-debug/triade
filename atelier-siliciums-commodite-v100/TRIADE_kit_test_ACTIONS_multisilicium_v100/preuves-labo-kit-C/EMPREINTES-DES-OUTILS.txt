@@ -1,0 +1,55 @@
+EMPREINTES-DES-OUTILS — l'autotest du kit-C vécu au bac du laboratoire
+========================================================================
+(25/11/2026, avant assemblage du paquet)
+
+LA MACHINE DU BAC (la classe de Colab : x86-64 mutualisé) :
+  uname -m     : x86_64
+  model name   : Intel(R) Xeon(R) Processor
+  drapeaux nommés : sha_ni PRESENT · hypervisor PRESENT ·
+                    constant_tsc PRESENT · nonstop_tsc PRESENT
+
+LE COMPILATEUR :
+  gcc (Debian 14.2.0-19) 14.2.0
+  commande vécue : gcc -O2 -msha -mssse3 -msse4.1 \
+                   -o run/dudect_collab dudect_collab.c -lm
+
+LES PIÈCES :
+  dudect_collab.c  sha256 ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d
+  cibles/proxy-image.bin (le scellé) 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+  cibles/manifeste-c.txt  sha256 7293cd86359cebba81d590173a49c462f876cf5ce8b639d5c26c2577713ea5d8
+
+L'ÉTAT DE L'AUTOTEST (AUTOTEST LABORATOIRE — la mécanique seule,
+AUCUN statut terrain n'en découle ; le run Colab appartient au
+développeur) :
+  — l'épreuve FIPS des TROIS lecteurs VÉCUE : sha256-logiciel(abc)
+    EXACT, sha256-x86-shani(abc) EXACT, tls13-02 SCELLÉE(abc) EXACT,
+    mutation K DIVERGE, restauration EXACT ;
+  — l'image mappée à l'indice 0x140000000 TENU ; les quatre plages
+    recoupées ;
+  — N=60 entier aux HUIT cibles, code 0, 960 lignes de données au csv
+    (8 cibles × 2 classes × 60) ;
+  — l'instrument PROUVÉ sur ce silicium : eq-branchue DIVERGE
+    (t=46,40 — le faux patron : 61,40 ticks la classe EGAL contre 6,45
+    la DIVERGENT par appel), eq-constant ne diverge pas (t=0,97) ;
+  — les quatre SCELLÉES : aucune divergence au seuil à N=60 sur CET
+    échantillon du bac (tls13-02 t=1,11 · tls13-13 t=0,85 · tls13-16
+    t=−0,02 · tls13-17 t=−0,18) ;
+  — le constat du bac : rapport médian logiciel/SHA-NI = 4,03 ;
+    tls13-02 scellée : 823,91 ticks par appel.
+
+LA NOTE DU LABO SUR SES PROPRES SORTIES : l'affichage des consoles au
+poste du labo AVALA la séquence « [m » suivie d'une lettre (l'artefact
+E249, déjà arbitré aux Entrées 252-253-259 sur la pièce dudect_v150) —
+les FICHIERS sont sains (constaté au niveau octet : « [machine] » vit
+trois fois dans la console consignée) ; l'artefact n'affecte que
+l'écran du bac, jamais les pièces.
+
+LA CONTESTATION NOMMÉE (l'instrument se refuse lui-même, fail-closed) :
+la première mouture de la table K256 du moteur avait AVALÉ une
+constante (0x4d2c6dfc — 63 initialisateurs au lieu de 64) ; l'épreuve
+FIPS « abc » du lecteur LOGICIEL la REFUSA sur-le-champ (« le lecteur
+LOGICIEL est faux — RIEN ne sera mesuré ») ; la faute fut trouvée et
+corrigée depuis la pièce vérifiée du kit-B (dudect_arm.c, la même
+source), et l'épreuve rendit sa preuve. Aucune mesure n'a vécu avant
+la correction : le geste fail-closed a fait son travail — consigné ici
+pour la postérité, D189.

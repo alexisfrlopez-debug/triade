@@ -1,0 +1,104 @@
+A-LIRE-EDITION-ACTIONS.txt — L'ÉDITION ACTIONS MULTISILICIUM DU KIT DE
+TEST v1.0.0
+============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+POURQUOI CETTE ÉDITION. Colab et Kaggle prêtent des notebooks : UNE
+machine à la fois, MUTUALISÉE, session éphémère. GitHub Actions prête
+AUTRE CHOSE : TROIS siliciums d'un seul geste — les runners du dépôt
+public sont gratuits, sans limite de minutes, et la matrice vit sur du
+hardware VRAIMENT différent :
+  — ubuntu-latest      le serveur x86-64 (un autre Xeon/EPYC que le
+                        Colab de l'Entrée 426) ;
+  — ubuntu-24.04-arm   le serveur ARM64 (une famille serveur, une
+                        AUTRE que le Cortex du téléphone) ;
+  — macos-14           L'APPLE SILICON M1 (les coeurs
+                        Firestorm/Icestorm — la première fois du
+                        silicium Apple dans la campagne : FEAT_SHA256
+                        possible, l'épreuve FIPS décidera).
+LA QUESTION de l'Entrée 421 y trouve son discriminateur ÉTENDU : le
+kit-C (la question machine-ou-code, les QUATRE SCELLÉES) sur un
+QUATRIÈME x86-64 ; l'équation du kit-B sur un QUATRIÈME ARM64 ; et le
+silicium Apple en prime. Les runs sont étiquetés AUTOTEST-DISTANT :
+le geste est celui du LABO (le workflow du dépôt) sur un silicium
+RÉEL — la hiérarchie demeure (le banc contrôlé référence, ces runs
+des lectures de commodité, JAMAIS le run terrain du développeur).
+
+CE QUE CONTIENT LE PAQUET :
+  actions-x86/kit-C-actions-dudect/    LE KIT-C : LA MÊME PIÈCE que
+      l'édition COLLAB, BYTE-POUR-BYTE (dudect_collab.c,
+      scenario-collab.py, cibles/proxy-image.bin et manifestes — le
+      scénario ASSERTE les scellés) + L'ENVELOPPE NEUVE
+      lancer-kit-C-CI.sh (l'étiquette AUTOTEST-DISTANT, la collecte) ;
+  actions-arm64/kit-D-actions-dudect/  LE KIT-D : LA MÊME PIÈCE que le
+      kit-B TÉLÉPHONE, BYTE-POUR-BYTE (dudect_arm.c — scellé
+      08681278… — scenario-dudect-arm.py) + L'ENVELOPPE NEUVE
+      lancer-kit-D-CI.sh ;
+  actions-arm64/kit-G-apple-dudect/    LE KIT-G NEUF : dudect_apple.c
+      (un DÉRIVÉ NOMMÉ de dudect_arm.c — les gardes de portage
+      NOMMÉES : affinité Linux-seulement, canal /proc absent sur
+      macOS : L'ÉPREUVE FIPS DÉCIDE SEULE) + scenario-dudect-apple.py
+      + lancer-kit-G-CI.sh (le sysctl d'identité, l'étiquette) ;
+  workflow/triade-siliciums-commodite.yml   LE WORKFLOW : la matrice
+      des trois jobs + le job « depot-des-preuves » qui collecte et
+      COMMITTE les preuves au dépôt avec [skip ci] ;
+  LISEZMOI-dudect-actions.txt   LA RÉFÉRENCE : les protocoles
+      pré-enregistrés (ACTIONS-ARM-1 et APPLE-ARM-1, les égalations du
+      TELEPHONE-ARM-1 ; le COLLAB-X86-1 inchangé pour le kit-C) ;
+  preuves-labo-kit-C/, preuves-labo-kit-D/, preuves-labo-kit-G/
+      les consoles d'autotest du laboratoire (les mécaniques éprouvées
+      AVANT livraison — l'autotest prouve la MÉCANIQUE, jamais le
+      silicium).
+
+COMMENT LE GESTE VIT (deux voies) :
+  VOIE 1 (la voie du labo, VÉCUE à la livraison) : le workflow vit AU
+    DÉPÔT (.github/workflows/triade-siliciums-commodite.yml) — il se
+    déclenche au push qui touche l'atelier, OU À LA MAIN (onglet
+    « Actions » du dépôt → « TRIADE — siliciums de commodité » →
+    « Run workflow »). Les trois jobs vivent leurs kits (quelques
+    minutes chacun), puis le job « depot-des-preuves » committe les
+    réceptacles au dépôt sous
+    atelier-siliciums-commodite-v100/preuves-actions/<job>/ — le
+    maître les lit dans le dépôt, ou télécharge les artefacts depuis
+    la page du run.
+  VOIE 2 (la voie du terrain, si le maître veut VIVRE le geste
+    lui-même sur SA session) : téléversez
+    TRIADE_kit_test_ACTIONS_multisilicium_v100.zip sur n'importe quel
+    Linux de commodité, dézippez, et vivez l'enveloppe de VOTRE choix
+    (elle fonctionne hors CI aussi) :
+        bash TRIADE_kit_test_ACTIONS_multisilicium_v100/actions-x86/kit-C-actions-dudect/lancer-kit-C-CI.sh
+    (l'étiquette dit AUTOTEST-DISTANT : barrez-la de votre main au
+    témoin si CE run est le vôtre — le geste du kit-C COLLAB vit
+    pareil pour le terrain.)
+
+CE QUE CETTE ÉDITION REFUSE (le périmètre demeure intouché) : les
+pièces scellées v0.15.0 sont x86-64 Windows — REFUSÉES PAR NATURE sur
+les siliciums ARM64 (empreintes citées, jamais mesurées) ; sur le job
+x86-64, SEULE proxy-image.bin vit (recoupée avant exécution, lecture
+seule, périmètre v0.15.0 intact). Windows ARM64 (runner gratuit en
+préversion publique) : REFUS NOMMÉ v1.0.0 (le portage msys2/mingw
+demanderait une itération). macOS Intel : REFUS NOMMÉ v1.0.0 (le geste
+prioritaire était le silicium APPLE, pas un quatrième x86). Le couloir
+VAES/AES-GCM (P5), le moteur d'oracle : le poste réel.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) ;
+  — datez et signez les témoins DE VOTRE MAIN (les runs CI du labo
+    portent leur étiquette AUTOTEST-DISTANT : ils ne se déguisent
+    JAMAIS en runs du maître) ;
+  — renvoyez les dossiers de preuves ENTIERS au coffre /test (dossier
+    Drive « Triade » → « test ») — le labo recoupe sur pièces, JAMAIS
+    avant le run, jamais sans pièces ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'ORDRE DE PASSAGE : le workflow vit les TROIS jobs en parallèle (le
+kit-C quelques minutes, le kit-D et le kit-G plus vite), puis la
+collecte. La lecture des verdicts appartient au labo, sur pièces —
+LA QUESTION machine-ou-code (Entrée 421) reçoit ici ses troisièmes et
+quatrièmes points.

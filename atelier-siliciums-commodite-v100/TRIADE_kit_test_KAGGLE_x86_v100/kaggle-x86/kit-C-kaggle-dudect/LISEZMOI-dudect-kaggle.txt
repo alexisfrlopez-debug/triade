@@ -1,0 +1,216 @@
+LISEZMOI — LE KIT-C DUDECT-KAGGLE (la même question, posée au deuxième
+silicium serveur de commodité, édition KAGGLE x86-64)
+==============================================================================
+
+LA COMMANDE (le développeur, 25/11/2026) : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants ». Kaggle Notebooks est exactement ce type d'environnement :
+gratuit, en ligne, notebook — la même commodité que Colab, UN AUTRE
+silicium serveur (des hôtes Xeon/EPYC différents, et des sessions GPU
+T4 ×2 / P100 ou TPU qui changent encore la race de l'hôte).
+
+LA QUESTION (la même que l'édition COLLAB — l'avis de l'Entrée 421) : les
+trois divergences |t|>5 du 24/11 au portable (tls13-02 : −10,64 ;
+tls13-13 : +9,65 ; tls13-16 : +9,19 — l'Entrée 416 les lut comme
+l'oscillation DVFS d'un portable 2 cœurs aux classes SÉQUENTIELLES)
+SUIVENT-ELLES LA MACHINE OU LE CODE ? L'édition COLLAB (Entrée 426) a
+vécu sa lecture : les quatre scellées silencieuses sur SON Xeon. Le
+partage tls13-16 (divergente au portable et au bac, silencieuse au Colab)
+demeure OUVERT — UN AUTRE serveur x86-64 pèse un point de plus : si la
+divergence y revient, le partage code se renforce ; si elle y reste
+absente, le partage machine×code demeure. Résultat nommé, jamais
+maquillé. La lecture appartient au labo, sur pièces.
+
+L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 25/11/2026, HORS DU
+PÉRIMÈTRE SCELLÉ v0.15.0. LE KIT-C EST LA MÊME PIÈCE : dudect_collab.c,
+cibles/proxy-image.bin et cibles/manifeste-c.txt sont les pièces
+BYTE-POUR-BYTE de l'édition COLLAB (Entrée 425 — leurs scellés ne
+bougent pas : ae698c29…, 0782d7e2…, 7293cd86…). SEUL L'ORCHESTRATEUR
+EST NEUF : scenario-kaggle.py (le réceptacle preuves-kaggle/, le témoin
+et le zip de retour au nom de cette édition, le constat de
+l'accélérateur). Le protocole KAGGLE-X86-1 ci-dessous est PRÉ-ENREGISTRÉ
+dans ce LISEZMOI AVANT tout run : l'équation est l'ÉGALATION du
+COLLAB-X86-1, AUCUN paramètre ne se règle au terrain, aucun chiffre ne
+sera fabriqué hors de cette équation.
+
+LA MACHINE DE COMMODITÉ SE NOMME (D206 — dit d'abord, pour qu'aucune
+lecture ne naisse grandie) :
+  — le silicium Kaggle est MUTUALISÉ : les voisins de session sont
+    INCONNUS, le t mesurera AUSSI eux — le langage demeure « dépendance
+    au seuil sur CET échantillon, CETTE machine », jamais plus ;
+  — le DVFS sous l'hyperviseur est OPAQUE : aucun cadre de fréquence
+    cockpit — la cadence se constate aux temps eux-mêmes (les colonnes
+    du csv) ;
+  — l'ACCÉLÉRATEUR (GPU T4/P100, TPU) est CONSTATÉ, jamais mesuré :
+    l'instrument de ce kit mesure le CPU ; la voie GPU demanderait un
+    instrument à pré-enregistrer (une itération future, si le labo la
+    veut) — nvidia-smi est lu au T0 et nommé au témoin, c'est tout ;
+  — la session est ÉPHÉMÈRE : le zip de retour naît tout seul,
+    RÉCUPÉREZ-LE AVANT LA FIN, et SAUVEGARDEZ LE NOTEBOOK (le dossier
+    /kaggle/working vit dans la version enregistrée du notebook) ;
+  — la hiérarchie d'évidence est INCHANGÉE : le banc contrôlé
+    (portable, téléphone) demeure la référence ; ce run est une lecture
+    de commodité, jamais une preuve.
+
+CE QUE CE KIT MESURE (et ce qu'il refuse) :
+  — les QUATRE cibles SCELLÉES de cibles/proxy-image.bin (la pièce
+    scellée v0.15.0, l'image mémoire étendue posée par l'extracteur du
+    kit-2) : tls13-02 (compression SHA-256), tls13-13 (échelle X25519),
+    tls13-16 (bloc AES-128), tls13-17 (GHASH). L'image est RECOUPÉE
+    (sha256 de l'image entière + sha256 de CHAQUE plage de cible contre
+    le manifeste) AVANT toute exécution, ET l'épreuve FIPS « abc » est
+    exigée DE LA PIÈCE SCELLÉE ELLE-MÊME (tls13-02 doit rendre le
+    condensé exact, puis la mutation d'un octet de sa table K — EN
+    MÉMOIRE SEULEMENT, la carte est MAP_PRIVATE, le fichier sur disque
+    est intouchable — doit DIVERGER le condensé, puis la restauration
+    doit le rendre exact) : l'image exécutée est la pièce recoupée,
+    RIEN d'autre n'est exécuté ;
+  — loupe.exe et moteur-shani.bin (les autres pièces scellées) sont
+    HORS PÉRIMÈTRE de ce kit : leurs empreintes sont CITÉES au binaire,
+    elles ne sont pas mesurées ici (chacune a son kit) ;
+  — le binaire est compilé par LE MÊME GESTE : compilé SUR PLACE depuis
+    la source ouverte (aucun exe précompilé ne vit dans ce kit, rien ne
+    peut être retiré par un scanner).
+
+LE PROTOCOLE KAGGLE-X86-1 (l'équation pré-enregistrée, l'égalation du
+COLLAB-X86-1) :
+  Les CIBLES, dans cet ordre :
+    1. eq-constant     le CONTRÔLE POSITIF : la comparaison de 32 octets
+                       par OU masqué — aucun branchement sur le secret.
+                       ATTENDU : aucune divergence au seuil (une
+                       divergence serait un RÉSULTAT précieux : D189,
+                       consigner tel quel).
+    2. eq-branchue     le CONTRÔLE NÉGATIF : la sortie au premier octet
+                       divergent — LE FAUX PATRON. ATTENDU : DIVERGENCE.
+                       Si elle ne diverge PAS : l'instrument est
+                       CONTESTÉ, le verdict le nomme (un instrument non
+                       éprouvé ne mesure rien).
+    3. sha256-logiciel la compression SHA-256 logicielle d'un bloc de 64
+                       octets (l'état AMONT est l'IV, le bloc est LE
+                       SECRET). ATTENDU : aucune divergence.
+    4. sha256-x86-shani la compression par les INSTRUCTIONS MATÉRIELLES
+                       SHA-NI. VIT seulement si le noyau expose le
+                       drapeau « sha_ni » ET que le compilateur a accepté
+                       -msha -mssse3 -msse4.1 — sinon REFUS NOMMÉ, le
+                       reste du run vit. ATTENDU : aucune divergence.
+    5. tls13-02        SCELLÉE : la compression SHA-256 de la pièce —
+                       l'état AMONT est l'IV, le bloc 64 est LE SECRET.
+    6. tls13-13        SCELLÉE : l'échelle X25519 — le scalaire est LE
+                       SECRET, u est l'auxiliaire fixe de la cible.
+    7. tls13-16        SCELLÉE : le bloc AES-128 — les 176 octets de
+                       clés sont LE SECRET, l'entrée est l'auxiliaire.
+    8. tls13-17        SCELLÉE : le GHASH GF(2^128) — X est LE SECRET,
+                       Y l'auxiliaire.
+  Les CLASSES, deux par cible, ÉCHANTILLONS ENTRELACÉS (à CHAQUE
+  itération la première classe vit puis la seconde — le secret régénéré
+  hors mesure) :
+    — comparaisons : la classe EGAL contre la classe DIVERGENT ;
+    — compressions et cibles scellées : la classe SECRET-FIXE contre la
+      classe SECRET-ALÉATOIRE (l'invariance de données).
+  L'ÉQUATION : échauffement 100 paires par cible (résultats jetés) ; un
+  échantillon mesure un LOT d'appels (l'amplification pré-enregistrée) :
+  LOT=512 pour eq-constant, eq-branchue, tls13-16 et tls13-17 ; LOT=64
+  pour sha256-logiciel, sha256-x86-shani et tls13-02 ; LOT=1 pour
+  tls13-13 ; N échantillons par classe, N=60 puis N=200 puis N=400 DANS
+  CET ORDRE (trois runs complets) ; la statistique est le t de Welch sur
+  les ticks, le seuil |t| > 5 (les mêmes paramètres que le kit-2, le
+  kit-B, le kit-C COLLAB et l'édition structurelle v0.11.0).
+  LE COMPTEUR : RDTSC sur x86-64 — la grandeur est nommée « ticks »,
+  JAMAIS « cycles » (la fréquence du TSC n'est pas lue : les drapeaux
+  constant_tsc/nonstop_tsc sont constatés et nommés, la colonne
+  « secondes » du csv vit en contrepoint CLOCK_MONOTONIC).
+  L'ÉPREUVE PRÉALABLE (fail-closed, TROIS lecteurs) : le condensé FIPS
+  180-4 « abc » EXACT exigé du lecteur LOGICIEL, du lecteur SHA-NI (si
+  présent) ET DE LA PIÈCE SCELLÉE tls13-02 (avec l'adversaire de
+  mutation K) AVANT toute mesure — un lecteur faux est un REFUS : rien
+  n'est mesuré.
+
+LE RUN (dans un notebook Kaggle — l'ordre exact des cellules vit aussi
+au A-LIRE-EDITION-KAGGLE.txt) :
+  0. (facultatif mais recommandé) Session : Accélérateur = Aucun, GPU
+     T4 ×2 ou P100 — CHAQUE choix se nomme au témoin (le CPU change de
+     race avec l'accélérateur ; le kit mesure le CPU, l'accélérateur
+     est constaté).
+  1. téléversez TRIADE_kit_test_KAGGLE_x86_v100.zip dans les INPUTS du
+     notebook (bouton « + Add Input » → « Upload » → Dataset) ;
+     le zip vit alors sous /kaggle/input/<nom-du-dataset>/ ;
+  2. cellule :
+       !cp /kaggle/input/*/TRIADE_kit_test_KAGGLE_x86_v100.zip .
+       !unzip -q TRIADE_kit_test_KAGGLE_x86_v100.zip -d /kaggle/working
+  3. cellule :
+       !bash /kaggle/working/TRIADE_kit_test_KAGGLE_x86_v100/COMMENCER-ICI.sh
+     — le lanceur vérifie les empreintes du paquet, INSTALLE gcc par
+       apt-get s'il manque, COMPILE la pièce sur cette machine depuis
+       la source (la source est la vérité), vit l'épreuve FIPS des
+       trois lecteurs, puis les TROIS runs N=60, N=200, N=400 dans
+       l'ordre imposé ;
+  4. à la fin : le zip de retour preuves-kaggle-<horodatage>.zip vit
+     dans /kaggle/working/TRIADE_kit_test_KAGGLE_x86_v100/kaggle-x86/
+     kit-C-kaggle-dudect/ — RÉCUPÉREZ-LE AVANT LA FIN DE LA SESSION
+     (onglet Output du panneau droit, ou en cellule :
+       import shutil
+       shutil.copy('<chemin-imprimé-par-le-run>.zip', '/kaggle/working')
+     puis téléchargement) ; SAUVEGARDEZ LE NOTEBOOK (Save Version) pour
+     que /kaggle/working vive dans la version enregistrée.
+  Quelques minutes à silicium partagé. Le réseau ne sert qu'à
+  l'installation éventuelle des paquets. Aucun droit particulier.
+
+LES TÉMOINS : le réceptacle ./preuves-kaggle/ naît tout seul :
+  scenario-kaggle-journal.log     le scénario entier, pas à pas ;
+  sortie-epreuve-fips.txt         l'épreuve des trois lecteurs ;
+  sortie-run-N60/200/400.txt      la console de chaque run ;
+  journal-dudect-kaggle-N60/200/400.csv   les échantillons (cible,
+                                  classe, itération, ticks, secondes) ;
+  temoin-dudect-kaggle-N60/200/400.txt    le témoin de chaque run
+                                  (machine, silicium, accélérateur,
+                                  mutualisation, compilateur,
+                                  empreintes, code) ;
+  temoin-dudect-kaggle-SYNTHESE.txt       la synthèse des trois runs ;
+  preuves-kaggle-<horodatage>.zip LE ZIP DE RETOUR (tout le
+                                  réceptacle, prêt au voyage).
+Datez et signez la synthèse de votre main (imprimez-la ou recopiez-la,
+signez, scannez/photographiez), puis téléversez le zip ET le scan au
+coffre /test (dossier Drive « Triade » → « test », par exemple sous
+preuves-kaggle-<votre-nom>/). Le labo recoupe sur pièces : jamais avant
+le run, jamais sans pièces. CE QUE LE LABO FERA DES TÉMOINS :
+recomposer les comptes depuis leurs contenus, vérifier l'empreinte de
+la source et de l'image scellée contre les scellés, recalculer les t
+depuis les ticks bruts du csv, confronter les verdicts à l'équation
+pré-enregistrée — aucun chiffre n'est repris sans son témoin.
+
+LA LECTURE HONNÊTE (à lire AVANT de s'inquiéter d'un verdict) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, CETTE machine
+    mutualisée, consignée telle quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon — jamais
+    « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument
+    est CONTESTÉ — nommé) ;
+  — le rapport médian logiciel/SHA-NI (s'il vit) est LE CONSTAT DE CE
+    SILICIUM de commodité — jamais une cible : aucune cible
+    pré-enregistrée n'existe pour ce silicium ;
+  — un écart nommé est un RÉSULTAT aussi précieux qu'un vert (D189) :
+    rapportez-le tel quel.
+
+LA PREUVE DU LABORATOIRE (ce que le labo a vécu AVANT de livrer) :
+  le bac du labo EST un Linux x86-64 (Xeon, drapeau sha_ni présent,
+  drapeau hypervisor présent — la même classe de machine que Kaggle) :
+  le run COMPLET (l'épreuve des trois lecteurs, la pièce scellée
+  comprise, puis N=60/200/400 entiers aux huit cibles) y fut vécu avec
+  l'étiquette AUTOTEST AVANT assemblage — la console (le journal du
+  scénario, code 0 aux trois runs) et le csv N=60 vivent au dossier
+  preuves-labo/ de ce paquet, avec les empreintes des outils du bac.
+  L'AUTOTEST PROUVE LA MÉCANIQUE, JAMAIS LE SILICIUM : aucun statut
+  terrain n'en découle — le run Kaggle appartient au développeur.
+
+LA RÉFÉRENCE CROISÉE : le kit-2 du 24/11 (la machine n° 1, les mêmes
+cibles scellées aux classes séquentielles) ; le kit-B du téléphone (le
+troisième silicium, FEAT_SHA256, rapport 4,36) ; le kit-C COLLAB (le
+Xeon Colab, Entrée 426 : les quatre scellées silencieuses, la lecture
+DVFS renforcée pour tls13-02/13, le partage tls13-16 DEMEURANT) ; le
+présent kit est le MÊME instrument au MÊME protocole sur UN AUTRE
+silicium serveur — la question machine-ou-code y trouve son deuxième
+point de commodité. Les empreintes des trois pièces scellées sont
+citées au binaire : le périmètre v0.15.0 demeure intact (l'image est
+ouverte EN LECTURE SEULE, recoupée avant exécution, jamais modifiée
+sur disque).

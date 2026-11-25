@@ -1,0 +1,156 @@
+LISEZMOI — LE KIT-E DUDECT-S390X (le test du silicium IBM Z, le plus loin
+de la famille, édition LINUXONE s390x)
+==============================================================================
+
+LA COMMANDE (le développeur, 25/11/2026) : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants ». LE SILICIUM IBM Z (s390x — une ISA de mainframe,
+des coeurs à cadence élevée et gouvernance propre) est le PLUS LOIN de
+la famille : x86, ARM, puis Z. La question du kit-B s'y vit PAREILLE
+sur un CINQUIÈME silicium : l'instrument (les deux contrôles, SHA-256
+logiciel) — le résultat, quel qu'il soit, sera nommé, jamais maquillé.
+
+L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 25/11/2026, HORS DU
+PÉRIMÈTRE SCELLÉ v0.15.0. Le protocole LINUXONE-S390X-1 ci-dessous est
+PRÉ-ENREGISTRÉ dans ce LISEZMOI AVANT tout run : l'équation exacte est
+figée, AUCUN paramètre ne se règle au terrain, aucun chiffre ne sera
+fabriqué hors de cette équation. La pièce dudect_s390x.c est un DÉRIVÉ
+NOMMÉ de dudect_arm.c (édition TÉLÉPHONE, v1.0.0) : la mécanique (alea,
+contrôles, compression, Welch, csv, épreuve FIPS) est la MÊME ; les
+ÉCARTS NOMMÉS : (1) le COMPTEUR — l'horloge monotone du noyau en
+NANOSECONDES, nommée, jamais déguisée en cycles (pas de compteur
+userspace canonique aussi direct que le TSC x86 ou le CNTVCT ARM) ;
+(2) le REFUS MATÉRIEL — KIMD/KLMD, les instructions de condensé du Z,
+sont SUPERVISEUR : l'espace utilisateur ne peut pas les émettre, la
+cible matérielle est REFUSÉE PAR NATURE, nommée ; (3)
+l'AMPLIFICATION — adaptée à l'échelle de l'horloge (LOT=4096/64,
+pré-enregistrée).
+
+LA PORTE GRATUITE (nommée honnêtement, vérifiée le 25/11/2026) : le
+portail historique « LinuxONE Community Cloud » (community.ibm.com) est
+INACCESSIBLE — la page répond une erreur ; le portail
+linuxone.cloud.ibm.com répond mais son contenu ne put être vérifié par
+le labo (portail JavaScript). LA PORTE SÛRE ET GRATUITE EST IBM Z
+XPLORE (ibmzxplore.influitive.com — plateforme mondiale d'apprentissage
+gratuite, « available globally at no cost », qui donne accès à des
+environnements Z réels : z/OS et Linux, avec Python et USS — Unix
+System Services). TOUTE AUTRE PORTE s390x que le maître possède
+(université, employeur, essai) vaut PAREIL : le kit exige seulement un
+shell Linux s390x avec gcc et python3. SI gcc est absent de la porte
+choisie : REFUS NOMMÉ — le kit ne mesure rien, il refuse ; l'écran se
+renvoie TEL QUEL (D122).
+
+CE QUE CE KIT REFUSE (dit d'abord, pour qu'aucune déception ne naisse) :
+  — les pièces scellées v0.15.0 (loupe.exe, proxy-image.bin,
+    moteur-shani.bin) sont x86-64 Windows : CE silicium s390x ne les
+    exécute PAS (l'ISA diverge, la convention d'appel diverge).
+    REFUSÉES PAR NATURE — leurs empreintes sont citées dans le binaire,
+    jamais mesurées ici ;
+  — les instructions MATÉRIELLES de condensé (KIMD/KLMD, Message
+    Digest Assist) sont SUPERVISEUR sur s390x : l'espace utilisateur ne
+    peut pas les émettre — le noyau seul s'en sert. La cible matérielle
+    est REFUSÉE PAR NATURE dans CETTE édition, nommée, jamais muette
+    (une itération future pré-enregistrerait la voie OpenSSL/EVP si le
+    labo la veut) ;
+  — les cibles VAES/AES-GCM (P5), le moteur d'oracle, les 27 harnais
+    par bloc : le poste réel x86-64, pas ce silicium.
+
+LE PROTOCOLE LINUXONE-S390X-1 (l'équation pré-enregistrée) :
+  Les CIBLES, dans cet ordre :
+    1. eq-constant     le CONTRÔLE POSITIF de l'instrument : la
+                       comparaison de 32 octets par OU masqué — aucun
+                       branchement sur le secret. ATTENDU : aucune
+                       divergence au seuil. (Une divergence serait un
+                       RÉSULTAT précieux : D189, consigner tel quel.)
+    2. eq-branchue     le CONTRÔLE NÉGATIF : la sortie au premier octet
+                       divergent — LE FAUX PATRON. ATTENDU : DIVERGENCE
+                       — la preuve que l'instrument détecte les fuites.
+                       Si elle ne diverge PAS : l'instrument est
+                       CONTESTÉ sur cet échantillon, le verdict le
+                       nomme.
+    3. sha256-logiciel la compression SHA-256 logicielle d'un bloc de 64
+                       octets (la même mécanique que la cible tls13-02
+                       du kit-2 : l'état AMONT est l'IV, le bloc est LE
+                       SECRET). ATTENDU : aucune divergence.
+  Les CLASSES, deux par cible, ÉCHANTILLONS ENTRELACÉS (à CHAQUE
+  itération la première classe vit puis la seconde — le secret régénéré
+  hors mesure) :
+    — comparaisons : la classe EGAL (le secret est la copie de
+      l'étalon) contre la classe DIVERGENT (un secret frais) ;
+    — compression : la classe SECRET-FIXE contre la classe
+      SECRET-ALÉATOIRE (l'invariance de données).
+  L'ÉQUATION : échauffement 100 paires par cible (résultats jetés) ; un
+  échantillon mesure un LOT d'appels (l'amplification adaptée à
+  l'horloge du noyau en nanosecondes, PRÉ-ENREGISTRÉE) : LOT=4096 pour
+  les comparaisons, LOT=64 pour la compression ; N échantillons par
+  classe, N=60 puis N=200 puis N=400 DANS CET ORDRE (trois runs
+  complets) ; la statistique est le t de Welch sur les ticks, le seuil
+  |t| > 5 (les mêmes paramètres que le kit-2, le kit-B et le kit-C).
+  LE COMPTEUR : CLOCK_MONOTONIC en NANOSECONDES sur s390x — l'horloge
+  du noyau, NOMMÉE, jamais déguisée en cycles (sur l'hôte x86-64 du
+  laboratoire : TSC, la voie de l'AUTOTEST — aucun statut terrain n'en
+  découle). Contrepoint : la colonne « secondes » du csv.
+  L'ÉPREUVE PRÉALABLE : le condensé FIPS 180-4 « abc » EXACT exigé du
+  lecteur logiciel AVANT toute mesure — un lecteur faux est un REFUS :
+  rien n'est mesuré.
+
+LE RUN (sur le shell Linux s390x de la porte choisie — Z Xplore ou
+toute autre, voyez A-LIRE-EDITION-LINUXONE.txt) :
+  1. téléversez les TROIS fichiers du kit dans votre dossier
+     (dudect_s390x.c, scenario-dudect-s390x.py,
+     lancer-kit-E-dudect-s390x.sh — AUCUN binaire ne voyage) ;
+  2. tapez   bash lancer-kit-E-dudect-s390x.sh
+     — le lanceur trouve Python et gcc (il tente l'installation par le
+     gestionnaire de paquets s'il peut — REFUS NOMMÉ sinon), COMPILE la
+     pièce SUR CETTE MACHINE depuis la source (la source est la
+     vérité), vit l'épreuve FIPS, puis les TROIS runs N=60, N=200,
+     N=400 dans l'ordre imposé ;
+  3. quelques minutes ; le réseau ne sert qu'à l'installation éventuelle
+     des paquets ; aucun droit particulier.
+
+LES TÉMOINS : le réceptacle ./preuves-dudect-s390x/ naît tout seul :
+  scenario-dudect-s390x-journal.log     le scénario entier, pas à pas ;
+  sortie-epreuve-fips.txt               l'épreuve d'appel ;
+  sortie-run-N60/200/400.txt            la console de chaque run ;
+  journal-dudect-s390x-N60/200/400.csv  les échantillons (cible,
+                                        classe, itération, ticks,
+                                        secondes) ;
+  temoin-dudect-s390x-N60/200/400.txt   le témoin de chaque run
+                                        (machine, silicium, compilateur,
+                                        empreintes, code de sortie) ;
+  temoin-dudect-s390x-SYNTHESE.txt      la synthèse des trois runs.
+Datez et signez la synthèse de votre main, puis renvoyez le dossier
+ENTIER au coffre /test (dossier Drive « Triade » → « test », par
+exemple sous preuves-dudect-s390x-<votre-nom>/). Le labo recoupe sur
+pièces : jamais avant le run, jamais sans pièces.
+
+LA LECTURE HONNÊTE (à lire AVANT de s'inquiéter d'un verdict) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle
+    quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE
+    machine — jamais « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument
+    est CONTESTÉ — nommé) ;
+  — le silicium Z gouverne sa cadence : le témoin constate ce que la
+    machine dit d'elle-même, rien de plus ;
+  — un écart nommé est un RÉSULTAT aussi précieux qu'un vert (D189) :
+    rapportez-le tel quel.
+
+LA PREUVE DU LABORATOIRE (ce que le labo a vécu AVANT de livrer) : la
+MÉCANIQUE fut éprouvée au bac (hôte Linux x86-64, la voie TSC de la
+même source) : l'épreuve FIPS « abc » EXACT, puis le run AUTOTEST
+N=60 aux trois cibles — l'instrument PROUVÉ (le faux patron
+eq-branchue DIVERGE), eq-constant et sha256-logiciel silencieux, code
+0. La console et le csv vivent au preuves-labo/ de ce paquet. L'hôte
+x86-64 PROUVE LA MÉCANIQUE, JAMAIS LE SILICIUM : aucun statut terrain
+n'en découle — le run s390x appartient au développeur.
+
+LA RÉFÉRENCE CROISÉE : le kit-2 du 24/11 (la machine n° 1) ; le kit-B
+du téléphone (FEAT_SHA256, rapport 4,36) ; le kit-C COLLAB (Entrée
+426) ; le présent kit-E est le geste du même instrument sur le
+CINQUIÈME silicium — la famille étendue : x86 portable, x86 serveur
+Colab, ARM téléphone, ARM Ampere (édition ORACLE), Z s390x (cette
+édition). Les pièces testées sont compilées SUR PLACE depuis la source
+ouverte du kit (aucune pièce scellée n'est touchée : le périmètre
+v0.15.0 demeure intact).

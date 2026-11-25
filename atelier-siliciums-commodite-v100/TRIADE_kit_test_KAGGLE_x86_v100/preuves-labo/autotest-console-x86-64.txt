@@ -1,0 +1,53 @@
+2026-11-25T13:10:17 === scenario-kaggle.py — L'ORCHESTRATEUR DU KIT-C (édition KAGGLE x86-64, 25/11/2026) ===
+2026-11-25T13:10:17 T0.machine — c-6b06c6eb-140d72b5-d5050f68549e · x86_64 · Python 3.12.16 · Linux c-6b06c6eb-140d72b5-d5050f68549e 5.10.134-013.15.kangaroo.al8.x86_64 #1 SMP Thu Jul 30 12:54:59 UTC 2026 x86_64
+2026-11-25T13:10:17 T0.silicium — 2 cœur(s) · Intel(R) Xeon(R) Processor · drapeaux : sha_ni, hypervisor, constant_tsc, nonstop_tsc
+2026-11-25T13:10:17 T0.accelerateur — aucun accélérateur NVIDIA constaté (session CPU — nommé)
+2026-11-25T13:10:17 T0.lecteur python sha256(abc) = ba7816bf8f01cfea… — EXACT
+2026-11-25T13:10:17 T0.piece — sha256(dudect_collab.c) = ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d
+2026-11-25T13:10:17 T0.piece — sha256(cibles/proxy-image.bin) = 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+2026-11-25T13:10:17 T0.piece — sha256(cibles/manifeste-c.txt) = 7293cd86359cebba81d590173a49c462f876cf5ce8b639d5c26c2577713ea5d8
+2026-11-25T13:10:17 T0.piece — les trois empreintes recoupent les scellés : les pièces sont les pièces du labo (l'image scellée comprise — la pièce du coffre, BYTE-POUR-BYTE celle de l'édition COLLAB)
+2026-11-25T13:10:17 T1.compilateur — gcc : gcc (Debian 14.2.0-19) 14.2.0
+2026-11-25T13:10:17 T1.compilation — VÉCUE : gcc -O2 -msha -mssse3 -msse4.1 -o run/dudect_collab dudect_collab.c -lm
+2026-11-25T13:10:17 T1.compilation — AVEC les drapeaux -msha -mssse3 -msse4.1 (la cible matérielle SHA-NI vivra si le noyau expose « sha_ni »)
+2026-11-25T13:10:17 T1.binaire — run/dudect_collab sha256 b7d9b1c266d1edf597ebef7cd7c547309ec576188b5f55fd0a4d9344d3144737
+2026-11-25T13:10:17 T2.epreuve — ./run/dudect_collab --fips (le condensé FIPS « abc » EXACT exigé des TROIS lecteurs : logiciel, SHA-NI s'il vit, ET LA PIÈCE SCELLÉE tls13-02 avec l'adversaire de mutation K)
+2026-11-25T13:10:17 T2.epreuve — === dudect_collab - LE MESUREUR DE LA QUESTION (edition COLLAB x86-64, v1.0.0) ===
+2026-11-25T13:10:17 T2.epreuve — [config] arch=x86-64  compteur=TSC (la grandeur est « ticks »)  N=200/classe  seuil |t|>5
+2026-11-25T13:10:17 T2.epreuve — [config] echantillons ENTRELACES (le protocole COLLAB-X86-1, pre-enregistre AVANT tout run)
+2026-11-25T13:10:17 T2.epreuve — [machine] drapeau hypervisor : present — le silicium est MUTUALISE : les voisins sont INCONNUS, le t mesurera AUSSI eux
+2026-11-25T13:10:17 T2.epreuve — [machine] drapeaux constant_tsc=present nonstop_tsc=present — le TSC est invariant (constate aux drapeaux) ; sa FREQUENCE n'est pas lue : aucun « cycle » ne sera fabrique, seul le contrepoint CLOCK_MONOTONIC vit au csv
+2026-11-25T13:10:17 T2.epreuve — [machine] drapeau sha_ni : PRESENT
+2026-11-25T13:10:17 T2.epreuve — [perimetre] les pieces scellees v0.15.0 face a ce kit :
+2026-11-25T13:10:17 T2.epreuve — [perimetre]   proxy-image.bin  MESUREE ICI (recoup: 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff)
+2026-11-25T13:10:17 T2.epreuve — [perimetre]   loupe.exe 0.1.1  HORS PERIMETRE (sa vitrine est le kit-3) sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+2026-11-25T13:10:17 T2.epreuve — [perimetre]   moteur-shani.bin HORS PERIMETRE (son couloir est le kit-1 au poste reel) sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+2026-11-25T13:10:17 T2.epreuve — [fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+2026-11-25T13:10:17 T2.epreuve — [fips] sha256-x86-shani(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+2026-11-25T13:10:17 T2.epreuve — [manifeste] image 69632 octets, 4 cible(s) scellee(s)
+2026-11-25T13:10:17 T2.epreuve — [image] sha256 recoupe - la piece scellee
+2026-11-25T13:10:17 T2.epreuve — [image] mapee a 0x140000000 (l'indice 0x140000000 tenu)
+2026-11-25T13:10:17 T2.epreuve — [tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+2026-11-25T13:10:17 T2.epreuve — [tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+2026-11-25T13:10:17 T2.epreuve — [tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+2026-11-25T13:10:17 T2.epreuve — [tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+2026-11-25T13:10:17 T2.epreuve — [fips] tls13-02 SCELLEE (abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT (la piece scellee est le lecteur)
+2026-11-25T13:10:17 T2.epreuve — [mutation K] condense DIVERGE — la table est BIEN lue par la piece (en memoire seule : le fichier sur disque est intouchable)
+2026-11-25T13:10:17 T2.epreuve — [restauration] EXACT
+2026-11-25T13:10:17 T2.epreuve — [fips] l'epreuve est vecue seule (l'option --fips) - code 0
+2026-11-25T13:10:17 T2.epreuve — VÉCUE : les lecteurs sont exacts (la pièce scellée comprise)
+2026-11-25T13:10:17 T3.run — N=60 par classe : LE RUN (quelques minutes à silicium partagé)
+2026-11-25T13:10:18 T3.run N=60 — code de sortie 0
+2026-11-25T13:10:18 T3.run N=60 — journal csv consigné (journal-dudect-kaggle-N60.csv)
+2026-11-25T13:10:18 T3.run N=60 — témoin composé : temoin-dudect-kaggle-N60.txt
+2026-11-25T13:10:18 T3.run — N=200 par classe : LE RUN (quelques minutes à silicium partagé)
+2026-11-25T13:10:18 T3.run N=200 — code de sortie 0
+2026-11-25T13:10:18 T3.run N=200 — journal csv consigné (journal-dudect-kaggle-N200.csv)
+2026-11-25T13:10:18 T3.run N=200 — témoin composé : temoin-dudect-kaggle-N200.txt
+2026-11-25T13:10:18 T3.run — N=400 par classe : LE RUN (quelques minutes à silicium partagé)
+2026-11-25T13:10:18 T3.run N=400 — code de sortie 0
+2026-11-25T13:10:18 T3.run N=400 — journal csv consigné (journal-dudect-kaggle-N400.csv)
+2026-11-25T13:10:18 T3.run N=400 — témoin composé : temoin-dudect-kaggle-N400.txt
+2026-11-25T13:10:18 T4.synthese — les codes : N60=0, N200=0, N400=0
+2026-11-25T13:10:18 T4.synthese — le réceptacle preuves-kaggle/ : journal, épreuve FIPS, trois sorties, trois csv, trois témoins, synthèse
+2026-11-25T13:10:18 T4.retour — le zip de retour : preuves-kaggle-20261125T131018Z.zip (95219 octets, sha256 cb21b74cc8918fdb8e3ef134000e530a2eefad9417473ad0d17f32bc56b22903)

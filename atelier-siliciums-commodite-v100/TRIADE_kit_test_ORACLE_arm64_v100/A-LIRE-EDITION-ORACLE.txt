@@ -1,0 +1,87 @@
+A-LIRE-EDITION-ORACLE.txt — L'ÉDITION ORACLE ARM64 DU KIT DE TEST v1.0.0
+============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+POURQUOI CETTE ÉDITION. Colab et Kaggle prêtent des notebooks sur des
+siliciums MUTUALISÉS aux voisins inconnus. L'offre ALWAYS FREE d'Oracle
+Cloud donne AUTRE CHOSE : une MACHINE VIRTUELLE À VOUS — le silicium
+AMPERE A1 (ARM64, coeurs Neoverse N1, cadence haute et stable, OCPUs
+DÉDIÉS — pas de voisins de session, l'hôte physique demeurant
+mutualisé, nommé). LE VRAI « hardware différent » : une famille serveur
+ARM64, une AUTRE que le Cortex du téléphone (le kit-B téléphone y a
+mesuré FEAT_SHA256 au rapport 4,36), une AUTRE que les Xeon/EPYC des
+notebooks. LA QUESTION du kit-B s'y vit PAREILLE : l'instrument
+(contrôles, SHA-256 logiciel, FEAT_SHA256 matérielle) sur UN QUATRIÈME
+silicium — le rapport médian logiciel/matériel d'Ampere A1 sera LE
+CONSTAT DE CE SILICIUM, jamais une cible.
+
+LE GUIDE D'INSCRIPTION (l'offre Always Free, vérifiée le 25/11/2026 sur
+les pages d'Oracle — docs.oracle.com « Always Free Resources ») :
+  1. créez un compte sur oracle.com/cloud/free (une carte bancaire est
+     EXIGÉE pour la vérification d'identité : une empreinte temporaire,
+     aucun prélèvement ; l'offre Always Free vit SANS limite de durée) ;
+  2. l'allocation gratuite Ampere A1 : 1 500 heures-OCPU et 9 000
+     Go-heures PAR MOIS (l'équivalent de 2 OCPU + 12 Go en continu),
+     plus 2 micro-instances x86 AMD et 200 Go de disque ;
+  3. dans la console, créez une instance « VM.Standard.A1.Flex » :
+     2 OCPU, 12 Go, image Ubuntu 22.04/24.04 (ARM64), générez la paire
+     de clés SSH, laissez le réseau par défaut ;
+  4. connectez-vous :  ssh -i <cle> ubuntu@<ip-publique> ;
+  5. téléversez le paquet :  scp -i <cle>
+     TRIADE_kit_test_ORACLE_arm64_v100.zip ubuntu@<ip>:~  puis dézippez ;
+  6. tapez :  bash TRIADE_kit_test_ORACLE_arm64_v100/COMMENCER-ICI.sh
+     (le lanceur installe Python et gcc s'ils manquent, compile la pièce
+     SUR CETTE MACHINE, vit l'épreuve FIPS, puis les trois runs
+     N=60/200/400) ;
+  7. RAPATRIEZ les preuves après le run (la gratuité peut réclamer les
+     machines inactives — nommé) : renvoyez le dossier
+     preuves-dudect-arm/ ENTIER au coffre /test (Drive « Triade »).
+
+CE QUE CONTIENT LE PAQUET :
+  oracle-arm64/kit-B-dudect-arm-oracle/   LE KIT : LA MÊME PIÈCE que
+      l'édition TÉLÉPHONE, BYTE-POUR-BYTE (dudect_arm.c — scellé
+      08681278… — compilée SUR PLACE : la source est la vérité, aucun
+      exe précompilé ne vit ici, rien ne peut être retiré par un
+      scanner ; scenario-dudect-arm.py — l'orchestrateur du kit-B),
+      avec UN LANCEUR ET UN LISEZMOI NEUFS : le protocole ORACLE-ARM-1
+      PRÉ-ENREGISTRÉ (l'égalation du TELEPHONE-ARM-1 : échauffement
+      100, LOT=512/4, N=60/200/400, t de Welch, |t|>5, CNTVCT_EL0 en
+      « ticks ») et le LISEZMOI-du-KIT-B-reference.txt (la référence
+      téléphone, pour le recoup) ;
+  preuves-labo/      les consoles des runs d'éprouvage du laboratoire
+      (x86-64 natif ; aarch64 croisé sous QEMU avec +sha2) —
+      l'émulation prouve la MÉCANIQUE, jamais le silicium : aucun
+      statut terrain n'en découle.
+
+CE QUE CETTE ÉDITION REFUSE (le périmètre demeure intouché) : les
+pièces scellées v0.15.0 sont x86-64 Windows — REFUSÉES PAR NATURE sur
+ARM64, leurs empreintes citées, jamais mesurées ici. Le couloir
+VAES/AES-GCM (P5), le moteur d'oracle, les harnais par bloc : le poste
+réel x86-64, pas ce silicium. Le rapport médian logiciel/matériel, s'il
+vit, est LE CONSTAT DE CE SILICIUM — jamais une cible.
+
+POURQUOI AUCUN EXE PRÉCOMPILÉ. Le kit compile sa pièce sur place
+(apt-get installe gcc par le lanceur si besoin) : rien ne peut être
+retiré par un scanner ou un antivirus — le coffre Drive a déjà vécu le
+faux positif « malware or spam » sur les exe de mesure de timing
+(12/11, Entrée 248 ; 25/11 sur le paquet complet). Sur ce silicium,
+la source EST l'exécutable.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) ;
+  — datez et signez les témoins DE VOTRE MAIN ;
+  — renvoyez les dossiers de preuves ENTIERS au coffre /test (dossier
+    Drive « Triade » → « test ») — le labo recoupe sur pièces, JAMAIS
+    avant le run, jamais sans pièces ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'ORDRE DE PASSAGE : COMMENCER-ICI.sh vérifie les empreintes, puis
+lance le kit-B-oracle (l'unique kit de cette édition — le constat
+d'identité vit dans le témoin du run : machine, silicium, OCPUs
+dédiés, hôte mutualisé nommé).

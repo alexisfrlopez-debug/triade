@@ -1,0 +1,6 @@
+EMPREINTES DES OUTILS DU BAC (l'autotest du kit-E, 25/11/2026)
+hôte       : Linux c-6b06c6eb-140d72b5-d5050f68549e 5.10.134-013.15.kangaroo.al8.x86_64 #1 SMP Thu Jul 30 12:54:59 UTC 2026 x86_64 GNU/Linux
+compilateur: gcc (Debian 14.2.0-19) 14.2.0
+commande   : gcc -O2 -o run_dudect_s390x dudect_s390x.c -lm
+date       : 2026-11-25T13:09:26Z
+piece      : dudect_s390x.c sha256 a9f702a3c2d337bb50217f134a7535f16e1da0ad7afd53ba4b0cac9e56a67301

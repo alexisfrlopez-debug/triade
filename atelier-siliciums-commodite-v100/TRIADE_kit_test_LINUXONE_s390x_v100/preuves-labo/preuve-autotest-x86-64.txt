@@ -1,0 +1,49 @@
+=== l'AUTOTEST DU LABORATOIRE — dudect_s390x.c sur l'hôte x86-64 du bac ===
+(25/11/2026 — la voie TSC de l'hôte, l'étiquette AUTOTEST : la MÉCANIQUE, jamais le silicium — aucun statut terrain n'en découle)
+
+--- l'épreuve FIPS ---
+=== dudect_s390x - LE TESTEUR DU SILICIUM S390x (edition LINUXONE, v1.0.0) ===
+[config] arch=non-s390x (l'hote x86-64 du laboratoire)  compteur=TSC (l'autotest du laboratoire x86-64 — aucun statut terrain n'en decoule)
+[config] N=200/classe  seuil |t|>5  echantillons ENTRELACES (le protocole LINUXONE-S390X-1)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[refus] les instructions de condense KIMD/KLMD (Message Digest
+        Assist) sont SUPERVISEUR sur s390x : l'espace utilisateur
+        ne peut pas les emettre. La cible materielle est REFUSEE
+        PAR NATURE dans CETTE edition — nommee, jamais muette.
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] l'epreuve est vecue seule (l'option --fips) - code 0
+
+--- le run AUTOTEST (N=60) ---
+=== dudect_s390x - LE TESTEUR DU SILICIUM S390x (edition LINUXONE, v1.0.0) ===
+[config] arch=non-s390x (l'hote x86-64 du laboratoire)  compteur=TSC (l'autotest du laboratoire x86-64 — aucun statut terrain n'en decoule)
+[config] N=60/classe  seuil |t|>5  echantillons ENTRELACES (le protocole LINUXONE-S390X-1)
+[ETIQUETTE] AUTOTEST LABORATOIRE - la mecanique seule : AUCUN statut terrain n'en decoule (le run s390x appartient au developpeur)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[refus] les instructions de condense KIMD/KLMD (Message Digest
+        Assist) sont SUPERVISEUR sur s390x : l'espace utilisateur
+        ne peut pas les emettre. La cible materielle est REFUSEE
+        PAR NATURE dans CETTE edition — nommee, jamais muette.
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[affinite] coeur 0 : posee
+[eq-constant] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4096 appels par echantillon)
+  egal           : moy 211726.8 ticks, med 244120 (par appel : 59.60)
+  divergent      : moy 205910.0 ticks, med 215552 (par appel : 52.62)
+  t de Welch = 0.66 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[eq-branchue] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4096 appels par echantillon)
+  egal           : moy 203185.5 ticks, med 196080 (par appel : 47.87)
+  divergent      : moy 22558.3 ticks, med 21940 (par appel : 5.36)
+  t de Welch = 76.10 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[sha256-logiciel] echauffement 100 paires, puis 60 iterations entrelacees (LOT=64 appels par echantillon)
+  fixe           : moy 47698.0 ticks, med 46000 (par appel : 718.75)
+  aleatoire      : moy 48120.2 ticks, med 46150 (par appel : 721.09)
+  t de Welch = -0.54 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-s390x-1795612166271358654.csv — joignez-le au temoin (la synthese le fait)
+[verdict] LE RUN VECU : 3/3 cible(s) consignee(s)
+[verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+[verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)

@@ -1,0 +1,9 @@
+EMPREINTES DES OUTILS DU BAC (l'autotest du kit-C-kaggle, 25/11/2026)
+hôte       : Linux c-6b06c6eb-140d72b5-d5050f68549e 5.10.134-013.15.kangaroo.al8.x86_64 #1 SMP Thu Jul 30 12:54:59 UTC 2026 x86_64 GNU/Linux
+compilateur: gcc (Debian 14.2.0-19) 14.2.0
+python     : Python 3.12.16
+date       : 2026-11-25T13:10:35Z
+commande   : python3 scenario-kaggle.py (l'épreuve FIPS des trois lecteurs, puis N=60/200/400 — code 0)
+piece      : dudect_collab.c sha256 ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d
+piece      : cibles/proxy-image.bin sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+piece      : scenario-kaggle.py sha256 8e3f758992843b9ab086c3c220be74e4e4cc397423d049540188fe021335a218

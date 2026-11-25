@@ -1,0 +1,95 @@
+A-LIRE-EDITION-KAGGLE.txt — L'ÉDITION KAGGLE x86-64 DU KIT DE TEST v1.0.0
+============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+POURQUOI CETTE ÉDITION. Kaggle Notebooks est le type même demandé :
+gratuit, en ligne, notebook — la même commodité que Colab, mais UN
+AUTRE hardware : des hôtes serveurs différents (des Xeon/EPYC d'une
+autre génération, et des sessions GPU T4 ×2 / P100 ou TPU qui changent encore
+la race de l'hôte — l'accélérateur est CONSTATÉ au témoin, jamais
+mesuré). LA QUESTION demeure celle de l'Entrée 421 : les trois
+divergences |t|>5 du 24/11 au portable (tls13-02 : −10,64 ;
+tls13-13 : +9,65 ; tls13-16 : +9,19 — lues comme DVFS à l'Entrée 416)
+SUIVENT-ELLES LA MACHINE OU LE CODE ? L'édition COLLAB (Entrée 426) a
+rendu sa lecture : les quatre scellées silencieuses sur SON Xeon, la
+lecture DVFS renforcée pour tls13-02/13, le partage tls13-16 DEMEURANT
+(divergente au portable ET au bac, silencieuse au Colab). UN AUTRE
+serveur x86-64 pèse un point de plus : si tls13-16 y revient, le
+partage code se renforce ; si elle y reste absente, le partage
+machine×code demeure — résultat nommé, jamais maquillé. La lecture
+appartient au labo, sur pièces.
+
+CE QUE CONTIENT LE PAQUET :
+  kaggle-x86/kit-C-kaggle-dudect/   LE KIT : LA MÊME PIÈCE que
+      l'édition COLLAB, BYTE-POUR-BYTE (dudect_collab.c — compilée SUR
+      PLACE : la source est la vérité, aucun exe précompilé ne vit ici,
+      rien ne peut être retiré par un scanner ; cibles/proxy-image.bin
+      — l'image scellée 0782d7e2…, la pièce du coffre — et ses
+      manifestes), avec UN ORCHESTRATEUR NEUF : scenario-kaggle.py (le
+      réceptacle preuves-kaggle/, le constat de l'accélérateur, le zip
+      de retour au nom de cette édition), le lanceur, et le LISEZMOI du
+      protocole KAGGLE-X86-1 PRÉ-ENREGISTRÉ avant tout run (l'égalation
+      du COLLAB-X86-1 : huit cibles, classes ENTRELACÉES, LOT=512/64/1,
+      N=60/200/400, t de Welch, |t|>5, RDTSC en « ticks ») ;
+  preuves-labo/      la console et le csv de l'autotest du laboratoire
+      (le bac EST un Linux x86-64 : Xeon, sha_ni, hypervisor — le run
+      complet 60/200/400 y fut vécu avec l'étiquette AUTOTEST avant
+      assemblage, code 0). L'autotest prouve la MÉCANIQUE, jamais le
+      silicium : aucun statut terrain n'en découle.
+
+LES HUIT CIBLES (l'ordre pré-enregistré) : eq-constant et eq-branchue
+(les contrôles de l'instrument — le négatif DOIT diverger), sha256-
+logiciel, sha256-x86-shani (les instructions SHA-NI si le noyau expose
+« sha_ni »), puis LES QUATRE SCELLÉES de proxy-image.bin : tls13-02,
+tls13-13, tls13-16, tls13-17 — recoupées (empreintes image + plages)
+avant toute exécution, et l'épreuve FIPS « abc » exigée de la pièce
+scellée ELLE-MÊME (avec l'adversaire de mutation K).
+
+CE QUE CETTE ÉDITION REFUSE (le périmètre demeure intouché) : loupe.exe
+et moteur-shani.bin sont HORS PÉRIMÈTRE (empreintes citées, jamais
+mesurées ici — chacune a son kit) ; l'ACCÉLÉRATEUR (GPU T4/P100, TPU)
+est CONSTATÉ (nvidia-smi lu au T0, nommé au témoin), jamais mesuré —
+la voie GPU demanderait un instrument à pré-enregistrer, une itération
+future ; le couloir VAES/AES-GCM (P5) et le moteur d'oracle demeurent
+au poste réel ; la hiérarchie d'évidence est INCHANGÉE — le banc
+contrôlé (portable, téléphone) demeure la référence, ce run est une
+lecture de commodité. Le silicium Kaggle est MUTUALISÉ aux voisins
+inconnus (le t mesurera aussi eux), le DVFS sous l'hyperviseur est
+opaque, et LA SESSION EST ÉPHÉMÈRE.
+
+DANS KAGGLE (l'ordre exact des cellules) :
+  0. (facultatif mais nommé) Session : Accélérateur = Aucun / GPU T4
+     ×2 / P100 — chaque choix se nomme au témoin.
+  1. téléversez TRIADE_kit_test_KAGGLE_x86_v100.zip dans les INPUTS du
+     notebook (« + Add Input » → Upload → Dataset) ;
+  2. cellule :  !cp /kaggle/input/*/TRIADE_kit_test_KAGGLE_x86_v100.zip .
+                !unzip -q TRIADE_kit_test_KAGGLE_x86_v100.zip -d /kaggle/working
+  3. cellule :  !bash /kaggle/working/TRIADE_kit_test_KAGGLE_x86_v100/COMMENCER-ICI.sh
+        (le lanceur vérifie les empreintes, installe gcc s'il manque,
+        compile, vit l'épreuve FIPS des trois lecteurs, puis les trois
+        runs N=60/200/400 — quelques minutes à silicium partagé)
+  à la fin :   RÉCUPÉREZ LE ZIP DE RETOUR AVANT LA FIN DE LA SESSION
+        (Kaggle est ÉPHÉMÈRE) — le nom exact ET le chemin sont imprimés
+        à la fin du run (onglet Output du panneau droit) ; SAUVEGARDEZ
+        AUSSI LE NOTEBOOK (Save Version) : /kaggle/working vit dans la
+        version enregistrée.
+  PUIS téléversez le zip au coffre /test (dossier Drive « Triade » →
+  « test »), avec le scan de la synthèse datée et signée de votre main.
+
+LES RÈGLES QUI NE CHANGENT PAS :
+  — un dossier NEUF par machine, ne mélangez jamais les runs (D99) ;
+  — chaque écart nommé est un RÉSULTAT, jamais un échec à maquiller
+    (D189) ;
+  — datez et signez les témoins DE VOTRE MAIN ;
+  — renvoyez le zip de preuves ET le scan au coffre /test — le labo
+    recoupe sur pièces, JAMAIS avant le run, jamais sans pièces ;
+  — chaque LISEZMOI de kit demeure LA RÉFÉRENCE : le lanceur fait les
+    gestes, le LISEZMOI dit pourquoi.
+
+L'ORDRE DE PASSAGE : COMMENCER-ICI.sh vérifie les empreintes du paquet
+puis lance le kit-C-kaggle (l'unique kit de cette édition — le constat
+d'identité vit dans le témoin du run : machine, silicium,
+accélérateur, mutualisation).

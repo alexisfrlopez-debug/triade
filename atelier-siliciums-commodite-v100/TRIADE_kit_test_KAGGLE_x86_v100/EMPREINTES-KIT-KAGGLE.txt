@@ -1,0 +1,14 @@
+1a850386b3384e863a5005e0f359946d908c6b46755546b232b443ed38ac2ad7  A-LIRE-EDITION-KAGGLE.txt
+b257633a35f445b6d6b746ba744d65a8a9da06e1aab4b87a9b89fa10093e5c72  COMMENCER-ICI.sh
+8dbf07cd64ba8fc7fe5b20e1cfdb3e82fa2beb8e0d91c1d9a3882ee241f8e0a7  kaggle-x86/kit-C-kaggle-dudect/LISEZMOI-dudect-kaggle.txt
+7293cd86359cebba81d590173a49c462f876cf5ce8b639d5c26c2577713ea5d8  kaggle-x86/kit-C-kaggle-dudect/cibles/manifeste-c.txt
+93d5a13fcc4d1cb2598b471e291266654d8fec18a9dd3800dba297fbc649db52  kaggle-x86/kit-C-kaggle-dudect/cibles/manifeste.json
+0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff  kaggle-x86/kit-C-kaggle-dudect/cibles/proxy-image.bin
+ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d  kaggle-x86/kit-C-kaggle-dudect/dudect_collab.c
+53321fd945df2c494600924b5e3421933796e15105dac84e0dd4c15817aa26fe  kaggle-x86/kit-C-kaggle-dudect/lancer-kit-C-KAGGLE.sh
+8e3f758992843b9ab086c3c220be74e4e4cc397423d049540188fe021335a218  kaggle-x86/kit-C-kaggle-dudect/scenario-kaggle.py
+5bea887ba127dcc6868a7f9569925bdebf325cfff35916ada3dcbe229032c315  preuves-labo/EMPREINTES-DES-OUTILS.txt
+6f51c3fa5950ca2d4d79d13161276db5c48a4c66e4521660d302ce4f1f87baee  preuves-labo/autotest-console-x86-64.txt
+387d63c66a879569399d1fbbb16e498faa83a1e97055fcc95c00546b3c9bc869  preuves-labo/autotest-x86-64-journal.csv
+df06f3386c881886b8f80fe7f5a271918810242daf3d3b5a35f1f341eb796ad1  preuves-labo/scenario-simule-console.txt
+881ffc17be5f4a6bcffaa5050e322321f7b115c40f4a15a8fed3b2161b429126  verifier-kit-kaggle.sh

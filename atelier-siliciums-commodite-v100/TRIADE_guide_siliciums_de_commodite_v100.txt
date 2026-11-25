@@ -1,0 +1,155 @@
+TRIADE_guide_siliciums_de_commodite_v100.txt — LE GUIDE DES SILICIUMS DE
+COMMODITÉ (les environnements gratuits en ligne au hardware différent,
+et leurs packs de test)
+==============================================================================
+(25/11/2026 — la commande du développeur : « si tu as des idées pour des
+siliciums supplémentaires du même type que google collab (environnement
+gratuit en ligne, mais hardware différent) fais moi les packs de test
+correspondants »)
+
+LA RÉPONSE EN UNE TABLE (le labo a vérifié chaque porte le 25/11/2026 —
+les sources vivent en bas de page ; ce qui n'a pu être vérifié est NOMMÉ,
+jamais affirmé) :
+
+  ┌─────────────────────┬──────────────────────────────┬─────────────────────┬──────────────────────┐
+  │ L'ENVIRONNEMENT     │ LE SILICIUM (ce qui change)  │ LE PACK             │ CE QUE LE PACK MESURE│
+  ├─────────────────────┼──────────────────────────────┼─────────────────────┼──────────────────────┤
+  │ Google Colab        │ x86-64 serveur Xeon/EPYC     │ vécu (Entrée 426 :  │ les 4 SCELLÉES +     │
+  │ (gratuit, notebook) │ mutualisé (le run COLLAB)    │ kit-C COLLAB)       │ SHA-NI + contrôles   │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────┼──────────────────────┤
+  │ Kaggle Notebooks    │ x86-64 serveur AUTRE hôte ;  │ TRIADE_kit_test_    │ les 4 SCELLÉES +     │
+  │ (gratuit, notebook) │ sessions GPU T4 ×2 / P100 /  │ KAGGLE_x86_v100.zip │ SHA-NI + contrôles   │
+  │                     │ TPU — l'accélérateur CONSTA- │ (le kit-C, la même  │ (le protocole        │
+  │                     │ TÉ au témoin, jamais mesuré) │ pièce byte-byte)    │ KAGGLE-X86-1)        │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────┼──────────────────────┤
+  │ GitHub Actions      │ TROIS siliciums d'un geste : │ TRIADE_kit_test_    │ kit-C : les 4        │
+  │ (gratuit, dépôt     │ x86-64 serveur · ARM64       │ ACTIONS_multisili-  │ SCELLÉES ; kit-D :   │
+  │ public, runners     │ serveur · APPLE SILICON M1   │ cium_v100.zip + le  │ FEAT_SHA256 serveur ;│
+  │ standards illimités)│ (FEAT_SHA256 possible —      │ workflow au dépôt   │ kit-G : FEAT_SHA256  │
+  │                     │ l'épreuve FIPS décidera)     │ (le labo peut y     │ Apple + contrôles    │
+  │                     │                              │ vivre les runs LUI- │                      │
+  │                     │                              │ MÊME : AUTOTEST-    │                      │
+  │                     │                              │ DISTANT)            │                      │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────┼──────────────────────┤
+  │ Oracle Cloud        │ ARM64 AMPERE A1 (Neoverse    │ TRIADE_kit_test_    │ contrôles + SHA-256  │
+  │ Always Free         │ N1, OCPUs DÉDIÉS — pas de    │ ORACLE_arm64_v100.  │ logiciel + FEAT_     │
+  │ (gratuit à vie,     │ voisins de session ; 1 500   │ zip (le kit-B, la   │ SHA256 (protocole    │
+  │ carte exigée)       │ h-OCPU/9 000 Go-h par mois)  │ même pièce)         │ ORACLE-ARM-1)        │
+  ├─────────────────────┼──────────────────────────────┼─────────────────────┼──────────────────────┤
+  │ IBM Z XPLORE        │ IBM Z s390x — LE PLUS LOIN   │ TRIADE_kit_test_    │ contrôles + SHA-256  │
+  │ (gratuit, « at no   │ de la famille (ISA mainframe)│ LINUXONE_s390x_     │ logiciel (KIMD/KLMD  │
+  │ cost », z/OS +      │                              │ v100.zip            │ SUPERVISEUR : REFUS  │
+  │ Linux réels)        │                              │ (la pièce kit-E     │ NOMMÉ ; protocole    │
+  │                     │                              │ neuve, dérivée      │ LINUXONE-S390X-1)    │
+  │                     │                              │ nommée de kit-B)    │                      │
+  └─────────────────────┴──────────────────────────────┴─────────────────────┴──────────────────────┘
+
+LA FAMILLE ÉTENDUE DE LA CAMPAGNE (après cette livraison) : x86-64
+portable (kit-2) · x86-64 bac (kit-2 autotest) · x86-64 Colab (kit-C,
+Entrée 426) · x86-64 Kaggle (ce pack) · x86-64 Actions (ce pack) ·
+ARM64 téléphone Cortex (kit-B, Entrée 424 — FEAT_SHA256 rapport 4,36) ·
+ARM64 Ampere A1 (ce pack) · ARM64 Actions-serveur (ce pack) · ARM64
+Apple Silicon M1 (ce pack) · s390x Z (ce pack) — DIX siliciums, TROIS
+ISA, si le maître vit tous les packs.
+
+CE QUE CHAQUE PORTE DEMANDE (le geste d'inscription) :
+  — KAGGLE : un compte gratuit (kaggle.com, compte Google ou e-mail) ;
+     le notebook vit dans le navigateur ; GPU T4 ×2 ou P100 au choix
+     de session (quota hebdomadaire, ~30 h/semaine annoncées) ; le
+     dossier /kaggle/working persiste dans la version SAUVEGARDÉE du
+     notebook ;
+  — ACTIONS : le dépôt public alexisfrlopez-debug/triade EXISTE déjà —
+     le workflow y vit (.github/workflows/triade-siliciums-commodite.
+     yml) : déclenchement manuel (onglet Actions → Run workflow) ou au
+     push ; les runners standards des dépôts publics sont GRATUITS et
+     sans limite de minutes (docs.github.com) ; Windows arm64 vit
+     aussi en préversion publique gratuite (github.blog, 14/04/2025)
+     — REFUS NOMMÉ v1.0.0, le portage mingw attendrait une itération ;
+  — ORACLE : un compte sur oracle.com/cloud/free — UNE CARTE BANCAIRE
+     EST EXIGÉE (empreinte temporaire pour vérification d'identité,
+     aucun prélèvement, l'offre Always Free vit sans limite de durée) ;
+     l'allocation Ampere A1 : 1 500 heures-OCPU et 9 000 Go-heures PAR
+     MOIS (l'équivalent de 2 OCPU + 12 Go en continu — docs.oracle.com
+     « Always Free Resources », lu le 25/11/2026) ; 2 micro-instances
+     x86 AMD et 200 Go de disque en plus ;
+  — Z XPLORE : un compte gratuit sur ibmzxplore.influitive.com («
+     available globally at no cost ») ; les environnements Z réels
+     (z/OS et Linux) vivent par les défis ; SI le shell Linux du
+     maître y porte gcc, le kit y vit — SINON REFUS NOMMÉ (D122/D189 :
+     l'écran se renvoie tel quel, l'écart est un résultat).
+
+LES PORTES FERMÉES (nommées honnêtement — le labo les a visitées le
+25/11/2026, aucune ne se déguise en vivante) :
+  — LE MINICLOUD POWER d'Unicamp (openpower.ic.unicamp.br — le silicium
+    POWER8 gratuit d'autrefois) : FERMÉ. La page dit la fin du
+    partenariat IBM-Systems/Unicamp après 20 ans et la fermeture des
+    projets, Minicloud compris (plus de 3 000 utilisateurs l'avaient
+    vécu). AUCUN pack POWER ne vit dans cette livraison : le silicium
+    POWER n'a plus de porte gratuite vérifiable — nommé, jamais
+    maquillé ;
+  — LE « LINUXONE COMMUNITY CLOUD » historique (community.ibm.com/z-
+    and-linuxone-community-cloud) : la page est INACCESSIBLE (erreur)
+    ; le portail linuxone.cloud.ibm.com répond mais son contenu ne put
+    être vérifié (portail JavaScript). SI cette porte vit encore pour
+    le maître, le pack LINUXONE s'y vit pareil (il n'exige qu'un shell
+    Linux s390x avec gcc et python3) ;
+  — LE GPU COMME CIBLE DE MESURE : les GPU gratuits (T4 Kaggle, P100,
+    ZeroGPU des espaces Hugging Face, Lightning AI ~30-80 h GPU
+    gratuites par mois selon les pages consultées) sont CONSTATÉS au
+    témoin des packs Kaggle (nvidia-smi), JAMAIS mesurés : l'instrument
+    dudect mesure du CODE CPU ; la voie GPU demanderait un instrument
+    à pré-enregistrer — une itération future, SI le labo la veut ;
+  — LE RISC-V « SILICIUM » : aucune porte gratuite vérifiable au
+    silicium RISC-V réel (les boards PhysTech etc. ne sont pas des
+    environnements en ligne) ; la VOIE QEMU (l'émulation) prouverait
+    la mécanique, JAMAIS le silicium — la langue de la campagne le
+    nomme : l'émulation n'est pas une porte silicium. REFUSÉ, nommé ;
+  — GOOGLE CLOUD SHELL (gratuit, 50 h/semaine, e2-small x86) et
+    LIGHTNING AI (gratuit, T4) : des portes x86-64 de commodité de
+    plus, PAREILLES aux portes déjà vécues — le kit-C s'y vit pareil
+    (le geste Colab) ; aucune pièce dédiée : nommées ici pour la
+    carte, pas pour la livraison.
+
+LA HIÉRARCHIE (elle ne change pas, D206 dit toujours) : le banc
+contrôlé (portable, téléphone) demeure la référence ; les runs de
+commodité (Colab, Kaggle, Actions, Oracle, Z Xplore) sont des LECTURES
+— la question de l'Entrée 421 (les divergences suivent-elles LA
+MACHINE ou LE CODE ?) y trouve des points, jamais des verdicts. Le
+partage tls13-16 (divergente au portable ET au bac 5/7, silencieuse au
+Xeon Colab — Entrée 426) est LA question ouverte que ces nouveaux
+siliciums x86-64 (Kaggle, Actions) pèseront.
+
+LES SOURCES (consultées par le labo le 25/11/2026, la citation honnête
+nommée, rien d'inventé) :
+  — docs.github.com « GitHub-hosted runners reference » : « Use of the
+    standard GitHub-hosted runners is free and unlimited on public
+    repositories » ;
+  — github.blog (16/01/2025) : « Linux arm64 hosted runners now
+    available for free in public repositories » ;
+  — github.blog (14/04/2025) : « Windows arm64 hosted runners now
+    available in public preview » (gratuits dans les dépôts publics) ;
+  — github.blog (29/01/2026) : arm64 standard runners désormais
+    disponibles aussi dans les dépôts privés ;
+  — docs.oracle.com « Always Free Resources » : Ampere A1 — 1 500
+    heures-OCPU et 9 000 Go-heures par mois (« equivalent to 2 OCPUs
+    and 12 GB »), 2 × VM.Standard.E2.1.Micro, 200 Go de Block Volume ;
+    oracle.com/cloud/free : la carte bancaire exigée à l'inscription,
+    l'empreinte temporaire ;
+  — ibm.com/products/z/resources/zxplore : Z Xplore, « free, global,
+    challenge-based platform », « available globally at no cost », les
+    environnements z/OS et Linux (Python, USS) ;
+  — openpower.ic.unicamp.br : l'annonce de FERMETURE du Minicloud
+    (fin du partenariat IBM-Systems/Unicamp) ;
+  — kaggle.com : les notebooks gratuits, GPU T4 ×2/P100, TPU (la page
+    de session le dit à chaque run — le témoin du pack le recoupe).
+
+L'ORDRE CONSEILLÉ AU MAÎTRE (si la question tls13-16 pèse le plus) :
+  1. KAGGLE (le plus proche du geste Colab déjà vécu — un autre Xeon,
+     la même question, les mêmes scellées) ;
+  2. ACTIONS (le labo peut y vivre les runs LUI-MÊME : trois siliciums
+     réels sans geste du maître — ou le maître déclenche Run workflow
+     et lit les preuves au dépôt) ;
+  3. ORACLE (le vrai hardware différent DÉDIÉ : ARM64 serveur à vous
+     seuls) ;
+  4. LINUXONE (le plus loin : l'ISA mainframe — la famille étendue
+     porte l'instrument, pas la question scellée).
