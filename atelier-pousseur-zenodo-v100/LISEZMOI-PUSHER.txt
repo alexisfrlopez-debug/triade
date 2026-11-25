@@ -1,8 +1,24 @@
 LE POUSSEUR ZENODO 1-CLIC WINDOWS — TRIADE v0.31.0 + participation v1.2.0
+ÉDITION b (correctif du 26/11/2026 au soir)
 ================================================================================
 Le 26/11/2026. Dézipper ce dossier, double-cliquer PUSHER-ZENODO.bat, UN CLIC sur
 le bouton vert : le protocole v0.31.0 (les trois packs) et la participation v1.2.0
 sont poussés sur Zenodo, avec vérification md5 au bord après le geste.
+
+POURQUOI CETTE ÉDITION b (si tu as déjà la première : elle plantait à l'ouverture)
+--------------------------------------------------------------------------------
+La première édition (PUSHER-ZENODO-WINDOWS-v0310.zip) ouvrait une fenêtre vide avec
+des erreurs « Impossible de convertir un Label en Int32 » : en PowerShell, $l et $L
+sont UNE seule variable (noms insensibles à la casse) — l'étiquette de la fenêtre
+écrasait le paramètre largeur. Corrigé : l'étiquette est $etq, la largeur $Largeur.
+Le moteur reçoit aussi trois rappels de fidélité au patron v19 : le corps JSON part
+en octets UTF-8 (Windows PowerShell 5.1 l'eût envoyé Latin-1 : les accents des
+métadonnées seraient devenus mojibake au bord), Trouve-Entree gère la forme
+«carte» de entries, et la barre de progression est coupée (lenteur Invoke-RestMethod).
+SI TU AS DÉJÀ LA PREMIÈRE ÉDITION : remplace simplement gui_zenodo.ps1 et
+moteur_zenodo.ps1 dans ton dossier existant par ceux-ci (le lot et le jeton ne
+changent pas) — ou dézippe ce dossier complet à part et jette l'ancien.
+LE LOT, LE JETON ET LES CIBLES SONT INCHANGÉS — mêmes empreintes, mêmes records.
 
 LE CONTENU DU LOT
 --------------------------------------------------------------------------------
@@ -33,7 +49,7 @@ LA VÉRIFICATION DEMANDÉE : AUCUNE nouvelle version à produire depuis la v0.31
 --------------------------------------------------------------------------------
 Trois preuves relevées ce jour au bac :
 - le worklog s'arrête à l'Entrée 429 (26/11) — la préparation même de la v0.31.0 ;
-- la tête du dépôt GitHub == fe91130 (ls-remote vérifié ce jour) — rien après ;
+- la tête du dépôt GitHub == fe91130 puis decc147 (Entrée 430) — rien de plus ;
 - le coffre /livrables et /test sans rien de plus récent que le 25/11 soir (les
   synthèses signées de la campagne Actions, Entrée 428, sont AVANT la préparation,
   déjà portées à la description du record).

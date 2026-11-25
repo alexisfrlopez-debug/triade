@@ -6,6 +6,11 @@
 # Le jeton est lu du fichier (jamais affiche, jamais ecrit ailleurs).
 # Le kit developpeur v1.3.0, le corpus v2.1 et TRIADE-TRAIN v1.0.0 sont
 # INCHANGES — aucune version creuse (la doctrine), ils ne sont pas republies.
+# correctif b (26/11/2026) — fidelite au patron python, trois gestes :
+#   1. le corps JSON part en octets UTF-8 (PowerShell 5.1 l'eut envoye Latin-1 :
+#      les accents des metadonnees seraient devenus mojibake au bord) ;
+#   2. Trouve-Entree gere la forme «carte» de entries (le patron l'autorisait) ;
+#   3. $ProgressPreference coupe (Invoke-RestMethod glisse sinon sous 5.1).
 # usage : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1 [-DryRun]
 #         [-BrouillonProtocole <id>] [-BrouillonParticipation <id>]
 
@@ -21,6 +26,7 @@ param(
 $Api = 'https://zenodo.org/api'
 $DatePub = '2026-11-26'
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
+$ProgressPreference = 'SilentlyContinue'
 
 # ---------------------------------------------------------------- le journal
 function Ecrire([string]$Ligne) {
@@ -40,7 +46,7 @@ function Invoke-Zenodo {
         try {
             $p = @{ Uri = $Uri; Method = $Methode; TimeoutSec = 1800
                     Headers = @{ Authorization = "Bearer $Jeton" } }
-            if ($CorpsJson) { $p['ContentType'] = 'application/json';   $p['Body'] = $CorpsJson }
+            if ($CorpsJson) { $p['ContentType'] = 'application/json';   $p['Body'] = [System.Text.Encoding]::UTF8.GetBytes($CorpsJson) }
             if ($Fichier)   { $p['ContentType'] = 'application/octet-stream'; $p['InFile'] = $Fichier }
             $d = Invoke-RestMethod @p
             return @{ Code = 200; Donnees = $d }
@@ -76,7 +82,13 @@ function Trouve-Entree { param($Donnees, [string]$Nom)
         return @($Donnees) | Where-Object { $_.key -eq $Nom } | Select-Object -First 1
     }
     if ($Donnees.entries) {
-        return @($Donnees.entries) | Where-Object { $_.key -eq $Nom } | Select-Object -First 1
+        $es = $Donnees.entries
+        if ($es -is [System.Array]) {
+            return @($es) | Where-Object { $_.key -eq $Nom } | Select-Object -First 1
+        }
+        # la forme «carte» (nom -> objet) : acces direct, comme le patron python
+        $prop = $es.PSObject.Properties[$Nom]
+        if ($prop) { return $prop.Value }
     }
     return $null
 }

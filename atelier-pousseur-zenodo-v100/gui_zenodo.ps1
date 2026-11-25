@@ -2,6 +2,9 @@
 # Un clic sur le bouton vert lance moteur_zenodo.ps1 (le patron v19 : newversion ->
 # fichiers -> metadonnees -> PUBLISH -> verification md5) ; le journal est suivi
 # en direct ; le jeton est lu de token-zenodo.txt par le moteur (jamais affiche).
+# Correctif b (26/11/2026) : en PowerShell, $l et $L sont UNE seule variable (noms
+# insensibles a la casse) — l'etiquette est $etq, la largeur $Largeur, la hauteur
+# $Hauteur (l'edition a echouait : « convertir Label en Int32 » a chaque appel).
 param(
     [string]$LotDir    = (Join-Path $PSScriptRoot 'lot'),
     [string]$TokenFile = (Join-Path $PSScriptRoot 'token-zenodo.txt'),
@@ -25,18 +28,18 @@ $form.MaximizeBox = $false
 $form.BackColor = [System.Drawing.Color]::FromArgb(250, 250, 246)
 
 function Nouv-Etiquette {
-    param([string]$Texte, [int]$X, [int]$Y, [int]$L, [int]$H, [float]$Taille,
+    param([string]$Texte, [int]$X, [int]$Y, [int]$Largeur, [int]$Hauteur, [float]$Taille,
           [switch]$Gras, $Couleur)
-    $l = New-Object System.Windows.Forms.Label
-    $l.Text = $Texte
-    $l.Location = New-Object System.Drawing.Point($X, $Y)
-    $l.Size = New-Object System.Drawing.Size($L, $H)
+    $etq = New-Object System.Windows.Forms.Label
+    $etq.Text = $Texte
+    $etq.Location = New-Object System.Drawing.Point($X, $Y)
+    $etq.Size = New-Object System.Drawing.Size($Largeur, $Hauteur)
     $st = [System.Drawing.FontStyle]::Regular
     if ($Gras) { $st = [System.Drawing.FontStyle]::Bold }
-    $l.Font = New-Object System.Drawing.Font('Segoe UI', $Taille, $st)
-    $l.ForeColor = $Couleur
-    $form.Controls.Add($l)
-    return $l
+    $etq.Font = New-Object System.Drawing.Font('Segoe UI', $Taille, $st)
+    $etq.ForeColor = $Couleur
+    $form.Controls.Add($etq)
+    return $etq
 }
 
 [void](Nouv-Etiquette 'PUBLIER LES MISES À JOUR ZENODO — LE GESTE À UN CLIC' 15 12 920 26 14 -Gras $BleuNuit)
