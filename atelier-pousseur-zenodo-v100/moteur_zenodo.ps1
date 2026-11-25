@@ -11,6 +11,15 @@
 #      les accents des metadonnees seraient devenus mojibake au bord) ;
 #   2. Trouve-Entree gere la forme «carte» de entries (le patron l'autorisait) ;
 #   3. $ProgressPreference coupe (Invoke-RestMethod glisse sinon sous 5.1).
+# correctif c (26/11/2026, apres le retour 00:31) — le PUBLISH seul rendait 400
+#   aux DEUX flux (brouillon, fichiers et metadonnees acceptes) : le bord vit
+#   en UTC et publication_date = 2026-11-26 etait ENCORE DEMAIN a 23:31 UTC —
+#   la fenetre 23:00-01:00 (Paris) quand la date est le jour de Paris. Deux gestes :
+#   1. la garde UTC : Attendre-Passage-Utc attend minuit UTC du jour voulu avant
+#      le PUBLISH (au plus une heure ; les brouillons vivent, rien ne se perd) ;
+#   2. les mots exacts du bord : le corps JSON du refus vit dans
+#      ErrorDetails.Message sous 5.1 comme sous 7 — on le lit D ABORD (le 400
+#      de 00:31 n avait rendu que le message .NET faute de le lire).
 # usage : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1 [-DryRun]
 #         [-BrouillonProtocole <id>] [-BrouillonParticipation <id>]
 
@@ -38,6 +47,28 @@ function Convertir-Corps { param($Objet)
     ConvertTo-Json -InputObject $Objet -Depth 8
 }
 
+# les mots EXACTS du bord : sous 5.1 comme sous 7, Invoke-RestMethod pose le
+# corps JSON du refus dans ErrorDetails.Message (le flux brut est deja bu) —
+# on le lit D ABORD, sinon le flux, sinon le message .NET (le 400 du 26/11
+# 00:31 n avait rendu que le message .NET faute de le lire).
+function Corps-Erreur { param($Erreur)
+    $corps = ''
+    try { if ($Erreur.ErrorDetails -and $Erreur.ErrorDetails.Message) { $corps = [string]$Erreur.ErrorDetails.Message } } catch {}
+    if (-not $corps) {
+        try {
+            $rep = $Erreur.Exception.Response
+            if ($rep -and $rep.GetResponseStream) {
+                $sr = New-Object System.IO.StreamReader($rep.GetResponseStream())
+                $corps = $sr.ReadToEnd()
+            } elseif ($rep -and $rep.Content) {
+                $corps = $rep.Content.ReadAsStringAsync().Result
+            }
+        } catch {}
+    }
+    if (-not $corps) { $corps = [string]$Erreur.Exception.Message }
+    return $corps
+}
+
 # ------------------------------------------- l'appel au bord (reprises 5xx)
 function Invoke-Zenodo {
     param([string]$Methode, [string]$Uri, [string]$CorpsJson, [string]$Fichier,
@@ -53,16 +84,7 @@ function Invoke-Zenodo {
         } catch {
             $code = $null; $corps = ''
             try { $code = [int]$_.Exception.Response.StatusCode } catch {}
-            try {
-                $rep = $_.Exception.Response
-                if ($rep -and $rep.GetResponseStream) {
-                    $sr = New-Object System.IO.StreamReader($rep.GetResponseStream())
-                    $corps = $sr.ReadToEnd()
-                } elseif ($rep -and $rep.Content) {
-                    $corps = $rep.Content.ReadAsStringAsync().Result
-                }
-            } catch {}
-            if (-not $corps) { $corps = $_.Exception.Message }
+            $corps = Corps-Erreur $_
             if ($corps.Length -gt 600) { $corps = $corps.Substring(0, 600) }
             $rajouable = ((-not $code) -or ($code -in 500, 502, 503, 504))
             if ($rajouable -and $i -lt $Essais) {
@@ -74,6 +96,35 @@ function Invoke-Zenodo {
         }
     }
     return @{ Code = 0; Corps = 'essais épuisés' }
+}
+
+# ---------------------- la garde UTC : le bord vit la date UTC, pas la tienne
+# Decision pure (injectable en test) : $null = rien a faire (la date est deja
+# vECUE au bord) ; @{ Cible/Minutes } = attendre ; @{ Refus } = refus net.
+function Decision-Garde-Utc { param([string]$DatePub, [datetime]$MaintenantUtc)
+    if (-not $DatePub) { return $null }
+    $aujourdhui = $MaintenantUtc.ToString('yyyy-MM-dd')
+    if ($DatePub -le $aujourdhui) { return $null }   # hier ou aujourd hui au bord : passe
+    $cible = [datetime]::ParseExact($DatePub, 'yyyy-MM-dd', $null)
+    $cible = [datetime]::SpecifyKind($cible, [datetimekind]::Utc)
+    $ecart = ($cible - $MaintenantUtc).TotalSeconds
+    if ($ecart -gt 93600) {
+        return @{ Refus = ("publication_date {0} est a plus d un jour dans le futur UTC ({1}) — corrige la date." -f $DatePub, $aujourdhui) }
+    }
+    return @{ Cible = $cible; Minutes = [int][math]::Ceiling($ecart / 60.0); AujourdHui = $aujourdhui }
+}
+
+function Attendre-Passage-Utc { param([string]$DatePub, [datetime]$MaintenantUtc = [datetime]::UtcNow)
+    # la fenetre 23:00-01:00 (Paris) vue de l UTC : publication_date encore
+    # «demain» au bord — le PUBLISH rend 400. On attend minuit UTC du jour voulu
+    # (au plus une heure), puis le PUBLISH passe. Les brouillons vivent entre-temps.
+    $d = Decision-Garde-Utc -DatePub $DatePub -MaintenantUtc $MaintenantUtc
+    if (-not $d) { return }
+    if ($d.Refus) { throw "garde UTC : $($d.Refus)" }
+    Ecrire ("  [garde UTC] le bord vit encore le {0} : publication_date = {1} est DEMAIN au bord — un PUBLISH maintenant serait 400." -f $d.AujourdHui, $DatePub)
+    Ecrire ("  [garde UTC] attente de {0} min jusqu a 00:00 UTC ({1} a ton poste) — les brouillons vivent, rien ne se perd." -f $d.Minutes, $d.Cible.ToLocalTime().ToString('HH:mm'))
+    while (([datetime]::UtcNow - $d.Cible).TotalSeconds -lt 0) { Start-Sleep -Seconds 20 }
+    Ecrire "  [garde UTC] minuit UTC passe — le bord vit le $DatePub : le PUBLISH suit."
 }
 
 function Trouve-Entree { param($Donnees, [string]$Nom)
@@ -268,7 +319,10 @@ function Publier-Flux {
         }
     }
 
-    # 4. PUBLISH — aucun publish partiel : les fichiers sont déjà vérifiés
+    # 4. PUBLISH — la garde UTC d abord : le bord vit la date UTC et refuse une
+    #    publication_date encore «demain» (le 400 du 26/11 00:31, les deux flux).
+    #    Aucun publish partiel : les fichiers sont deja verifies et engages.
+    Attendre-Passage-Utc -DatePub $DatePub
     $r = Invoke-Zenodo -Methode Post -Uri $brouillon.links.publish
     if ($r.Code -notin 200, 201, 202) {
         Ecrire ('RESULTAT|{0}|ROUGE|PUBLISH-HTTP-{1}|—' -f $NomFlux, $r.Code)

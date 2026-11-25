@@ -18,6 +18,7 @@ Usage :
   ZENODO_TOKEN=$(cat /home/z/my-project/work/tokens/zenodo.txt) \
       python3 depot/scripts/vague19/publier_zenodo_v0310.py [protocole|participation] [--draft <id>]
 """
+import datetime
 import hashlib
 import json
 import os
@@ -74,6 +75,32 @@ def sha(p):
 
 def md5(p):
     return hashlib.md5(pathlib.Path(p).read_bytes()).hexdigest()
+
+
+def _utc_naive():
+    return datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+
+
+def garde_utc(date_pub, maintenant_utc=None):
+    """(correctif c, 26/11) Le bord vit la date UTC : une publication_date encore
+    «demain» au bord est refusée au PUBLISH (HTTP 400 — le retour du poste du
+    26/11, 00:31 Paris = 23:31 UTC la veille ; brouillon, fichiers et
+    métadonnées passaient, le PUBLISH seul était refusé). Renvoie None si la
+    date est déjà vécue au bord, sinon les minutes d'attente jusqu'à 00:00 UTC
+    ; SystemExit si la date est à plus d'un jour dans le futur UTC."""
+    if not date_pub:
+        return None
+    m = maintenant_utc if maintenant_utc is not None else _utc_naive()
+    aujourdhui = m.strftime("%Y-%m-%d")
+    if date_pub <= aujourdhui:
+        return None
+    cible = datetime.datetime.strptime(date_pub, "%Y-%m-%d")
+    ecart = (cible - m).total_seconds()
+    if ecart > 93600:
+        raise SystemExit(
+            f"garde UTC : publication_date {date_pub} est à plus d'un jour dans "
+            f"le futur UTC ({aujourdhui}) — corrige la date.")
+    return int(ecart // 60) + (1 if ecart % 60 else 0)
 
 
 def nouvelle_version(record):
@@ -219,6 +246,18 @@ def publier_flux(record, titre, version, description, fichiers, draft_id=None):
     }
     metadonnees(draft, meta)
     print("  [metadata] posées")
+    # la garde UTC (correctif c) : le bord vit la date UTC — une publication_date
+    # encore «demain» au bord rend 400 au PUBLISH. On attend 00:00 UTC (au plus
+    # une heure) ; les brouillons vivent, aucun publish partiel.
+    minutes = garde_utc(DATE_PUB)
+    if minutes:
+        print(f"  [garde UTC] le bord vit encore la veille : publication_date = "
+              f"{DATE_PUB} est DEMAIN au bord — attente de {minutes} min jusqu'à "
+              f"00:00 UTC (brouillons vivants, rien ne se perd).")
+        cible = datetime.datetime.strptime(DATE_PUB, "%Y-%m-%d")
+        while _utc_naive() < cible:
+            time.sleep(20)
+        print("  [garde UTC] minuit UTC passé — le PUBLISH suit.")
     pub = publier(draft)
     doi = pub.get("doi") or pub.get("pids", {}).get("doi", {}).get("identifier")
     rid = pub.get("id")

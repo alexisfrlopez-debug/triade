@@ -1,81 +1,94 @@
-LE POUSSEUR ZENODO 1-CLIC WINDOWS — TRIADE v0.31.0 + participation v1.2.0
-ÉDITION b (correctif du 26/11/2026 au soir)
+LE POUSSEUR ZENODO 1-CLIC WINDOWS — ÉDITION c (le correctif du PUBLISH-400)
 ================================================================================
-Le 26/11/2026. Dézipper ce dossier, double-cliquer PUSHER-ZENODO.bat, UN CLIC sur
-le bouton vert : le protocole v0.31.0 (les trois packs) et la participation v1.2.0
-sont poussés sur Zenodo, avec vérification md5 au bord après le geste.
+Le 26/11/2026 (la nuit). L'édition b a tourné à ton poste à 00:31 : TOUT a
+passé — brouillons 24545339 (protocole) et 24545356 (participation) créés, les
+quatre packs déposés, les métadonnées posées — SAUF LE PUBLISH : HTTP 400 aux
+deux flux, mot pour mot « Le serveur distant a retourné une erreur : (400)
+Demande incorrecte. »
 
-POURQUOI CETTE ÉDITION b (si tu as déjà la première : elle plantait à l'ouverture)
---------------------------------------------------------------------------------
-La première édition (PUSHER-ZENODO-WINDOWS-v0310.zip) ouvrait une fenêtre vide avec
-des erreurs « Impossible de convertir un Label en Int32 » : en PowerShell, $l et $L
-sont UNE seule variable (noms insensibles à la casse) — l'étiquette de la fenêtre
-écrasait le paramètre largeur. Corrigé : l'étiquette est $etq, la largeur $Largeur.
-Le moteur reçoit aussi trois rappels de fidélité au patron v19 : le corps JSON part
-en octets UTF-8 (Windows PowerShell 5.1 l'eût envoyé Latin-1 : les accents des
-métadonnées seraient devenus mojibake au bord), Trouve-Entree gère la forme
-«carte» de entries, et la barre de progression est coupée (lenteur Invoke-RestMethod).
-SI TU AS DÉJÀ LA PREMIÈRE ÉDITION : remplace simplement gui_zenodo.ps1 et
-moteur_zenodo.ps1 dans ton dossier existant par ceux-ci (le lot et le jeton ne
-changent pas) — ou dézippe ce dossier complet à part et jette l'ancien.
-LE LOT, LE JETON ET LES CIBLES SONT INCHANGÉS — mêmes empreintes, mêmes records.
+LA CAUSE NOMMÉE — LA FENÊTRE UTC : le bord vit la date UTC, et à 00:31 chez
+toi il était 23:31 UTC LE 25/11. publication_date = 2026-11-26 était donc
+ENCORE DEMAIN au bord : un PUBLISH portant une date future est refusé (400)
+tandis que brouillon, fichiers et métadonnées passent — exactement ce que ton
+journal montre. La fenêtre : de 23:00 à 01:00 heure de Paris quand la date
+porte le jour de Paris ; aucun des mints précédents ne l'a croisée (tous en
+journée). Dès 01:00 chez toi, le bord vit le 26/11 UTC : la même relance passe.
 
-LE CONTENU DU LOT
+LES DEUX GESTES DE L'ÉDITION c (moteur_zenodo.ps1 seul ; LE LOT, LE JETON, LES
+CIBLES ET LES MÉTADONNÉES : INCHANGÉS byte-byte — mêmes quatre packs au
+manifeste, mêmes records 24499428→v0.31.0 et 24499847→v1.2.0) :
+1. LA GARDE UTC — avant le PUBLISH, le moteur attend minuit UTC du jour voulu
+   (au plus une heure ; journal : « [garde UTC] attente de N min jusqu'à 00:00
+   UTC… puis le PUBLISH suit »). Les brouillons vivent pendant l'attente, rien
+   ne se perd, aucun publish partiel — les fichiers sont déjà vérifiés.
+2. LES MOTS EXACTS DU BORD — si un refus survient malgré tout, le moteur lit
+   maintenant le CORPS JSON de la réponse (ErrorDetails, lu sous 5.1 comme
+   sous 7) : la raison du refus s'écrira mot pour mot au journal, plus jamais
+   le seul message .NET.
+
+TON GESTE — DEUX VOIES, TOUTES DEUX SÛRES (le moteur est idempotent : brouillon
+repris, publié sauté) :
+- VOIE COURTE : après 01:00 (heure de Paris), RELANCE TON ÉDITION b TELLE
+  QUELLE — le bord vit le 26/11 UTC, le PUBLISH passe, les brouillons vivants
+  sont repris (l'envoi des 93 Mo se refait : quelques minutes).
+- VOIE c : remplace SEUL moteur_zenodo.ps1 dans le dossier déjà dézippé par
+  celui de cette édition — ou dézippe PUSHER-ZENODO-WINDOWS-v0310c.zip à part
+  et jette l'ancien — puis UN CLIC À N'IMPORTE QUELLE HEURE : le moteur attend
+  lui-même le passage UTC, publie, vérifie les md5.
+
+LE CONTENU DU LOT (inchangé de l'édition b)
 --------------------------------------------------------------------------------
 PUSHER-ZENODO.bat ......... le clic unique (double-cliquer, la fenêtre s'ouvre)
 gui_zenodo.ps1 ............ la fenêtre : table du lot aux empreintes, cibles, journal en direct
-moteur_zenodo.ps1 ......... le moteur (le patron v19 porté en PowerShell :
-                            newversion -> fichiers -> métadonnées -> PUBLISH -> md5)
+moteur_zenodo.ps1 ......... le moteur ÉDITION c (le patron v19 + la garde UTC + les mots du bord)
 token-zenodo.txt .......... TON JETON ZENODO — DONNÉE SENSIBLE : garde ce dossier privé
 PUSHER-JOURNAL.log ........ créé au premier clic : la preuve de chaque geste
 lot\TRIADE_soumission_v0.31.0.zip ....... 289 496 o   sha256 bdf0e1596703341ec8…
 lot\TRIADE_presentation_v0.31.0.zip ... 2 205 552 o  sha256 5ddbd9ff64e5d6f55…
-lot\TRIADE_complet_v0.31.0.zip ........ 28 859 998 o  sha256 fdd7a0875be33d3c6…
+lot\TRIADE_complet_v0.31.0.zip ........ 28 859 998 o sha256 fdd7a0875be33d3c6…
 lot\TRIADE_participer_v1.2.0.zip ..... 31 297 548 o  sha256 6581120881b256e02…
 lot\MANIFESTE-PACKS-v0.31.0.json ...... les quatre empreintes (vérifiées au chargement)
 lot\rapport_verification_v0.31.0.txt .. la preuve d'avant-publication
 
-CE QUE ÇA PUBLIE (et ce que ça ne touche pas)
+CE QUE ÇA PUBLIE (et ce que ça ne touche pas) — inchangé
 --------------------------------------------------------------------------------
 1. PROTOCOLE — record 24499428 (concept 10.5281/zenodo.24367343) : v0.26.0 → v0.31.0
    — les trois packs : soumission, présentation, complet.
 2. PARTICIPATION — record 24499847 (concept 10.5281/zenodo.24497299) : v1.1.0 → v1.2.0
    — le pack des cinq kits.
-KIT DÉVELOPPEUR v1.3.0, CORPUS v2.1, TRIADE-TRAIN v1.0.0 : INCHANGÉS — aucune version
-creuse (la doctrine), le lot ne les republie pas. Les métadonnées posées sont celles
-du script préparé et vérifié à l'Entrée 429 (le patron v19).
+KIT DÉVELOPPEUR v1.3.0, CORPUS v2.1, TRIADE-TRAIN v1.0.0 : INCHANGÉS — aucune
+version creuse (la doctrine), le lot ne les republie pas. Les métadonnées posées
+sont celles du script préparé et vérifié à l'Entrée 429 (le patron v19).
 
 LA VÉRIFICATION DEMANDÉE : AUCUNE nouvelle version à produire depuis la v0.31.0
 --------------------------------------------------------------------------------
-Trois preuves relevées ce jour au bac :
-- le worklog s'arrête à l'Entrée 429 (26/11) — la préparation même de la v0.31.0 ;
-- la tête du dépôt GitHub == fe91130 puis decc147 (Entrée 430) — rien de plus ;
-- le coffre /livrables et /test sans rien de plus récent que le 25/11 soir (les
-  synthèses signées de la campagne Actions, Entrée 428, sont AVANT la préparation,
-  déjà portées à la description du record).
-Le travail dont tu te souviens « après la 0.31 » (l'exécution P3 235/235, les campagnes
-témoign multi-siliciums, les synthèses signées) est ANTÉRIEUR à la préparation du 26/11
-et déjà consigné : NOMMÉ à la description de la v0.31.0 comme résultats post-génération
-du labo — la doctrine (le verbatim ne se réécrit pas) veut que la prochaine édition
-(v0.32+) les porte dans les pièces. Rien ne manque au lot.
+Trois preuves relevées au bac (26/11) : le worklog clos à l'Entrée 429 (la
+préparation même de la v0.31.0) ; la tête du dépôt GitHub == fe91130 puis les
+commits 430/431 (le pousseur et son correctif b — RIEN sur les pièces) ; le
+coffre /livrables et /test sans rien de plus récent que le 25/11 soir. Le
+travail « après la 0.31 » est ANTÉRIEUR à la préparation et déjà NOMMÉ à la
+description du record — la prochaine édition le portera dans les pièces.
 
 BON À SAVOIR
 --------------------------------------------------------------------------------
-- Idempotent : interrompu ? RELANCE (un clic) — le moteur reprend le brouillon vivant
-  et saute ce qui est déjà publié. Aucune publication partielle : le PUBLISH n'est
-  appelé qu'après la vérification des fichiers déposés.
-- Si Windows (SmartScreen) demande une confirmation à l'ouverture : « Informations
-  supplémentaires » puis « Exécuter quand même » — les .bat/.ps1 dézippés d'Internet
-  sont scrutés par défaut.
-- Si un 403 « unusual traffic » apparaît CHEZ TOI (improbable : c'est l'IP du bac qui
-  est bloquée, pas la tienne) : attends une heure ou change de réseau, puis relance.
-- Le bac veille : un retry automatique tourne toutes les 8 h — dès que le bord répond
-  au bac, il mint et enchaîne la chaîne complète. SI TU PUBLIES ICI AVANT LUI,
-  DIS-LE AU BAC : il supprimera le retry et enchaînera la chaîne complète
-  (livrables du coffre, supersédés à l'ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
-- En ligne de commande (sans fenêtre) :
-    powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1
-  et avec -DryRun pour tout vérifier sans toucher au bord. Reprise d'un brouillon
-  précis : -BrouillonProtocole <id> / -BrouillonParticipation <id>.
-- Durée : l'envoi des 62 Mo (protocole) + 31 Mo (participation) dépend de ta liaison
-  montante ; compte de une à quelques minutes. Le journal tourne en direct.
+- Idempotent : interrompu ? RELANCE (un clic) — le moteur reprend le brouillon
+  vivant et saute ce qui est déjà publié. Aucune publication partielle : le
+  PUBLISH n'est appelé qu'après la vérification des fichiers déposés, et
+  désormais qu'après la garde UTC.
+- Les brouillons 24545339 / 24545356 vivent au bord de la nuit : la relance les
+  REPREND (l'envoi se refait ; tu peux aussi nommer : -BrouillonProtocole
+  24545339, -BrouillonParticipation 24545356).
+- Si Windows (SmartScreen) demande une confirmation à l'ouverture :
+  « Informations supplémentaires » puis « Exécuter quand même ».
+- Si un 403 « unusual traffic » apparaît CHEZ TOI (improbable : c'est l'IP du
+  bac qui est bloquée, pas la tienne — vérifiée bloquée encore ce 26/11) :
+  attends une heure ou change de réseau, puis relance.
+- Le bac veille : le cron 548803 (toutes les 8 h) — dès que le bord répond au
+  bac il mint et enchaîne. SI TU PUBLIES ICI AVANT LUI, DIS-LE AU BAC : il
+  supprimera le retry et enchaînera la chaîne complète (livrables du coffre,
+  supersédés à l'ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
+- En ligne de commande : powershell -NoProfile -ExecutionPolicy Bypass -File
+  moteur_zenodo.ps1  (et -DryRun pour tout vérifier sans toucher au bord).
+- Durée : l'envoi des 93 Mo dépend de ta liaison montante ; si tu cliques dans
+  la fenêtre UTC, compte en plus l'attente jusqu'à 00:00 UTC (au plus une
+  heure, le journal la compte en direct).
