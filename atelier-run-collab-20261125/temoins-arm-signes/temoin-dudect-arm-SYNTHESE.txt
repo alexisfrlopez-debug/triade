@@ -1,0 +1,26 @@
+LA SYNTHÈSE DUDECT-ARM — édition TÉLÉPHONE, kit-B, v1.0.0
+================================================================
+La machine    : localhost · aarch64 · Python 3.13.13 · Linux localhost 6.6.127-android15-8-g1a029ed73e0c-ab15135097-4k #1 SMP PREEMPT Wed Apr  1 13:57:24 UTC 2026 aarch64
+Le silicium   : 8 cœur(s) · drapeau sha2 : PRÉSENT
+La pièce      : dudect_arm.c sha256 08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32
+Le binaire    : run/dudect_arm sha256 5cc679614eb87fb3bfab0f950e8820ea5d5813313ec79522c6d59d4b3bd714d4
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (clang -O2 -march=armv8-a+sha2 -o run/dudect_arm dudect_arm.c -lm — la source est la vérité)
+Le compilateur: clang version 21.1.8
+
+LES TROIS RUNS (l'ordre imposé du protocole) :
+  N=60 — code 0 (sortie-run-N60.txt, journal-dudect-arm-N60.csv, temoin-dudect-arm-N60.txt)
+  N=200 — code 0 (sortie-run-N200.txt, journal-dudect-arm-N200.csv, temoin-dudect-arm-N200.txt)
+  N=400 — code 0 (sortie-run-N400.txt, journal-dudect-arm-N400.csv, temoin-dudect-arm-N400.txt)
+
+LA LECTURE HONNÊTE (le protocole entier vit au LISEZMOI-dudect-arm.txt) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE machine — jamais « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument est CONTESTÉ — nommé) ;
+  — le rapport médian logiciel/materiel est LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pré-enregistrée n'existe pour ARM).
+
+LES RÉFÉRENCES : kit-A (constat-arm.py) pour l'identité complète ; le coffre /test pour le retour des preuves.
+
+signature du geste : à dater et à signer de la main du développeur.
+
+Fait le 25/11/2026
+Alexis Lopez

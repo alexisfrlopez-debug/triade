@@ -1,0 +1,23 @@
+=== dudect_collab - LE MESUREUR DE LA QUESTION (edition COLLAB x86-64, v1.0.0) ===
+[config] arch=x86-64  compteur=TSC (la grandeur est « ticks »)  N=200/classe  seuil |t|>5
+[config] echantillons ENTRELACES (le protocole COLLAB-X86-1, pre-enregistre AVANT tout run)
+[machine] drapeau hypervisor : present — le silicium est MUTUALISE : les voisins sont INCONNUS, le t mesurera AUSSI eux
+[machine] drapeaux constant_tsc=present nonstop_tsc=present — le TSC est invariant (constate aux drapeaux) ; sa FREQUENCE n'est pas lue : aucun « cycle » ne sera fabrique, seul le contrepoint CLOCK_MONOTONIC vit au csv
+[machine] drapeau sha_ni : ABSENT
+[perimetre] les pieces scellees v0.15.0 face a ce kit :
+[perimetre]   proxy-image.bin  MESUREE ICI (recoup: 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff)
+[perimetre]   loupe.exe 0.1.1  HORS PERIMETRE (sa vitrine est le kit-3) sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[perimetre]   moteur-shani.bin HORS PERIMETRE (son couloir est le kit-1 au poste reel) sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-x86-shani : PASSE (le noyau n'expose pas « sha_ni » — REFUS NOMME, la cible sera passee)
+[manifeste] image 69632 octets, 4 cible(s) scellee(s)
+[image] sha256 recoupe - la piece scellee
+[image] mapee a 0x140000000 (l'indice 0x140000000 tenu)
+[tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+[tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+[tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+[tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+[fips] tls13-02 SCELLEE (abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT (la piece scellee est le lecteur)
+[mutation K] condense DIVERGE — la table est BIEN lue par la piece (en memoire seule : le fichier sur disque est intouchable)
+[restauration] EXACT
+[fips] l'epreuve est vecue seule (l'option --fips) - code 0

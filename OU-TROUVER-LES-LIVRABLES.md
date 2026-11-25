@@ -433,3 +433,34 @@ Entrées 251-304) et au worklog (`worklog.md`, Tasks 158-211).*
 - **AU COFFRE** : `TRIADE_surveillant_CPU_v102.zip` au `/livrables` (14 pièces, sha256 c8a6633d7c39153bd9a7e298a646e47e23ad30991f9d09030058dd6b0062132a) + la section CORRECTIF v1.0.2 au `LISEZMOI-KITS-TERRAIN-2026-11-24.txt` ; les v1.0.0 et v1.0.1 demeurent pour la mémoire.
 - **AU DÉPÔT** : `atelier-surveillant-cpu-v102/` — les trois pièces corrigées, les deux ERRATUM (v1.0.1 verbatim + v1.0.2), EMPREINTES, les preuves du labo (autotest VERT 18 lignes avec le contrôle du collecteur, contrôle négatif « collecteur muet → REFUS exit 2 », épreuve du parseur, csv + témoin de l'autotest) ; worklog Entrée 420.
 - **LA LECTURE** : la collecte vit désormais dans un FIL DE FOND (un runspace séparé, une table synchronisée) — le fil de la fenêtre ne touche plus jamais WMI ; les marqueurs des boutons lisent le cache ; le csv porte autant de lignes que d'échantillons réellement collectés (cadence nommée si WMI est lent, jamais maquillée). Installation inchangée : au RACINE du kit terrain, à côté de COMMENCER-ICI.bat.
+
+## Mise à jour 421 (25/11/2026) — LE PREMIER RUN KIT-A TÉLÉPHONE REÇU : LE TROISIÈME SILICIUM NOMMÉ ; L'AVIS COLAB DONNÉ
+
+- **LE FAIT** : les deux pièces kit-A (constat-arm-journal.log 2 278 o sha256 3e809ca8… ; constat-arm-verdict.txt 1 274 o sha256 72f3670e…) déposées au /test — le geste de sortie Termux de la 419 a vécu. La moitié CONSTAT du protocole TELEPHONE-ARM-1 (415) est close : **Blackview XPLORE 1**, MT8791V/mt6877, Cortex-A55+A78, FEAT_SHA256 confirmée, les pièces x86-64 REFUSÉES PAR NATURE (empreintes citées), les lecteurs sha256/sha512 « abc » EXACTS.
+- **LA PORTÉE** : le téléphone est nommé troisième silicium de la campagne ; l'AVIS Colab donné à la demande du maître (discriminateur machine-ou-code, causes nommées — jamais une preuve, D206) ; worklog Entrée 421.
+
+## Mise à jour 422 (25/11/2026) — LE PASSAGE WINDOWS COMPLET : QUINZE GESTES TERRAIN, LA BATTERIE PAR LE COCKPIT, KIT-3 VERT SIGNÉ
+
+- **LE FAIT** : quinze pièces déposées au /livrables (kit TRIADE_kits_terrain_Windows_v0150/ du terrain) : la batterie dudect 60→200→400 PLUS un second N60 TOUS par le cockpit v1.0.2 (fenêtres de fréquence vivantes), kit-1 ÉCHEC NOMMÉ (SHA-NI absent, Ivy Bridge nommé), kit-3 VERT, la signature du maître sur cinq témoins ; les seize t recalculés au bac à l'écart 0,00.
+- **LA LECTURE** : les divergences du 24/11 NE SE RÉPLIQUENT PAS aux seconds passages (fenêtres, entrelacement du contexte) — la cause DVFS nommée à la 416 se renforce ; worklog Entrée 422.
+
+## Mise à jour 423 (25/11/2026) — LA VITRINE VÉCUE DEVANT TÉMOIN : KIT-3 VERT DE BOUT EN BOUT
+
+- **LE FAIT** : preuves-loupe/ au /test (temoin-vitrine.txt e3b28fea…, temoin-loupe.txt 5d1b89aa… inchangé byte-byte, signé à la main) — les deux fenêtres 0/0, aucun WER ni événement 1000 nommant loupe.exe ; la leçon de la 208 (« jamais une vitrine sans témoin ») est close ; worklog Entrée 423.
+
+## Mise à jour 424 (25/11/2026) — LE KIT-B VÉCU : LE TROISIÈME SILICIUM A SA BATTERIE, LE PROTOCOLE TÉLÉPHONE-ARM-1 EN ENTIÈRETÉ
+
+- **LE FAIT** : preuves.tar.gz (29 133 o, sha256 d3f2f7a0…) au /test — les DOUZE pièces du kit-B : trois runs N=60/200/400 codes 0, l'instrument PROUVÉ (eq-branchue t=193,68/66,40/150,00), AUCUNE divergence au seuil pour les deux SHA-256, FEAT_SHA256 mesurée (rapport médian 4,36), les douze t recalculés à l'écart 0,00 ; worklog Entrée 424.
+
+## Mise à jour 425 (25/11/2026) — LE KIT COLLAB LIVRÉ : LE DISCRIMINATEUR MACHINE-OU-CODE A SON INSTRUMENT
+
+- **LE FAIT** : TRIADE_kit_test_COLLAB_x86_v100.zip au /livrables (15 pièces, 71 688 o, sha256 025979f2…) — protocole COLLAB-X86-1 pré-enregistré, huit cibles dont les QUATRE scellées recoupées avant exécution, épreuve FIPS des trois lecteurs avec la mutation K ; vécu TROIS fois au bac (instrument prouvé 7/7, tls13-16 divergente 5/7 sous entrelacement, logiciel/SHA-NI = 4,02) ; les témoins ARM remis au maître pour signature ; worklog Entrée 425.
+
+## Mise à jour 426 (25/11/2026) — LE RUN COLLAB RECROUPÉ : LES QUATRE SCELLÉES SILENCIEUSES AU COLAB ; LES TÉMOINS ARM SIGNÉS
+
+- **LE FAIT** : trois dépôts au /livrables recoupés byte-byte — preuves-collab-20261125T114128Z.zip (90 166 o, sha256 2f384957…, le retour du run Colab), constat-arm-verdict.txt SIGNÉ (c8bf4740… = l'original 72f3670e… + la main du maître), temoin-dudect-arm-SYNTHESE.txt SIGNÉ (b19de03a… = l'original 63da9d06… + la main). La SUITE de la 425 close en ses deux branches.
+- **LE RECROUP** : l'image scellée == la pièce du dépôt (0782d7e2…), les 4 plages VERT contre le manifeste, la source == le kit (ae698c29…), l'épreuve FIPS vécue (mutation K divergente/restaurée), l'équation COLLAB-X86-1 respectée à la lettre (LOT 512/64/1, entrelacement, 60→200→400), **21/21 t de Welch recalculés VERT depuis les csv bruts**.
+- **LA RÉPONSE À LA QUESTION DE LA 421 (sur pièces, jamais un verdict)** : au Xeon Colab mutualisé (sha_ni absent), l'instrument est prouvé (eq-branchue +57,70/+127,61/+35,35) et **LES QUATRE SCELLÉES SILENCIEUSES aux trois N** — tls13-02 (−3,61/−0,91/−0,24) et tls13-13 (+0,05/+0,17/−0,73) divergent nulle part hors du portable : la lecture DVFS SE RENFORCE ; **tls13-16 SILENCIEUSE AU COLAB** (+0,95/−1,43/+0,97) alors qu'elle diverge au portable et au bac 5/7 : le partage se resserre sans se fermer (interaction microarchitecture×code ou bruit des voisins du bac) — la pièce est au labo, un partage, pas un verdict. Le constat : tls13-02 scellée = 866,47 ticks par appel sur CE silicium.
+- **AU DÉPÔT** : `atelier-run-collab-20261125/` — le zip byte-byte du coffre, l'extraction verbatim des douze pièces, les deux témoins ARM signés, `RAPPORT-RUN-COLLAB-20261125.txt`, `recoup_run_collab.py` (l'outil du recalcul) ; worklog Entrée 426.
+- **LA GARDE** : le /livrables lu sans y écrire ; aucun chiffre fabriqué (21/21 recomputé) ; les miroirs RESYNCHRONISÉS (le trois-bords refait — le bundle Drive datait du 24/11 20:21 : la session précédente avait poussé la 425 sans sync, nommé).
+- **SUITE** : la suite éventuelle au partage tls13-16 ; la publication Zenodo de v0.31.0 attend la commande du maître ; P4/P5/P6 au poste réel.

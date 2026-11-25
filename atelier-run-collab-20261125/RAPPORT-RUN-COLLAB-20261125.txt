@@ -1,0 +1,135 @@
+RAPPORT-RUN-COLLAB-20261125.txt — LE RUN COLLAB RECROUPÉ SUR PIÈCES ; LES TÉMOINS ARM SIGNÉS PARACHÈVÉS
+====================================================================================================
+(le labo, 25/11/2026 — la nouvelle du maître : « preuves arm signées et preuves du run collab
+déposées dans /livrables du drive »)
+
+LE FAIT. TROIS dépôts au /livrables du coffre, recoupés byte-byte par
+re-téléchargement :
+  — preuves-collab-20261125T114128Z.zip (90 166 octets, sha256
+    2f38495755f4db4bd89704ee55ea5478510ded165c1956d151861c50637d187e) —
+    LE RETOUR DU RUN COLLAB, le réceptacle composé par le scénario du
+    kit-C lui-même (la leçon Termux de l'Entrée 419 conduite jusqu'au
+    bout : le zip né tout seul, récupéré avant la fin de session) ;
+  — constat-arm-verdict.txt (1 306 o, sha256 c8bf4740…) — LE VERDICT
+    KIT-A SIGNÉ DE LA MAIN du maître ;
+  — temoin-dudect-arm-SYNTHESE.txt (1 830 o, sha256 b19de03a…) — LA
+    SYNTHÈSE KIT-B SIGNÉE DE LA MAIN du maître.
+La SUITE annoncée à l'Entrée 425 est vécue : le run Colab a pesé, les
+signatures ARM ont parachève le rite des Entrées 421/424.
+
+LA MACHINE (dite par les témoins, jamais par le labo) : 1488dab158ae ·
+x86_64 · Python 3.13.18 · Linux 6.6.159+ · Intel Xeon 2 cœurs @ 2,20 GHz
+· drapeaux hypervisor, constant_tsc, nonstop_tsc — LE SILICIUM DE
+COMMODITÉ SE NOMME (D206) : mutualisé, voisins inconnus, DVFS opaque
+sous l'hyperviseur ; sha_ni ABSENT (le noyau ne l'expose pas — un Xeon
+d'une génération sans SHA-NI, une AUTRE microarchitecture que le Xeon
+du bac qui l'expose).
+
+LE RECROUP DU LABO (aucun chiffre repris sans son témoin) :
+  1. L'IMAGE SCELLÉE EST LA PIÈCE DU COFFRE : proxy-image.bin du kit
+     (sha256 0782d7e20d0b…3a885dff) == l'exemplaire du dépôt
+     (scripts/kits_mesure_v150/kit_dudect/cibles/), recoupée byte-byte ;
+     les QUATRE plages (tls13-02/13/16/17) recoupées contre le
+     manifeste-c.txt du kit (4/4 VERT, tailles exactes 69632/448/2944/
+     192/192) ;
+  2. LA SOURCE EST LA SOURCE DU LABO : dudect_collab.c du kit (sha256
+     ae698c29…daca0d) == l'empreinte imprimée au journal du run (T0) et
+     à la synthèse ; le binaire fut RECOMPILÉ SUR PLACE (gcc 13.3.0
+     Ubuntu, -O2 -msha -mssse3 -msse4.1 — la source est la vérité) ;
+  3. L'ÉPREUVE FIPS DES TROIS LECTEURS VÉCUE AVANT MESURE : logiciel
+     (abc) EXACT ; SHA-NI PASSÉ (REFUS NOMMÉ, sha_ni absent du noyau) ;
+     LA PIÈCE SCELLÉE tls13-02(abc) EXACT ; L'ADVERSAIRE DE MUTATION K :
+     un octet de la table muté EN MÉMOIRE SEULE → le condensé DIVERGE,
+     la restauration le rend EXACT — la table est bien lue par la pièce
+     exécutée, le fichier sur disque intouchable ;
+  4. L'ÉQUATION PRÉ-ENREGISTRÉE COLLAB-X86-1 RESPECTÉE : l'ordre des
+     huit cibles, l'échauffement 100 paires, les LOT (512 pour
+     eq-constant/eq-branchue/tls13-16/tls13-17 ; 64 pour
+     sha256-logiciel/tls13-02 ; 1 pour tls13-13), les classes ENTRELACÉES
+     (le cœur du discriminateur), N=60 PUIS 200 PUIS 400 dans l'ordre,
+     RDTSC en « ticks », le seuil |t|>5 — tout constaté aux sorties et
+     aux csv (840/2 800/5 600 échantillons : l'équation exacte) ;
+  5. LE WELCH RECALCULÉ DU CSV BRUT : recoup_run_collab.py — 21/21 t
+     recoupés VERT à l'arrondi d'impression près (écart ≤ 0,005).
+
+LES TROIS RUNS (le verbatim des sorties, les csv aux preuves-collab/) :
+  N=60  : code 0 — eq-branchue DIVERGE (t=+57,70 : le faux patron
+          visible, l'instrument EST PROUVÉ) ; les SIX autres cibles
+          mesurées toutes |t| ≤ 3,61 ;
+  N=200 : code 0 — eq-branchue DIVERGE (t=+127,61) ; les autres
+          toutes |t| ≤ 1,43 ;
+  N=400 : code 0 — eq-branchue DIVERGE (t=+35,35) ; les autres toutes
+          |t| ≤ 2,21 ; LE CONSTAT : tls13-02 SCELLÉE = 866,47 ticks
+          par appel sur CE silicium (contre ≈ 824 au bac ; le logiciel
+          Colab ≈ 825-831 : la pièce du coffre demeure un peu plus
+          lente que la compression nue, l'écart se retrouve, consigné).
+
+LA RÉPONSE À LA QUESTION DE L'ENTRÉE 421 (les trois divergences |t|>5
+du 24/11 au portable — tls13-02 : −10,64 ; tls13-13 : +9,65 ; tls13-16 :
++9,19, classes SÉQUENTIELLES, lues comme DVFS à l'Entrée 416) — SUR
+PIÈCES, SUR CE RUN, classes ENTRELACÉES sur le Xeon mutualisé :
+  — tls13-02 : SILENCIEUSE aux trois N (−3,61/−0,91/−0,24) — la
+    divergence du portable ne se réplique NI au bac (7/7) NI au Colab ;
+  — tls13-13 : SILENCIEUSE aux trois N (+0,05/+0,17/−0,73) — même
+    partage ;
+  — tls13-16 : SILENCIEUSE aux trois N (+0,95/−1,43/+0,97) — elle
+    divergeait au portable (+9,19) ET au bac (5/7, t jusqu'à 29,48) ;
+    au Colab ELLE NE DIVERGE PAS ;
+  — tls13-17 (jamais divergente) : SILENCIEUSE (confirmée).
+LA LECTURE (un partage, pas un verdict — la hiérarchie demeure : le
+banc contrôlé référence, le Colab commodité qui se nomme) : pour
+tls13-02 et tls13-13, la divergence n'existe NULLE PART hors du
+portable aux classes séquentielles — la lecture DVFS de l'Entrée 416
+se RENFORCE. Pour tls13-16, le partage se resserre sans se fermer :
+divergente sur DEUX machines (le portable, le Xeon du bac 5/7),
+silencieuse sur le Xeon du Colab et 2/7 au bac — ni machine pure, ni
+code pur : une INTERACTION microarchitecture×code (ou le bruit des
+voisins du bac, où le contrôle positif lui-même a wobbé 2/7 à la
+425) reste la lecture la plus défendable ; LA PIÈCE EST AU LABO, la
+phrase de la 425 demeure : un partage, jamais un verdict.
+
+LES TÉMOINS ARM SIGNÉS (le rite des Entrées 421/424 parachève) :
+  — constat-arm-verdict.txt (kit-A) : l'original du /test (sha256
+    72f3670e… — l'empreinte consignée à la 421, recoupée) + LA
+    SIGNATURE APPEND-ONLY de la main du maître (« fait le 25/11/2026 /
+    Alexis Lopez ») — le préfixe byte-byte intact, la signature ne
+    touche rien ;
+  — temoin-dudect-arm-SYNTHESE.txt (kit-B) : l'original de
+    preuves.tar.gz du /test (sha256 63da9d06… — l'empreinte consignée
+    à la 425, recoupée) + LA MÊME SIGNATURE append-only ;
+  — le dépôt des scans au coffre tient le geste (la mention
+    « signature du geste : à dater et à signer de la main du
+    développeur » est SOLDÉE sur les deux pièces).
+
+LES ÉCARTS NOMMÉS (des résultats, D189) : (a) le LISEZMOI-du-kit-C
+demandait le retour au /test du coffre ; le maître l'a déposé au
+/livrables avec les témoins signés — commodité sans perte, les pièces
+sont là et recoupées, nommé ; (b) la synthèse collab N'EST PAS
+datée-signée (sa dernière ligne l'attend) — les témoins ARM le sont ;
+le rite inégal est nommé, le dépôt tient lieu (le précédent kit-B de
+la 424) ; (c) l'artefact d'affichage E249 (le « m » avalé : « achine] »
+trois fois à la console) vit AUSSI dans sortie-epreuve-fips.txt du
+run — le bac l'avait nommé à la 425, il se confirme au terrain, les
+fichiers sont sains à l'octet près ; (d) l'épreuve FIPS porte
+« N=200/classe » à son en-tête (l'option --fips vit seule, le défaut
+du binaire) — les runs ont vécu 60→200→400 conformes, nommé pour la
+lecture ; (e) le binaire run/dudect_collab (0ad46f8a…) ne peut être
+recoupé byte-byte au labo (gcc 13.3.0 de la session Colab) — son
+épreuve FIPS exacte ET l'identité de la source TIENNENT le recoup
+d'origine (le même raisonnement que la 424(e)) ; (f) le journal
+scenario-collab-journal.log vit verbatim au zip ET à l'extraction du
+dépôt (git add -f — le précédent preuves-shani de la 416) : le
+.gitignore *.log ne l'avalerait pas sinon.
+
+LA GARDE : les pièces scellées jamais modifiées sur disque
+(proxy-image.bin recoupée avant exécution, mutation K en mémoire seule
+restaurée) ; le /livrables LU sans y écrire (rien n'y bouge) ; le
+verbatim des témoins JAMAIS retouché (les copies au dépôt sont
+byte-byte, sha256 consignés) ; aucun secret affiché ; aucun chiffre
+fabriqué (tout sort des pièces, recomputé au bac : 21/21).
+
+SUITE : la commande éventuelle d'une suite à donner au partage tls13-16
+(un quatrième silicium au banc contrôlé, ou la lecture définitive du
+développeur) ; la publication Zenodo de v0.31.0 attend la commande du
+maître ; P4/P5/P6 au poste réel x86-64 ; la vague 27 au /instructions
+quand le maître la dépose.

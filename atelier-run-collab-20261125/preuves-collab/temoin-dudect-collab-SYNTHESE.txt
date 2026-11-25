@@ -1,0 +1,28 @@
+LA SYNTHÈSE DUDECT-COLLAB — édition COLLAB x86-64, kit-C, v1.0.0
+================================================================
+La machine    : 1488dab158ae · x86_64 · Python 3.13.18 · Linux 1488dab158ae 6.6.159+ #1 SMP Thu Oct 22 03:07:54 UTC 2026 x86_64
+Le silicium   : 2 cœur(s) · Intel(R) Xeon(R) CPU @ 2.20GHz · drapeaux : hypervisor, constant_tsc, nonstop_tsc
+La pièce      : dudect_collab.c sha256 ae698c2916c67fe25f7a5662fb932675a2e8c5023f838cafe5ad3a8d00daca0d
+Le scellé     : cibles/proxy-image.bin sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+Le binaire    : run/dudect_collab sha256 0ad46f8af179c0ef7878d484f9a5f43856c3da84e314009dbaaf47e9ec4571fa
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (gcc -O2 -msha -mssse3 -msse4.1 -o run/dudect_collab dudect_collab.c -lm — la source est la vérité)
+Le compilateur: gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+LA MUTUALISATION (D206 : la machine de commodité se nomme) : le silicium de la session est PARTAGÉ aux voisins inconnus — le t mesure AUSSI eux ; le DVFS sous l'hyperviseur est opaque ; la hiérarchie d'évidence est inchangée (le banc contrôlé demeure la référence) ; la session est ÉPHÉMÈRE — le zip de retour est déjà composé, RÉCUPÉREZ-LE AVANT LA FIN.
+
+LES TROIS RUNS (l'ordre imposé du protocole) :
+  N=60 — code 0 (sortie-run-N60.txt, journal-dudect-collab-N60.csv, temoin-dudect-collab-N60.txt)
+  N=200 — code 0 (sortie-run-N200.txt, journal-dudect-collab-N200.csv, temoin-dudect-collab-N200.txt)
+  N=400 — code 0 (sortie-run-N400.txt, journal-dudect-collab-N400.csv, temoin-dudect-collab-N400.txt)
+
+LA QUESTION DU KIT (l'avis de l'Entrée 421) : les trois divergences |t|>5 du 24/11 au portable (tls13-02 : −10,64 ; tls13-13 : +9,65 ; tls13-16 : +9,19 — lues comme DVFS à l'Entrée 416 aux classes SÉQUENTIELLES) SUIVENT-ELLES LA MACHINE OU LE CODE ? Ce run, classes ENTRELACÉES sur un silicium serveur mutualisé, dit ce qu'il dit — la lecture appartient au labo, sur pièces.
+
+LA LECTURE HONNÊTE (le protocole entier vit au LISEZMOI-dudect-collab.txt) :
+  — |t| > 5 = dépendance AU SEUIL sur CET échantillon, CETTE machine mutualisée, consignée telle quelle ;
+  — |t| <= 5 = aucune divergence au seuil sur cet échantillon — jamais « temps constant prouvé » ;
+  — le contrôle négatif eq-branchue DOIT diverger (sinon l'instrument est CONTESTÉ — nommé) ;
+  — le rapport médian logiciel/SHA-NI (s'il vit) est LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pré-enregistrée n'existe pour ce silicium de commodité).
+
+LES RÉFÉRENCES : le kit-2 du 24/11 (la machine n° 1, les mêmes cibles scellées aux classes séquentielles) ; le kit-B du téléphone (le troisième silicium, FEAT_SHA256) ; le coffre /test pour le retour des preuves.
+
+signature du geste : à dater et à signer de la main du développeur.

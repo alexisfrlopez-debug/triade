@@ -1,0 +1,58 @@
+=== dudect_collab - LE MESUREUR DE LA QUESTION (edition COLLAB x86-64, v1.0.0) ===
+[config] arch=x86-64  compteur=TSC (la grandeur est « ticks »)  N=400/classe  seuil |t|>5
+[config] echantillons ENTRELACES (le protocole COLLAB-X86-1, pre-enregistre AVANT tout run)
+[machine] drapeau hypervisor : present — le silicium est MUTUALISE : les voisins sont INCONNUS, le t mesurera AUSSI eux
+[machine] drapeaux constant_tsc=present nonstop_tsc=present — le TSC est invariant (constate aux drapeaux) ; sa FREQUENCE n'est pas lue : aucun « cycle » ne sera fabrique, seul le contrepoint CLOCK_MONOTONIC vit au csv
+[machine] drapeau sha_ni : ABSENT
+[perimetre] les pieces scellees v0.15.0 face a ce kit :
+[perimetre]   proxy-image.bin  MESUREE ICI (recoup: 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff)
+[perimetre]   loupe.exe 0.1.1  HORS PERIMETRE (sa vitrine est le kit-3) sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[perimetre]   moteur-shani.bin HORS PERIMETRE (son couloir est le kit-1 au poste reel) sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-x86-shani : PASSE (le noyau n'expose pas « sha_ni » — REFUS NOMME, la cible sera passee)
+[manifeste] image 69632 octets, 4 cible(s) scellee(s)
+[image] sha256 recoupe - la piece scellee
+[image] mapee a 0x140000000 (l'indice 0x140000000 tenu)
+[tls13-02] plage recoupee (RVA 49280, 448 o) - la piece scellee
+[tls13-13] plage recoupee (RVA 53504, 2944 o) - la piece scellee
+[tls13-16] plage recoupee (RVA 57088, 192 o) - la piece scellee
+[tls13-17] plage recoupee (RVA 57280, 192 o) - la piece scellee
+[fips] tls13-02 SCELLEE (abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT (la piece scellee est le lecteur)
+[mutation K] condense DIVERGE — la table est BIEN lue par la piece (en memoire seule : le fichier sur disque est intouchable)
+[restauration] EXACT
+[affinite] coeur 0 : posee
+[eq-constant] echauffement 100 paires, puis 400 iterations entrelacees (LOT=512 appels par echantillon)
+  egal       : moy 52356.0 ticks, med 51308 (par appel : 100.21)
+  divergent  : moy 50920.0 ticks, med 51704 (par appel : 100.98)
+  t de Welch = 0.69 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[eq-branchue] echauffement 100 paires, puis 400 iterations entrelacees (LOT=512 appels par echantillon)
+  egal       : moy 39475.0 ticks, med 39340 (par appel : 76.84)
+  divergent  : moy 8246.2 ticks, med 8518 (par appel : 16.64)
+  t de Welch = 35.35 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+[sha256-logiciel] echauffement 100 paires, puis 400 iterations entrelacees (LOT=64 appels par echantillon)
+  fixe       : moy 55143.4 ticks, med 53179 (par appel : 830.92)
+  aleatoire  : moy 55462.1 ticks, med 52777 (par appel : 824.64)
+  t de Welch = -0.46 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sha256-x86-shani] REFUS NOMME : le noyau n'expose pas « sha_ni » - la cible est PASSEE, le reste du run vit
+[tls13-02] echauffement 100 paires, puis 400 iterations entrelacees (LOT=64 appels par echantillon)
+  fixe       : moy 56529.8 ticks, med 55454 (par appel : 866.47)
+  aleatoire  : moy 56638.4 ticks, med 55508 (par appel : 867.31)
+  t de Welch = -0.24 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-13] echauffement 100 paires, puis 400 iterations entrelacees (LOT=1 appels par echantillon)
+  fixe       : moy 473731.4 ticks, med 460192 (par appel : 460192.00)
+  aleatoire  : moy 475902.4 ticks, med 459639 (par appel : 459639.00)
+  t de Welch = -0.73 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-16] echauffement 100 paires, puis 400 iterations entrelacees (LOT=512 appels par echantillon)
+  fixe       : moy 7669.8 ticks, med 7516 (par appel : 14.68)
+  aleatoire  : moy 7592.9 ticks, med 7526 (par appel : 14.70)
+  t de Welch = 0.97 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[tls13-17] echauffement 100 paires, puis 400 iterations entrelacees (LOT=512 appels par echantillon)
+  fixe       : moy 360207.7 ticks, med 353468 (par appel : 690.37)
+  aleatoire  : moy 357970.6 ticks, med 353675 (par appel : 690.77)
+  t de Welch = 2.21 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-collab-1795606888263721725.csv — joignez-le au temoin (la synthese le fait)
+[constat] tls13-02 SCELLEE : 866.47 ticks par appel — la piece du coffre, mesuree sur CE silicium (le labo la relira contre le kit-2 du 24/11)
+[verdict] LE RUN VECU : 7/8 cible(s) consignee(s), 1 refus nomme(s)
+[la question] les trois divergences |t|>5 du 24/11 au portable (tls13-02 : -10,64 ; tls13-13 : +9,65 ; tls13-16 : +9,19 — l'Entree 416 les lut comme DVFS aux classes SEQUENTIELLES) : CE run, sur CE silicium, classes ENTRELACEES, dit ce qu'il dit. La lecture appartient au labo, sur pieces — jamais avant le run, jamais sans pieces
+[verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, CETTE machine mutualisee, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon — jamais « temps constant prouve »
+[verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
