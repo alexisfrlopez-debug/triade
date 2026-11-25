@@ -1,0 +1,81 @@
+ERRATUM-SURVEILLANT-v101.txt — LE CORRECTIF v1.0.1 DU COCKPIT (25/11/2026, au soir)
+====================================================================================
+
+LE FAIT (le terrain a parle : la capture du developpeur, 25/11 au soir) :
+sur PORTABLE (i7-3667U, 4 coeurs logiques, Windows 10 19045), la v1.0.0
+affiche une ligne C4 FANTOME dans la grille des coeurs et rend a CHAQUE
+echantillon l'erreur :
+  Sort-Object : Impossible de convertir la valeur «_Total» en type
+  «System.Int32». Erreur: «Le format de la chaine d'entree est incorrect.»
+  (surveillant-cpu.ps1:138)
+
+LA CAUSE, nommee sur pieces : la classe WMI
+Win32_PerfFormattedData_Counters_ProcessorInformation expose TROIS familles
+d'instances — les coeurs (« 0,0 » a « 0,3 » : noeud,coeur), l'agregat
+global (« _Total ») ET L'AGREGAT PAR NOEUD NUMA (« 0,_Total »). La v1.0.0
+n'excluait que le nom exact « _Total » : l'instance « 0,_Total » entrait
+donc parmi les coeurs — la ligne C4 fantome sur une machine a 4 coeurs
+logiques — et le tri [int]($_.Nom.Split(',')[1]) recait « _Total » :
+l'erreur, a chaque echantillon (~1/s ; 500 ms pendant un run). Les
+colonnes freq_par_coeur_MHz et charge_par_coeur_pct du csv portaient
+CINQ valeurs au lieu de QUATRE.
+
+POURQUOI LE LABO NE L'A PAS VUE (l'ecart nomme, D189) : la mockerie
+d'autotest simulait les coeurs et « _Total », mais PAS « 0,_Total » — le
+jeu d'instances REEL de Windows n'etait pas reproduit (aucun Windows au
+labo). L'instrument ne s'etait pas conteste sur cette instance.
+
+LE CORRECTIF v1.0.1 (chirurgical, trois pieces) :
+  — surveillant-cpu.ps1 : ne vivent parmi les coeurs que les instances
+    « noeud,coeur » TOUTES NUMERIQUES (^[0-9]+,[0-9]+$) ; le tri se fait
+    par NOEUD PUIS COEUR (robuste aux machines multi-sockets) ; l'agregat
+    global est cherche sous ses deux noms (« _Total », a defaut
+    « *,_Total ») ;
+  — la mockerie d'autotest GAGNE l'instance « 0,_Total » : la condition du
+    terrain est desormais reproduite au labo ;
+  — l'autotest REFUSE tout agregat parmi les coeurs et tout ordre faux :
+    LE CONTROLE QUI AURAIT REFUSE LA v1.0.0 ;
+  — SURVEILLANT-CPU.bat : la ligne de version seule.
+
+L'ETAT DES EPREUVES (PowerShell 7.4.6 au labo, 25/11 au soir — les
+consoles vivent a preuves-labo/) :
+  — l'autotest v1.0.1 : VERT, exit 0 — 17 lignes, 2 fenetres, le temoin
+    et le csv composes, et le csv ne porte plus que QUATRE coeurs tries
+    (2500;2507;2514;2521) ;
+  — LE CONTROLE NEGATIF VECU : le filtre v1.0.1 seul reverté (tout le
+    reste demeure v1.0.1) — l'erreur du terrain reproduite A L'IDENTIQUE
+    (17 occurrences de « Cannot convert value "_Total" »), puis le REFUS
+    fail-closed : « un agregat _Total vit parmi les coeurs », exit 2.
+    L'instrument surveille desormais son propre bug.
+
+LA TEMPERATURE, nommee sans maquillage : la capture du terrain lit
+126,9 degC — la zone ACPI (MSAcpi_ThermalZoneTemperature) est FIGEE sur
+beaucoup de portables (400,05 K : la valeur classique du capteur muet) ;
+un silicium sain aurait longuement throttle bien avant. La valeur BRUTE
+reste journalisee au csv et au temoin (rien n'est cache) ; seul
+l'AFFICHAGE v1.0.1 la marque « (zone douteuse) » au-dela de 110 degC
+(surveillant-cpu-gui.ps1). La vraie temperature par coeur demande le
+pilote constructeur : HORS PERIMETRE du cockpit — le LISEZMOI-surveillant
+le disait deja (« la zone thermique que Windows expose — la seule lisible
+sans pilote »).
+
+LE GESTE TERRAIN (rien ne change par ailleurs) : extrayez v1.0.1 au RACINE
+du kit terrain (a cote de COMMENCER-ICI.bat, ou la v1.0.0 vit deja —
+remplacez les trois pieces). La capture du terrain montre aussi
+« kit-2 ABSENT » : le dossier vivait seul dans Downloads, isole du kit
+terrain — de la les boutons de run refusaient nommement. Les journaux csv
+deja ecrits en v1.0.0 restent VALIDES comme constat (lisez les QUATRE
+premieres valeurs des colonnes par coeur ; la cinquieme est l'agregat) ;
+les runs a venir vivront en v1.0.1.
+
+LES EMPREINTES (sha256 ; la table complete vit a EMPREINTES-SURVEILLANT.txt) :
+  SURVEILLANT-CPU.bat      v1.0.0 5091afc1… -> v1.0.1 4fbf38cd…
+  surveillant-cpu.ps1      v1.0.0 dc008251… -> v1.0.1 44bc97aa…
+  surveillant-cpu-gui.ps1  v1.0.0 11507001… -> v1.0.1 d249e0e4…
+  LISEZMOI-surveillant.txt INCHANGE (verbatim v1.0.0, 56eba64d…)
+
+LA REGLE QUI NE CHANGE PAS : l'ecart nomme est un RESULTAT (D189). Le bug
+du terrain a fait gagner l'instrument — la mockerie est desormais fidele
+a l'instance vue, et le controle refuse ce qu'il refusait de voir. Le
+temoin v1.0.0 du terrain reste une piece honnete : il CONSTATE ce que la
+machine exposait, y compris son cinquieme coeur fantome.

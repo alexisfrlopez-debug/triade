@@ -1,0 +1,3 @@
+[parseur] surveillant-cpu.ps1 : SANS erreur (734 lignes)
+[parseur] surveillant-cpu-gui.ps1 : SANS erreur (345 lignes)
+[parseur] les deux pieces v1.0.2 sont PROPRES au parseur

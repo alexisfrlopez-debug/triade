@@ -1,0 +1,8 @@
+=== AUTOTEST SURVEILLANT-CPU — la logique sans GUI (le labo, v1.0.2) ===
+le silicium simule : Intel(R) Test(TM) i7-SIMULE @ 2.00GHz (la mockerie du labo)
+la base            : 2501 MHz
+le journal         : /home/z/my-project/work/controle-negatif-v102/journal-surveillant-20261125-004256.csv
+[ecart nomme] LANCER-KIT-2-DUDECT.bat introuvable depuis ce dossier — normal au labo : le refus correspondant est MOQUE ci-dessous
+
+--- le controle du collecteur de fond (v1.0.2) ---
+[REFUS] AUTOTEST : le collecteur de fond n a pas cycle (0 cycles en 100 periodes de 100 ms)

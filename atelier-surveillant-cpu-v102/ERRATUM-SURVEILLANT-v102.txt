@@ -1,0 +1,98 @@
+ERRATUM-SURVEILLANT-v102.txt — LE CORRECTIF v1.0.2 DU COCKPIT (25/11/2026, la nuit)
+====================================================================================
+
+LE FAIT (le terrain a parle : la nouvelle du developpeur, 25/11 la nuit) :
+la fenetre du cockpit NE REPOND PLUS — « je n'arrive pas a cliquer sur les
+boutons (n'importe quel bouton, meme celui pour quitter ou la croix pour
+fermer la fenetre) ». Ni les runs, ni MARQUER, ni QUITTER, ni la croix :
+la fenetre est peinte mais MUETTE — Windows la marque « ne repond pas ».
+
+LA CAUSE, nommee sur pieces : le minuteur WinForms (System.Windows.Forms.
+Timer, une seconde) appelait a CHAQUE TIC les DEUX requetes WMI — le
+compteur Processor Information (Win32_PerfFormattedData_Counters_
+ProcessorInformation) puis la zone thermique ACPI (MSAcpi_ThermalZone_
+Temperature) — SUR LE FIL DE LA FENETRE. Sur le portable du terrain
+(i7-3667U, Windows 10), chacune de ces requetes prend plusieurs secondes :
+le fil de la fenetre etait occupe en continu, la pompe a messages ne
+traitait plus NI les clics NI la croix. La preuve indirecte vivait deja
+dans la capture v1.0.0 : les ~30 erreurs Sort-Object rendues pendant que
+le developpeur essayait de cliquer — une erreur par tic, des tics de
+plusieurs secondes. LA v1.0.1 a corrige l'erreur et le coeur fantome,
+PAS LE FIL : le gel vivait dans les deux versions (nomme ici).
+
+POURQUOI LE LABO NE L'A PAS VUE (l'ecart nomme, D189) : aucun Windows au
+labo — la mockerie d'autotest repond INSTANTANEMENT, un fil bloque n'a
+jamais ete vecu. L'autotest eprouvait la LOGIQUE (les echantillons, le
+csv, les fenetres), pas la VIVACITE de la fenetre. La cause etait
+pourtant dite a demi au LISEZMOI (« ~2 requetes WMI/seconde » : la charge
+etait nommee, leur LATENCE SUR LE FIL DE LA FENETRE ne l'etait pas).
+
+LE CORRECTIF v1.0.2 (chirurgical : LE COLLECTEUR DE FOND) :
+  — surveillant-cpu.ps1 porte la piece nouvelle : Demarrer-Collecteur /
+    Arreter-Collecteur — un RUNSPACE DE FOND collecte sans relache (300 ms
+    de respiration entre deux collectes) et depose chaque echantillon dans
+    une table synchronisee ($script:Sync.Dernier). Une seule logique : les
+    fonctions Get-Echantillon et Get-Temperature sont copiees TEXTO dans le
+    runspace (Texte-Fonction rend les accolades) — la mockerie d'autotest
+    traverse avec lui au labo, la vraie cmdlet vit au terrain ;
+  — surveillant-cpu-gui.ps1 : le TIC du minuteur ne touche PLUS JAMAIS WMI
+    — il lit le cache, journalise CHAQUE echantillon reellement collecte,
+    peint les lectures, la grille et la courbe. Les boutons vivent a tout
+    instant ; la croix aussi ;
+  — Mark-Evenement (le geste des boutons : MARQUER, DEBUT-RUN, FIN-RUN)
+    prefere LE CACHE : cliquer ne gele plus la fenetre non plus ;
+  — le statut NOMME ce que la collecte vit : « PREMIERE COLLECTE WMI EN
+    COURS » au demarrage, « COLLECTE EN ECHEC NOMMEE » si aucun echantillon
+    n'arrive pendant 30 s (fermez et renvoyez : l'ecart est nomme, D189) ;
+  — SURVEILLANT-CPU.bat : la ligne de version seule.
+
+CE QUI CHANGE POUR LE CSV (dit honnetement) : le journal porte desormais
+autant de lignes que d'echantillons REELLEMENT collectes (si WMI est lent,
+la cadence ralentit — nomme au statut, jamais maquille). Le FORMAT ne
+change pas : memes colonnes, memes temoins, memes fenetres de run. Les csv
+deja ecrits (v1.0.0, v1.0.1) restent VALIDES comme constat.
+
+L'ETAT DES EPREUVES (PowerShell 7.4.6 au labo, 25/11 la nuit — les
+consoles vivent a preuves-labo/) :
+  — le PARSEUR : les deux pieces SANS erreur (734 et 345 lignes) ;
+  — l'autotest v1.0.2 : VERT, exit 0 — 18 lignes (12 echantillons + 6
+    evenements, la 6e est LE MARQUEUR PAR LE CACHE), 2 fenetres, le temoin
+    et le csv composes ;
+  — LE CONTROLE DU COLLECTEUR (nouveau, vecu) : le collecteur demarre,
+    CYCLE (2 cycles en moins d'une seconde), son echantillon est PROPRE
+    (quatre coeurs numeriques, aucun agregat), le marqueur par le cache
+    JOURNALISE, l'arret vécu ;
+  — LE CONTROLE NEGATIF VECU : le collecteur seul rendu MUET (Cycles
+    jamais signale, tout le reste v1.0.2) — REFUS fail-closed : « le
+    collecteur de fond n a pas cycle (0 cycles en 100 periodes de 100 ms) »,
+    exit 2. L'instrument refuse son propre machinery mort ;
+  — LE CONTROLE SOURCE (au labo, sur pieces) : le bloc Add_Tick du GUI
+    porte la lecture du cache et NI Get-Echantillon NI Get-Temperature —
+    le gel est structurellement absent du fil de la fenetre ;
+  — CE QUE LE LABO NE PEUT PAS VIVRE (nomme, D189) : la GUI elle-meme —
+    aucun Windows au laboratoire. La VIVACITE de la fenetre sur le
+    silicium du terrain reste le temoin du terrain.
+
+LE GESTE TERRAIN (rien ne change par ailleurs) : remplacez les TROIS
+pieces (SURVEILLANT-CPU.bat, surveillant-cpu.ps1, surveillant-cpu-gui.ps1)
+par celles du paquet v1.0.2 — ou reextrayez tout au RACINE du kit terrain
+(a cote de COMMENCER-ICI.bat). Au demarrage, la premiere collecte WMI peut
+prendre quelques secondes (le statut le dit) : la fenetre reste vivante,
+les boutons et la croix repondent. Puis les lectures defilent.
+
+LES EMPREINTES (sha256 ; la table complete vit a EMPREINTES-SURVEILLANT.txt) :
+  SURVEILLANT-CPU.bat      v1.0.1 4fbf38cd… -> v1.0.2 6bbaddf4…
+  surveillant-cpu.ps1      v1.0.1 44bc97aa… -> v1.0.2 ef084545…
+  surveillant-cpu-gui.ps1  v1.0.1 d249e0e4… -> v1.0.2 3c6574bc…
+  LISEZMOI-surveillant.txt INCHANGE (verbatim v1.0.0, 56eba64d…)
+  ERRATUM-SURVEILLANT-v101.txt CONSERVE verbatim (la memoire du premier
+    correctif — le faux coeur « 0,_Total », la temperature « zone
+    douteuse » : tout demeure dit)
+
+LA REGLE QUI NE CHANGE PAS : l'ecart nomme est un RESULTAT (D189). Le gel
+du terrain a fait gagner l'instrument trois fois : le collecteur de fond
+(la cause du gel ne peut plus se produire — le fil de la fenetre ne touche
+plus WMI), le controle du collecteur (l'autotest REFUSE un collecteur
+mort), le controle source (le labo verifie sur pieces que le tic ne porte
+plus aucune requete WMI). La fenetre ne mesurera toujours AUCUN temps
+d'execution : elle constate, elle enveloppe, elle temoigne.

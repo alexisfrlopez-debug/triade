@@ -1,0 +1,19 @@
+# EMPREINTES-SURVEILLANT.txt — la table des pieces (v1.0.2, 25/11/2026 la nuit)
+# (posee par le labo a l'assemblage ; recoup : sha256sum -c ou CertUtil.
+#  Les pieces v1.0.1 : SURVEILLANT-CPU.bat 4fbf38cd…, surveillant-cpu.ps1
+#  44bc97aa…, surveillant-cpu-gui.ps1 d249e0e4… ; les pieces v1.0.0 :
+#  5091afc1…, dc008251…, 11507001… — l'histoire des correctifs vit a
+#  ERRATUM-SURVEILLANT-v101.txt et ERRATUM-SURVEILLANT-v102.txt.)
+6bbaddf4199ab5a80f6aea9a59725c192314656d0475769ac7fa5d989e835af0  SURVEILLANT-CPU.bat
+ef0845457f4b2e202e44c6e249fbe7e29ad518445e306e0f6eec610a3fc6dc10  surveillant-cpu.ps1
+3c6574bc739b239884a0271d9625403d7c0f4a661ed7138df51570cd6507b130  surveillant-cpu-gui.ps1
+56eba64d2b6e229ef3f99ec8a68e330a5c3b44cd1abe6b20d8f3dce9e5853f58  LISEZMOI-surveillant.txt
+946e1089ef0a571d005f6bd1b2400794402605a609a98c9886d4cc300fb519fd  ERRATUM-SURVEILLANT-v101.txt
+3224d1b99a5dbd5eb3bb7d2ab5b55f554f9179497363bbe51a12aa955d5d48f7  ERRATUM-SURVEILLANT-v102.txt
+e24d3256d692c78033c2e235d25771c62891d7e6cab9544bc6e27d21aaba5170  journal-surveillant-20261124-233648.csv
+c60acc3320e782b0ea96b8cc7a29d1863cf4de7589a54954e6a29ca747e7bf7d  temoin-surveillant-AUTOTEST.txt
+26110560b5eba59008e47810b4f1fd99926309aa71fb1fec9360cb0c7090b74c  preuves-labo/autotest-v102-VERT.txt
+63093a0d9342bc1b17b83d3205d6a53ef16a4432d136f8146933cda9f66b629e  preuves-labo/controle-negatif-v102-REFUS.txt
+c5751aaff2f07433cbc360435a919b76a31869759910a90ac0b62091bb3c90c7  preuves-labo/epreuve-parseur-v102.txt
+09d45dd61ae89a34849fd11b6b3fad8b5d8a2ab795ad082debe863686b4379d0  preuves-labo/journal-autotest-v102-20261125.csv
+0e0bdd2082fc7a78b54f5ec47adf8f3718352b6d1e80d338af0f97bfd8d9e05b  preuves-labo/temoin-autotest-v102-20261125.txt

@@ -1,0 +1,36 @@
+LE TEMOIN SURVEILLANT — le cockpit du poste de test (v1.0.1)
+====================================================================
+compose le    : 2026-11-25 00:02:25.584 (AUTOTEST)
+la machine    :   OS 5.10.134.13
+le silicium   : Intel(R) Test(TM) i7-SIMULE @ 2.00GHz (la mockerie du labo)
+la base       : 2501 MHz annonces (Win32_Processor.MaxClockSpeed)
+la source freq: ProcessorFrequency (MHz, le compteur de Windows)
+la source temp: MSAcpi_ThermalZoneTemperature (root/wmi)
+
+LE JOURNAL    : journal-surveillant-20261125-000225.csv
+  sha256      : 74a63bd2228a1c6bf361cf06540d36a6694b12d8030465e92b0e169209938d72
+les echantillons : 17
+LA FREQUENCE GLOBALE : min 2130  med 2460  max 2500 MHz
+LA CHARGE            : moy 43 %  max 100 %
+LA TEMPERATURE       : min 60.4  max 63.2 degC
+LA PREUVE DU TURBO   : 0/17 echantillons AU-DESSUS de la base (turbo vecu) ; 8 SOUS la base (economie/throttle)
+
+LES FENETRES DE RUN (la frequence VECUE pendant chaque test) :
+  N200 (0 s) : freq min 2130  med 2290  max 2400 MHz  temp 61.9-63.2 degC
+  N400 (0 s) : freq min 2460  med 2460  max 2460 MHz  temp 62.1-62.1 degC
+
+LES EVENEMENTS (l'horodatage exact de chaque geste) :
+  2026-11-25 00:02:25.505  DEBUT-RUN-N200
+  2026-11-25 00:02:25.533  FIN-RUN-N200 code=0
+  2026-11-25 00:02:25.550  MARQUE: observation manuelle du developpeur
+  2026-11-25 00:02:25.567  DEBUT-RUN-N400
+  2026-11-25 00:02:25.571  FIN-RUN-N400 code=2
+
+LA LECTURE HONNETE : ce temoin CONSTATE la frequence, la charge et
+la temperature VECUES pendant les runs — il ne mesure aucun temps
+d'execution (le mesureur du kit-2 fait cela, sur ses pieces scellees).
+La granularite du compteur Windows est ~1 s : le journal dessine le
+CADRE de frequence du run (le regime turbo/throttle), pas l'instant
+intra-run. Les divergences |t|>5 du kit-2 se lisent AVEC ce cadre.
+
+signature du geste : a dater et a signer de la main du developpeur.

@@ -1,0 +1,169 @@
+LA PREUVE DU CONTROLE NEGATIF — l'ancien comportement refuse (v1.0.1)
+======================================================================
+(25/11/2026 au soir, PowerShell 7.4.6 sous Linux au labo. LE DELTA : la
+ copie de la piece v1.0.1 OU SEUL LE FILTRE des agregats est reverté a
+ son etat v1.0.0 — if ($row.Name -eq '_Total') { continue } — tout le
+ reste demeure v1.0.1, mockerie et controle compris. La condition du
+ terrain est ainsi reproduite au labo : l'erreur Sort-Object vit 17 fois
+ (une par echantillon et evenement, comme au terrain), PUIS l'autotest
+ REFUSE fail-closed. Console verbatim, exit code a la derniere ligne.)
+=== AUTOTEST SURVEILLANT-CPU — la logique sans GUI (le labo, v1.0.1) ===
+le silicium simule : Intel(R) Test(TM) i7-SIMULE @ 2.00GHz (la mockerie du labo)
+la base            : 2501 MHz
+le journal         : /tmp/ctrl-negatif/journal-surveillant-20261125-000249.csv
+[ecart nomme] LANCER-KIT-2-DUDECT.bat introuvable depuis ce dossier — normal au labo : le refus correspondant est MOQUE ci-dessous
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+Sort-Object: /tmp/ctrl-negatif/surveillant-cpu.ps1:155
+Line |
+ 155 |          Sort-Object { [int]($_.Nom.Split(',')[0]) }, { [int]($_.Nom.S …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot convert value "_Total" to type "System.Int32". Error: "The input
+     | string '_Total' was not in a correct format."
+
+lignes journalisees : 17
+fenetres de run     : 2
+le temoin compose   : /tmp/ctrl-negatif/temoin-surveillant-20261125-000249.txt
+
+--- le temoin (integral) ---
+LE TEMOIN SURVEILLANT — le cockpit du poste de test (v1.0.1)
+====================================================================
+compose le    : 2026-11-25 00:02:49.357 (AUTOTEST)
+la machine    :   OS 5.10.134.13
+le silicium   : Intel(R) Test(TM) i7-SIMULE @ 2.00GHz (la mockerie du labo)
+la base       : 2501 MHz annonces (Win32_Processor.MaxClockSpeed)
+la source freq: ProcessorFrequency (MHz, le compteur de Windows)
+la source temp: MSAcpi_ThermalZoneTemperature (root/wmi)
+
+LE JOURNAL    : journal-surveillant-20261125-000249.csv
+  sha256      : fc910d62eaf9b1e523ebb9b2e3680b6a76e6c031b3d8dc185d24f8d236a3c102
+les echantillons : 17
+LA FREQUENCE GLOBALE : min 2130  med 2460  max 2500 MHz
+LA CHARGE            : moy 43 %  max 100 %
+LA TEMPERATURE       : min 60.4  max 63.2 degC
+LA PREUVE DU TURBO   : 0/17 echantillons AU-DESSUS de la base (turbo vecu) ; 8 SOUS la base (economie/throttle)
+
+LES FENETRES DE RUN (la frequence VECUE pendant chaque test) :
+  N200 (0 s) : freq min 2130  med 2290  max 2400 MHz  temp 61.9-63.2 degC
+  N400 (0 s) : freq min 2460  med 2460  max 2460 MHz  temp 62.1-62.1 degC
+
+LES EVENEMENTS (l'horodatage exact de chaque geste) :
+  2026-11-25 00:02:49.286  DEBUT-RUN-N200
+  2026-11-25 00:02:49.310  FIN-RUN-N200 code=0
+  2026-11-25 00:02:49.324  MARQUE: observation manuelle du developpeur
+  2026-11-25 00:02:49.339  DEBUT-RUN-N400
+  2026-11-25 00:02:49.343  FIN-RUN-N400 code=2
+
+LA LECTURE HONNETE : ce temoin CONSTATE la frequence, la charge et
+la temperature VECUES pendant les runs — il ne mesure aucun temps
+d'execution (le mesureur du kit-2 fait cela, sur ses pieces scellees).
+La granularite du compteur Windows est ~1 s : le journal dessine le
+CADRE de frequence du run (le regime turbo/throttle), pas l'instant
+intra-run. Les divergences |t|>5 du kit-2 se lisent AVEC ce cadre.
+
+signature du geste : a dater et a signer de la main du developpeur.
+
+--- les 6 premieres lignes du csv ---
+horodatage,evenement,freq_MHz,charge_pct,temp_C,freq_par_coeur_MHz,charge_par_coeur_pct
+2026-11-25 00:02:49.260,,2500,12,60.4,2500;2500;2507;2514;2521,12;12;17;22;27
+2026-11-25 00:02:49.274,,2490,14,60.7,2490;2490;2497;2504;2511,14;14;19;24;29
+2026-11-25 00:02:49.280,,2470,99,61.1,2470;2470;2477;2484;2491,99;99;100;100;100
+2026-11-25 00:02:49.286,DEBUT-RUN-N200,2380,100,61.9,2380;2380;2387;2394;2401,100;100;100;100;100
+2026-11-25 00:02:49.293,,2140,100,62.7,2140;2140;2147;2154;2161,100;100;100;100;100
+[REFUS] AUTOTEST : un agregat _Total vit parmi les coeurs
+  (le bug du terrain 25/11 — la ligne C4 fantome — corrige en v1.0.1)
+EXIT=2
