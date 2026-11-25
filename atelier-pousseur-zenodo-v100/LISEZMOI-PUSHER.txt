@@ -1,0 +1,65 @@
+LE POUSSEUR ZENODO 1-CLIC WINDOWS — TRIADE v0.31.0 + participation v1.2.0
+================================================================================
+Le 26/11/2026. Dézipper ce dossier, double-cliquer PUSHER-ZENODO.bat, UN CLIC sur
+le bouton vert : le protocole v0.31.0 (les trois packs) et la participation v1.2.0
+sont poussés sur Zenodo, avec vérification md5 au bord après le geste.
+
+LE CONTENU DU LOT
+--------------------------------------------------------------------------------
+PUSHER-ZENODO.bat ......... le clic unique (double-cliquer, la fenêtre s'ouvre)
+gui_zenodo.ps1 ............ la fenêtre : table du lot aux empreintes, cibles, journal en direct
+moteur_zenodo.ps1 ......... le moteur (le patron v19 porté en PowerShell :
+                            newversion -> fichiers -> métadonnées -> PUBLISH -> md5)
+token-zenodo.txt .......... TON JETON ZENODO — DONNÉE SENSIBLE : garde ce dossier privé
+PUSHER-JOURNAL.log ........ créé au premier clic : la preuve de chaque geste
+lot\TRIADE_soumission_v0.31.0.zip ....... 289 496 o   sha256 bdf0e1596703341ec8…
+lot\TRIADE_presentation_v0.31.0.zip ... 2 205 552 o  sha256 5ddbd9ff64e5d6f55…
+lot\TRIADE_complet_v0.31.0.zip ........ 28 859 998 o  sha256 fdd7a0875be33d3c6…
+lot\TRIADE_participer_v1.2.0.zip ..... 31 297 548 o  sha256 6581120881b256e02…
+lot\MANIFESTE-PACKS-v0.31.0.json ...... les quatre empreintes (vérifiées au chargement)
+lot\rapport_verification_v0.31.0.txt .. la preuve d'avant-publication
+
+CE QUE ÇA PUBLIE (et ce que ça ne touche pas)
+--------------------------------------------------------------------------------
+1. PROTOCOLE — record 24499428 (concept 10.5281/zenodo.24367343) : v0.26.0 → v0.31.0
+   — les trois packs : soumission, présentation, complet.
+2. PARTICIPATION — record 24499847 (concept 10.5281/zenodo.24497299) : v1.1.0 → v1.2.0
+   — le pack des cinq kits.
+KIT DÉVELOPPEUR v1.3.0, CORPUS v2.1, TRIADE-TRAIN v1.0.0 : INCHANGÉS — aucune version
+creuse (la doctrine), le lot ne les republie pas. Les métadonnées posées sont celles
+du script préparé et vérifié à l'Entrée 429 (le patron v19).
+
+LA VÉRIFICATION DEMANDÉE : AUCUNE nouvelle version à produire depuis la v0.31.0
+--------------------------------------------------------------------------------
+Trois preuves relevées ce jour au bac :
+- le worklog s'arrête à l'Entrée 429 (26/11) — la préparation même de la v0.31.0 ;
+- la tête du dépôt GitHub == fe91130 (ls-remote vérifié ce jour) — rien après ;
+- le coffre /livrables et /test sans rien de plus récent que le 25/11 soir (les
+  synthèses signées de la campagne Actions, Entrée 428, sont AVANT la préparation,
+  déjà portées à la description du record).
+Le travail dont tu te souviens « après la 0.31 » (l'exécution P3 235/235, les campagnes
+témoign multi-siliciums, les synthèses signées) est ANTÉRIEUR à la préparation du 26/11
+et déjà consigné : NOMMÉ à la description de la v0.31.0 comme résultats post-génération
+du labo — la doctrine (le verbatim ne se réécrit pas) veut que la prochaine édition
+(v0.32+) les porte dans les pièces. Rien ne manque au lot.
+
+BON À SAVOIR
+--------------------------------------------------------------------------------
+- Idempotent : interrompu ? RELANCE (un clic) — le moteur reprend le brouillon vivant
+  et saute ce qui est déjà publié. Aucune publication partielle : le PUBLISH n'est
+  appelé qu'après la vérification des fichiers déposés.
+- Si Windows (SmartScreen) demande une confirmation à l'ouverture : « Informations
+  supplémentaires » puis « Exécuter quand même » — les .bat/.ps1 dézippés d'Internet
+  sont scrutés par défaut.
+- Si un 403 « unusual traffic » apparaît CHEZ TOI (improbable : c'est l'IP du bac qui
+  est bloquée, pas la tienne) : attends une heure ou change de réseau, puis relance.
+- Le bac veille : un retry automatique tourne toutes les 8 h — dès que le bord répond
+  au bac, il mint et enchaîne la chaîne complète. SI TU PUBLIES ICI AVANT LUI,
+  DIS-LE AU BAC : il supprimera le retry et enchaînera la chaîne complète
+  (livrables du coffre, supersédés à l'ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
+- En ligne de commande (sans fenêtre) :
+    powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1
+  et avec -DryRun pour tout vérifier sans toucher au bord. Reprise d'un brouillon
+  précis : -BrouillonProtocole <id> / -BrouillonParticipation <id>.
+- Durée : l'envoi des 62 Mo (protocole) + 31 Mo (participation) dépend de ta liaison
+  montante ; compte de une à quelques minutes. Le journal tourne en direct.
