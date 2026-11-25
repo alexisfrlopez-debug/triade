@@ -15,10 +15,11 @@ hardware VRAIMENT différent :
                         Colab de l'Entrée 426) ;
   — ubuntu-24.04-arm   le serveur ARM64 (une famille serveur, une
                         AUTRE que le Cortex du téléphone) ;
-  — macos-14           L'APPLE SILICON M1 (les coeurs
-                        Firestorm/Icestorm — la première fois du
-                        silicium Apple dans la campagne : FEAT_SHA256
-                        possible, l'épreuve FIPS décidera).
+  — macos-latest       L'APPLE SILICON (la famille M du runner
+                        courant — la première fois du silicium Apple
+                        dans la campagne : le sysctl du témoin nomme la
+                        puce EXACTE, FEAT_SHA256 possible, l'épreuve FIPS
+                        décidera).
 LA QUESTION de l'Entrée 421 y trouve son discriminateur ÉTENDU : le
 kit-C (la question machine-ou-code, les QUATRE SCELLÉES) sur un
 QUATRIÈME x86-64 ; l'équation du kit-B sur un QUATRIÈME ARM64 ; et le

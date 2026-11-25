@@ -3,7 +3,7 @@
  * La commande (le developpeur, 25/11/2026) : « si tu as des idees pour des
  * siliciums supplementaires du meme type que google collab (environnement
  * gratuit en ligne, mais hardware different) fais moi les packs de test
- * correspondants ». LE SILICIUM APPLE (M1 : coeurs Firestorm/Icestorm,
+ * correspondants ». LE SILICIUM APPLE (la famille M,
  * ARM64, FEAT_SHA256) vit GRATUITEMENT en ligne sur les runners macOS des
  * GitHub Actions (depot public) : UNE AUTRE famille que le Cortex du
  * telephone, UNE AUTRE que le Neoverse des serveurs ARM, UNE AUTRE que les

@@ -15,9 +15,10 @@ minutes — avec un hardware VRAIMENT différent par job :
                         kit-B téléphone sur un silicium serveur : la
                         famille ARM64-SERVEUR, une AUTRE que le
                         Cortex-A55/A78 du téléphone) ;
-  — macos-14           l'APPLE SILICON M1 (le kit-G, la pièce NEUVE :
-                        les coeurs Firestorm/Icestorm — la PREMIÈRE
-                        fois du silicium Apple dans la campagne).
+  — macos-latest       l'APPLE SILICON (le kit-G, la pièce NEUVE :
+                        la famille M du runner courant — la PREMIÈRE
+                        fois du silicium Apple dans la campagne ; le
+                        sysctl du témoin nomme la puce EXACTE).
 
 L'ÉTAT DU KIT : NOUVEAU, PRÉPARÉ AU LABORATOIRE LE 25/11/2026, HORS DU
 PÉRIMÈTRE SCELLÉ v0.15.0. DEUX PIÈCES SONT BYTE-POUR-BYTE les pièces

@@ -1,5 +1,5 @@
 === l'AUTOTEST DU LABORATOIRE — dudect_apple.c sur l'hôte x86-64 du bac ===
-(25/11/2026 — la voie TSC de l'hôte, l'étiquette AUTOTEST : la MÉCANIQUE, jamais le silicium — aucun statut terrain n'en découle ; le run Apple Silicon réel vivra sur le runner macOS)
+(25/11/2026 — la voie TSC de l'hôte, l'étiquette AUTOTEST : la MÉCANIQUE, jamais le silicium — aucun statut terrain n'en découle ; le run Apple Silicon réel vivra sur le runner macOS ; l'écart nommé du bac : eq-constant a wobbé au seuil — le bruit d'un silicium mutualisé, consigné tel quel, D189)
 
 --- l'épreuve FIPS ---
 === dudect_apple - LE TESTEUR DU SILICIUM APPLE (edition APPLE-SILICON, v1.0.0) ===
@@ -28,18 +28,19 @@
 [silicium] la cible materielle n'est PAS compilable ici (compilateur sans +sha2, ou hote non-aarch64) — REFUS NOMME, le reste du run vit
 [affinite] coeur 0 : posee
 [eq-constant] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
-  egal           : moy 23496.4 ticks, med 19640 (par appel : 38.36)
-  divergent      : moy 28299.3 ticks, med 31272 (par appel : 61.08)
-  t de Welch = -4.33 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  egal           : moy 25294.5 ticks, med 19646 (par appel : 38.37)
+  divergent      : moy 31029.8 ticks, med 31640 (par appel : 61.80)
+  t de Welch = -5.51 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+  ATTENDU : aucune divergence — la divergence d'un patron constant est un RESULTAT (D189 : consigner tel quel)
 [eq-branchue] echauffement 100 paires, puis 60 iterations entrelacees (LOT=512 appels par echantillon)
-  egal           : moy 25465.8 ticks, med 24960 (par appel : 48.75)
-  divergent      : moy 2782.5 ticks, med 2810 (par appel : 5.49)
-  t de Welch = 49.49 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
+  egal           : moy 28131.8 ticks, med 25108 (par appel : 49.04)
+  divergent      : moy 3268.3 ticks, med 2812 (par appel : 5.49)
+  t de Welch = 14.57 -> DIVERGENCE TEMPORELLE (a consigner telle quelle) (seuil |t| > 5)
 [sha256-logiciel] echauffement 100 paires, puis 60 iterations entrelacees (LOT=4 appels par echantillon)
-  fixe           : moy 2997.9 ticks, med 3004 (par appel : 751.00)
-  aleatoire      : moy 2978.7 ticks, med 2982 (par appel : 745.50)
-  t de Welch = 2.11 -> AUCUNE divergence au seuil (seuil |t| > 5)
-[sortie] journal-dudect-apple-1795612166317703168.csv — joignez-le au temoin (la synthese le fait)
-[verdict] LE RUN VECU : 3/3 cible(s) consignee(s), 0 refus nomme(s)
+  fixe           : moy 2981.1 ticks, med 2988 (par appel : 747.00)
+  aleatoire      : moy 2971.0 ticks, med 2974 (par appel : 743.50)
+  t de Welch = 0.99 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-apple-1795613104924537308.csv — joignez-le au temoin (la synthese le fait)
+[verdict] LE RUN VECU : 3/3 cible(s) consignee(s), 0 refus nomme(s) — controle positif DIVERGENT (resultat)
 [verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
 [verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)

@@ -1,6 +1,6 @@
-EMPREINTES DES OUTILS DU BAC (l'autotest du kit-G, 25/11/2026)
+EMPREINTES DES OUTILS DU BAC (l'autotest du kit-G, 25/11/2026 — les octets CORRIGÉS)
 hôte       : Linux c-6b06c6eb-140d72b5-d5050f68549e 5.10.134-013.15.kangaroo.al8.x86_64 #1 SMP Thu Jul 30 12:54:59 UTC 2026 x86_64 GNU/Linux
 compilateur: gcc (Debian 14.2.0-19) 14.2.0
 commande   : gcc -O2 -o run_dudect_apple dudect_apple.c -lm
-date       : 2026-11-25T13:09:26Z
-piece      : dudect_apple.c sha256 34402a5349684c902e5383b6eaee15141b612fe9462982a3d31bd8cf91c9937b
+date       : 2026-11-25T13:25:04Z
+piece      : dudect_apple.c sha256 6af573f6f30632e5a7538a2ad8f002b70e1bf3b0a4926b01652a4a962999a08b

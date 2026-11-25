@@ -11,7 +11,7 @@
 #   — ubuntu-24.04-arm   le serveur ARM64 (le kit-D, la pièce kit-B
 #                         téléphone byte-pour-byte : l'équation
 #                         TELEPHONE-ARM-1 sur un silicium serveur) ;
-#   — macos-14           l'APPLE SILICON M1 (le kit-G, la pièce neuve :
+#   — macos-latest       l'APPLE SILICON (le kit-G, la pièce neuve :
 #                         le protocole APPLE-ARM-1, FEAT_SHA256 possible
 #                         — l'épreuve FIPS décidera, fail-closed).
 #
@@ -82,8 +82,8 @@ jobs:
           path: atelier-siliciums-commodite-v100/preuves-actions/
 
   kit-G-apple-silicon:
-    name: "kit-G — l'Apple Silicon M1 (la première fois du silicium Apple)"
-    runs-on: macos-14
+    name: "kit-G — l'Apple Silicon (macos-latest, la famille M)"
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: "Le kit-G vit (AUTOTEST-DISTANT)"

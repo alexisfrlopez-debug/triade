@@ -56,8 +56,8 @@ DEST = "preuves-dudect-apple"
 SOURCE = "dudect_apple.c"
 
 # ---- LE SCELLE : le sha256 de la pièce dudect_apple.c livrée par ce kit ----
-SCELLE_DUDECT_APPLE_C = ("34402a5349684c902e5383b6eaee151"
-                         "41b612fe9462982a3d31bd8cf91c9937b")
+SCELLE_DUDECT_APPLE_C = ("6af573f6f30632e5a7538a2ad8f002b7"
+                         "0e1bf3b0a4926b01652a4a962999a08b")
 
 # ---- le FIPS 180-4 « abc » (le lecteur Python du scénario) ----
 ABC_SHA256 = ("ba7816bf8f01cfea414140de5dae2223"

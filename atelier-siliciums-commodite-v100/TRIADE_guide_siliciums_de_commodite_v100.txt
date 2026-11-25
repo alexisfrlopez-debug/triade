@@ -49,7 +49,7 @@ portable (kit-2) · x86-64 bac (kit-2 autotest) · x86-64 Colab (kit-C,
 Entrée 426) · x86-64 Kaggle (ce pack) · x86-64 Actions (ce pack) ·
 ARM64 téléphone Cortex (kit-B, Entrée 424 — FEAT_SHA256 rapport 4,36) ·
 ARM64 Ampere A1 (ce pack) · ARM64 Actions-serveur (ce pack) · ARM64
-Apple Silicon M1 (ce pack) · s390x Z (ce pack) — DIX siliciums, TROIS
+Apple Silicon famille M (ce pack) · s390x Z (ce pack) — DIX siliciums, TROIS
 ISA, si le maître vit tous les packs.
 
 CE QUE CHAQUE PORTE DEMANDE (le geste d'inscription) :
