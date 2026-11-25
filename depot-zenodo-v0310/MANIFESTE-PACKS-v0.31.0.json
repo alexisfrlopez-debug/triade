@@ -1,0 +1,22 @@
+{
+  "TRIADE_complet_v0.31.0.zip": {
+    "bytes": 28859998,
+    "sha256": "fdd7a0875be33d3c6a10a3d065d049683831891b2a0a08198fa8c6cb7d4e5620",
+    "md5": "311782bc1aa1febf5844b7b2b99f12a6"
+  },
+  "TRIADE_presentation_v0.31.0.zip": {
+    "bytes": 2205552,
+    "sha256": "5ddbd9ff64e5d6f555de1d135c97f33eaf43c21619e8edf325bb2cece75702f6",
+    "md5": "e0b3c93f66d9b7fe39e2f1406f897be9"
+  },
+  "TRIADE_soumission_v0.31.0.zip": {
+    "bytes": 289496,
+    "sha256": "bdf0e1596703341ec8144bada0be9e38cca092722ef7cb683548ffeda39e1fd9",
+    "md5": "d4154b210d2f5395991247b006710b59"
+  },
+  "TRIADE_participer_v1.2.0.zip": {
+    "bytes": 31297548,
+    "sha256": "6581120881b256e02792cad469bd5ab31a00ba76368c12230026164568c57ce8",
+    "md5": "b3ee6cc13e15789b0088392d962d7912"
+  }
+}
