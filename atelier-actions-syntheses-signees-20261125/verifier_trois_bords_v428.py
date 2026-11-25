@@ -18,7 +18,7 @@ ATELIER = DEPOT + "/atelier-actions-syntheses-signees-20261125"
 SILICIUMS = DEPOT + "/atelier-siliciums-commodite-v100/preuves-actions"
 MIRROR_FOLDER = "1ZzvJjLlGyVW4YKnXWdAgZO0IjFETKOZY"   # TRIADE-sauvegarde-git
 COFFRE_ROOT = "105MmhMGsVEiDICOv8uM8CVjcBm6pcdYp"
-LIVRABLES = "1wF0p0g-OPdnL7fgurNsJb6D1rXhtyHqIZ"
+LIVRABLES = "1wF0p0g-OPdnL7fgnNsJb6D1rXhtyHqIZ"   # (l'id exact du v426 — la typo fgur corrigée)
 INSTRUCTIONS = "1uL8fMoXDW9tSsG0L2RoniBYKIjJTLVI6"
 DEPOT_CAMPAGNE = "preuves-actions-campagne-20261125"    # au /livrables
 
@@ -54,6 +54,7 @@ H = {"Authorization": "Bearer " + sa_token()}
 
 def list_folder(folder):
     import json
+    import time
     out = {}
     token = None
     while True:
@@ -63,8 +64,16 @@ def list_folder(folder):
         if token:
             params["pageToken"] = token
         url = "https://www.googleapis.com/drive/v3/files?" + urllib.parse.urlencode(params)
-        r = urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=60)
-        obj = json.load(r)
+        # reprise idempotente aux 404/500 passagers du bord Drive (3 essais)
+        for essai in range(3):
+            try:
+                r = urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=60)
+                obj = json.load(r)
+                break
+            except urllib.error.HTTPError as e:
+                if essai == 2:
+                    raise
+                time.sleep(3 * (essai + 1))
         for f in obj.get("files", []):
             out[f["name"]] = f
         token = obj.get("nextPageToken")
@@ -146,8 +155,10 @@ camp = liv.get(DEPOT_CAMPAGNE)
 check("coffre /livrables preuves-actions-campagne-20261125 (dossier)",
       bool(camp) and camp["mimeType"] == "application/vnd.google-apps.folder")
 if camp:
-    pa = list_folder(camp["id"])            # preuves-actions
-    sous = {f["name"]: f["id"] for f in pa.values()
+    pa = list_folder(camp["id"])            # preuves-actions (le sous-dossier unique)
+    pa_id = [f["id"] for f in pa.values()
+             if f["mimeType"] == "application/vnd.google-apps.folder"][0]
+    sous = {f["name"]: f["id"] for f in list_folder(pa_id).values()
             if f["mimeType"] == "application/vnd.google-apps.folder"}
     n_check, n_signees = 0, 0
     for kit in ["kit-C-x86-serveur", "kit-D-arm64-serveur",
