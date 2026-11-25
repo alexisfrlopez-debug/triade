@@ -1,0 +1,31 @@
+LE TÉMOIN DUDECT-ARM — N60 (édition TÉLÉPHONE, kit-B, v1.0.0)
+================================================================
+L'horodatage  : 2026-11-25T13:36:32
+La pièce      : dudect_arm.c sha256 08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32
+Le protocole  : TELEPHONE-ARM-1 (pré-enregistré au LISEZMOI-dudect-arm.txt AVANT tout run)
+Les cibles    : eq-constant (contrôle positif), eq-branchue (contrôle négatif), sha256-logiciel, sha256-arm-sha2 (si le noyau expose « sha2 » et le compilateur +sha2)
+Le run        : N=60 par classe (le protocole TELEPHONE-ARM-1 — échantillons entrelacés)
+Code du run   : 0
+Le binaire    : run/dudect_arm (sha256 633c90fb919f4676…)
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (clang -O2 -march=armv8-a+sha2 -o run/dudect_arm dudect_arm.c -lm — la source est la vérité)
+La machine    : runnervmnfvap · aarch64 · Python 3.12.3 · Linux runnervmnfvap 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 19:06:39 UTC 2026 aarch64
+Le silicium   : 4 cœur(s) · drapeau sha2 : PRÉSENT
+
+LES DERNIÈRES LIGNES DE LA CONSOLE (la sortie complète vit dans sortie-run-N60.txt) :
+
+    fixe           : moy 197.3 ticks, med 200 (par appel : 50.00)
+    aleatoire      : moy 199.1 ticks, med 200 (par appel : 50.00)
+    t de Welch = -2.66 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  [sortie] journal-dudect-arm-1795613792643887271.csv — joignez-le au temoin (la synthese le fait)
+  [constat] le rapport median logiciel/materiel = 4.52 — LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pre-enregistree n'existe pour ARM)
+  [verdict] LE RUN VECU : 4/4 cible(s) consignee(s), 0 refus nomme(s)
+  [verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+  [verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
+
+LA LECTURE HONNÊTE : |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE machine — jamais « temps constant prouvé ».
+
+À COMPLÉTER DE VOTRE MAIN (le mesureur ne peut pas le lire à votre place) :
+  - l'état EFFECTIF du gouverneur de fréquence (DVFS) pendant le run, si vous le connaissez ;
+  - vos observations, mêmes défavorables (D189 : rapporter tel quel).
+
+PUIS : datez et signez de votre main sous ces lignes, et renvoyez le dossier preuves-dudect-arm/ ENTIER au coffre /test (dossier Drive « Triade » → « test »). Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces.

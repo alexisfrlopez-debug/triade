@@ -1,0 +1,32 @@
+LE TÉMOIN DUDECT-APPLE — N400 (édition APPLE-SILICON, kit-G, v1.0.0)
+================================================================
+L'horodatage  : 2026-11-25T13:46:46
+La pièce      : dudect_apple.c sha256 6af573f6f30632e5a7538a2ad8f002b70e1bf3b0a4926b01652a4a962999a08b
+Le protocole  : APPLE-ARM-1 (l'égalation du TELEPHONE-ARM-1, pré-enregistrée au LISEZMOI-dudect-apple.txt AVANT tout run)
+Les cibles    : eq-constant (contrôle positif), eq-branchue (contrôle négatif), sha256-logiciel, sha256-arm-sha2 (si le compilateur l'expose ET que l'épreuve FIPS l'accepte — sur macOS le canal noyau manque, l'épreuve décide seule)
+Le run        : N=400 par classe (le protocole APPLE-ARM-1 — échantillons entrelacés)
+Code du run   : 0
+Le binaire    : run/dudect_apple (sha256 96ccc107e7be6bee…)
+L'origine     : RECOMPILÉ SUR CETTE MACHINE (clang -O2 -march=armv8-a+sha2 -o run/dudect_apple dudect_apple.c -lm — la source est la vérité)
+La machine    : sjc22-be108-407d6215-ff9c-4c84-86a0-4ae44d163778-4603D40A3051.local · arm64 · Python 3.15.2 · Darwin sjc22-be108-407d6215-ff9c-4c84-86a0-4ae44d163778-4603D40A3051.local 25.6.0 Darwin Kernel Version 25.6.0: Mon Oct 12 00:39:04 PDT 2026; root:xnu-12377.161.15.701.48~2/RELEASE_ARM64_VMAPPLE arm64
+Le silicium   : le CPU : Apple M1 (Virtual) · le modèle : VirtualMac2,1 · les cœurs : 3 (le canal sysctl — /proc absent sur macOS, nommé)
+
+LA MACHINE DE COMMODITÉ SE NOMME (D206) : le run Apple Silicon vit sur un runner MUTUALISÉ aux voisins inconnus ; l'affinité n'est PAS posable sur macOS (nommée au binaire — le t sera bruité, constaté tel quel) ; la hiérarchie d'évidence est INCHANGÉE — le banc contrôlé (portable, téléphone) demeure la référence.
+
+LES DERNIÈRES LIGNES DE LA CONSOLE (la sortie complète vit dans sortie-run-N400.txt) :
+
+    fixe           : moy 4.0 ticks, med 4 (par appel : 1.00)
+    aleatoire      : moy 4.0 ticks, med 4 (par appel : 1.00)
+    t de Welch = -0.91 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  [sortie] journal-dudect-apple-1795614406498964000.csv — joignez-le au temoin (la synthese le fait)
+  [constat] le rapport median logiciel/materiel = 7.75 — LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pre-enregistree n'existe pour Apple Silicon)
+  [verdict] LE RUN VECU : 4/4 cible(s) consignee(s), 0 refus nomme(s) — INSTRUMENT CONTESTE (nomme)
+  [verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+  [verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
+
+LA LECTURE HONNÊTE : |t| > 5 = dépendance AU SEUIL sur CET échantillon, consignée telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet échantillon, CETTE machine — jamais « temps constant prouvé ».
+
+À COMPLÉTER DE VOTRE MAIN (le mesureur ne peut pas le lire à votre place) :
+  - vos observations, mêmes défavorables (D189 : rapporter tel quel).
+
+PUIS : datez et signez de votre main sous ces lignes, et renvoyez le dossier preuves-dudect-apple/ ENTIER au coffre /test (dossier Drive « Triade » → « test »). Le labo recoupe sur pièces : jamais avant le run, jamais sans pièces.

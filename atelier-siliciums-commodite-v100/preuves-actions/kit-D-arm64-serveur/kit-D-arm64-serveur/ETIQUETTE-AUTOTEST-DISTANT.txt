@@ -1,0 +1,11 @@
+ÉTIQUETTE : AUTOTEST-DISTANT (l'édition ACTIONS, job kit-D-arm64-serveur)
+Le silicium est RÉEL (le runner arm64 Linux de GitHub, mutuel aux
+voisins inconnus — D206) ; le geste est celui du LABO (le workflow du
+dépôt public, gratuit). La hiérarchie d'évidence est INCHANGÉE : le
+banc contrôlé (portable, téléphone) demeure la référence ; ce run est
+une lecture de commodité, JAMAIS le run terrain du développeur. La
+pièce est byte-pour-byte celle du kit-B TÉLÉPHONE (dudect_arm.c,
+scellé 08681278…) ; l'équation TELEPHONE-ARM-1 (échauffement 100,
+LOT=512/4, N=60/200/400, t de Welch, |t|>5) vit au LISEZMOI-dudect-arm
+de l'édition TÉLÉPHONE, RE-ENREGISTRÉE au LISEZMOI-dudect-actions de
+cette édition pour CE silicium serveur.

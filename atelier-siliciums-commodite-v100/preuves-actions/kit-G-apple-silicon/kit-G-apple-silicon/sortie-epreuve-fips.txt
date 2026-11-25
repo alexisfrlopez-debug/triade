@@ -1,0 +1,15 @@
+=== dudect_apple - LE TESTEUR DU SILICIUM APPLE (edition APPLE-SILICON, v1.0.0) ===
+[config] arch=aarch64 (Apple Silicon — l'identite vit au sysctl du scenario)  compteur=CNTVCT_EL0 (le compteur generique du SoC — PAS le cycle CPU)
+[config] N=200/classe  seuil |t|>5  echantillons ENTRELACES (le protocole APPLE-ARM-1)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[silicium] le canal /proc/cpuinfo est ABSENT (macOS) : la
+           garde noyau ne peut pas s'y exprimer —
+           L'EPREUVE FIPS DECIDE SEULE (fail-closed) : si
+           le lecteur materiel vit et rend le condense
+           exact, la cible vit ; sinon REFUS NOMME.
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-arm-sha2(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] l'epreuve est vecue seule (l'option --fips) - code 0

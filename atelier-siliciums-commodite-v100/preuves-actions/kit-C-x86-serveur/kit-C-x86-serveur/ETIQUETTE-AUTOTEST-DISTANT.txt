@@ -1,0 +1,10 @@
+ÉTIQUETTE : AUTOTEST-DISTANT (l'édition ACTIONS, job kit-C-x86-serveur)
+Le silicium est RÉEL (le runner ubuntu-latest de GitHub, mutuel aux
+voisins inconnus — D206 : le t mesure AUSSI eux) ; le geste est celui
+du LABO (le workflow du dépôt public, gratuit). La hiérarchie
+d'évidence est INCHANGÉE : le banc contrôlé (portable, téléphone)
+demeure la référence ; ce run est une lecture de commodité, JAMAIS le
+run terrain du développeur. La pièce est byte-pour-byte celle de
+l'édition COLLAB (dudect_collab.c, proxy-image.bin, manifestes) ; le
+protocole COLLAB-X86-1 pré-enregistré vit au LISEZMOI-dudect-collab
+de l'édition COLLAB.

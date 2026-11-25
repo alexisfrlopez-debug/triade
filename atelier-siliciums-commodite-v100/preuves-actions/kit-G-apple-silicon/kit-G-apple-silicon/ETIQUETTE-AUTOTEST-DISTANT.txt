@@ -1,0 +1,10 @@
+ÉTIQUETTE : AUTOTEST-DISTANT (l'édition ACTIONS, job kit-G-apple-silicon)
+Le silicium est RÉEL (le runner macOS Apple Silicon de GitHub, mutuel
+aux voisins inconnus — D206) ; le geste est celui du LABO (le workflow
+du dépôt public, gratuit). La hiérarchie d'évidence est INCHANGÉE : le
+banc contrôlé (portable, téléphone) demeure la référence ; ce run est
+une lecture de commodité, JAMAIS le run terrain du développeur. La
+pièce dudect_apple.c est un DÉRIVÉ NOMMÉ de dudect_arm.c (kit-B
+TÉLÉPHONE) : mêmes contrôles, même équation (APPLE-ARM-1, l'égalation
+du TELEPHONE-ARM-1), les gardes de portage NOMMÉES (affinité
+Linux-seulement, canal /proc absent — l'épreuve FIPS décide seule).

@@ -1,0 +1,37 @@
+=== dudect_apple - LE TESTEUR DU SILICIUM APPLE (edition APPLE-SILICON, v1.0.0) ===
+[config] arch=aarch64 (Apple Silicon — l'identite vit au sysctl du scenario)  compteur=CNTVCT_EL0 (le compteur generique du SoC — PAS le cycle CPU)
+[config] N=200/classe  seuil |t|>5  echantillons ENTRELACES (le protocole APPLE-ARM-1)
+[refus] les pieces scellees v0.15.0 sont x86-64 Windows - REFUSEES PAR NATURE sur ce silicium (empreintes citees) :
+[refus]   loupe.exe 0.1.1        sha256 c111510535767a40b0122d4e42261c9d8e1ec10d94d95ef666fd76ceb93e61d1
+[refus]   proxy-image.bin        sha256 0782d7e20d0bd4a268e6ec7ed0dc1453a0f42d7e72b784c2acc9ed423a885dff
+[refus]   moteur-shani.bin       sha256 761ab194d88d527c653111a41324b0bb3e9247b1c56ba8dc9fedeeccbe04bcec
+[silicium] le canal /proc/cpuinfo est ABSENT (macOS) : la
+           garde noyau ne peut pas s'y exprimer —
+           L'EPREUVE FIPS DECIDE SEULE (fail-closed) : si
+           le lecteur materiel vit et rend le condense
+           exact, la cible vit ; sinon REFUS NOMME.
+[fips] sha256-logiciel(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[fips] sha256-arm-sha2(abc) = ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad — EXACT
+[affinite] coeur 0 : REFUSEE sur ce systeme (macOS : pas de goupille — le t sera bruite, consignez-le)
+[eq-constant] echauffement 100 paires, puis 200 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 173.7 ticks, med 163 (par appel : 0.32)
+  divergent      : moy 585.7 ticks, med 163 (par appel : 0.32)
+  t de Welch = -1.48 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[eq-branchue] echauffement 100 paires, puis 200 iterations entrelacees (LOT=512 appels par echantillon)
+  egal           : moy 315.5 ticks, med 159 (par appel : 0.31)
+  divergent      : moy 21.9 ticks, med 17 (par appel : 0.03)
+  t de Welch = 3.88 -> AUCUNE divergence au seuil (seuil |t| > 5)
+  ATTENDU : divergence — L'INSTRUMENT EST CONTESTE sur cet echantillon (nomme, jamais muet : le temoin le dit, le labo recoupera avec vous)
+[sha256-logiciel] echauffement 100 paires, puis 200 iterations entrelacees (LOT=4 appels par echantillon)
+  fixe           : moy 33.0 ticks, med 32 (par appel : 8.00)
+  aleatoire      : moy 33.1 ticks, med 32 (par appel : 8.00)
+  t de Welch = -0.35 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sha256-arm-sha2] echauffement 100 paires, puis 200 iterations entrelacees (LOT=4 appels par echantillon)
+  fixe           : moy 4.2 ticks, med 4 (par appel : 1.00)
+  aleatoire      : moy 4.2 ticks, med 4 (par appel : 1.00)
+  t de Welch = 0.71 -> AUCUNE divergence au seuil (seuil |t| > 5)
+[sortie] journal-dudect-apple-1795614406466345000.csv — joignez-le au temoin (la synthese le fait)
+[constat] le rapport median logiciel/materiel = 8.00 — LE CONSTAT DE CE SILICIUM (jamais une cible : aucune cible pre-enregistree n'existe pour Apple Silicon)
+[verdict] LE RUN VECU : 4/4 cible(s) consignee(s), 0 refus nomme(s) — INSTRUMENT CONTESTE (nomme)
+[verdict] la lecture honnete : |t| > 5 = dependance AU SEUIL sur CET echantillon, consignee telle quelle ; |t| <= 5 = aucune divergence au seuil sur cet echantillon, CETTE machine - jamais « temps constant prouve »
+[verdict] code de sortie : 0 (le run vecu, vert ou ecarts nommes)
