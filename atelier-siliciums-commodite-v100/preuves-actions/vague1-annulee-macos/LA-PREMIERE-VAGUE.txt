@@ -1,0 +1,14 @@
+LA PREMIÈRE VAGUE DU RUN 45622766831 (25/11/2026, 13:21Z) — nommée, jamais effacée
+Le run fut déclenché au premier dépôt du workflow : kit-C et kit-D y
+vécurent (succès), mais le job kit-G fut ANNULÉ SANS DÉMARRER —
+l'étiquette macos-14 était RETIRÉE des runners (nommé à l'Entrée 427,
+correctif 1 : le workflow passa à macos-latest). Le job de collecte,
+privé de son besoin, fut SAUTÉ : les preuves de cette vague ne purent
+être committées par le workflow — les journaux bruts des jobs vivent
+ICI, verbatim, pour le recoup (ils portent les verdicts de la vague :
+kit-C sur EPYC 7763 — 8/8, tls13-13 DIVERGENTE à N=60 t=−5,46,
+silencieuse à N=200/400, tls13-16 silencieuse aux trois N, rapport
+logiciel/SHA-NI 3,88-3,86 ; kit-D sur ARM64 serveur — 4/4, FEAT_SHA256
+rapport 5,27). La seconde vague (run 45625277486, déclenchée par le
+push du correctif) vécut ENTIERE : ses preuves vivent committées aux
+dossiers kit-C-x86-serveur/, kit-D-arm64-serveur/ et kit-G-apple-silicon/.
