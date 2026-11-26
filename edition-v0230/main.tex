@@ -1,5 +1,18 @@
 % =====================================================================
-%  TRIADE — édition académique v0.19.5 (manuscrit IMRAD, anglais)
+%  TRIADE — édition académique v0.33.0 (manuscrit IMRAD, anglais)
+%  L'édition v0.33.0 est L'ÉDITION DU CŒUR IMRAD (la vague 28, l'instruction
+%  6w0b61juk — les objectifs poussés à leur maximum) : le cœur IMRAD de
+%  12–15 pages (Introduction, Méthodes, Résultats — RQ1–RQ4 + la
+%  décomposition quatre bras hissée du journal OPT + la table des statuts,
+%  Discussion, Menaces sur la validité, Travaux connexes, Conclusion), LE
+%  JOURNAL OPT (« Distance to the floor »), LES PROGRAMMES DE RÉSULTATS
+%  ÉTENDUS, LES NOTES POST-ÉDITION et LE CHANGELOG gelé RENVOYÉS EN ANNEXES,
+%  les travaux connexes enrichis (JSONSchemaBench, les backends de décodage
+%  contraint, AutoVecCoder, LLM4Decompile/SLaDe — références vérifiées,
+%  différenciées), DEUX classes de linter nouvelles (C30 N-VALUE,
+%  C31 CLAIM-SCOPE), le budget token par vague mesuré et pré-enregistré
+%  (OPT-20). AUCUNE valeur mesurée n'est modifiée.
+
 %  L'édition v0.19.5 est L'ÉDITION DE LA CLÔTURE DE LA VAGUE 7
 %  (l'instruction 1c4sokpii, la vague du 19/11, la cinquième et
 %  dernière) née de la v0.19.4 (le coût de la boucle) : le CRITÈRE
@@ -87,7 +100,7 @@
 %  les comptes du journal vivent en macros (donnees/macros_v190.tex,
 %  régénérées à chaque passe).
 % =====================================================================
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 \usepackage{fontspec}
 \setmainfont{Liberation Serif}
@@ -97,7 +110,7 @@
 
 \usepackage{amsmath,amssymb}
 \usepackage{geometry}
-\geometry{a4paper, top=2.6cm, bottom=2.4cm, left=2.3cm, right=2.3cm}
+\geometry{a4paper, top=2.2cm, bottom=2.2cm, left=2.1cm, right=2.1cm}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \definecolor{liaison}{HTML}{3681A6}
@@ -106,6 +119,7 @@
 \usepackage{longtable}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \usepackage{enumitem}
+\setlist{itemsep=1pt, topsep=2pt, parsep=1pt, partopsep=0pt}
 \setlist{noitemsep, topsep=2pt, leftmargin=1.4em}
 \usepackage{microtype}
 \usepackage{url}
@@ -115,11 +129,11 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks=true, linkcolor=liaison, citecolor=liaison,
             urlcolor=liaison, unicode=true,
-            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.32.0)},
+            pdftitle={TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent Governance (Academic Edition v0.33.0)},
             pdfauthor={Alexis Lopez}]{hyperref}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\itshape TRIADE — academic edition v0.32.0}
+\fancyhead[L]{\small\itshape TRIADE — academic edition v0.33.0}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
 
@@ -136,7 +150,7 @@ Under Signed-Intent Governance\\
 fourteen-unit two-arm field campaign, and two sealed applications}}
 \author{Alexis Lopez\thanks{Independent researcher; corresponding author.
 Project repository: \code{alexisfrlopez-debug/triade} (GitHub mirror).}}
-\date{26 November 2026 $\cdot$ Academic edition v0.32.0}
+\date{26 November 2026 $\cdot$ Academic edition v0.33.0}
 
 \begin{document}
 \maketitle
@@ -168,12 +182,12 @@ concurrent publication is atomic to eight bytes and requires quiescence. Every
 limit, awaiting run and negative result is named. The study is $N=1$ in agents,
 languages and operators.
 \end{abstract}
-\vspace{-2mm}
+\vspace{-1mm}
 \noindent\textbf{Keywords:} agent-written native code; signed-intent governance;
-oracle and terrain evidence; edition linter.\vspace{3mm}
-\vspace{-2mm}
+oracle and terrain evidence; edition linter.\vspace{1mm}
+\vspace{-1mm}
 \noindent\textbf{Mots-clés :} code natif écrit par agent ; gouvernance à intention
-signée ; preuve d'oracle et de terrain ; linter d'édition.\vspace{3mm}
+signée ; preuve d'oracle et de terrain ; linter d'édition.\vspace{1mm}
 
 
 \begin{otherlanguage}{french}
@@ -299,7 +313,7 @@ optimization without measurement).
 
 The development loop itself (update an intention, re-derive the oracle,
 edit the notation, rebuild, verify, seal) and the seal ceremony model are
-described in the protocol specification (the edition accompanied here is v0.15.17, which this edition accompanies; v0.15.8 remains a \emph{dated} reference, its D81 purge edition, whose five-share threshold-three Shamir escrow is the active guard and whose delivery instructions are retired from the operational text); we summarise only what the evaluation needs.
+described in the protocol specification (the edition accompanied here is v0.15.18, which this edition accompanies; v0.15.8 remains a \emph{dated} reference, its D81 purge edition, whose five-share threshold-three Shamir escrow is the active guard and whose delivery instructions are retired from the operational text); we summarise only what the evaluation needs.
 
 \paragraph{Governance: signed intent and append-only records.}
 Every layer-I tree is condensed and signed with an Ed25519 key kept
@@ -401,7 +415,7 @@ extraction script shipped with this edition; the manuscript contains no
 hand-typed data value.
 
 % --- Tableaux générés depuis le journal (source unique de vérité) ---
-\input{donnees/tables_generees_v180}
+
 
 % ------------------------------------------------------------------
 \subsection{The D204 two-arm field campaign}\label{sec:campagne}
@@ -464,7 +478,7 @@ consumes no delivery), and zero escapes attributable to either arm's
 native code. The reconciliation script recomputes every total from the
 raw registers and refuses any divergence.
 
-\input{donnees/table-campagne}
+
 
 \subsection{The D210 extension campaign: identical formats, randomized
 order, empirical attribution}\label{sec:d210}
@@ -716,7 +730,7 @@ the differential oracles at 33.6\,s / 4.0\,s / 146\,s / 57\,s
 across the four units, the POSIX parity at 1.4--8.1\,s, the
 mapped-DLL proof at 1.5\,s.
 
-\input{donnees/table-campagne-d210}
+
 
 \subsection{RQ2: token cost per validated change}\label{sec:rq2}
 
@@ -775,12 +789,13 @@ full disassembly of \code{loupe.exe} costs 300{,}304 tokens
 current medians. The two realistic ones, measured to close the gap
 between the card and the naive floor: (a)~the function-level
 disassembly by symbol table --- the unit a standard tool would feed the
-agent --- costs a median of 2{,}074 tokens [quartiles 1{,}192--3{,}202;
+agent --- costs a median of 2{,}074 tokens ($n{=}18$ blocks; quartiles
+1{,}192--3{,}202;
 min 317, max 6{,}552]; (b)~a hierarchical retrieval over the disassembly
 (the block header plus a fifteen-line window) costs a median of 792
-tokens [628--982; min 525, max 1{,}217]. Read at the comparable perimeter
+tokens ($n{=}18$ blocks; [628--982; min 525, max 1{,}217]). Read at the comparable perimeter
 (content, cl100k\_base): the card's locating \emph{material} (a median
-of 596) sits below the retrieval baseline (792) --- the indexed fragment
+of 596, $n{=}5$ per operation) sits below the retrieval baseline (792) --- the indexed fragment
 is smaller than header-plus-window; the full round-trips (1{,}277 native)
 sit above it, the written response being the difference. The whole
 generation-1 lineage totalled 13{,}873 tokens (D34); full-card audits
@@ -923,366 +938,63 @@ is why the 0.1.1 image hash differs from 0.1.0
 (R7), the sealed 0.1.0 artifact remaining frozen at its own fingerprint
 --- an explicit debt-repayment pattern the protocol names and tracks.
 
-% ------------------------------------------------------------------
-\subsection{Strengthened evidence (the v0.11.0 programme)}\label{sec:renforce}
+\subsection{The four-arm decomposition and the pre-registered campaigns' summary}\label{sec:quatrebras}
+The decomposition the plan assigns to the core: the lexicographic
+reading, the isolated notation effect and the fourth arm, moved
+unchanged from the optimisation journal (annex) where they previously
+lived, so that the core results answer RQ1--RQ4 \emph{and} the causal
+decomposition of what notation, verification and governance each cost.
 
-The second edition added six laboratory instruments to the evidence base
-(Table~\ref{tab:preuves}); all run with fixed, consigned seeds and are
-reproducible from the scripts shipped with this edition.
+\paragraph{Lexicographic reading.} No compensation between ranks: each
+axis is reported for itself, and the eleventh instruction batch
+improved the security rank (the D81 purge, the vault hardening, the
+lifter guard) without conceding performance (the corridors and the
+carrier loop), verification strength (the four arms reconciled at
+zero drift) or token cost (the templates).
 
-\paragraph{Mutation testing --- re-run with composition killers (v0.14.0).} The 832
-single-byte mutants of v0.11.0 were re-run (same seed, same module,
-same generation order) with a new semantic killer: a \emph{composition
-harness per mutant} --- the full application loop for the Loupe domain
-(open, cascade, paint, type, scroll, save, quit; the saved disk and
-screen bytes confronted to the sane baseline), the ClientHello composition
-plus record protection for the tls13 orchestration blocks, and the
-autonomous sys harness for the sys domain (D195). Result: 776/832
-killed (93.3\%, up from 83.4\%) --- tls13 and sys now at 100\%, the
-56 remaining Loupe survivors \emph{named} (mutations in paths the
-scenario does not exercise: error branches, unreached offsets,
-neutral bytes). The original campaign: 832 single-byte mutants of the sealed blocks
-(instructions, operands, offsets --- one byte mutated in a laboratory copy,
-the sealed artifact untouched), killed by the existing instruments in
-order of cost: the round-trip check, the structural oracle, and --- for the fourteen
-blocks of the cryptographic families (the thirteen tls13 crypto blocks
-and loupe-06's md5; 224 mutants, Table~\ref{tab:preuves}) --- the
-semantic differential against official vectors. Result: 694/832 killed (83.4\%);
-the cryptographic families reach 100\%. The 138 survivors concentrate in
-the orchestration and UI blocks, where the semantic killer is not wired
-at the isolated-mutant level (their semantics are verified by the full
-harnesses in composition, not per mutant): this gap is \emph{named}, not
-hidden, and is the primary target of the next edition.
+\paragraph{The isolated notation effect.} The third campaign arm
+(C+G: the gcc-O2-compiled C receiving the full governance stack ---
+signed intentions, a chained crystallisation certificate, the
+contract-derived oracle, the kit) separates what hand-written
+notation costs from what governance alone costs. Measured on the same
+machine at $n{=}5$ per arm: T \cgMquatreT{}\,s, C \cgMquatreC{}\,s,
+C+G \cgMquatreCG{}\,s --- the governance gestures add
+\cgEffetGouvernanceMs{}\,ms (\cgEffetGouvernanceRatio{}), while the
+residual \cgEffetNotationMs{}\,ms per session
+(\cgEffetNotationRatio{}) is the notation's own proof burden: the
+twelve concurrent crystallisation rebuilds, the byte-exact
+round-trips and the plan recomposition that the compiled arm never
+requires. The sixth unit closed on its red at the correction cap
+(three named escapes: an external-composition answer, a faulty
+SHA-256 constant table caught by the independent judge at 0/3
+reference vectors, a completion-truncated final pass) --- the
+campaign's own precedent for a unit closed at the cap, reported as
+such. The human-time metric is not measurable in the laboratory and
+awaits the developer's field run; no value is fabricated.
 
-\paragraph{Fault-injection battery (v0.19.5).} The fifty-six named
-survivors were re-run under a \emph{fault-injection battery}: sixteen
-application scenarios at the evidence conventions --- the missed,
-locked and refused opens; the GO mode ran end-to-end (the empty
-commit, out-of-bounds, the hexa keys, DEL, ESC); the search to the end
-and past the last occurrence (the occurrence count read from the file
-itself); the full 256-distinct-byte journal and the non-hexa
-character; the incomplete bottom line; the boundary keys; the handle
-at the most-significant word; and the block-level faults (no session,
-outside file, null exit, the \code{ReadFile} shim failing, the search
-string at the input convention --- the clean state at every call, the
-non-volatiles verified, the verdicts read at the block). The battery
-reproduces the v0.14.0 console \emph{identically first} (776/832 at
-the consigned seed 20261111 --- no new draw), then kills thirty-five
-of the fifty-six: \textbf{811/832 (97.5\%)} --- 83.4\% $\rightarrow$
-93.3\% $\rightarrow$ 97.5\% across the three programmes. The
-twenty-one remaining survivors are each named to one of thirteen cause
-families (six the dying state --- fields written at close die with the
-window, no observable reads them back; three the blind shim --- the
-scroll and invalidation calls read neither flag nor handle; two the
-post-entry view tracking; and one each: the never-served error code,
-the volatile RBP under msx64, the adjacent sentinel, the off-table
-transfer site, the never-served handle, the field beyond the pattern,
-the never-served failure path, the converging guards, the reframe
-path, the diverted target falling back). \emph{No killer weakened}:
-the original console was reproduced before the battery ran, and the
-sealed pieces were never touched --- the battery writes to the
-emulations.
-
-\paragraph{Coverage-guided fuzzing.} The two untrusted-input blocks were
-attacked under instrumentation: \code{loupe-\allowbreak 01} (the file path, through
-the harness's virtual OS with canaries around the path buffer) reached
-60.5\,\% block-instruction coverage over 400 iterations with zero crashes
-and zero canary violations; the \code{http-10} parser (on the sealed 0.4.0
-artifact) reached 358 distinct instructions with zero emulation crashes
-and zero named faults, growing a 17-entry corpus. The limits are stated:
-coverage is per-block under emulation, and crashes are emulation faults,
-not terrain deaths.
-
-\paragraph{Bounded static memory safety.} An abstract interpretation of
-all 52 blocks (the extension of the msx64 ABI audit born at run 4):
-2{,}098 memory accesses classified --- 1{,}181 stack accesses verified
-against the frame bound (zero out-of-frame: the stack-smash class is
-absent), 263 accesses mediated by contract-bounded argument pointers, 191
-constant \code{[rip]} accesses, 463 unresolved accesses \emph{named}
-(volatile-recomputed bases, composed indices). The analysis is linear
-(no path enumeration, loop bodies verified once, no alias analysis): a
-bounded verification, not a proof.
-
-\paragraph{Constant-time (emulation --- reformulated as exact trace equality).}
-The earlier editions reported the Welch statistics of a t-test on
-executed-instruction counts between fixed-secret and random-secret
-classes (N=60 each) as uniformly zero. That formulation was an artefact
-twice over, both
-facets found by the present edition's replay. First: on bit-identical
-instruction traces the variance is null and Welch's $t$ is \emph{undefined}
-(0/0), not zero --- a t-test is the wrong instrument for an equality that
-is exact. Second: on two of the six targets (hmac, aes-gcm) the v0.11.0
-instrument had never activated its instruction counter (the counts were
-all zeros; the hkdf target had run with an accidentally truthy flag) ---
-the vacuous measurements are named, and the replay measures all six for
-real. The correct statement is \emph{exact equality of the executed-
-instruction traces}, and the replay verifies it as such: each of the six
-targets (sha-256, hmac, hkdf, x25519, aes-gcm, md5) executes a single
-instruction count across all 120 measurements --- sha-256 4{,}469, hmac
-18{,}371, hkdf 18{,}407, x25519 exactly 1{,}238{,}959 for every key,
-aes-gcm 11{,}695, md5 132{,}509 (grain consigned, the v0.11.0 protocols
-replayed verbatim). N=60 per class is an exact \emph{structural}
-control, never a statistical power test. The present edition promotes
-the instrument: every run now hashes its \emph{complete} trace ---
-each executed instruction (address and size) and each data access
-(type, address and size; values never hashed) --- and the six targets
-each show \emph{one distinct hash} across all 120 measurements
-($N{=}60$ per class, seed consigned): bit-identical execution flows
-\emph{and} memory-access patterns across the secret classes, the count
-subsumed by the hash (two traces of different lengths cannot share
-it), the x25519 count confirmed within it. The single-count equality
-remains true; it is no longer alone. The metric remains
-emulation-structural; the real-hardware wall-clock timing is a separate,
-now measured, claim (the dudect kit runs below).
-
-\paragraph{Comparative benchmarks --- audited and corrected (v0.13.0).} The
-v0.11.0 edition reported a ``15.3$\times$ instruction advantage'' for
-the hand-written SHA-256 blocks over a compiled reference. The audit
-required by the present edition found that figure to be a \emph{measurement
-artifact}: the instrument read the emulation counter after the hash
-pipeline returned, but the counter resets at every block invocation ---
-the published 4{,}524 instructions were the \emph{finalisation stage
-alone}, compared against the reference's \emph{complete} operation (the
-implausible 4.2 instructions per SHA-256 round was the tell; a scalar
-round needs an order of magnitude more). Re-measured stage by stage,
-digest verified against \code{hashlib} before counting and the 17
-compression invocations confirmed mechanically, the complete operation
-costs 75{,}983 instructions for the blocks against 69{,}132 for
-gcc~14.2 -O2 and 77{,}505 for -Os, in the same emulator on the same
-input --- under the explicit convention that every percentage here is
-\emph{the cost of the notation relative to the reference, positive =
-the notation more expensive}: the hand notation sits \emph{between}
-the two compiler levels at $+9.9\%$ executed instructions against -O2
-and $-2.0\%$ against -Os (the v0.11.0 text had both signs inverted;
-every sign and value is recalculated from the raw CSV by the numeric
-linter of the present edition, which now checks the signs too), is
-1.45$\times$ more compact than the -O2 function (1{,}021 vs 1{,}482
-bytes including the shared K table) but less compact than -Os (548
-bytes), and neither camp uses any ISA extension beyond the x86-64
-baseline --- no AVX, no SHA-NI (the -O2 reference does use baseline SSE2
-moves for buffer setup, which the pure-GPR notation does not; the gap
-is reported unadjusted and strict GPR-to-GPR parity is not claimed).
-The 15.3$\times$ claim is \emph{withdrawn}; the corrected statement is
-that the WYSIWYG notation is competitive with a modern compiler on its
-own turf --- the price of direct auditability is nearly nil, and the
-spectacular premium does not exist.
-
-\paragraph{Oracle independence --- second agent (v0.14.0).} The oracle was
-re-generated by a second, \emph{isolated} agent instance (fresh context,
-no shared conversation) deriving the MD5 $T[64]$ and SHA-256 $K[64]$
-tables from the mathematical definitions alone: \emph{zero divergences}
-across the 128 constants (agent == plan == definitions), confirmed by an
-integer-exact cube-root route executed independently. The named gap:
-the laboratory's agent infrastructure exposes only one model family ---
-true cross-family independence remains open. The v0.11.0 routes: the
-MD5/SHA tables re-derived
-through decimal arithmetic, the RFC 1321 gold vectors confronted
-spec$\leftrightarrow$\allowbreak harness$\leftrightarrow$\allowbreak hashlib, the differentials
-re-run with a new seed and the system generator (\code{os.urandom}):
-zero divergences across all confrontations. A second \emph{agent} remains
-to be tried (the replication protocol is proposed in the next edition).
-
-% ------------------------------------------------------------------
-\subsection{The controlled compiler comparison (the v0.14.0 programme)}\label{sec:comparaison}
-
-The pre-registered plan (D193, hash-consigned before any measurement)
-compares six sealed Loupe blocks spanning the five families against a C
-reference implemented \emph{from the same layer-I contracts}, compiled
-with gcc 14.2 -O2/-Os (clang absent, the deviation named), calling the
-\emph{same mini-OS shims} through an \code{ms\_abi} pointer table, and
-confronted with the \emph{same vectors} (D195). The headline result is
-\emph{behavioural}: zero divergence across all contract vectors ---
-the hand notation and the compiled reference are observationally
-equivalent at the contract level.
-
-\emph{Instructions (complete operations, the audited counting convention).}
-On SHA-256 range hashing the notation is at \emph{parity at equal work}:
-9{,}089 vs 9{,}146 instructions (the 384-byte block composes the sealed
-765-byte inherited implementation through the card; the 1{,}707-byte C
-function embeds its own). Windowed file reads are at parity (48 vs 47). On
-the simpler pure blocks the compiler's tight loops win: hex-line
-composition 641 vs 477, byte search 193 vs 69, keystroke entry 39 vs 16.
-The full session-open cascade (window + fingerprint panel) reads
-102{,}176 vs 75{,}560 --- \emph{not at equal work}: the compiled camp
-computes only the SHA-256 half of the panel (no audited C MD5 exists;
-the v0.11.0 reference was rejected as faulty), so the comparison
-carries its mark until an audited C MD5 exists. The per-vector audit
-of the present edition names a further artefact: the loupe-01 median
-(1{,}025 vs 32 instructions) falls on a \emph{refusal} vector (four
-of the five suite vectors are refusals), where the notation composes
-its controls in-piece and the compiled reference stays short --- the
-real opening costs 102{,}136 vs 75{,}525 ($1.35\times$, still not at
-equal work), reported per vector in the data archive.
-
-\emph{Sizes.} Mixed, honestly: the notation is more compact on
-SHA-256 (384+765 shared inheritance bytes vs 1{,}707) and on the
-session-open block (448 vs 494 bytes), less compact on keystroke
-entry (704 vs 413) and search (192 vs 105) --- the directions
-corrected in the present edition against the raw table, where the
-previous edition had inverted the open and keystroke entries.
-
-\emph{Mutation (same protocol, same seed, same draw for both camps).}
-Camp notation: 5--13/16 killed per block under the differential
-killer at -O2 (3--13 across both optimisation levels; every bound
-recalculated from the raw table by the numeric linter of the present
-edition), the survivors named (consistent with the orchestration
-class). Camp compiled: 16/16 on the OS-calling blocks (the call-
-sequence killer catches everything), 12--14/16 under the differential
-killer on the pure blocks --- and 16/16 in \emph{total} everywhere,
-the remaining mutants falling to the cheaper killers. The reading we
-pre-registered as H4-D193 holds at the level that matters: both camps
-kill 96/96 mutants in total --- \emph{testable to the same degree},
-the killer profiles differing (the notation's kills concentrate in
-the differential killer, the compiled camp's spread across
-differential and call-sequence).
-
-
-\subsection{The unbounded model and conformance testing
-(the v0.15.0 programme)}\label{sec:v150}
-
-\paragraph{From bounded to unbounded.} The v0.12.0 model checked the
-vault's claims by exhaustive exploration up to three epochs --- an
-artificial ceiling inherited from the explorer, not from the design (the
-implementation's closing step is $e \leftarrow e+1$ without a cap). The
-v0.15.0 programme removes the ceiling and moves the proof to an
-\emph{inductive invariant} $I$ over the operational semantics:
-$I_1$ (a learned secret implies the full three-element threshold),
-$I_2$ (no unjust destruction flag), $I_3$ (the trap media and the CF2
-fragments are never touched), $I_4$ (epochs stay positive). The proof
-obligations are discharged mechanically: initialisation holds at the
-initial state; preservation is checked for \emph{each of the 13 rules}
-over the finite set of state shapes (288 shapes satisfying $I$, the
-epoch instantiated over both guard classes $\{1\}$ and $\{\ge 2\}$); the
-epoch-uniformity of the class $\ge 2$ is \emph{structural} --- the
-rules only ever compare the epoch to 1 and take its successor, a fact
-of the rule text audited mechanically (the epoch is read by
-$\{e > 1, e + 1\}$ only) --- and witnessed in replay by re-running the
-whole proof under epoch translations $\delta \in \{7, 50, 1000\}$ with
-bit-identical verdicts. The present edition adds the \emph{coverage
-lemma} that was previously implicit: every concrete reachable state is
-represented by at least one of the 288 abstract shapes, so the
-preservation check over the shapes covers the entire reachable space.
-The lemma is discharged in three obligations: (O1)~the abstraction
-$\alpha$ is total on well-typed states (its domains are the typing
-constraints); (O2)~those domain constraints are \emph{inductive} ---
-verified by Apalache over unbounded integers (initialization and
-preservation both NoError, with a negative control: a weakened domain
-is caught, Error~12); (O3)~the 288 shapes are \emph{exactly} the image
-of the well-typed invariant-satisfying states under $\alpha$ --- a
-verified bijection (288~forms, none outside the invariant, all
-reachable bounded states covered). The TLA+ model submitted to the
-model checkers is aligned with the operational semantics \emph{rule by
-rule}: a strict transpiler reads the thirteen actions of \code{CF3.tla}
-and confronts guards and effects with the Python semantics over 512
-concrete states per rule (both epoch classes, every subset, every
-boolean) --- all thirteen aligned, any unrecognized construct a refusal.
-The independent model-checker replay of the present edition (TLC the
-bounded fidelity: 154 states, 1{,}152 transitions reproduced exactly;
-Apalache/SMT the unbounded induction
-$\mathrm{Init} \Rightarrow I$ and $I \wedge \mathrm{Next} \Rightarrow I'$,
-negative controls caught) returns 8/8 green. Monotonicity (no rule ever decreases the epoch)
-is checked unconditionally over 4{,}096 shapes; the two replay rules
-return the state unchanged. The four properties are therefore
-\emph{proved unbounded}: any epoch, any depth, under hypotheses
-A1--A4, with A5 (side channels, implementation flaws, three-element
-compromise, quantum) explicitly out of model.
-
-\paragraph{Fidelity and bounded cross-checks.} The ported explorer
-reproduces the v0.12.0 counts \emph{exactly} under the historical
-ceiling (154 states, 1{,}152 transitions --- the proof of a faithful
-port); with the ceiling removed, the extended bounds ($e \le 5$ at depth
-8: 228 states / 1{,}902 transitions; $e \le 7$ at depth 12: 372 /
-3{,}342) find zero reachable states outside $I$ and zero property
-counterexamples --- the bounded evidence now confirms the unbounded
-proof instead of substituting for it.
-
-\paragraph{Model--implementation conformance (renamed in the present
-edition; formerly ``refinement'') --- now a generative campaign.} The
-v0.15.0 evidence was a directed game of 34 replayed steps (every
-abstract rule against the real Python implementation, a test vault
-under a publicly marked test passphrase; the real vault is never opened
-by a test): the honest cycle across \emph{five} successive epochs, fifteen
-wrong-passphrase attempts (zero destruction, zero sealing), the proven
-container falsification, the trap falsification, the past-epoch replay
-in three variants, the absent trap, the foreign vault's trap, and the
-below-threshold adversary (32 forged key-halves triples, zero verifier
-passes) --- zero gaps, every failure path included. The present edition
-replaces the chosen-steps design with a \emph{generative} campaign:
-10{,}000 random transition sequences (seed consigned, 3--8 steps per
-trace, weighted draws over the actions \emph{offered} by the model,
-every rule and every refusal path covered --- accepted and refused
-counts per rule are read from the generation logs), each trace driving
-the abstract model and the concrete test vault in parallel, every
-verdict confronted step by step, every divergence shrunk (ddmin) and
-archived. Result: \textbf{660 divergent traces, exactly one class} ---
-\code{falsifie\_conteneur} during an open session: the model's guard
-offers the rule only in the canonical phase, while the concrete
-sentinel runs on the canonical container and \emph{does} destroy on
-proven falsification mid-session (local destruction, PV raised, the
-trap media and CF2 untouched). The analysis: a state-coverage gap of
-the \emph{model} (an under-approximation discovered by the campaign
---- the directed 34-step game never crossed it, the randomization
-crosses it 660 times in 10{,}000), \emph{not} a threat to the
-properties: the concrete destruction remains proven falsification and
-remains local (P3 and P4 hold on every divergent trace); the shrinker
-(ddmin) reduces every divergent trace to its minimal failing sequence:
-655 of the 660 reach the two-step minimum [\code{ouvrir\_correct},
-\code{falsifie\_conteneur}], their per-trace minima consigned in the
-campaign's raw register. The replay at identical seed reproduces the
-10{,}000 verdict digests bit for bit. \textbf{The gap is now closed}
-(the present edition, the v0.15.3 model extension): the guard aligned
-with the concrete sentinel --- falsification offered in both phases,
-the destruction local, the media and fragments untouched --- and the
-campaign re-played \emph{to zero divergence}: 30{,}000 traces across
-three seeds (the consigned 20261112 plus two new ones), every rule and
-refusal path covered, the replay bit-identical twice; against the
-consigned v0.18.0 register, exactly the 660 traces of the divergence
-class changed and \emph{nothing else} (the 9{,}340 other digests
-identical, every fin type identical) --- the extension changed
-precisely the discovered gap. The bounded cross-check confirms the
-reachability space is invariant: the TLC fidelity chain still finds
-154 distinct states at the historical bounds, only the fired
-transitions grow (896 to 926 --- the in-session falsifications now
-offered); the unbounded proofs were re-discharged on the extended
-model (the inductive invariants hold, the 13-rule alignment is
-SMT-unbounded, the epoch-translation lemma is re-proven, 31 negative
-controls caught --- including the extension-annulled guard restored
-as a mutation, and the destruction that overflows onto the media). Three concrete gestures sit outside the abstract model
-(the out-of-band epoch witness, the foreign vault, the forged halves)
-and remain consigned as such, with their concrete verdicts matching
-the specification.
-
-\paragraph{The hardware runs: the dudect timing measured; two kits still
-waiting.} The real-time dudect kit ran on the developer's machine,
-twice, with dated and hand-signed witnesses (13 November 2026; four
-targets extracted from the sealed proxy piece, RDTSC/QPC timing, core
-affinity 0, the native call validated against the FIPS~180-4 ``abc''
-vector). At N=200 per class the Welch statistics read $|t| = 12.39$
-(tls13-02) and $5.19$ (tls13-13) --- above the $|t|>5$ threshold,
-consigned exactly as measured --- with tls13-16 at $0.94$ and tls13-17
-at $3.11$; the N=400 run reads $0.84$, $1.55$, $-0.30$ and $2.02$ ---
-all four under the threshold, the N=200 dependencies dissipated at the
-larger sample. The honest reading is the kit's own: no threshold
-divergence on that sample, that machine, one run at each N --- never
-``constant time proven''; cache-timing and power side channels remain
-out of scope, and the single-run scope is part of the claim. The present edition
-delivers the \emph{pre-registered repetition protocol} that the
-single-run scope called for: $n{\ge}10$ independent executions per
-$N{\in}\{60, 200, 400\}$, at least two machines (each with its
-consigned CPU fingerprint and effective frequency state), fixed core
-affinity, and the tls13-02/tls13-13 N=200 peaks investigation
-pre-registered with its candidate causes named \emph{before} any data
-(a clock-noise false positive, a shared-core interruption, or a real
-constant-time gap --- the repetition and the median criterion decide,
-no cause is elected in advance); the sealed measurer is carried
-unchanged, the aggregation tool refuses any missing run (fail-closed),
-and the kit waits for the developer's gesture --- no figure fabricated.
-Two kits also remain \emph{awaiting a hardware run}:
-\code{fence.i} semantics on physical RISC-V silicon (the executed M7
-terrain runs were TCG emulation --- the reserve is named), and a
-third-machine Loupe field run (the full T0--T7+S0 scenario). For
-those, no number exists and none is fabricated; the claims table stays
-honest until the runs are on record.
+\paragraph{The fourth arm: the notation effect proper.} The fourth
+campaign arm (C+G+: the compiled C receiving the governance stack
+\emph{and} the complete verification regime of the notation arm ---
+ten rebuilds per unit confronted at the byte, equal oracle volumes,
+the plan recomposition at every delivery) settles the requalification
+question the third arm left open. Measured on the same machine at
+$n{=}5$ per arm, order alternated against thermal drift: T
+\quatreBrasT{}\,s, C+G+ \quatreBrasCGP{}\,s, C+G \quatreBrasCG{}\,s, C
+\quatreBrasC{}\,s --- the notation effect \emph{proper} (T$-$C+G+) is
+\effetNotationPropre{}\,s (\partNotationPropre\,\% of T$-$(C+G)), the
+verification regime (C+G+$-$C+G) \effetRegime{}\,s (\partRegime\,\%),
+the governance gestures \effetGouvernanceOnze{}\,s: the pre-registered
+H-CGP2 is confirmed --- the requalification rejected at both windows
+(the paired session and the wave-10 reference) --- and the
+three-effect ventilation closes exactly at the unrounded medians
+($20.715 + 16.497 + 0.213 = 37.425$\,s $=$ T$-$C; the rounded macros
+leave a 13\,ms residual --- the closure is stated at its operands).
+At equal oracle volumes the notation arm's living oracles cost 33.48\,s
+against 0.51\,s compiled (the re-execution of the assembled notation
+under emulation against the compiled piece's native run, 66$\times$);
+the notation session decomposed post by post attributes \oraclesPart\,\%
+of its 43.7\,s to the oracles --- the regime's cost is dominated by
+the verification volumes, not the writing.
 
 \input{donnees/statuts_v230.tex}
 
@@ -1711,6 +1423,51 @@ with the oracle/terrain epistemology that a laboratory harness is
 structurally blind to the classes that only loading, linking and
 hardware reveal.
 
+\paragraph{Structured outputs and constrained decoding.}
+The constrained-generation side of the adoption problem is now
+benchmarked on real schemas: JSONSchemaBench~\cite{jsonschemabench}
+measures constrained-decoding approaches across efficiency, coverage
+and output quality, and the serving engines expose grammar backends
+--- XGrammar~\cite{xgrammar}, Outlines~\cite{outlines} and the
+guidance stack~\cite{guidance} --- that enforce a schema at decode
+time. The SERVING-ABSENT refusal of the present study (the border
+accepts the \code{response\_format} field and does not apply it to
+the decode) was probed on pieces at the twenty-seventh wave and
+re-probed as an endpoint-selection gate at the twenty-eighth: an
+endpoint that accepts a schema without applying it is refused by
+name, which is why the structured-diff campaign (D264/OPT-16) runs
+its bounded repair loop client-side --- the closed schema holding the
+edit diff at a 79.5-native-token median, the free-text writing
+variance remaining the named residual. The benchmark's lesson cuts
+both ways: constraint fidelity is a serving property to be measured,
+never assumed.
+
+\paragraph{Learned vectorisation and decompilation.}
+Two adjacent lines sharpen the positioning. AutoVecCoder
+~\cite{autoveccoder} teaches LLMs to emit \emph{explicitly vectorised}
+source code (an automated vectorisation pipeline with a reinforcement
+stage) --- their vectorisation is a source-level transformation, while
+the SIMD corridors here are hand-written notation under seal, measured
+against the tuned library (the 0.7271 cycles-per-byte interleaved
+corridor) and scheduled against the compiler on the frozen VAES
+notation (the notation-versus-C schedule gap published as a distinct
+result at the twenty-eighth wave). On the decompilation side,
+LLM4Decompile~\cite{llm4decompile} and SLaDe~\cite{slade} erode the
+anti-reverse-engineering premium that the IP plan of the threat model
+leans on --- the pack assumes it: the sealed notation's value is
+governance and provenance, not secrecy, and the decompilation line is
+cited to keep that assumption honest.
+
+\paragraph{RL for code, and what the reward measures.}
+SuperCoder~\cite{supercoder} optimises \emph{execution speed} by
+reinforcement on runtime rewards --- the strongest published RL result
+on assembly optimisation, and the natural contrast for the adoption
+corpus's training plan: the reward there is the conformity judge's own
+verdict (syntax, expansion, round-trip, oracle, mutation --- cumulative
+and strict, never a similarity, never a runtime), because the property
+being trained is the machine-writing stability that the free-text
+refusals (HORS-FORMAT) name, not the speed of the artifact.
+
 \paragraph{Design by contract and specification-first development.}
 TRIADE's layer I applies design-by-contract ideas~\cite{meyer1992} at the
 machine-code level: one specification per block, pre/post-conditions,
@@ -1806,339 +1563,6 @@ claimed contribution is the integration --- contract-first notation at
 the byte level, signed-intent governance, oracle/terrain epistemology
 with named-defect accounting --- evaluated end-to-end by building a real
 application with an LLM agent and reporting where it failed.
-
-% ------------------------------------------------------------------
-\section{Distance to the floor}\label{sec:floor}
-\paragraph{Scope convention (mandatory before any comparison).}
-Each ratio below is measured over the \emph{total} operation cost
-(material read, prescription prose, emitted response), with each field
-also reported separately in the campaign artifacts; the floors are
-named with their computation method, and no ratio is ever compared
-across different scopes.
-
-\paragraph{Security.} Of the 2{,}098 memory accesses classified by the
-bounded analysis, \sureteDecharges{} are discharged by proof (95.6\,\%)
---- loop-invariant inference, interval and alias analysis, and bounded
-model checking over the lifted notation --- and \sureteNOMMES{} carry
-named causes together with a satisfiability certificate proving that no
-static bound exists without the external invariant (OS contract, caller
-structure, layout runtime field); zero out-of-frame accesses. The
-mutation battery stands at \mutationBrutNum/\mutationDenomBrut{} raw
-(97.5\,\%) and \mutationAjusteNum/\mutationDenomAjuste{} adjusted
-(99.3\,\%, the 15 excluded equivalents labelled
-proved-argued-bounded --- twelve semantic arguments, three bounded
-sweeps, never mechanical unbounded proofs),
-the two scores always presented side by side. The CF3 inductive
-invariant is mechanised in an independent proof assistant
-(\cfTroisObligations{} obligations, certificates archived), and the
-static non-interference proof covers 16 blocks across seven crypto
-families (the eleventh wave adds tls13-04 at the refined model ---
-the state secret, the total length a named public metadata --- and
-tls13-08), proven under the lifter-soundness hypothesis --- which the
-eleventh wave establishes \emph{on its validated domain}: 942 distinct
-encodings confronted at zero divergence by the exact method (the
-writes observed at the diff and the write hooks, the reads by the
-differential sentinel), and a 7{,}769-mutant corpus whose 155
-divergences are \emph{all} out-of-vocabulary --- the guard that
-follows: the lifter declares its soundness over the modelled classes
-and refuses any unmodelled class at load time (fail-closed, the
-refusal named). The GHASH key~H is covered as a secret (tls13-17 at
-the third argument: neither branch nor address tainted); the
-negative control caught in both directions.
-
-\paragraph{Performance.} The M4 session runs at a median of
-\mquatreAvantMediane{}\,s unoptimised, \mquatreChaudMediane{}\,s warm
-with the memo stack (the unrounded medians 6.912\,s and 2.056\,s; the
-29.7\,s run is the observed 1-in-10 audit), and \mquatreBrasC{}\,s at
-the compiled reference arm: a floor-ratio of \mquatreRatioChaud{} against
-the C arm at equal work, recalculated from the unrounded medians
-($6.912/2.056 = 3.362$, cited at one decimal wherever the current
-measurement is meant). The byte-search SSE2 variant was
-corrected and re-measured: the prior variant broadcast a four-byte
-pattern instead of the first byte (a fault surfaced by a
-planted-occurrence differential the prior confrontation could not
-see, 406 of 564 planted occurrences missed); the corrected variant
-passes all 88 vectors at zero divergence and costs \sseDeuxVdeuxInstructions{}
-instructions per operation --- 0.04$\times$ the gcc-O2 instruction
-count --- while on hardware (RDTSC, pinned core, $n{=}20$) it runs
-\sseDeuxTempsReel{} cycles per absent 4{,}096-byte search against
-\gccODeuxTempsReel{} for gcc-O2, \idiomeMemchrTempsReel{} for the
-memchr-and-memcmp idiom and 933 for libc \code{memmem}: the
-hand-written SSE2 notation sits \emph{inside the class of the library's
-SIMD primitives} (1.5$\times$ above the memchr idiom, 1.1$\times$
-below \code{memmem}), 19.3$\times$ below the compiled scalar path
---- both ratios restated at one decimal from the unrounded cycle
-counts (833/561 and 16{,}040/833; the prior edition's ``1.6$\times$''
-and ``two orders'' were coarser roundings of the same measurements,
-corrected by the numeric linter of the present edition). The
-AES-NI descent is already the sealed domain (the era profile requires
-it), and the CPUID dispatch is hoisted out of the per-block loop in
-the laboratory variant (45 to 34.4 instructions per block, at exact
-parity with the sealed block under the same carrier).
-
-\paragraph{Optimisation.} Every lever in the OPT journal is founded on
-a measured hot path (R11); the wave adds the crystallisation certificate
-(a one-block diff re-verifies 3 of 18 blocks), the double engine at
-session opening (divergence zero at volume), and the deterministic
-oracle compiler (968 oracle tokens removed over three units); the
-tenth batch adds the edit window (OPT-10: the reread material down
-7.0$\times$, the total median 2{,}452 to 1{,}146 at $n{=}18$ with the
-independent re-tokenisation at zero drift and the pointer's four
-named refusals re-verified fail-closed); the eleventh batch adds the
-round-trip verdict cache (the key bound to the notation, the engine
-and the profile --- a hit returns the verdict without re-execution,
-the session-opening re-verification 285.725 to 0.418\,ms, a
-683.6$\times$ gain (the recomposed canon, the unrounded operands
-published --- the reader recomputes), every key divergence forcing
-the complete re-verification back) and the incremental crystallisation (the transitive closure of
-the real diff alone re-verified: 13 of 28 blocks, $-54\,\%$ of the
-verification post --- the 1-in-10 audit named a probabilistic net,
-never a proof; the capture demonstrated at the sought seed).
-
-\paragraph{Token cost.} The pointer-only localiser stands at a median
-of 1{,}053 native request tokens (the v0.21.0 \mbox{total-perimeter} record
-of 1{,}103 dated alongside; $n{=}18$ at each wave); the hierarchical
-locator at 627 ($-40.5\,\%$: the coarse index of identifiers and
-short fingerprints first, then the fine pointer --- the expansion
-re-checked client-side); the templated editor at 674 ($-39.1\,\%$
-against the window re-measure at 1{,}106: the versioned template
-TPL-EDIT-v1 carries the format grammar once, its sha-256 engraved at
-the prompt, the prescription prose down 57\,\% --- 866 to 372 cl100k
-tokens, the lever the tenth wave had named); the add-by-skeleton at
-2{,}200 ($-28.4\,\%$ against the whole-notation 3{,}073.5 at the same
-perimeter, its feasibility 3 to 7 greens across the four passes
-(the skeleton, then the domain dictionary, then the grammar with its
-repair loop, then the counter-example repair --- the wave-13 loop
-converts none of the honest refusals, the wave-14 counter-example
-repair converts its first (loupe-11) at 7/18 for a median 3{,}990
-tokens; the third pass measures 3{,}844 tokens per validated change at
-(2026) 6/18, (2026) 18/18 for the edit operation at 712), the fifth
-campaign (the structured expansion diff at
-opcode/operand/offset --- the line as written, its expansion at the
-exact point it breaks, the canonical pattern admitted; Nov 2026) at
-5/18 for a median
-4{,}604 tokens: the
-Nov 2026 pre-registered target of $\ge$15/18
-missed, the cost target of $\le$4{,}500 missed by 104 --- the
-unfavourable reading consigned, never a number adjusted, never a
-target re-drawn; the named cause is the subject's CLI variance (the
-three wave-14 greens lost at identical prompts, the judges intact, the
-chronic refusals unconverted --- the free-text HORS-FORMAT class
-remains), the residual gap named by
-refusal class at the third pass (nine expansion-divergent, two
-out-of-format, one unknown-id): the gap has moved from domain
-knowledge to the stability of the model's machine writing against
-the expansion judge); the edit floor ratio is
-24.5$\times$ at the \emph{same} tokenizer --- the real diff pair
-re-tokenised through the campaign's own usage field (median 27.5
-native tokens over the eighteen tasks; the cl100k floor line --- 18
-tokens, the mixed ratio 63.6$\times$ of the v0.21.0 edition ---
-remains dated history), the locate and add floors named as ever
-(the literal pointer, the block body).
-
-\paragraph{Lexicographic reading.} No compensation between ranks: each
-axis is reported for itself, and the eleventh instruction batch
-improved the security rank (the D81 purge, the vault hardening, the
-lifter guard) without conceding performance (the corridors and the
-carrier loop), verification strength (the four arms reconciled at
-zero drift) or token cost (the templates).
-
-\paragraph{The isolated notation effect.} The third campaign arm
-(C+G: the gcc-O2-compiled C receiving the full governance stack ---
-signed intentions, a chained crystallisation certificate, the
-contract-derived oracle, the kit) separates what hand-written
-notation costs from what governance alone costs. Measured on the same
-machine at $n{=}5$ per arm: T \cgMquatreT{}\,s, C \cgMquatreC{}\,s,
-C+G \cgMquatreCG{}\,s --- the governance gestures add
-\cgEffetGouvernanceMs{}\,ms (\cgEffetGouvernanceRatio{}), while the
-residual \cgEffetNotationMs{}\,ms per session
-(\cgEffetNotationRatio{}) is the notation's own proof burden: the
-twelve concurrent crystallisation rebuilds, the byte-exact
-round-trips and the plan recomposition that the compiled arm never
-requires. The sixth unit closed on its red at the correction cap
-(three named escapes: an external-composition answer, a faulty
-SHA-256 constant table caught by the independent judge at 0/3
-reference vectors, a completion-truncated final pass) --- the
-campaign's own precedent for a unit closed at the cap, reported as
-such. The human-time metric is not measurable in the laboratory and
-awaits the developer's field run; no value is fabricated.
-
-\paragraph{The fourth arm: the notation effect proper.} The fourth
-campaign arm (C+G+: the compiled C receiving the governance stack
-\emph{and} the complete verification regime of the notation arm ---
-ten rebuilds per unit confronted at the byte, equal oracle volumes,
-the plan recomposition at every delivery) settles the requalification
-question the third arm left open. Measured on the same machine at
-$n{=}5$ per arm, order alternated against thermal drift: T
-\quatreBrasT{}\,s, C+G+ \quatreBrasCGP{}\,s, C+G \quatreBrasCG{}\,s, C
-\quatreBrasC{}\,s --- the notation effect \emph{proper} (T$-$C+G+) is
-\effetNotationPropre{}\,s (\partNotationPropre\,\% of T$-$(C+G)), the
-verification regime (C+G+$-$C+G) \effetRegime{}\,s (\partRegime\,\%),
-the governance gestures \effetGouvernanceOnze{}\,s: the pre-registered
-H-CGP2 is confirmed --- the requalification rejected at both windows
-(the paired session and the wave-10 reference) --- and the
-three-effect ventilation closes exactly at the unrounded medians
-($20.715 + 16.497 + 0.213 = 37.425$\,s $=$ T$-$C; the rounded macros
-leave a 13\,ms residual --- the closure is stated at its operands).
-At equal oracle volumes the notation arm's living oracles cost 33.48\,s
-against 0.51\,s compiled (the re-execution of the assembled notation
-under emulation against the compiled piece's native run, 66$\times$);
-the notation session decomposed post by post attributes \oraclesPart\,\%
-of its 43.7\,s to the oracles --- the regime's cost is dominated by
-the verification volumes, not the writing.
-
-\paragraph{Memory safety at one hundred percent.} The 92
-runtime-based accesses of the prior edition now close the
-classification: 34 address computations (LEA) are discharged
-relationally (the computed value feeds already-classified use
-sites), and the 58 true dereferences are requalified
-\emph{conditional (assumption-discharged)} on the sealed artifact:
-each is a proof obligation conditional on a named external invariant
---- the exhaustive trusted-computing base reads 24 plan-field
-accesses (the 960-byte CADRE layout), 23 caller-contract accesses
-(the AEAD context) and 11 OS accesses (the system-call buffer). The
-runtime guards themselves are \emph{emitted in laboratory copies
-only} (the OPT-01 margin-$0\times$10000 model, never in the sealed
-binary): a two-sided check proven by an UNSAT certificate per guard
-(58/58 re-verified), falsified per guard in the laboratory variant
-(the violated invariant is refused at both zone boundaries and on
-the index face, the honest address admitted). Every access carries
-its proof-strength label (statically sound / bounded /
-conditional-assumption-discharged); zero out-of-frame accesses. The
-fifteenth wave re-drew the register by stages --- the 24 plan-field
-guards discharged by the layout proof, the 23 caller-contract guards
-discharged at composition by the caller's own certificate, the 11 OS
-accesses the named residual assumptions (the TCB $58\to34\to11$)
---- and emitted the eleven OS guards as a real corridor at the
-virgin margin 0xFC00 (424 bytes, 116 instructions, the round-trip
-green, R4/R7 preserved --- no sealed address moves; the falsified
-guard refused at both boundaries and on the index face, the harness
-36/36; the dispatch cost named --- a median 22 instructions per call
-against the 7 of the inlined guard, the price of the single-field
-eleven-window emission); the rejeu of the 116 certificates is
-consigned at its corrected invocation (58 UNSAT $+$ 58 SAT, the
-first-pass invocation bug --- an option meant for stdin --- named in
-an append-only erratum beside the untouched report).
-
-\paragraph{The SIMD corridors.} The three corridors are measured on
-hardware (RDTSC, pinned core, the sealed margins intact, the battery
-of \batterieVecteurs{} vectors per search corridor --- the exact partition \batteriePartition{} (sixteen buffer-tail vectors at every alignment of the last 16-byte block plus three at the buffer end, four overlapping patterns at periods one to four, thirteen lengths covering 1--33 --- the nominal list 1, 2, 3, 4, 15, 16, 17, 18, 19, 20, 31, 32, 33 ---, three page crossings, eight multi-occurrence cases, 512 property-based at the consigned seed --- summing to \batterieVecteurs{} exactly) at zero divergence): the hybrid memchr+memcmp byte-search at
-\hybrideCycles{} cycles [IQR \hybrideIqr{}] per absent 4{,}096-byte
-search, \hybrideGain{} below the sealed GPR notation (\scelleGprCycles{})
---- inside the class of the library's SIMD primitives; the SHA-NI
-compression body at \shaniCorpsCbloc{} cycles per block (\shaniGain{}
-below the sealed SHA-256 at equal work, the dispatch hoisted out of
-the loop, 202 cycles named); the AVX2 corridor dominated by its
-CPUID polling at the virtualised laboratory (the probe costs
-$\approx$\cpuidSondage{} cycles per call --- the hoisting to one probe
-per session is the named condition of its use; 5{,}846 cycles measured
-as sealed, the gap named).
-
-\paragraph{The carrier loop restructured.} The AES-NI carrier loop
-of the GCM seal reaches \porteuseVquatreInline{} cycles per block [IQR
-\porteuseVquatreIqr{}] in its inline form (the key schedule exposed
-at independent addresses, the block body in the loop, no call): the
-pre-registered target of $\le$\porteuseCible{} cycles per block
-envelope included is \emph{met}, a \porteuseGain{} gain over the v2
-flow at \porteuseVdeuxFlux{} --- joining the class of the compiler-called sealed block (7.62); the variants that did not break
-the dependency chain are named (the address table 53.11, the unrolling alone 53.17 --- the independent addressing mode is the
-lever, not the precomputation). The FIPS~197 key-schedule parity
-holds byte for byte at 256/256, the mutated-unrolling negative
-control caught at the first vector, the out-of-bound count refused
-fail-closed (nothing encrypted past the bound).
-
-\paragraph{The vault hardened on laboratory copies.} The seven
-hardening gestures (a)--(g) are proved on laboratory copies at the
-public control passphrase (no real vault, no real phrase --- the
-absolute rule): the ciphertext fingerprint bound to the key and
-verified \emph{before} the AEAD (corruption refused without
-destruction, falsification under a valid naive fingerprint destroyed
-with a formal report), the trap derivation epoch-bound (the
-anti-rollback extended to the trap), the Argon2 re-parametering
-ceremony versioned (the entropy floor verified: the strong passphrase
-admitted at 184 bits against the 60-bit gate, three weak ones
-refused), the phrase change under three-part escrow (the old phrase
-inoperant), the RAM guard specified and demonstrated (mlock,
-explicit zeroing verified byte for byte, the dumpable flag cleared),
-the epoch-witness anchoring and the FIDO2 prototype specified --- the
-network gesture and the physical token awaiting the developer's
-command, the gaps named. A z3 state machine proves the four
-invariants of the sentinel (the control names the unguarded machine
-where corruption destroys). The D81 delivery instructions are
-purged from the operational documents (the Book of the Vault v1.7
-and the specification v0.15.8: the five-share threshold-three Shamir
-escrow is the active guard, the repository public --- the runbook
-simulation refused the
-trap gesture at the first named step, the \purgeCommitsScannes{}-commit
-history scan found zero leak).
-
-\paragraph{The canonical adopted-budgets table.} One table, every value carrying its decision ID, scope and status: locate 1{,}053 $\to$ \gabaritLocaliserApres{} native (hierarchical, adopted D222/OPT-14) · edit 1{,}106 $\to$ \gabaritEditerApres{} (TPL-EDIT-v1, adopted OPT-14; the thirteenth wave's repair loop measures 712 per validated change at (2026) 18/18) · add 3{,}074 (the published record; the unrounded canon 3{,}073.5) $\to$ \gabaritAjouterApres{} skeleton (measured OPT-14; the 2026 record: 3/18, then 5/18 at the twelfth wave, then 6/18 at the thirteenth (2026), then 7/18 at the fourteenth --- the wave-13 repair loop converts none, the wave-14 counter-example repair converts its first (loupe-11); the fifth campaign (Nov 2026) at 5/18, its target missed and the reading consigned; the gap named by refusal class; the thirteenth wave measures 3{,}844 per validated change, the fourteenth 3{,}990, the fifth 4{,}604) --- the earlier perimeters (M1 51/719/1{,}088, content-only 580/2{,}143/3{,}510, whole-notation 3{,}374) remain dated history, labelled as such; the specification's dashboard (Table 19) is aligned on this table, its M1 budgets becoming dated history. The verification-side canons at unrounded operands: the round-trip cache 285.725 ms $\to$ 0.418 ms at the oracle opening (a 683.6$\times$ gain, the key bound to the notation, the engine and the profile); the wave-eleven regime ratio 39.24/2.163 $=$ 18.1$\times$; the fifteenth wave's native oracle engine at 0.960 ms $\to$ 0.000185 ms on the memo hit (a $5189\times$ gain recomputed at the unrounded medians, the engine line-identical to the Unicorn twin on both sealed crypto bodies, the mechanisms orthogonal to the regime memoisation and the incremental crystallisation); the interleaved CTR$\times$GHASH composition at 0.7271 cycles per byte at 4\,KiB (2{,}978.2 cycles [IQR 5.6] per 4{,}096-byte call, $n{=}20$ on the pinned core; the pre-registered target of 2.0 held at 36 per cent; OpenSSL EVP at 0.5757 (2{,}357.9 cycles [IQR 19.3]) --- the corridor within $1.26\times$ of the tuned library; the sealed per-block chain at 49.9376 (204{,}544.5 cycles) --- $68.7\times$ behind, no control removed; the parity at the rig itself: the corridor and the fallback produce the same 4{,}112 bytes on the rig's input, the guard green before the measurement).
-
-\paragraph{The pre-registered kits.} Six kits close the ``awaiting''
-lines of the evidence tables \emph{without producing a result} (the
-rule): the RISC-V \code{fence.i} silicon probe, the third-machine
-Loupe run, the dudect replications at three sample sizes, the
-stratified H7 hypothesis, the second annotator at the pre-registered
-$\kappa$, and the CF3 Tamarin model --- thirty fingerprints consigned
-before delivery, the 57 autotest checks green, no measurement taken
-(the developer's gesture remains the only source of terrain
-evidence); the Tamarin kit now carries the \emph{v2 reformulation}
-(q8kugkpdu: the porting restriction removed, the implication lemma
-stated, the threshold witness added, the new model hashed and
-consigned --- the fourteenth wave ran it at the sandbox: the implication
-lemma falsified at the first effective run (a two-step trace, the shares
-as public variables making the knowledge trivially satisfiable --- a
-modelling defect named, the model amended by writing and re-hashed),
-the five other lemmata incomplete at budget; no verdict fabricated).
-\paragraph{The adoption-side ecosystem (fifteenth wave).} Assembled
-by construction from the repository (\code{git ls-files}, never a
-manually maintained list): the training corpus of 109 triples (v2, historical; v2.1: 127/24/19 + 48 DPO)
-extracted mechanically from the append-only campaign journals (57 at
-the third, 52 at the fourth version; the splits sealed at the
-consigned seed --- 28/4/4 tasks, 77/16/16 triples, the held-out
-carrying the validators alone, no golden notation; the contamination
-canary unique; ten bit-identical rebuilds); the training environment
-with the typed multi-level reward (syntax, expansion, round-trip,
-oracle, mutation --- cumulative and strict; the reward is the judge's
-own verdict at every level, never a similarity; the anti-hacking
-check at the reward); the re-playable capability ladder (the rungs
-name the frontier, never an average; the checkpoint-kit-judges matrix
-fail-closed; the procedural generator resists contamination); the
-model-independent agent guide (the eleven rules, the graceful
-degradation named --- never a weakened judge --- and the pre-registered
-bench embedded); the canonical-English documentation core at the
-measured budgets (216 and 167 tokens against the 1{,}500 and 800
-ceilings); the 156-piece developer kit (the version-compatibility
-gate fail-closed, no trust anchor shipped, the genesis ceremony
-air-gapped by construction); the feedback, triage and reporting tools
-(the schema frozen by fingerprint before any report, the secrets
-gates lived at the refusal, the decision proposals addressed to the
-developer --- never applied); and the pre-registered hardware
-protocols with their fail-closed aggregator (a missing run refuses,
-never a partial verdict; the machine runs remain the developer's
-gesture).
-
-\section*{Edition changelog (frozen)}\label{sec:changelog}
-\noindent The body above states the current state in one voice; the waves are frozen history, one line each, the detail in the wave reports:
-\begin{itemize}\itemsep2pt
-\item v0.14.0 (17 Nov 2026) --- the mutation battery re-run with composition killers; the compiler-reference comparison.
-\item v0.15.x (17--18 Nov 2026) --- the proof-status table born; the explorer reproduced.
-\item v0.18.x (18 Nov 2026) --- the two-arm campaign D204.
-\item v0.19.0--v0.19.6 (19--20 Nov 2026) --- the OPT-04 pointer; the fault-injection battery; the kit v1.0.0.
-\item v0.20.0 (20 Nov 2026) --- the floor edition: the four-axis dashboard, the memory-safety discharge, CF3 mechanised.
-\item v0.21.0 (20 Nov 2026) --- the SSE2 re-measure; the edit-window; the third arm.
-\item v0.22.0 (21 Nov 2026) --- the eleventh wave: the SIMD corridors, the carrier loop, the fourth arm, the lifter, the templates.
-\item v0.22.1 (21 Nov 2026) --- the corrective release: the purged chains, the regenerated vault of ateliers.
-\item v0.23.0 (22 Nov 2026) --- the thirteenth wave carried, the requalifications, the equalised ventilation, the exact partition, the aligned abstracts.
-\item v0.23.1 (22 Nov 2026) --- the corrective release: the corrected sources and the six ateliers of the fourteenth wave in the complete archive; the five documents unchanged (the soumission and presentation packs carried byte-byte).
-\item v0.23.2 (22 Nov 2026) --- the corrective generation: the ten sourced corrections (a)--(j) carried to the five documents, every published ratio at its unrounded operands, the F/L replication grid, the extended cross-piece linter; the fourteenth wave carried (the GHASH aggregation, the regime memoisation, TPL-ADD-v4, the H7 draw, the first effective Tamarin run).
-\item v0.23.3 (23 Nov 2026) --- the fifteenth wave released: the five documents regenerated under the five-class linter (the semantic phrases, the decision ranges, the dated feasibility sequences, the post-deposit version claims, the English gallicisms); the wave carried (the composition measurement, the TCB reduction, the native oracle engine, TPL-ADD-v5 with its target missed, the H7 campaign served, CF3-v3 at the verdict machine, the adoption-side ecosystem).
-\item v0.24.0 (24 Nov 2026) --- the seventeenth wave: the publication of a switch is atomic up to eight natural bytes and no further, quiescence mandatory (D253); the R10 guarantee bounded to what its anchor is worth, integrity, authenticity and freshness separated, the coherent binary+state restore named as invisible to any local anchor (D254); the provenance register (eleven lines recomposed from canonical sources, four living refusals), and the manuscript's one ratio that did not recompose (63.39/19.66 = 3.2243, published 3.23) corrected at the source (D255). No measured value changed.
-\item v0.25.0 (24 Nov 2026) --- the eighteenth wave: the five documents regenerated under the ported five-class linter; the residues closed (abstract and changelog order, the decision range, the corpus named historical, the data availability); the specification gains the five residual hazards of the rendezvous (D261), the closed prescriptive whitelist (D262), the NV TPM counter (D263) and the structured expansion (D264). No measured value changed.
-\item v0.26.0 (24 Nov 2026) --- the nineteenth wave: the pack generation gate now runs the ported five-class linter plus six fail-closed classes (version table, decision range, changelog order, numbering, bench count, semantic threat), and the six residues named by the review are closed (the presentation's stale version table, the unqualified threat rows, the decisions D262--D264 absent from the specification, the +1 of the 16/16 bench, the changelog order, the mixed numbering of the proofs' section 2); the decision chain D261--D267 enters the journal and the specification (prescriptive whitelist, NV counter, structured expansion, transparency anchoring). No measured value changed.
-\item v0.27.0 (24 Nov 2026) --- the twentieth wave: the edition linter passes from eleven to fifteen classes (version prose, wave continuity, abstract length, reader-test count) and the four residues found by the review are closed at the source (the Book's prose version references, the presentation's wave number, the -35.7% operands pinned to the provenance register, the reader test decomposed one line per case). No measured value changed.
-\item v0.28.0 (24 Nov 2026) --- the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\item v0.29.0 (24 Nov 2026) --- the twenty-second wave: the six residues of the review are closed at the source (the anchoring status derived from the append-only journal, the presentation's wave title, the Book's guard header and foreword, the class count, the companion specification, the multiplication ratio), the edition linter gains three classes that close the holes demonstrated (count, title wave, status recomposition) with a typographic normalisation, and the manuscript's form is cleaned (release note out of the title, one keyword line per language, French abstract aligned to 233 words). No measured value changed.\item v0.30.0 (24 Nov 2026) --- the twenty-third wave: the prose of status is derived, not typed (D275) --- the Data availability paragraph from the deposit registry (the latest minted version is v0.26.0; this edition is explicitly unminted), the Tamarin/ProVerif status from the proof-status registry (L3 verified, L1/L2 incomplete at the memory wall, ProVerif port delivered), the specification accompanied in Section 2.1 pinned to v0.15.15, the multiplication ratio in canonical operand order, and the vault appendix title recomposed from the table itself; four linter classes close the holes shown (C21 DOI, C22 English version prose, C23 proof status, C24 operand order). No measured value changed.\item v0.31.0 (24 Nov 2026) --- the twenty-fourth wave: the targets, like the statuses, move into a registry (D276) --- one line per target with its exact subject, perimeter, pre-registered value, measurement and verdict, published in the proofs; the interleaved AES-GCM corridor is named what it is (measured at 1.26x EVP, no relative target of its own) while the 1.05x target belongs to the VAES corridor, which is not written; class C25 recomposes every published verdict from the registry. No measured value changed and no target re-aimed.
-\item v0.32.0 (26 Nov 2026) --- the present edition, the twenty-fifth wave: the pack's own review is answered at the source --- the D267 anchoring divergence between the five pieces is settled by deriving the single status from the append-only journal (class C26 recomposes every shared semantic status across all five pieces), the four editorial residues are closed (the fourteen signed trees of Table 12, the two wave-24 section titles distinguished, the French fragments of the English manuscript, the Book's chronology reordered; classes C27--C29), the targets registry gains its era table and every TENUE verdict cites its perimeter or carries the dated-historical label, the constrained-decoding campaign is delivered as a ready harness with the named SERVING-ABSENT refusal (the border accepts the schema field and does not apply it), the symbolic proofs advance natively (two sub-lemmas verified, the occurrence semantics of the checker named, the real-machine kit at a logged fingerprint), and the VAES corridor is written on its frozen notation and measured: the gate is green first (20/20 NIST vectors against the independent reference, the mutated variant refused at the first vector), the pre-registered 1.05x target is MISSED at 5.66x EVP and published as missed, and the native oracle engine session runs the 235-vector corpus at 0.266 s median against its 10 s target. No measured value changed and no target re-aimed.\end{itemize}
 
 \section{Conclusion}\label{sec:conclusion}
 
@@ -2272,7 +1696,7 @@ v0.31.0 (2026-11-26, version DOI 10.5281/zenodo.24545339).
 The deposits are recorded one line each in the deposit registry
 (\code{DEPOTS.jsonl}) and this paragraph is derived from it: the dated
 version DOIs are 10.5281/zenodo.24545339, 10.5281/zenodo.24499428, 10.5281/zenodo.24497211, 10.5281/zenodo.24450872, 10.5281/zenodo.24442951, 10.5281/zenodo.24442241, 10.5281/zenodo.24438614, 10.5281/zenodo.24420007, 10.5281/zenodo.24407701, 10.5281/zenodo.24397623, 10.5281/zenodo.24382460, 10.5281/zenodo.24379173, 10.5281/zenodo.24367344
-for v0.31.0, v0.26.0, v0.25.0, v0.23.3, v0.23.2, v0.23.1, v0.23.0, v0.22.1, v0.22.0, v0.21.0, v0.19.5, v0.19.4, v0.19.0 respectively. This edition (v0.32.0) is \emph{not}
+for v0.31.0, v0.26.0, v0.25.0, v0.23.3, v0.23.2, v0.23.1, v0.23.0, v0.22.1, v0.22.0, v0.21.0, v0.19.5, v0.19.4, v0.19.0 respectively. This edition (v0.33.0) is \emph{not}
 minted: the developer's deposit gesture is an explicit command, and until
 it is given the current snapshot has no version DOI of its own, which is
 why none is cited here. The two
@@ -2288,6 +1712,658 @@ the content of this manuscript.
 \paragraph{Acknowledgements.} The author thanks the Z.ai GLM agent
 (``the laboratory'') for eleven milestones of disciplined execution, and
 the TRIADE decision log for keeping everyone honest.
+
+
+% ===================================================================
+\appendix
+% ===================================================================
+\section{The extended results programmes}\label{sec:renforce-annexe}
+The three programmes below were core results subsections until the
+present edition; they are moved verbatim to this annex by the IMRAD
+restructure, and every measured value they carry is unchanged.
+
+% ------------------------------------------------------------------
+\subsection{Strengthened evidence (the v0.11.0 programme)}\label{sec:renforce}
+
+The second edition added six laboratory instruments to the evidence base
+(Table~\ref{tab:preuves}); all run with fixed, consigned seeds and are
+reproducible from the scripts shipped with this edition.
+
+\paragraph{Mutation testing --- re-run with composition killers (v0.14.0).} The 832
+single-byte mutants of v0.11.0 were re-run (same seed, same module,
+same generation order) with a new semantic killer: a \emph{composition
+harness per mutant} --- the full application loop for the Loupe domain
+(open, cascade, paint, type, scroll, save, quit; the saved disk and
+screen bytes confronted to the sane baseline), the ClientHello composition
+plus record protection for the tls13 orchestration blocks, and the
+autonomous sys harness for the sys domain (D195). Result: 776/832
+killed (93.3\%, up from 83.4\%) --- tls13 and sys now at 100\%, the
+56 remaining Loupe survivors \emph{named} (mutations in paths the
+scenario does not exercise: error branches, unreached offsets,
+neutral bytes). The original campaign: 832 single-byte mutants of the sealed blocks
+(instructions, operands, offsets --- one byte mutated in a laboratory copy,
+the sealed artifact untouched), killed by the existing instruments in
+order of cost: the round-trip check, the structural oracle, and --- for the fourteen
+blocks of the cryptographic families (the thirteen tls13 crypto blocks
+and loupe-06's md5; 224 mutants, Table~\ref{tab:preuves}) --- the
+semantic differential against official vectors. Result: 694/832 killed (83.4\%);
+the cryptographic families reach 100\%. The 138 survivors concentrate in
+the orchestration and UI blocks, where the semantic killer is not wired
+at the isolated-mutant level (their semantics are verified by the full
+harnesses in composition, not per mutant): this gap is \emph{named}, not
+hidden, and is the primary target of the next edition.
+
+\paragraph{Fault-injection battery (v0.19.5).} The fifty-six named
+survivors were re-run under a \emph{fault-injection battery}: sixteen
+application scenarios at the evidence conventions --- the missed,
+locked and refused opens; the GO mode ran end-to-end (the empty
+commit, out-of-bounds, the hexa keys, DEL, ESC); the search to the end
+and past the last occurrence (the occurrence count read from the file
+itself); the full 256-distinct-byte journal and the non-hexa
+character; the incomplete bottom line; the boundary keys; the handle
+at the most-significant word; and the block-level faults (no session,
+outside file, null exit, the \code{ReadFile} shim failing, the search
+string at the input convention --- the clean state at every call, the
+non-volatiles verified, the verdicts read at the block). The battery
+reproduces the v0.14.0 console \emph{identically first} (776/832 at
+the consigned seed 20261111 --- no new draw), then kills thirty-five
+of the fifty-six: \textbf{811/832 (97.5\%)} --- 83.4\% $\rightarrow$
+93.3\% $\rightarrow$ 97.5\% across the three programmes. The
+twenty-one remaining survivors are each named to one of thirteen cause
+families (six the dying state --- fields written at close die with the
+window, no observable reads them back; three the blind shim --- the
+scroll and invalidation calls read neither flag nor handle; two the
+post-entry view tracking; and one each: the never-served error code,
+the volatile RBP under msx64, the adjacent sentinel, the off-table
+transfer site, the never-served handle, the field beyond the pattern,
+the never-served failure path, the converging guards, the reframe
+path, the diverted target falling back). \emph{No killer weakened}:
+the original console was reproduced before the battery ran, and the
+sealed pieces were never touched --- the battery writes to the
+emulations.
+
+\paragraph{Coverage-guided fuzzing.} The two untrusted-input blocks were
+attacked under instrumentation: \code{loupe-\allowbreak 01} (the file path, through
+the harness's virtual OS with canaries around the path buffer) reached
+60.5\,\% block-instruction coverage over 400 iterations with zero crashes
+and zero canary violations; the \code{http-10} parser (on the sealed 0.4.0
+artifact) reached 358 distinct instructions with zero emulation crashes
+and zero named faults, growing a 17-entry corpus. The limits are stated:
+coverage is per-block under emulation, and crashes are emulation faults,
+not terrain deaths.
+
+\paragraph{Bounded static memory safety.} An abstract interpretation of
+all 52 blocks (the extension of the msx64 ABI audit born at run 4):
+2{,}098 memory accesses classified --- 1{,}181 stack accesses verified
+against the frame bound (zero out-of-frame: the stack-smash class is
+absent), 263 accesses mediated by contract-bounded argument pointers, 191
+constant \code{[rip]} accesses, 463 unresolved accesses \emph{named}
+(volatile-recomputed bases, composed indices). The analysis is linear
+(no path enumeration, loop bodies verified once, no alias analysis): a
+bounded verification, not a proof.
+
+\paragraph{Constant-time (emulation --- reformulated as exact trace equality).}
+The earlier editions reported the Welch statistics of a t-test on
+executed-instruction counts between fixed-secret and random-secret
+classes (N=60 each) as uniformly zero. That formulation was an artefact
+twice over, both
+facets found by the present edition's replay. First: on bit-identical
+instruction traces the variance is null and Welch's $t$ is \emph{undefined}
+(0/0), not zero --- a t-test is the wrong instrument for an equality that
+is exact. Second: on two of the six targets (hmac, aes-gcm) the v0.11.0
+instrument had never activated its instruction counter (the counts were
+all zeros; the hkdf target had run with an accidentally truthy flag) ---
+the vacuous measurements are named, and the replay measures all six for
+real. The correct statement is \emph{exact equality of the executed-
+instruction traces}, and the replay verifies it as such: each of the six
+targets (sha-256, hmac, hkdf, x25519, aes-gcm, md5) executes a single
+instruction count across all 120 measurements --- sha-256 4{,}469, hmac
+18{,}371, hkdf 18{,}407, x25519 exactly 1{,}238{,}959 for every key,
+aes-gcm 11{,}695, md5 132{,}509 (grain consigned, the v0.11.0 protocols
+replayed verbatim). N=60 per class is an exact \emph{structural}
+control, never a statistical power test. The present edition promotes
+the instrument: every run now hashes its \emph{complete} trace ---
+each executed instruction (address and size) and each data access
+(type, address and size; values never hashed) --- and the six targets
+each show \emph{one distinct hash} across all 120 measurements
+($N{=}60$ per class, seed consigned): bit-identical execution flows
+\emph{and} memory-access patterns across the secret classes, the count
+subsumed by the hash (two traces of different lengths cannot share
+it), the x25519 count confirmed within it. The single-count equality
+remains true; it is no longer alone. The metric remains
+emulation-structural; the real-hardware wall-clock timing is a separate,
+now measured, claim (the dudect kit runs below).
+
+\paragraph{Comparative benchmarks --- audited and corrected (v0.13.0).} The
+v0.11.0 edition reported a ``15.3$\times$ instruction advantage'' for
+the hand-written SHA-256 blocks over a compiled reference. The audit
+required by the present edition found that figure to be a \emph{measurement
+artifact}: the instrument read the emulation counter after the hash
+pipeline returned, but the counter resets at every block invocation ---
+the published 4{,}524 instructions were the \emph{finalisation stage
+alone}, compared against the reference's \emph{complete} operation (the
+implausible 4.2 instructions per SHA-256 round was the tell; a scalar
+round needs an order of magnitude more). Re-measured stage by stage,
+digest verified against \code{hashlib} before counting and the 17
+compression invocations confirmed mechanically, the complete operation
+costs 75{,}983 instructions for the blocks against 69{,}132 for
+gcc~14.2 -O2 and 77{,}505 for -Os, in the same emulator on the same
+input --- under the explicit convention that every percentage here is
+\emph{the cost of the notation relative to the reference, positive =
+the notation more expensive}: the hand notation sits \emph{between}
+the two compiler levels at $+9.9\%$ executed instructions against -O2
+and $-2.0\%$ against -Os (the v0.11.0 text had both signs inverted;
+every sign and value is recalculated from the raw CSV by the numeric
+linter of the present edition, which now checks the signs too), is
+1.45$\times$ more compact than the -O2 function (1{,}021 vs 1{,}482
+bytes including the shared K table) but less compact than -Os (548
+bytes), and neither camp uses any ISA extension beyond the x86-64
+baseline --- no AVX, no SHA-NI (the -O2 reference does use baseline SSE2
+moves for buffer setup, which the pure-GPR notation does not; the gap
+is reported unadjusted and strict GPR-to-GPR parity is not claimed).
+The 15.3$\times$ claim is \emph{withdrawn}; the corrected statement is
+that the WYSIWYG notation is competitive with a modern compiler on its
+own turf --- the price of direct auditability is nearly nil, and the
+spectacular premium does not exist.
+
+\paragraph{Oracle independence --- second agent (v0.14.0).} The oracle was
+re-generated by a second, \emph{isolated} agent instance (fresh context,
+no shared conversation) deriving the MD5 $T[64]$ and SHA-256 $K[64]$
+tables from the mathematical definitions alone: \emph{zero divergences}
+across the 128 constants (agent == plan == definitions), confirmed by an
+integer-exact cube-root route executed independently. The named gap:
+the laboratory's agent infrastructure exposes only one model family ---
+true cross-family independence remains open. The v0.11.0 routes: the
+MD5/SHA tables re-derived
+through decimal arithmetic, the RFC 1321 gold vectors confronted
+spec$\leftrightarrow$\allowbreak harness$\leftrightarrow$\allowbreak hashlib, the differentials
+re-run with a new seed and the system generator (\code{os.urandom}):
+zero divergences across all confrontations. A second \emph{agent} remains
+to be tried (the replication protocol is proposed in the next edition).
+
+% ------------------------------------------------------------------
+\subsection{The controlled compiler comparison (the v0.14.0 programme)}\label{sec:comparaison}
+
+The pre-registered plan (D193, hash-consigned before any measurement)
+compares six sealed Loupe blocks spanning the five families against a C
+reference implemented \emph{from the same layer-I contracts}, compiled
+with gcc 14.2 -O2/-Os (clang absent, the deviation named), calling the
+\emph{same mini-OS shims} through an \code{ms\_abi} pointer table, and
+confronted with the \emph{same vectors} (D195). The headline result is
+\emph{behavioural}: zero divergence across all contract vectors ---
+the hand notation and the compiled reference are observationally
+equivalent at the contract level.
+
+\emph{Instructions (complete operations, the audited counting convention).}
+On SHA-256 range hashing the notation is at \emph{parity at equal work}:
+9{,}089 vs 9{,}146 instructions (the 384-byte block composes the sealed
+765-byte inherited implementation through the card; the 1{,}707-byte C
+function embeds its own). Windowed file reads are at parity (48 vs 47). On
+the simpler pure blocks the compiler's tight loops win: hex-line
+composition 641 vs 477, byte search 193 vs 69, keystroke entry 39 vs 16.
+The full session-open cascade (window + fingerprint panel) reads
+102{,}176 vs 75{,}560 --- \emph{not at equal work}: the compiled camp
+computes only the SHA-256 half of the panel (no audited C MD5 exists;
+the v0.11.0 reference was rejected as faulty), so the comparison
+carries its mark until an audited C MD5 exists. The per-vector audit
+of the present edition names a further artefact: the loupe-01 median
+(1{,}025 vs 32 instructions) falls on a \emph{refusal} vector (four
+of the five suite vectors are refusals), where the notation composes
+its controls in-piece and the compiled reference stays short --- the
+real opening costs 102{,}136 vs 75{,}525 ($1.35\times$, still not at
+equal work), reported per vector in the data archive.
+
+\emph{Sizes.} Mixed, honestly: the notation is more compact on
+SHA-256 (384+765 shared inheritance bytes vs 1{,}707) and on the
+session-open block (448 vs 494 bytes), less compact on keystroke
+entry (704 vs 413) and search (192 vs 105) --- the directions
+corrected in the present edition against the raw table, where the
+previous edition had inverted the open and keystroke entries.
+
+\emph{Mutation (same protocol, same seed, same draw for both camps).}
+Camp notation: 5--13/16 killed per block under the differential
+killer at -O2 (3--13 across both optimisation levels; every bound
+recalculated from the raw table by the numeric linter of the present
+edition), the survivors named (consistent with the orchestration
+class). Camp compiled: 16/16 on the OS-calling blocks (the call-
+sequence killer catches everything), 12--14/16 under the differential
+killer on the pure blocks --- and 16/16 in \emph{total} everywhere,
+the remaining mutants falling to the cheaper killers. The reading we
+pre-registered as H4-D193 holds at the level that matters: both camps
+kill 96/96 mutants in total --- \emph{testable to the same degree},
+the killer profiles differing (the notation's kills concentrate in
+the differential killer, the compiled camp's spread across
+differential and call-sequence).
+
+
+\subsection{The unbounded model and conformance testing
+(the v0.15.0 programme)}\label{sec:v150}
+
+\paragraph{From bounded to unbounded.} The v0.12.0 model checked the
+vault's claims by exhaustive exploration up to three epochs --- an
+artificial ceiling inherited from the explorer, not from the design (the
+implementation's closing step is $e \leftarrow e+1$ without a cap). The
+v0.15.0 programme removes the ceiling and moves the proof to an
+\emph{inductive invariant} $I$ over the operational semantics:
+$I_1$ (a learned secret implies the full three-element threshold),
+$I_2$ (no unjust destruction flag), $I_3$ (the trap media and the CF2
+fragments are never touched), $I_4$ (epochs stay positive). The proof
+obligations are discharged mechanically: initialisation holds at the
+initial state; preservation is checked for \emph{each of the 13 rules}
+over the finite set of state shapes (288 shapes satisfying $I$, the
+epoch instantiated over both guard classes $\{1\}$ and $\{\ge 2\}$); the
+epoch-uniformity of the class $\ge 2$ is \emph{structural} --- the
+rules only ever compare the epoch to 1 and take its successor, a fact
+of the rule text audited mechanically (the epoch is read by
+$\{e > 1, e + 1\}$ only) --- and witnessed in replay by re-running the
+whole proof under epoch translations $\delta \in \{7, 50, 1000\}$ with
+bit-identical verdicts. The present edition adds the \emph{coverage
+lemma} that was previously implicit: every concrete reachable state is
+represented by at least one of the 288 abstract shapes, so the
+preservation check over the shapes covers the entire reachable space.
+The lemma is discharged in three obligations: (O1)~the abstraction
+$\alpha$ is total on well-typed states (its domains are the typing
+constraints); (O2)~those domain constraints are \emph{inductive} ---
+verified by Apalache over unbounded integers (initialization and
+preservation both NoError, with a negative control: a weakened domain
+is caught, Error~12); (O3)~the 288 shapes are \emph{exactly} the image
+of the well-typed invariant-satisfying states under $\alpha$ --- a
+verified bijection (288~forms, none outside the invariant, all
+reachable bounded states covered). The TLA+ model submitted to the
+model checkers is aligned with the operational semantics \emph{rule by
+rule}: a strict transpiler reads the thirteen actions of \code{CF3.tla}
+and confronts guards and effects with the Python semantics over 512
+concrete states per rule (both epoch classes, every subset, every
+boolean) --- all thirteen aligned, any unrecognized construct a refusal.
+The independent model-checker replay of the present edition (TLC the
+bounded fidelity: 154 states, 1{,}152 transitions reproduced exactly;
+Apalache/SMT the unbounded induction
+$\mathrm{Init} \Rightarrow I$ and $I \wedge \mathrm{Next} \Rightarrow I'$,
+negative controls caught) returns 8/8 green. Monotonicity (no rule ever decreases the epoch)
+is checked unconditionally over 4{,}096 shapes; the two replay rules
+return the state unchanged. The four properties are therefore
+\emph{proved unbounded}: any epoch, any depth, under hypotheses
+A1--A4, with A5 (side channels, implementation flaws, three-element
+compromise, quantum) explicitly out of model.
+
+\paragraph{Fidelity and bounded cross-checks.} The ported explorer
+reproduces the v0.12.0 counts \emph{exactly} under the historical
+ceiling (154 states, 1{,}152 transitions --- the proof of a faithful
+port); with the ceiling removed, the extended bounds ($e \le 5$ at depth
+8: 228 states / 1{,}902 transitions; $e \le 7$ at depth 12: 372 /
+3{,}342) find zero reachable states outside $I$ and zero property
+counterexamples --- the bounded evidence now confirms the unbounded
+proof instead of substituting for it.
+
+\paragraph{Model--implementation conformance (renamed in the present
+edition; formerly ``refinement'') --- now a generative campaign.} The
+v0.15.0 evidence was a directed game of 34 replayed steps (every
+abstract rule against the real Python implementation, a test vault
+under a publicly marked test passphrase; the real vault is never opened
+by a test): the honest cycle across \emph{five} successive epochs, fifteen
+wrong-passphrase attempts (zero destruction, zero sealing), the proven
+container falsification, the trap falsification, the past-epoch replay
+in three variants, the absent trap, the foreign vault's trap, and the
+below-threshold adversary (32 forged key-halves triples, zero verifier
+passes) --- zero gaps, every failure path included. The present edition
+replaces the chosen-steps design with a \emph{generative} campaign:
+10{,}000 random transition sequences (seed consigned, 3--8 steps per
+trace, weighted draws over the actions \emph{offered} by the model,
+every rule and every refusal path covered --- accepted and refused
+counts per rule are read from the generation logs), each trace driving
+the abstract model and the concrete test vault in parallel, every
+verdict confronted step by step, every divergence shrunk (ddmin) and
+archived. Result: \textbf{660 divergent traces, exactly one class} ---
+\code{falsifie\_conteneur} during an open session: the model's guard
+offers the rule only in the canonical phase, while the concrete
+sentinel runs on the canonical container and \emph{does} destroy on
+proven falsification mid-session (local destruction, PV raised, the
+trap media and CF2 untouched). The analysis: a state-coverage gap of
+the \emph{model} (an under-approximation discovered by the campaign
+--- the directed 34-step game never crossed it, the randomization
+crosses it 660 times in 10{,}000), \emph{not} a threat to the
+properties: the concrete destruction remains proven falsification and
+remains local (P3 and P4 hold on every divergent trace); the shrinker
+(ddmin) reduces every divergent trace to its minimal failing sequence:
+655 of the 660 reach the two-step minimum [\code{ouvrir\_correct},
+\code{falsifie\_conteneur}], their per-trace minima consigned in the
+campaign's raw register. The replay at identical seed reproduces the
+10{,}000 verdict digests bit for bit. \textbf{The gap is now closed}
+(the present edition, the v0.15.3 model extension): the guard aligned
+with the concrete sentinel --- falsification offered in both phases,
+the destruction local, the media and fragments untouched --- and the
+campaign re-played \emph{to zero divergence}: 30{,}000 traces across
+three seeds (the consigned 20261112 plus two new ones), every rule and
+refusal path covered, the replay bit-identical twice; against the
+consigned v0.18.0 register, exactly the 660 traces of the divergence
+class changed and \emph{nothing else} (the 9{,}340 other digests
+identical, every fin type identical) --- the extension changed
+precisely the discovered gap. The bounded cross-check confirms the
+reachability space is invariant: the TLC fidelity chain still finds
+154 distinct states at the historical bounds, only the fired
+transitions grow (896 to 926 --- the in-session falsifications now
+offered); the unbounded proofs were re-discharged on the extended
+model (the inductive invariants hold, the 13-rule alignment is
+SMT-unbounded, the epoch-translation lemma is re-proven, 31 negative
+controls caught --- including the extension-annulled guard restored
+as a mutation, and the destruction that overflows onto the media). Three concrete gestures sit outside the abstract model
+(the out-of-band epoch witness, the foreign vault, the forged halves)
+and remain consigned as such, with their concrete verdicts matching
+the specification.
+
+\paragraph{The hardware runs: the dudect timing measured; two kits still
+waiting.} The real-time dudect kit ran on the developer's machine,
+twice, with dated and hand-signed witnesses (13 November 2026; four
+targets extracted from the sealed proxy piece, RDTSC/QPC timing, core
+affinity 0, the native call validated against the FIPS~180-4 ``abc''
+vector). At N=200 per class the Welch statistics read $|t| = 12.39$
+(tls13-02) and $5.19$ (tls13-13) --- above the $|t|>5$ threshold,
+consigned exactly as measured --- with tls13-16 at $0.94$ and tls13-17
+at $3.11$; the N=400 run reads $0.84$, $1.55$, $-0.30$ and $2.02$ ---
+all four under the threshold, the N=200 dependencies dissipated at the
+larger sample. The honest reading is the kit's own: no threshold
+divergence on that sample, that machine, one run at each N --- never
+``constant time proven''; cache-timing and power side channels remain
+out of scope, and the single-run scope is part of the claim. The present edition
+delivers the \emph{pre-registered repetition protocol} that the
+single-run scope called for: $n{\ge}10$ independent executions per
+$N{\in}\{60, 200, 400\}$, at least two machines (each with its
+consigned CPU fingerprint and effective frequency state), fixed core
+affinity, and the tls13-02/tls13-13 N=200 peaks investigation
+pre-registered with its candidate causes named \emph{before} any data
+(a clock-noise false positive, a shared-core interruption, or a real
+constant-time gap --- the repetition and the median criterion decide,
+no cause is elected in advance); the sealed measurer is carried
+unchanged, the aggregation tool refuses any missing run (fail-closed),
+and the kit waits for the developer's gesture --- no figure fabricated.
+Two kits also remain \emph{awaiting a hardware run}:
+\code{fence.i} semantics on physical RISC-V silicon (the executed M7
+terrain runs were TCG emulation --- the reserve is named), and a
+third-machine Loupe field run (the full T0--T7+S0 scenario). For
+those, no number exists and none is fabricated; the claims table stays
+honest until the runs are on record.
+
+% ------------------------------------------------------------------
+% ------------------------------------------------------------------
+\section{The generated evidence tables}\label{sec:tables-annexe}
+The eight long tables below lived inside Methods and Results until the
+present edition; they are moved verbatim to this annex by the IMRAD
+restructure (the plan's ``long tables to annexes''), every value
+unchanged, every in-text reference resolving to this annex.
+
+\input{donnees/tables_generees_v180}
+
+\input{donnees/table-campagne}
+
+\input{donnees/table-campagne-d210}
+
+
+% ------------------------------------------------------------------
+\section{Distance to the floor (the optimisation journal)}\label{sec:floor}
+\paragraph{Scope convention (mandatory before any comparison).}
+Each ratio below is measured over the \emph{total} operation cost
+(material read, prescription prose, emitted response), with each field
+also reported separately in the campaign artifacts; the floors are
+named with their computation method, and no ratio is ever compared
+across different scopes.
+
+\paragraph{Security.} Of the 2{,}098 memory accesses classified by the
+bounded analysis, \sureteDecharges{} are discharged by proof (95.6\,\%)
+--- loop-invariant inference, interval and alias analysis, and bounded
+model checking over the lifted notation --- and \sureteNOMMES{} carry
+named causes together with a satisfiability certificate proving that no
+static bound exists without the external invariant (OS contract, caller
+structure, layout runtime field); zero out-of-frame accesses. The
+mutation battery stands at \mutationBrutNum/\mutationDenomBrut{} raw
+(97.5\,\%) and \mutationAjusteNum/\mutationDenomAjuste{} adjusted
+(99.3\,\%, the 15 excluded equivalents labelled
+proved-argued-bounded --- twelve semantic arguments, three bounded
+sweeps, never mechanical unbounded proofs),
+the two scores always presented side by side. The CF3 inductive
+invariant is mechanised in an independent proof assistant
+(\cfTroisObligations{} obligations, certificates archived), and the
+static non-interference proof covers 16 blocks across seven crypto
+families (the eleventh wave adds tls13-04 at the refined model ---
+the state secret, the total length a named public metadata --- and
+tls13-08), proven under the lifter-soundness hypothesis --- which the
+eleventh wave establishes \emph{on its validated domain}: 942 distinct
+encodings confronted at zero divergence by the exact method (the
+writes observed at the diff and the write hooks, the reads by the
+differential sentinel), and a 7{,}769-mutant corpus whose 155
+divergences are \emph{all} out-of-vocabulary --- the guard that
+follows: the lifter declares its soundness over the modelled classes
+and refuses any unmodelled class at load time (fail-closed, the
+refusal named). The GHASH key~H is covered as a secret (tls13-17 at
+the third argument: neither branch nor address tainted); the
+negative control caught in both directions.
+
+\paragraph{Performance.} The M4 session runs at a median of
+\mquatreAvantMediane{}\,s unoptimised ($n{=}5$ sessions, the unrounded
+medians consigned), \mquatreChaudMediane{}\,s warm
+with the memo stack (the unrounded medians 6.912\,s and 2.056\,s; the
+29.7\,s run is the observed 1-in-10 audit), and \mquatreBrasC{}\,s at
+the compiled reference arm: a floor-ratio of \mquatreRatioChaud{} against
+the C arm at equal work, recalculated from the unrounded medians
+($6.912/2.056 = 3.362$, cited at one decimal wherever the current
+measurement is meant). The byte-search SSE2 variant was
+corrected and re-measured: the prior variant broadcast a four-byte
+pattern instead of the first byte (a fault surfaced by a
+planted-occurrence differential the prior confrontation could not
+see, 406 of 564 planted occurrences missed); the corrected variant
+passes all 88 vectors at zero divergence and costs \sseDeuxVdeuxInstructions{}
+instructions per operation --- 0.04$\times$ the gcc-O2 instruction
+count --- while on hardware (RDTSC, pinned core, $n{=}20$) it runs
+\sseDeuxTempsReel{} cycles per absent 4{,}096-byte search against
+\gccODeuxTempsReel{} for gcc-O2, \idiomeMemchrTempsReel{} for the
+memchr-and-memcmp idiom and 933 for libc \code{memmem}: the
+hand-written SSE2 notation sits \emph{inside the class of the library's
+SIMD primitives} (1.5$\times$ above the memchr idiom, 1.1$\times$
+below \code{memmem}), 19.3$\times$ below the compiled scalar path
+--- both ratios restated at one decimal from the unrounded cycle
+counts (833/561 and 16{,}040/833; the prior edition's ``1.6$\times$''
+and ``two orders'' were coarser roundings of the same measurements,
+corrected by the numeric linter of the present edition). The
+AES-NI descent is already the sealed domain (the era profile requires
+it), and the CPUID dispatch is hoisted out of the per-block loop in
+the laboratory variant (45 to 34.4 instructions per block, at exact
+parity with the sealed block under the same carrier).
+
+\paragraph{Optimisation.} Every lever in the OPT journal is founded on
+a measured hot path (R11); the wave adds the crystallisation certificate
+(a one-block diff re-verifies 3 of 18 blocks), the double engine at
+session opening (divergence zero at volume), and the deterministic
+oracle compiler (968 oracle tokens removed over three units); the
+tenth batch adds the edit window (OPT-10: the reread material down
+7.0$\times$, the total median 2{,}452 to 1{,}146 at $n{=}18$ with the
+independent re-tokenisation at zero drift and the pointer's four
+named refusals re-verified fail-closed); the eleventh batch adds the
+round-trip verdict cache (the key bound to the notation, the engine
+and the profile --- a hit returns the verdict without re-execution,
+the session-opening re-verification 285.725 to 0.418\,ms, a
+683.6$\times$ gain (the recomposed canon, the unrounded operands
+published --- the reader recomputes), every key divergence forcing
+the complete re-verification back) and the incremental crystallisation (the transitive closure of
+the real diff alone re-verified: 13 of 28 blocks, $-54\,\%$ of the
+verification post --- the 1-in-10 audit named a probabilistic net,
+never a proof; the capture demonstrated at the sought seed).
+
+\paragraph{Token cost.} The pointer-only localiser stands at a median
+of 1{,}053 native request tokens (the v0.21.0 \mbox{total-perimeter} record
+of 1{,}103 dated alongside; $n{=}18$ at each wave); the hierarchical
+locator at 627 ($-40.5\,\%$: the coarse index of identifiers and
+short fingerprints first, then the fine pointer --- the expansion
+re-checked client-side); the templated editor at 674 ($-39.1\,\%$
+against the window re-measure at 1{,}106: the versioned template
+TPL-EDIT-v1 carries the format grammar once, its sha-256 engraved at
+the prompt, the prescription prose down 57\,\% --- 866 to 372 cl100k
+tokens, the lever the tenth wave had named); the add-by-skeleton at
+2{,}200 ($-28.4\,\%$ against the whole-notation 3{,}073.5 at the same
+perimeter, its feasibility 3 to 7 greens across the four passes
+(the skeleton, then the domain dictionary, then the grammar with its
+repair loop, then the counter-example repair --- the wave-13 loop
+converts none of the honest refusals, the wave-14 counter-example
+repair converts its first (loupe-11) at 7/18 for a median 3{,}990
+tokens ($n{=}18$ tasks); the third pass measures 3{,}844 tokens per validated change at
+(2026) 6/18, (2026) 18/18 for the edit operation at 712), the fifth
+campaign (the structured expansion diff at
+opcode/operand/offset --- the line as written, its expansion at the
+exact point it breaks, the canonical pattern admitted; Nov 2026) at
+5/18 ($n{=}18$ tasks) for a median
+4{,}604 tokens: the
+Nov 2026 pre-registered target of $\ge$15/18
+missed, the cost target of $\le$4{,}500 missed by 104 --- the
+unfavourable reading consigned, never a number adjusted, never a
+target re-drawn; the named cause is the subject's CLI variance (the
+three wave-14 greens lost at identical prompts, the judges intact, the
+chronic refusals unconverted --- the free-text HORS-FORMAT class
+remains), the residual gap named by
+refusal class at the third pass (nine expansion-divergent, two
+out-of-format, one unknown-id): the gap has moved from domain
+knowledge to the stability of the model's machine writing against
+the expansion judge); the edit floor ratio is
+24.5$\times$ at the \emph{same} tokenizer --- the real diff pair
+re-tokenised through the campaign's own usage field (median 27.5
+native tokens over the eighteen tasks, $n{=}18$; the cl100k floor line --- 18
+tokens, the mixed ratio 63.6$\times$ of the v0.21.0 edition ---
+remains dated history), the locate and add floors named as ever
+(the literal pointer, the block body).
+
+\paragraph{Memory safety at one hundred percent.} The 92
+runtime-based accesses of the prior edition now close the
+classification: 34 address computations (LEA) are discharged
+relationally (the computed value feeds already-classified use
+sites), and the 58 true dereferences are requalified
+\emph{conditional (assumption-discharged)} on the sealed artifact:
+each is a proof obligation conditional on a named external invariant
+--- the exhaustive trusted-computing base reads 24 plan-field
+accesses (the 960-byte CADRE layout), 23 caller-contract accesses
+(the AEAD context) and 11 OS accesses (the system-call buffer). The
+runtime guards themselves are \emph{emitted in laboratory copies
+only} (the OPT-01 margin-$0\times$10000 model, never in the sealed
+binary): a two-sided check proven by an UNSAT certificate per guard
+(58/58 re-verified), falsified per guard in the laboratory variant
+(the violated invariant is refused at both zone boundaries and on
+the index face, the honest address admitted). Every access carries
+its proof-strength label (statically sound / bounded /
+conditional-assumption-discharged); zero out-of-frame accesses. The
+fifteenth wave re-drew the register by stages --- the 24 plan-field
+guards discharged by the layout proof, the 23 caller-contract guards
+discharged at composition by the caller's own certificate, the 11 OS
+accesses the named residual assumptions (the TCB $58\to34\to11$)
+--- and emitted the eleven OS guards as a real corridor at the
+virgin margin 0xFC00 (424 bytes, 116 instructions, the round-trip
+green, R4/R7 preserved --- no sealed address moves; the falsified
+guard refused at both boundaries and on the index face, the harness
+36/36; the dispatch cost named --- a median 22 instructions per call
+against the 7 of the inlined guard, the price of the single-field
+eleven-window emission); the rejeu of the 116 certificates is
+consigned at its corrected invocation (58 UNSAT $+$ 58 SAT, the
+first-pass invocation bug --- an option meant for stdin --- named in
+an append-only erratum beside the untouched report).
+
+\paragraph{The SIMD corridors.} The three corridors are measured on
+hardware (RDTSC, pinned core, the sealed margins intact, the battery
+of \batterieVecteurs{} vectors per search corridor --- the exact partition \batteriePartition{} (sixteen buffer-tail vectors at every alignment of the last 16-byte block plus three at the buffer end, four overlapping patterns at periods one to four, thirteen lengths covering 1--33 --- the nominal list 1, 2, 3, 4, 15, 16, 17, 18, 19, 20, 31, 32, 33 ---, three page crossings, eight multi-occurrence cases, 512 property-based at the consigned seed --- summing to \batterieVecteurs{} exactly) at zero divergence): the hybrid memchr+memcmp byte-search at
+\hybrideCycles{} cycles [IQR \hybrideIqr{}] per absent 4{,}096-byte
+search, \hybrideGain{} below the sealed GPR notation (\scelleGprCycles{})
+--- inside the class of the library's SIMD primitives; the SHA-NI
+compression body at \shaniCorpsCbloc{} cycles per block (\shaniGain{}
+below the sealed SHA-256 at equal work, the dispatch hoisted out of
+the loop, 202 cycles named); the AVX2 corridor dominated by its
+CPUID polling at the virtualised laboratory (the probe costs
+$\approx$\cpuidSondage{} cycles per call --- the hoisting to one probe
+per session is the named condition of its use; 5{,}846 cycles measured
+as sealed, the gap named).
+
+\paragraph{The carrier loop restructured.} The AES-NI carrier loop
+of the GCM seal reaches \porteuseVquatreInline{} cycles per block [IQR
+\porteuseVquatreIqr{}] in its inline form (the key schedule exposed
+at independent addresses, the block body in the loop, no call): the
+pre-registered target of $\le$\porteuseCible{} cycles per block
+envelope included is \emph{met}, a \porteuseGain{} gain over the v2
+flow at \porteuseVdeuxFlux{} --- joining the class of the compiler-called sealed block (7.62); the variants that did not break
+the dependency chain are named (the address table 53.11, the unrolling alone 53.17 --- the independent addressing mode is the
+lever, not the precomputation). The FIPS~197 key-schedule parity
+holds byte for byte at 256/256, the mutated-unrolling negative
+control caught at the first vector, the out-of-bound count refused
+fail-closed (nothing encrypted past the bound).
+
+\paragraph{The vault hardened on laboratory copies.} The seven
+hardening gestures (a)--(g) are proved on laboratory copies at the
+public control passphrase (no real vault, no real phrase --- the
+absolute rule): the ciphertext fingerprint bound to the key and
+verified \emph{before} the AEAD (corruption refused without
+destruction, falsification under a valid naive fingerprint destroyed
+with a formal report), the trap derivation epoch-bound (the
+anti-rollback extended to the trap), the Argon2 re-parametering
+ceremony versioned (the entropy floor verified: the strong passphrase
+admitted at 184 bits against the 60-bit gate, three weak ones
+refused), the phrase change under three-part escrow (the old phrase
+inoperant), the RAM guard specified and demonstrated (mlock,
+explicit zeroing verified byte for byte, the dumpable flag cleared),
+the epoch-witness anchoring and the FIDO2 prototype specified --- the
+network gesture and the physical token awaiting the developer's
+command, the gaps named. A z3 state machine proves the four
+invariants of the sentinel (the control names the unguarded machine
+where corruption destroys). The D81 delivery instructions are
+purged from the operational documents (the Book of the Vault v1.7
+and the specification v0.15.8: the five-share threshold-three Shamir
+escrow is the active guard, the repository public --- the runbook
+simulation refused the
+trap gesture at the first named step, the \purgeCommitsScannes{}-commit
+history scan found zero leak).
+
+\paragraph{The canonical adopted-budgets table.} One table, every value carrying its decision ID, scope and status: locate 1{,}053 $\to$ \gabaritLocaliserApres{} native (hierarchical, adopted D222/OPT-14) · edit 1{,}106 $\to$ \gabaritEditerApres{} (TPL-EDIT-v1, adopted OPT-14; the thirteenth wave's repair loop measures 712 per validated change at (2026) 18/18) · add 3{,}074 (the published record; the unrounded canon 3{,}073.5) $\to$ \gabaritAjouterApres{} skeleton (measured OPT-14; the 2026 record: 3/18, then 5/18 at the twelfth wave, then 6/18 at the thirteenth (2026), then 7/18 at the fourteenth --- the wave-13 repair loop converts none, the wave-14 counter-example repair converts its first (loupe-11); the fifth campaign (Nov 2026) at 5/18, its target missed and the reading consigned; the gap named by refusal class; the thirteenth wave measures 3{,}844 per validated change, the fourteenth 3{,}990, the fifth 4{,}604) --- the earlier perimeters (M1 51/719/1{,}088, content-only 580/2{,}143/3{,}510, whole-notation 3{,}374) remain dated history, labelled as such; the specification's dashboard (Table 19) is aligned on this table, its M1 budgets becoming dated history. The verification-side canons at unrounded operands: the round-trip cache 285.725 ms $\to$ 0.418 ms at the oracle opening (a 683.6$\times$ gain, the key bound to the notation, the engine and the profile); the wave-eleven regime ratio 39.24/2.163 $=$ 18.1$\times$; the fifteenth wave's native oracle engine at 0.960 ms $\to$ 0.000185 ms on the memo hit (a $5189\times$ gain recomputed at the unrounded medians, the engine line-identical to the Unicorn twin on both sealed crypto bodies, the mechanisms orthogonal to the regime memoisation and the incremental crystallisation); the interleaved CTR$\times$GHASH composition at 0.7271 cycles per byte at 4\,KiB (2{,}978.2 cycles [IQR 5.6] per 4{,}096-byte call, $n{=}20$ on the pinned core; the pre-registered target of 2.0 held at 36 per cent; OpenSSL EVP at 0.5757 (2{,}357.9 cycles [IQR 19.3]) --- the corridor within $1.26\times$ of the tuned library; the sealed per-block chain at 49.9376 (204{,}544.5 cycles) --- $68.7\times$ behind, no control removed; the parity at the rig itself: the corridor and the fallback produce the same 4{,}112 bytes on the rig's input, the guard green before the measurement).
+
+\paragraph{The pre-registered kits.} Six kits close the ``awaiting''
+lines of the evidence tables \emph{without producing a result} (the
+rule): the RISC-V \code{fence.i} silicon probe, the third-machine
+Loupe run, the dudect replications at three sample sizes, the
+stratified H7 hypothesis, the second annotator at the pre-registered
+$\kappa$, and the CF3 Tamarin model --- thirty fingerprints consigned
+before delivery, the 57 autotest checks green, no measurement taken
+(the developer's gesture remains the only source of terrain
+evidence); the Tamarin kit now carries the \emph{v2 reformulation}
+(q8kugkpdu: the porting restriction removed, the implication lemma
+stated, the threshold witness added, the new model hashed and
+consigned --- the fourteenth wave ran it at the sandbox: the implication
+lemma falsified at the first effective run (a two-step trace, the shares
+as public variables making the knowledge trivially satisfiable --- a
+modelling defect named, the model amended by writing and re-hashed),
+the five other lemmata incomplete at budget; no verdict fabricated).
+\paragraph{The adoption-side ecosystem (fifteenth wave).} Assembled
+by construction from the repository (\code{git ls-files}, never a
+manually maintained list): the training corpus of 109 triples (v2, historical; v2.1: 127/24/19 + 48 DPO)
+extracted mechanically from the append-only campaign journals (57 at
+the third, 52 at the fourth version; the splits sealed at the
+consigned seed --- 28/4/4 tasks, 77/16/16 triples, the held-out
+carrying the validators alone, no golden notation; the contamination
+canary unique; ten bit-identical rebuilds); the training environment
+with the typed multi-level reward (syntax, expansion, round-trip,
+oracle, mutation --- cumulative and strict; the reward is the judge's
+own verdict at every level, never a similarity; the anti-hacking
+check at the reward); the re-playable capability ladder (the rungs
+name the frontier, never an average; the checkpoint-kit-judges matrix
+fail-closed; the procedural generator resists contamination); the
+model-independent agent guide (the eleven rules, the graceful
+degradation named --- never a weakened judge --- and the pre-registered
+bench embedded); the canonical-English documentation core at the
+measured budgets (216 and 167 tokens against the 1{,}500 and 800
+ceilings); the 156-piece developer kit (the version-compatibility
+gate fail-closed, no trust anchor shipped, the genesis ceremony
+air-gapped by construction); the feedback, triage and reporting tools
+(the schema frozen by fingerprint before any report, the secrets
+gates lived at the refusal, the decision proposals addressed to the
+developer --- never applied); and the pre-registered hardware
+protocols with their fail-closed aggregator (a missing run refuses,
+never a partial verdict; the machine runs remain the developer's
+gesture).
+
+% ------------------------------------------------------------------
+\section{Post-edition notes}\label{sec:notes}
+The notes below were post-edition subsections (8.1--8.7) until the
+present edition; they are moved verbatim to this annex, each frozen at
+its wave, the detail living in the wave reports.
 
 \subsection{Post-edition note (v0.25.0): bounded guarantees, atomicity, provenance}
 
@@ -2387,6 +2463,24 @@ Four classes join the gate with their negative controls: C21 (cited DOI), C22 (E
 prose), C23 (proof status), C24 (operand order).
 
 
+\subsection{Post-edition note (v0.33.0): the IMRAD core, the derived
+harness, the generalised engine}
+The twenty-eighth wave restructures the manuscript into the core the
+review asked for: this edition's core is Introduction, Methods, Results
+(RQ1--RQ4, the four-arm decomposition hoisted from the journal, the
+status table), Discussion, Threats, Related Work and Conclusion; the
+optimisation journal, the extended-results programmes, the post-edition
+notes and the frozen changelog are annexes, every measured value
+unchanged. The wave's own measurements, all pre-registered: the
+derived-memory harness executes 229 of 235 oracle vectors with the map
+derived mechanically from the card C (the jumeau console line-identical
+81/81, six tls-06 vectors refused as DEPASSEMENT --- the timeout gate:
+an honest stop is not an OK); the generalised native engine runs the
+12,000-case volume at a 4.56x C hot regime against the bare-call pilot
+(the committed engine's 1056x C and the 77x C end-to-end convention
+published alongside); the structured edit holds its 150-token target at
+a 79.5 median. No measured value changed and no target re-aimed.
+
 \subsection{Post-edition note (v0.31.0): one registry for targets}
 
 Three ``add'' targets coexisted without a canonical table and the 1.05$\times$ AES-GCM target did
@@ -2398,6 +2492,30 @@ target rather than failed against it. Class C25 refuses a piece that publishes a
 verdict the registry does not carry.
 
 % ------------------------------------------------------------------
+\section*{Edition changelog (frozen)}\label{sec:changelog}
+\noindent The body above states the current state in one voice; the waves are frozen history, one line each, the detail in the wave reports:
+\begin{itemize}\itemsep2pt
+\item v0.14.0 (17 Nov 2026) --- the mutation battery re-run with composition killers; the compiler-reference comparison.
+\item v0.15.x (17--18 Nov 2026) --- the proof-status table born; the explorer reproduced.
+\item v0.18.x (18 Nov 2026) --- the two-arm campaign D204.
+\item v0.19.0--v0.19.6 (19--20 Nov 2026) --- the OPT-04 pointer; the fault-injection battery; the kit v1.0.0.
+\item v0.20.0 (20 Nov 2026) --- the floor edition: the four-axis dashboard, the memory-safety discharge, CF3 mechanised.
+\item v0.21.0 (20 Nov 2026) --- the SSE2 re-measure; the edit-window; the third arm.
+\item v0.22.0 (21 Nov 2026) --- the eleventh wave: the SIMD corridors, the carrier loop, the fourth arm, the lifter, the templates.
+\item v0.22.1 (21 Nov 2026) --- the corrective release: the purged chains, the regenerated vault of ateliers.
+\item v0.23.0 (22 Nov 2026) --- the thirteenth wave carried, the requalifications, the equalised ventilation, the exact partition, the aligned abstracts.
+\item v0.23.1 (22 Nov 2026) --- the corrective release: the corrected sources and the six ateliers of the fourteenth wave in the complete archive; the five documents unchanged (the soumission and presentation packs carried byte-byte).
+\item v0.23.2 (22 Nov 2026) --- the corrective generation: the ten sourced corrections (a)--(j) carried to the five documents, every published ratio at its unrounded operands, the F/L replication grid, the extended cross-piece linter; the fourteenth wave carried (the GHASH aggregation, the regime memoisation, TPL-ADD-v4, the H7 draw, the first effective Tamarin run).
+\item v0.23.3 (23 Nov 2026) --- the fifteenth wave released: the five documents regenerated under the five-class linter (the semantic phrases, the decision ranges, the dated feasibility sequences, the post-deposit version claims, the English gallicisms); the wave carried (the composition measurement, the TCB reduction, the native oracle engine, TPL-ADD-v5 with its target missed, the H7 campaign served, CF3-v3 at the verdict machine, the adoption-side ecosystem).
+\item v0.24.0 (24 Nov 2026) --- the seventeenth wave: the publication of a switch is atomic up to eight natural bytes and no further, quiescence mandatory (D253); the R10 guarantee bounded to what its anchor is worth, integrity, authenticity and freshness separated, the coherent binary+state restore named as invisible to any local anchor (D254); the provenance register (eleven lines recomposed from canonical sources, four living refusals), and the manuscript's one ratio that did not recompose (63.39/19.66 = 3.2243, published 3.23) corrected at the source (D255). No measured value changed.
+\item v0.25.0 (24 Nov 2026) --- the eighteenth wave: the five documents regenerated under the ported five-class linter; the residues closed (abstract and changelog order, the decision range, the corpus named historical, the data availability); the specification gains the five residual hazards of the rendezvous (D261), the closed prescriptive whitelist (D262), the NV TPM counter (D263) and the structured expansion (D264). No measured value changed.
+\item v0.26.0 (24 Nov 2026) --- the nineteenth wave: the pack generation gate now runs the ported five-class linter plus six fail-closed classes (version table, decision range, changelog order, numbering, bench count, semantic threat), and the six residues named by the review are closed (the presentation's stale version table, the unqualified threat rows, the decisions D262--D264 absent from the specification, the +1 of the 16/16 bench, the changelog order, the mixed numbering of the proofs' section 2); the decision chain D261--D267 enters the journal and the specification (prescriptive whitelist, NV counter, structured expansion, transparency anchoring). No measured value changed.
+\item v0.27.0 (24 Nov 2026) --- the twentieth wave: the edition linter passes from eleven to fifteen classes (version prose, wave continuity, abstract length, reader-test count) and the four residues found by the review are closed at the source (the Book's prose version references, the presentation's wave number, the -35.7% operands pinned to the provenance register, the reader test decomposed one line per case). No measured value changed.
+\item v0.28.0 (24 Nov 2026) --- the twenty-first wave: the decision-range bound is derived from the journal itself, the per-block harnesses are measured (95 of 235 vectors execute; the twenty-seven blocks that fault are named with their cause), and the two absolute targets become relative (AES-GCM against OpenSSL EVP; add against the adopted edit budget, ratio 3.264 against a target of 3.0, published as missed).\item v0.29.0 (24 Nov 2026) --- the twenty-second wave: the six residues of the review are closed at the source (the anchoring status derived from the append-only journal, the presentation's wave title, the Book's guard header and foreword, the class count, the companion specification, the multiplication ratio), the edition linter gains three classes that close the holes demonstrated (count, title wave, status recomposition) with a typographic normalisation, and the manuscript's form is cleaned (release note out of the title, one keyword line per language, French abstract aligned to 233 words). No measured value changed.\item v0.30.0 (24 Nov 2026) --- the twenty-third wave: the prose of status is derived, not typed (D275) --- the Data availability paragraph from the deposit registry (the latest minted version is v0.26.0; this edition is explicitly unminted), the Tamarin/ProVerif status from the proof-status registry (L3 verified, L1/L2 incomplete at the memory wall, ProVerif port delivered), the specification accompanied in Section 2.1 pinned to v0.15.15, the multiplication ratio in canonical operand order, and the vault appendix title recomposed from the table itself; four linter classes close the holes shown (C21 DOI, C22 English version prose, C23 proof status, C24 operand order). No measured value changed.\item v0.31.0 (24 Nov 2026) --- the twenty-fourth wave: the targets, like the statuses, move into a registry (D276) --- one line per target with its exact subject, perimeter, pre-registered value, measurement and verdict, published in the proofs; the interleaved AES-GCM corridor is named what it is (measured at 1.26x EVP, no relative target of its own) while the 1.05x target belongs to the VAES corridor, which is not written; class C25 recomposes every published verdict from the registry. No measured value changed and no target re-aimed.
+\item v0.32.0 (26 Nov 2026) --- the twenty-fifth wave: the pack's own review is answered at the source --- the D267 anchoring divergence between the five pieces is settled by deriving the single status from the append-only journal (class C26 recomposes every shared semantic status across all five pieces), the four editorial residues are closed (the fourteen signed trees of Table 12, the two wave-24 section titles distinguished, the French fragments of the English manuscript, the Book's chronology reordered; classes C27--C29), the targets registry gains its era table and every TENUE verdict cites its perimeter or carries the dated-historical label, the constrained-decoding campaign is delivered as a ready harness with the named SERVING-ABSENT refusal (the border accepts the schema field and does not apply it), the symbolic proofs advance natively (two sub-lemmas verified, the occurrence semantics of the checker named, the real-machine kit at a logged fingerprint), and the VAES corridor is written on its frozen notation and measured: the gate is green first (20/20 NIST vectors against the independent reference, the mutated variant refused at the first vector), the pre-registered 1.05x target is MISSED at 5.66x EVP and published as missed, and the native oracle engine session runs the 235-vector corpus at 0.266 s median against its 10 s target. No measured value changed and no target re-aimed.\item v0.33.0 (26 Nov 2026) --- the present edition, the twenty-eighth wave: the manuscript is restructured into the IMRAD core the reviewer asked for --- the optimisation journal, the extended results programmes, the post-edition notes and the frozen changelog moved to annexes, the four-arm decomposition hoisted into the core results, the related-work section enriched with the verified structured-output benchmark and constrained-decoding backends, AutoVecCoder, LLM4Decompile and SLaDe; the wave's measured results are the derived-memory harness (the map derived mechanically from the card C: 229 of 235 vectors executable, the jumeau console line-identical 81/81, six tls-06 vectors refused as DEPASSEMENT --- the timeout gate: an honest stop is not an OK), the generalised native engine at volumes (12,000 cases, the hot regime at 4.56x C against the bare-call pilot, the console deferred and line-identical, the audit one-in-ten at zero discrepancy), the structured edit at the token floor (OPT-16: the median at 79.5 native tokens against the 150 target, HELD), the symmetric replay of the T piece (five core-contract probes green) and the pre-registered terrain-wave plan; two linter classes (C30 N-VALUE, C31 CLAIM-SCOPE) and the per-wave token budget (OPT-20). No measured value changed and no target re-aimed.\end{itemize}
+
+% ------------------------------------------------------------------
 \bibliography{refs}
+
 
 \end{document}

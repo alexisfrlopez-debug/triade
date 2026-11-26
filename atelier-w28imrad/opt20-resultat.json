@@ -1,0 +1,23 @@
+{
+ "convention": "la production autoriée de la vague (plans + rapports + prose ajoutée au manuscrit)",
+ "pieces": 17,
+ "caracteres": 58543,
+ "cl100k": 19744,
+ "natif_usage": 19269,
+ "budget_vague_suivante": "≤ 19269 tokens natifs (la production de la vague 28)",
+ "fichiers": [
+  "PLAN-W28VAES.md",
+  "PLAN-W28OPT16.md",
+  "PLAN-W28HARNAIS.md",
+  "PLAN-W28ATTR.md",
+  "PLAN-W28TERRAIN.md",
+  "PLAN-W28RLVR.md",
+  "PLAN-W28IMRAD.md",
+  "atelier-w28vaes/rapport.txt",
+  "atelier-w28opt16/rapport.txt",
+  "atelier-w28harnais/rapport.txt",
+  "atelier-w28attr/rapport.txt",
+  "atelier-w28terrain/rapport.txt",
+  "atelier-w28rlvr/rapport.txt"
+ ]
+}

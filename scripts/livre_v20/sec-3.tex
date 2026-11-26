@@ -1,0 +1,234 @@
+% =====================================================================
+%  CH. 5 LA SENTINELLE · CH. 6 LES SECRETS ET LEURS GARDES
+% =====================================================================
+\section{La sentinelle — du démon à la serrure}\label{sec:sentinelle}
+
+\subsection{Pourquoi ce mot revient, et ce qu'il a voulu dire trois fois}
+
+« Sentinelle » a désigné trois choses différentes dans l'histoire du coffre, et la
+confusion des trois est la question la plus fréquente du terrain. Une fois pour
+toutes :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les trois vies du mot « sentinelle ».}
+\label{tab:sentinelles}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Époque} & \textbf{Ce que c'était} & \textbf{Sa limite} \\
+\midrule
+CF2, démon résident (D86) & un processus userland de longue durée : surveille la
+couche C, croise deux seuils (processus non blanchi + lecture de contenu), brûle les
+fragments & usurpable par un faux heart-beat ; tuable par l'adversaire avant
+destruction ; exige un moteur de plateforme (inotify/\code{/proc} au laboratoire,
+SACL/ETW attendus sur Windows) \\
+CF2, PORTE D120 & le verrou qui refuse de déverrouiller sans sentinelle vivante — la
+demande du terrain : « si elle n'est pas lancée, tous nos efforts sont inutiles » &
+sur plateforme sans moteur, la porte \emph{avertit} à chaque déverrouillage (« SANS
+sentinelle ») : l'ère intermédiaire est honnête mais incomplète \\
+CF3, sentinelle instantanée (D121) & \textbf{par invocation} : les cinq vérifications
+ordonnées courent DANS chaque acte qui déverrouille — ouvrir, clôture,
+\code{verifier}, re-lecture à froid & aucune : elle ne dépend d'aucun état de machine
+falsifiable — \emph{le piège est le témoin, et il est hors machine} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La question du terrain, posée à la passation : \emph{« on avait pas décidé de la
+supprimer, en migrant en CF3 ? Si on impose CF3 dès la création de projet, on n'a pas
+besoin de sentinelle, non ? »} La réponse tient en trois temps. Oui, le \textbf{démon}
+est mort en CF3 — remplacé, pas retiré. L'exigence D120 (« indispensable au
+déverrouillage ») \emph{reste}, réalisée par invocation : la sentinelle instantanée
+n'est pas un composant qu'on peut oublier de lancer, \emph{c'est la serrure elle-même}
+— le sine qua non est satisfait par construction, sans démon ni moteur de plateforme à
+attendre. Et oui, \textbf{un coffre né CF3 n'a jamais connu de sentinelle à lancer} :
+\code{init} le crée à l'époque 1 avec son média du piège, et chaque acte porte sa
+propre vérification.
+
+\subsection{La sentinelle instantanée — l'ordre est la loi}\label{sec:sentinst}
+
+À tout acte qui déverrouille, cinq vérifications courent \emph{dans cet ordre} —
+l'ordre n'est pas esthétique, il sépare les modes de défaillance :
+
+\begin{enumerate}
+\item \textbf{Piège présent.} Absent : refus nommé, déverrouillage \emph{impossible}
+(fail-closed). Rien n'est lu, rien ne brûle — l'absence du média n'est jamais une
+attaque, c'est un état.
+\item \textbf{Piège intègre} (le \code{tag}). Invalide : refus nommé + journal, mais
+\emph{pas} de destruction — le média est hors limite de confiance : une corruption
+bénigne (lecteur capricieux, secteur mort) doit pouvoir être relue depuis les copies
+hors-ligne. La destruction attend la preuve cryptographique (étape 5).
+\item \textbf{Cohérence des champs publics.} Époque du piège = époque du conteneur
+(sinon : « piège PÉRIMÉ », refus anti-retour) ; H\_projet du piège = H\_projet du
+conteneur (sinon : le piège d'un \emph{autre} coffre).
+\item \textbf{Phrase} (via \code{verif}). Divergente : réessai à délai croissant —
+1, 2, 4 secondes, plafond 8 (le plafond borne aussi le verrouillage de compte par
+soi-même). \emph{Jamais} de destruction : une faute de frappe ne doit pas tuer le
+coffre.
+\item \textbf{AEAD + étiquette} (KEK complet). Échec \emph{après} 1--4 verts :
+falsification ou corruption \emph{prouvée} côté machine $\to$ destruction locale +
+PV + journal. L'étiquette vérifiée (le clair doit hacher vers le H\_projet de
+l'en-tête) ferme la course de clôture.
+\end{enumerate}
+
+Un échec \textbf{nomme son étape} ; les étapes suivantes ne courent pas. C'est la
+grammaire même du fail-closed : vous saurez toujours \emph{quoi} a refusé, et donc
+\emph{où} regarder (chapitre 9).
+
+\begin{terrain}[— l'avertissement D120 dans un rapport réel]
+Pendant la migration du coffre réel (30/10), le \emph{déverrouillage CF2} — la
+dernière fois que la vieille serrure parlait — a affiché :
+\begin{lstlisting}
+[coffre-CF2] AVERTISSEMENT D120 : deverrouillage SANS
+sentinelle vivante - le moteur n'est pas livre sur cette
+plateforme (exigence consignee spec  9) : le coffre s'ouvre
+sans temoin.
+\end{lstlisting}
+Aucun avertissement équivalent n'est apparu aux actes CF3 : la sentinelle instantanée
+n'a pas de moteur à attendre. L'avertissement D120 est le signal d'une \emph{ère} —
+honnête, bornée, et close par la génération suivante.
+\end{terrain}
+
+\subsection{Ce que la destruction locale ne touche JAMAIS}
+
+La réponse à la falsification (étape 5) détruit \emph{côté machine} : le conteneur, le
+staging, le brouillon — trois passes d'écrasement (aléa, 0xFF, 0x00), troncature,
+renommage aléatoire, unlink, fsync, et un PV horodaté dans \code{.keys/pv-cf3/} avec la
+raison nommée (deux destructions la même seconde produisent deux fichiers distincts —
+correctif D123, appris d'un écrasement prouvé par le terrain). Elle ne touche
+\textbf{jamais} le média du piège (c'est la relève), \textbf{jamais} les fragments CF2
+ni leurs copies hors-ligne : la destruction reste survivable — c'est la contrepartie
+qui rend le piège destructif acceptable. La mort d'un coffre est toujours un état
+\emph{recouvrable par le sachet}.
+
+\section{Les secrets et leurs gardes}\label{sec:gards}
+
+\subsection{L'inventaire honnête — ce que vous protégez, en fait}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les secrets du coffre et leurs gardes — l'inventaire complet.}
+\label{tab:inventaire}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Secret} & \textbf{Sa garde} & \textbf{Si la garde manque} \\
+\midrule
+La phrase de contrôle & votre tête ; le séquestre D183/D223 (cinq parts
+Shamir à seuil trois, la reconstitution à froid) & sans la phrase, pas de
+K\_user — le coffre est muet ; sous trois parts assemblables, la phrase est
+PERDUE (le seuil est la survie) \\
+Les phrases par projet & le coffre chiffré (CF1/2/3) & un projet dont la phrase est
+perdue doit faire l'objet d'une rotation de sa propre lignée \\
+Le secret maître M (CF2) & cinq fragments Shamir, seuil 3 — jamais entier nulle part &
+sous 3 fragments : mort \emph{informationnelle} (aucune attaque possible, aucune
+reconstruction non plus) \\
+S\_piège (CF3, par époque) & le média du sachet — jamais sur la machine hors l'instant
+de l'acte & sans le piège d'époque égale : l'acte est \emph{impossible} — branchez le
+bon média \\
+La graine de clé I & support physique hors-ligne (64 hex — imprimable) & le dépôt
+porte la clé publique ; une graine perdue attend la rotation de clé (re-signer tous
+les arbres, même commit) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Le sachet — l'objet physique qui vaut le coffre}
+
+Le sachet est une pochette physique, \textbf{individuelle} (un média du piège par
+coffre — borne consignée), qui porte : les \textbf{pièges d'époque}
+(\code{piege-CF3-epoque-N.txt}, un fichier par époque, ajoutés à chaque clôture) ; les
+\textbf{copies hors-ligne des fragments CF2} (T = 3 : la relève si les gardes machine
+brûlent) ; et la \textbf{carte papier}. Il se branche pendant les actes qui l'exigent —
+et \emph{seulement} pendant eux : le geste de débrancher est consigné au journal de
+cérémonie, parce qu'un média resté branché pendant la session est un média exposé.
+
+\subsection{La carte du sachet — le témoin indécevable}
+
+La carte est une fiche papier, écrite \emph{à la main}, une ligne par clôture :
+
+\begin{lstlisting}
+TRIADE - coffre CF3 (carte du sachet)
+2026-10-30  epoque 1   checksum 0cc89a96
+                                (migration CF2 -> CF3, VERIFIER VERT x2)
+<ligne suivante a la prochaine cloture - jamais d'effacement>
+\end{lstlisting}
+
+Sa raison d'être : l'anti-retour-en-arrière (§ \ref{sec:temoins}). Un attaquant admin
+peut effacer le journal local et vous resservir un conteneur ancien avec son piège
+ancien — il ne peut pas imiter votre écriture dans votre sachet. Le jour où
+\code{verifier} affiche un checksum absent de votre carte, le mensonge est nommé.
+La carte ne protège que si elle est \emph{regardée} : le verdict à froid ré-exécuté
+par la machine est le filet (recommandation : machine froide, le lendemain d'une
+cérémonie).
+
+\subsection{La frontière des supports — git, \code{.keys}, sachet, Drive}
+
+\begin{table}[htbp]
+\centering\small
+\caption{La frontière des supports — ce qui vit où, et pourquoi.}
+\label{tab:frontiere}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Support} & \textbf{Ce qu'il porte} & \textbf{Ce qu'il ne porte JAMAIS} \\
+\midrule
+Dépôt git (poussé, PUBLIC depuis D220) & le code, la spécification signée
+(\code{v06/I/}), les preuves publiques du sceau, le journal de travail & aucun
+conteneur, aucun fragment, aucune graine, AUCUNE PHRASE (le séquestre 5/3
+hors dépôt, D223) : \code{/.keys/} est gitignoré \\
+\code{.keys/} du clone & conteneurs CF1/CF2/CF3, gardes CF2, config, journaux et PV
+locaux, miroir d'époque & jamais dans git — la ligne existe depuis D12/D27, le
+coffre-fort depuis D75 \\
+Le sachet & pièges d'époque, T copies hors-ligne, la carte papier & jamais branché
+pendant une session de travail \\
+Le Drive & le miroir complet du dépôt, le kit de cérémonie (\code{v06/} identique au
+miroir par construction, D130), le conteneur CF1 de secours & aucune graine de clé I \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{terrain}[— rien à pousser après une cérémonie de coffre]
+La question du terrain, juste après la migration CF3 : « je dois pousser quelque chose
+sur le git maintenant ? » Non — par construction. Tout ce que la migration écrit vit
+dans \code{.keys\textbackslash} (ignoré : ligne 28 du \code{.gitignore}), le piège vit
+sur le média, la boîte noire est un \code{*.log} (ignoré). Un \code{git status} rend
+\code{nothing to commit} : le clone est exactement ce que GitHub a. Les seuls
+\emph{push} de votre chaîne sont les remises du sceau — et ceux-là, la cérémonie du
+sceau les guide. La consignation au \emph{journal Git} (le troisième témoin d'époque)
+se fait côté laboratoire, par le commit qui accompagne le rapport D122.
+\end{terrain}
+
+\subsection{La rotation — le remède quand un secret a pu fuir}\label{sec:rotation}
+
+La phrase commise en git y demeure à vie (D81) ; le média photographié pendant un acte
+sert une époque (borne assumée). Le remède n'est jamais d'espérer : c'est de
+\emph{tourner}.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Les rotations du coffre — quoi tourne, quand, et ce qui ne change pas.}
+\label{tab:rotations}
+\begin{tabularx}{\textwidth}{@{}l Y Y@{}}
+\toprule
+\textbf{Rotation} & \textbf{Le geste} & \textbf{Ce qui ne change pas} \\
+\midrule
+Phrase de contrôle & \code{changer-phrase} (l'ancienne devient inopérante, les
+entrées intactes) ; le changement passe par la cérémonie sous séquestre —
+trois parts assemblées à froid, la phrase neuve re-découpée en CINQ parts,
+JAMAIS écrite au dépôt (le refus nommé la garde) & le coffre, les projets,
+le sel (le re-chiffrement prend un sel neuf) \\
+Moitiés CF3 & chaque \emph{clôture} : S\_serrure et S\_piège frais, époque N+1 &
+K\_user, \code{sel\_argon} — la clé utilisateur est INVARIABLE à travers les
+époques \\
+Secret maître CF2 & re-découpage Shamir (rotation complète du coffre CF2) & la base
+JSON, le seuil \\
+Clé I du sceau & remplacer \code{cle-publique-I.txt} ET toutes les signatures dans le
+MÊME commit (un état mixte est refusé par \code{verifier}) ; la rotation est consignée
+au journal & les arbres, les manifestes (re-signés par la nouvelle clé) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La règle de jugement : une exposition \emph{prouvée} (phrase vue, média photographié)
+exige la rotation dans la session qui suit ; une exposition \emph{possible} (doute,
+reliquat) se traite au calendrier. Entre les deux, votre degré de sommeil est le
+dernier arbitre — c'est à vous que la menace s'adresse.

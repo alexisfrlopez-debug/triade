@@ -148,7 +148,7 @@
    "n": null,
    "source": {
     "chemin": "docs/JOURNAL_OPTIMISATION.md",
-    "sha256": "aa68944c119c96ee4e4d0192d33b0c24cbef9195e0b2864b1dce77cd4d71d44e"
+    "sha256": "b0316e0d2283227861d40741506ac3eb0018c25f0ba2329122c13d7c38a96eee"
    },
    "statut": "documenté (journal OPT-16, mesures du 15/11/2026 ; VM, pas métal nu)",
    "unite": "× (cycles/bloc mesurés ÷ cycles/bloc au plancher ; médianes non arrondies)",

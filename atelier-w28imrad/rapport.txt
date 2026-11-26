@@ -1,0 +1,80 @@
+ATELIER W28IMRAD — LE MANUSCRIT CŒUR IMRAD ET LE PROTOCOLE APPLIQUÉ À
+LUI-MÊME (prompt 7 de la vague 28, dépôt du 26/11/2026)
+Plan gelé : PLAN-W28IMRAD.md (EMPREINTES-PLANS-VAGUE28.txt, commit 78bced1 — le
+commit AVANT toute donnée). AUCUNE valeur mesurée modifiée.
+
+1. LA RESTRUCTURE (restructurer_manuscrit.py, chaque geste ancré) : le cœur
+   IMRAD — Introduction, Méthodes (le protocole, les campagnes D204/D210, les
+   pré-enregistrements), Résultats (RQ1–RQ4 + LA DÉCOMPOSITION QUATRE BRAS
+   hissée du journal OPT au cœur + la table des statuts), Discussion, Menaces
+   sur la validité, Travaux connexes, Conclusion ; LE JOURNAL OPT (« Distance
+   to the floor »), LES PROGRAMMES DE RÉSULTATS ÉTENDUS (v0.11.0/v0.14.0/
+   v0.15.0), LES TABLES LONGUES (les huit tables générées et de campagne),
+   LES NOTES POST-ÉDITION 8.1–8.7 et LE CHANGELOG gelé RENVOYÉS EN ANNEXES
+   (\appendix — A les programmes étendus, B les tables générées, C le journal
+   OPT, D les notes, E le changelog). Le format compact (10pt, la géométrie
+   resserrée, les listes compactées) : LE CŒUR MESURÉ À 16 PAGES
+   (Introduction→Conclusion ; la cible 12–15 : L'ÉCART D'UNE PAGE NOMMÉ — le
+   contenu noyau du plan tient en entier, aucun paragraphe du noyau n'a été
+   sacrifié pour tenir la plage ; le pack entier demeure 34 pages). La
+   décomposition quatre bras déplacée INTÉGRALE (aucun paragraphe coupé, aucun
+   nombre touché).
+2. LES TRAVAUX CONNEXES ENRICHIS (les RÉFÉRENCES VÉRIFIÉES — chaque arXiv/
+   MLSys consulté avant l'ajout à refs.bib) : JSONSchemaBench (arXiv
+   2501.10868, Geng et al.) et les backends de décodage contraint — XGrammar
+   (MLSys 2025, Dong, Ruan, Cai et al.), Outlines (arXiv 2307.08701, Willard &
+   Louf), la pile guidance/llguidance — pour positionner SERVING-ABSENT (la
+   fidélité de contrainte est une propriété du serving à MESURER, jamais à
+   présumer) ; AutoVecCoder (arXiv 2605.17978, Li et al.) cité et différencié
+   (eux : la vectorisation SOURCE ; ici : la notation scellée gouvernée,
+   mesurée contre la bibliothèque et schedulée contre le compilateur) ;
+   LLM4Decompile (arXiv 2403.05286, EMNLP 2024, Tan, Luo, Li, Zhang) et SLaDe
+   (arXiv 2305.12520, Armengol-Estapé et al.) pour le plan IP (le pack assume
+   l'érosion : la valeur de la notation scellée est la gouvernance et la
+   provenance, pas le secret) ; SuperCoder différencié sur LE PRIX DE LA
+   RÉCOMPENSE (eux : RL orienté runtime ; ici : le RLVR pré-enregistré sur
+   les juges de conformité — jamais une similarité, jamais un runtime).
+3. DEUX CLASSES DE LINTER (linter_v4.py étendu, append-only) : C30 N-VALUE —
+   toute médiane PUBLIÉE porte son n= à la portée de la phrase-voisine (six
+   ajouts éditoriaux honnêtes au manuscrit : les deux lignes de base à
+   n=18 blocs, le matériau de la décomposition à n=5, la vague 14 et la
+   cinquième campagne à n=18 tâches, le plancher du diff réel à n=18) ;
+   C31 CLAIM-SCOPE — toute revendication « first/only » porte son scope et sa
+   source à la fenêtre (le motif étroit : les prétentions de primeauté, pas
+   les emplois ordinaires du mot). Le linter à TRENTE ET UNE classes.
+4. LE BUDGET TOKEN PAR VAGUE (OPT-20, mesurer_opt20.py) : la production
+   autoriée de la vague 28 (les sept plans gelés, les six rapports d'atelier
+   précités, la prose ajoutée au manuscrit) mesurée à 19 269 TOKENS NATIFS
+   (19 744 cl100k) — le compte natif LU DU CHAMP USAGE du bord (la convention
+   OPT-14/16 : le compte est le LOG, jamais une estimation) ; LA CIBLE BUDGET
+   PRÉ-ENREGISTRÉE pour la vague 29 : ≤ 19 269 tokens natifs de production.
+   Consigné au journal OPT (OPT-20).
+5. LA GÉNÉRATION v0.33.0 : la prose du manuscrit DÉRIVÉE des registres
+   (deriver_prose_v330.py : le Data availability du registre des dépôts — le
+   dernier minté v0.31.0/24545339, l'édition courante non mintée ; la
+   spécification accompagnée v0.15.18 ; les chaînes de version) ; la
+   spécification v0.15.18 (patcher_spec_v160.py — la section de version, les
+   résultats de la vague) ; le Livre du Coffre v1.17 (patcher_livre_v20.py) ;
+   les pièces preuves/présentation (generer_pieces_v330.py — les SEPT
+   ateliers de la vague lus verbatim) ; LA PORTE V1..V7 + L1..L31 (le linter
+   EST la porte, les DEUX mutations nouvelles C30/C31 aux côtés des
+   vingt-et-une reconduites) ; l'ancre RFC 3161 v0.33.0 posée et vérifiée ;
+   la provenance recomposée ; les packs assemblés aux empreintes consignées.
+6. LA GARDE : aucune pièce scellée touchée (le sceau-I 14/14 avant et
+   après ; les huit notations recoupées aux empreintes) ; aucune valeur
+   mesurée modifiée (les n= ajoutés sont des MÉTADONNÉES de portée, pas des
+   valeurs ; la restructure déplace, ne touche pas) ; l'abstract ≤ 250 mots
+   (inchangé, vérifié) ; aucune cible re-tirée ; le registre CIBLES.md porte
+   CIB-HARNAIS-200 soldée (229/235) et CIB-VOL-REGIME TENUE (4,56 × C).
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w28imrad/restructurer_manuscrit.py    # la restructure IMRAD
+  python3 scripts/vague28/deriver_prose_v330.py         # la prose des registres
+  python3 scripts/spec_v160/patcher_spec_v160.py        # la spécification v0.15.18
+  python3 scripts/livre_v20/patcher_livre_v20.py       # le Livre v1.17
+  python3 atelier-w28imrad/mesurer_opt20.py             # le budget OPT-20
+  python3 scripts/vague28/generer_pieces_v330.py        # les cinq pièces
+  python3 scripts/vague28/porte_generation_v330.py       # la porte (zéro rouge)
+  python3 scripts/vague28/assembler_packs_v0330.py      # les trois packs
+  python3 v06/sceau_I.py verifier                       # la garde (14/14)
+Les sha256 de tous les fichiers produits : EMPREINTES.txt.

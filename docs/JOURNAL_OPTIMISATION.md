@@ -414,3 +414,29 @@ tours — la variance d'écriture machine demeure, nommée ; le décodage contra
 reste le levier fermé D264). Les 6 premières tâches furent mesurées en deux séances (le
 bord 429 dose l'appel — la reprise par point de contrôle, AUCUN chiffre re-tiré) ; la
 convention des médianes : SUR 18 ET SUR VERTES, les deux nommées.
+
+## OPT-20 — LE BUDGET TOKEN PAR VAGUE : LA PRODUCTION DE LA VAGUE 28 MESURÉE À 19 269 TOKENS NATIFS
+(W28IMRAD, la vague 28, prompt 7, geste 4 ; le plan gelé sha256 consigné à
+EMPREINTES-PLANS-VAGUE28.txt — la cible pré-enregistrée AVANT la mesure : le
+budget de la vague suivante ≤ le compte de la présente)
+
+LA MÉTA-OPTIMISATION (le protocole s'optimise lui-même) : le coût token de
+génération du pack par vague, mesuré et pré-enregistré comme budget. LA
+CONVENTION (nommée, honnête) : la vague PRODUIT des artefacts — les sept plans
+gelés, les six premiers rapports d'atelier (le rapport du présent atelier hors
+compte, sa taille ~500 tokens, la convention nommée), la prose source ajoutée
+au manuscrit (la restructuration IMRAD, les trois paragraphes de travaux
+connexes vérifiés, la note de vague 28, la note post-édition v0.33.0). LE
+COMPTE NATIF est lu du CHAMP USAGE du bord — le texte porté par l'appel, la
+convention OPT-14/16 reconduite : le compte est le LOG, jamais une estimation ;
+le CL100K compté en parallèle (le compte distinct, jamais le juge).
+
+LA MESURE : 17 pièces, 58 543 caractères — **19 269 TOKENS NATIFS** (19 744
+cl100k). LA CIBLE BUDGET PRÉ-ENREGISTRÉE pour la vague 29 : **≤ 19 269 tokens
+natifs de production** (la production de la vague 28 est le plafond ; la
+lecture honnête : le budget borne la PRODUCTION autoriée, pas l'exécution des
+chaînes de génération — les scripts tournent sans agent, les PDF naissent des
+registres).
+
+La pièce : atelier-w28imrad/mesurer_opt20.py + opt20-resultat.json (la
+convention, les comptes, la liste des pièces).

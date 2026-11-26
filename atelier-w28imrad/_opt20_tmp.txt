@@ -1,0 +1,855 @@
+### PLAN-W28VAES.md
+# PLAN GELÉ — W28VAES (couloir VAES : domaine réfléchi, amortissement, schedule de notation — performance)
+
+> Vague 28, prompt 1 (dépôt du 26/11/2026). R4 (contrat stable), R7 (aucune adresse scellée
+> déplacée), R11 (avant/après au journal OPT). CIB-AES-105 (≤ 1,05 × OpenSSL EVP au même
+> volume) est pré-enregistrée D273, JAMAIS re-tirée. L'écart notation-vs-C est un RÉSULTAT
+> DISTINCT pré-enregistré au présent plan. Aucun gain revendiqué sans run recoupé.
+
+## Geste
+1. PRÉ-ENREGISTRER la mesure : mêmes 20 vecteurs NIST CAVP 14.0 (les vecteurs dorés de
+   W27VAES, INTACTS), même volume 4 Kio, n=20, cœur épinglé 0, contre OpenSSL EVP 3.5.7 au
+   même volume ; le chemin EVP réel consigné (OPENSSL_ia32cap, le drapeau VAES512 de la 3.1+) ;
+   l'état de fréquence consigné (VM non goupillée = caveat nommé ; machine réelle goupillée =
+   kit livré). LES TROIS PIÈCES MESURÉES : (i) le portage C AMÉLIORÉ — GHASH en domaine
+   réfléchi de bout en bout (la conversion UNE FOIS aux frontières, H et ses puissances
+   pré-calculées en bitref8), l'expansion de clé + les puissances H amorties par contexte de
+   session (comme EVP), la frontière d'appel supprimée (le couloir inliné au point de mesure) ;
+   (ii) LE SCHEDULE DE NOTATION — le couloir écrit en ASSEMBLAGE SUR le calendrier de la
+   notation gelée couloir-vaes.asm (7911d03f… INTACTE : le dispatch hissé hors boucle, CTR
+   deux blocs par vAESENC, GHASH Karatsuba huit blocs par pli, l'entrelacement CTR(g+1) avant
+   GHASH(g)), assemblé et exécuté COMME BINAIRE ; (iii) EVP au même volume. L'ÉCART
+   notation-vs-C = (ii) contre (i) à algorithme égal, publié comme RÉSULTAT DISTINCT.
+2. LA PORTE AVANT TOUTE MESURE (dans l'ordre) : parité 20/20 CAVP contre EVP octet pour octet
+   (4 Kio paddés, tags compris) pour CHACUNE des deux pièces mesurées ; la variante mutée
+   (rk13 ⊕ 0x5a) refusée au premier vecteur ; round-trip inter-implémentations vert ; rejeu
+   bit-identique.
+3. LA MESURE : n=20 par pièce, quatre passes, médianes, IQR consigné ; le ratio contre EVP ;
+   la décomposition du coût mise à jour par classe (les quatre causes de W27VAES : expansion
+   hors boucle, conversion par bloc, schedule C, frontière d'appel — lesquelles soldées,
+   lesquelles demeurent) ; le plafond ISA ~0,1–0,3 c/B nommé au rapport.
+4. LE VERDICT : CIB-AES-105 tenue ou manquée, publié TEL QUEL (jamais re-tirée) ; l'écart
+   notation-vs-C publié tel quel — si la notation schedulée bat le portage C à algorithme
+   égal, c'est le résultat systèmes consigné : l'érosion de schedule compilateur sur
+   co-planification SIMD, mesurée et contrôlée.
+
+## Critères d'acceptation
+- La notation gelée couloir-vaes.asm INTACTE (sha256 recoupé avant/après — l'empreinte
+  consignée AVANT l'implémentation, la règle reconduite).
+- Parité CAVP 20/20 pour chaque pièce mesurée AVANT toute mesure ; mutant refusé au premier
+  vecteur ; round-trip vert ; rejeu bit-identique.
+- Aucun artefact scellé touché ; sceau-I 14/14 avant et après ; le couloir demeure une pièce
+  de laboratoire autonome.
+- Les cibles et statuts recomposés aux registres (CIBLES.md, JOURNAL_OPTIMISATION.md OPT-19,
+  STATUTS-EN-ATTENTE.md) ; le linter numérique recompose chaque ratio publié de ses opérandes
+  non arrondis ; aucun chiffre fabriqué.
+
+
+### PLAN-W28OPT16.md
+# PLAN GELÉ — W28OPT16 (éditer par diff structuré au plancher token — coût, OPT-16)
+
+> Vague 28, prompt 2 (dépôt du 26/11/2026). Le plus grand levier token restant. La cible
+> pré-enregistrée : MÉDIANE ≤ 150 TOKENS NATIFS sur les 18 tâches d'édition (ratio plancher
+> ~5,5× contre le diff réel 27,5 tokens, au lieu de 24,5×). La graine 20261117 reconduite,
+> l'ordre des 18 tâches JAMAIS re-tiré. Le budget `usage` natif lu à chaque appel, le cl100k
+> compté en parallèle (un compte distinct, jamais le juge). Aucune cible re-tirée.
+
+## Geste
+1. PRÉ-ENREGISTRER OPT-16 (empreinte du présent plan consignée avant toute mesure) : les 18
+   tâches d'édition de taches-edition.json (les mêmes blocs loupe-*, la même graine, le même
+   ordre — le matériau de la vague 10/OPT-05 reconduit, AUCUN nouveau tirage).
+2. ÉTENDRE LE SCHÉMA FERMÉ à l'édition : la réponse de l'agent est UNIQUEMENT l'objet JSON
+   {"op": "substituer", "dst": "<id du bloc>", "offset": <index de ligne dans la plage du
+   bloc>, "src": "<la ligne nouvelle, littérale>"} — additionalProperties false, l'enum des
+   op fermée (substituer), l'offset contraint à la plage de lignes du bloc, la ligne src du
+   domaine de notation. L'agent ne rend QUE le diff structuré (~30–80 tokens attendus) ; LE
+   CLIENT expande (applique la substitution à l'offset), assemble, round-trip, et confronte
+   au bloc attendu (le diff exact : ligne unique révisée, AUCUNE autre ligne changée).
+3. LES QUATRE REFUS NOMMÉS fail-closed : POINTEUR-INCONNU (dst inconnu), EMPREINTE-DIVERGENTE
+   (la notation du bloc a divergé de son empreinte consignée), SCHÉMA-VIOLÉ (l'objet viole le
+   schéma fermé), HORS-FORMAT (la réponse n'est pas l'objet JSON). L'AGRÉGATEUR fail-closed :
+   un appel manquant refuse le verdict (APPEL-MANQUANT). LA BOUCLE DE RÉPARATION bornée à
+   TROIS tours, réinjectant le refus exact et le contre-exemple.
+4. LA MESURE : les 18 tâches dans l'ordre de la graine, chaque tâche UNE fois (les tours de
+   réparation journalisés à part, jamais recomptés comme tâches) ; médianes publiées SUR 18
+   ET sur les vertes (les deux conventions nommées) ; la re-tokenisation indépendante à
+   écart ≤ 1 ; chaque conversion consignée par classe de refus ; la cible tenue ou manquée,
+   publiée TELLE QUELLE.
+5. LE PLANCHER RAPPELÉ : le diff réel des 18 tâches (une ligne substituée) ≈ 27,5 tokens —
+   le ratio plancher publié à côté de la médiane.
+
+## Critères d'acceptation
+- Rejeu bit-identique à graine consignée (deux passes) ; fixtures 18/18 vertes au chemin
+  vert (le client gabarits reconduit).
+- Les quatre refus ÉPROUVÉS sur copies (une mutation par refus, chacun refusé nommément) ;
+  l'expandeur importé à empreinte sha256 recoupée (JUGE-MODIFIÉ refusé).
+- Le registre CIBLES (la ligne OPT-16 au budget publié) et la table des ères mis à jour sans
+  re-tirage ; recomposition C25/C26 aux cinq pièces ; aucun artefact scellé touché.
+- Aucune valeur mesurée modifiée ; sceau-I 14/14 avant et après.
+
+
+### PLAN-W28HARNAIS.md
+# PLAN GELÉ — W28HARNAIS (la carte mémoire dérivée de la carte C ; le moteur natif aux volumes complets — optimisation/vérification)
+
+> Vague 28, prompt 3 (dépôt du 26/11/2026). CIB-HARNAIS-200 (≥ 200/235 exécutables) est
+> pré-enregistrée D273, JAMAIS re-tirée. Le constat P3 à la racine du coffre
+> (rapport-execution-p3-20261125.txt, l'Entrée 412) est RECROUPÉ D'ABORD : ce qui est déjà
+> exécuté au harnais par bloc v4 est consigné tel quel, aucune valeur re-mesurée sans plan.
+> La cible de régime du moteur généralisé est PRÉ-ENREGISTRÉE au présent plan : ≤ 5 × C
+> (au lieu de ~18×) aux volumes complets (12 000 cas/bloc critique), l'audit 1/10 conservé,
+> AUCUN contrôle retiré.
+
+## Geste
+1. LE RECOUPEMENT PRÉALABLE : le rapport P3 du coffre (235/235 au harnais image v4, cible
+   ≥ 200 TENUE, l'agrégateur fail-closed AUCUN REFUS) recoupé contre le dépôt
+   (atelier-p3-exec/, le recomposition-image.json) — l'état consigné, aucune valeur
+   re-mesurée sans plan gelé.
+2. LA CARTE MÉMOIRE DÉRIVÉE DE LA CARTE C : pour chaque bloc, la carte mémoire du harnais
+   dérivée MÉCANIQUEMENT des adresses et plages de tous les blocs (le manifeste-52, le
+   compagnon clair des adresses de la carte C au bac — la carte chiffrée elle-même demeure
+   scellée, D105) : le voisinage réel des blocs appelés MAPPÉ à ses RVA réelles (les blocs
+   assemblés depuis leurs notations, les sha256 recoupés), les stubs contractuels émis pour
+   les globaux lus (le contrat dérivé de la couche I — les spécifications des blocs —
+   JAMAIS de la pièce), les entrées d'IAT aux adresses de l'image.
+3. LA PORTE AVANT MESURE : les 95 vecteurs déjà exécutables au contexte standard rendent une
+   console LIGNE-IDENTIQUE à l'original (le harnais v23) ; un shim muté attrapé au premier
+   vecteur ; le mémo content-addressed refuse à l'octet muté.
+4. L'EXÉCUTION : les 235 vecteurs exécutés au harnais à carte dérivée, la classification et
+   le digeste confrontés au jumeau (console-native + registres 8hguph5ee), tout écart restant
+   nommé par classe (le rax non défini de b20006 demeure nommé, jamais masqué). LE COMPTE
+   publié TEL QUEL : exécutables/235 — CIB-HARNAIS-200 tenue ou manquée sans re-tirage ; le
+   registre C17 recomposé depuis les fichiers.
+5. LE MOTEUR NATIF GÉNÉRALISÉ aux volumes complets : 12 000 cas engendrés pour UN BLOC
+   CRITIQUE (tls13-16, le plus volumineux du corpus, la graine consignée), exécutés
+   nativement par le moteur (chaque bloc en sous-processus), l'audit 1-sur-10 conservé
+   (confrontation au jumeau aux mêmes volumes) ; LE RÉGIME mesuré contre le pilote C au même
+   volume (le même code de bloc appelé directement sans échafaudage d'oracle, compilé au
+   gcc du bac) : cible ≤ 5 × C, pré-enregistrée, publiée tenue ou manquée telle quelle.
+
+## Critères d'acceptation
+- Rejeu bit-identique de la session complète ; confrontation champ par champ au jumeau
+  (pages de sortie, digeste) ; contrôles négatifs vécus (voisinage amputé, stub muté,
+  global non déclaré — chacun refusé nommément).
+- Sceau-I 14/14 avant et après ; aucun artefact scellé touché ; statuts recomposés aux
+  cinq pièces (C26) ; le registre C17 recomposé depuis les fichiers.
+- La cible de régime pré-enregistrée avant toute mesure ; aucun contrôle retiré ; le
+  verdict publié tel quel, manqué compris.
+
+
+### PLAN-W28ATTR.md
+# PLAN GELÉ — W28ATTR (attribution symétrique et indépendance inter-familles — la réplication)
+
+> Vague 28, prompt 4 (dépôt du 26/11/2026). L'attendu est consigné AVANT le run ; le verdict
+> publié tel quel. Si aucune seconde famille capable n'est disponible : le refus nommé
+> FAMILY-ABSENT consigné au registre, AUCUN chiffre fabriqué, la ligne demeure EN ATTENTE.
+
+## Geste
+1. LA REJOUABILITÉ SYMÉTRIQUE (pré-enregistrée AVANT le run) : la pièce T de la quatrième
+   unité livrée (loupe-16 × bras T — le binaire loupe.exe de l'unité 04 D210, sha256
+   b382e01b… recoupé avant le run, la notation scellée à son slot 0x2c0) rejouée au KIT
+   MINIMAL STANDARD (la forme des kits de D204 : UNE pièce, UN scénario, le lanceur — aucun
+   artefact de rig, aucun GUI, aucune notation livrée au juge), MÊME JUGE, MÊMES VECTEURS
+   que l'attribution C (l'épreuve POSIX aux 14 vecteurs, la graine 20261115, le modèle
+   indépendant Python). L'ATTENDU consigné AVANT le run : 14 VERT ou écart nommé. Le mécanisme
+   au bac : la pièce T montée à sa base réelle (l'image loupe.exe en lecture seule), le bloc
+   loupe-16-saisie exécuté à son slot, les arguments tirés de la spécification I (la
+   convention consignée par vecteur). Le verdict publié TEL QUEL.
+2. LES CONSTANTES PAR SECONDE FAMILLE : les tables MD5 T[64] et SHA-256 K[64] et un
+   échantillon pré-enregistré de vecteurs contractuels non crypto à régénérer par une SECONDE
+   FAMILLE d'agent distante (identifiant consigné à chaque appel), la confrontation
+   tripartite spec ↔ seconde famille ↔ définitions (zéro divergence exigée, tout écart nommé
+   avant correctif). AU BAC : la sonde de capacité vécue — la seule API disponible est la
+   famille GLM (la même que l'agent du projet, la famille du bord du bac) ; la voie locale
+   open-weights a déjà son écart nommé (Qwen2.5-Coder-1.5B : la récitation 0/64, consignée à
+   la vague 7). SI AUCUNE seconde famille capable n'est disponible : FAMILY-ABSENT consigné,
+   la ligne EN ATTENTE, aucun chiffre fabriqué.
+3. LA CONSIGNATION : les empreintes des pièces T et C recoupées avant/après (aucun octet
+   changé) ; les 128 constantes confrontées une à une aux définitions mathématiques (la
+   confrontation des définitions, jamais une preuve d'indépendance — l'indépendance exige la
+   seconde famille) ; statuts et registres recomposés aux cinq pièces (C26) ; le gap, s'il
+   demeure, nommé et non reconstruit.
+
+## Critères d'acceptation
+- Rejeu bit-identique de la session (deux passes) ; l'attendu consigné AVANT le run,
+  l'empreinte du plan gelé au commit d'abord.
+- Les 14 vecteurs de l'épreuve POSIX rejoués MÊME juge, MÊME graine ; le verdict publié
+  tel quel (14 VERT ou écart nommé) ; le symétrique C (l'épreuve vague 27 : 14 VERT,
+  0 ROUGE) cité à côté, jamais fusionné.
+- Aucun artefact scellé touché ; sceau-I 14/14 avant et après ; le registre des attentes
+  (ATT-REPL) mis à jour depuis les runs, jamais de la frappe.
+
+
+### PLAN-W28TERRAIN.md
+# PLAN GELÉ — W28TERRAIN (la vague terrain groupée pré-enregistrée : les dix attentes d'un seul geste — sécurité)
+
+> Vague 28, prompt 5 (dépôt du 26/11/2026). UN SEUL plan pré-enregistré (sha256 consigné
+> avant tout run), l'agrégateur fail-closed : un run manquant REFUSE le verdict de la vague.
+> Les statuts se dérivent des runs (PREUVES-STATUTS.json), jamais de la frappe ; INCOMPLETE
+> demeure INCOMPLETE tant que la preuve n'est pas close. Aucun chiffre fabriqué.
+
+## Geste
+1. LE PLAN GELÉ (le présent fichier, sha256 consigné au commit d'abord) : l'ordre des runs,
+   les machines (empreintes CPU, état de fréquence — goupillé ou caveat nommé), les budgets,
+   l'attendu par kit, les critères de verdict, ET la randomisation stratifiée pour H7 (la
+   campagne aux 28 unités — l'effet d'ordre, le tirage T-premier 4/4 et l'événement 1/16
+   consignés) ; l'investigation des pics dudect N=200 (12,39/5,19) pré-enregistrée : les
+   causes candidates nommées AVANT les données, aucune élue d'avance.
+2. L'ORDRE DES RUNS (ProVerif d'abord, la grande RAM) : (P1) ProVerif CF3-v3.pv (le port
+   livré, sha256 98d8e6d1…) — la grande RAM, les six requêtes actives ; (P2) Tamarin — L1a
+   par sous-lemmes de connaissance, L2b reformulé au fait persistant (!) ou à l'événement
+   de naissance explicite (la sémantique d'occurrence nommée — le modèle-témoin test_occ
+   .spthy demeure la référence), lemmes [reuse] ; (P3) dudect n ≥ 10 × {60, 200, 400} sur
+   ≥ 2 machines goupillées ; (P4) fence.i sur silicium RV64 ; (P5) la 3ᵉ machine Loupe ;
+   (P6) VAES goupillé (le kit W27VAES : source + notation + porte + commande) ; (P7) le
+   compteur NV TPM matériel ; (P8) la bascule métal nu (le banc 16/16 prêt) ; (P9) la
+   sentinelle Windows SACL/4663 ; (P10) FIDO2 hmac-secret. LE SERVING CONFORME (la dixième
+   attente) vit à W28RLVR (le gate d'endpoint).
+3. LES AUTOTESTS AVANT CHAQUE RUN (le mécanisme prouvé, jamais la machine) : chaque kit
+   livré à empreinte consignée, l'autotest exécuté au bac AVANT le run du poste réel ; un
+   autotest rouge suspend le kit (jamais la machine accusée).
+4. L'AGRÉGATEUR FAIL-CLOSED : un run manquant refuse le verdict de la vague ; chaque témoin
+   signé et daté consigné au journal append-only ; les refus nommés éprouvés par kit
+   (ANCRE-PERDUE, RETOUR-EN-ARRIERE, APPEL-MANQUANT selon le kit).
+5. LA PUBLICATION : chaque verdict TEL QUEL, les pics dudect N=200 compris s'ils persistent
+   (l'investigation pré-enregistrée : les causes candidates au plan, la donnée ensuite) ;
+   INCOMPLETE demeure INCOMPLETE tant que la preuve n'est pas close.
+
+## Critères d'acceptation
+- Le plan gelé AVANT tout run (le commit d'abord, sha256 à EMPREINTES-PLANS-VAGUE28.txt).
+- Les autotests des kits vécus au bac (les empreintes recoupées avant/après).
+- Aucun artefact scellé touché ; sceau-I 14/14 ; la recomposition C16 du compte d'attentes
+  et C26 des statuts aux cinq pièces ; aucun chiffre fabriqué.
+
+
+### PLAN-W28RLVR.md
+# PLAN GELÉ — W28RLVR (l'entraînement sur juges de conformité, jamais sur similarité — coût/terrain)
+
+> Vague 28, prompt 6 (dépôt du 26/11/2026). L'opération ajouter stagne à 5–7/18 (cible
+> ≥ 15/18 à ≤ 3 000 tokens, SERVING-ABSENT consigné). La récompense est le verdict du juge,
+> JAMAIS une similarité. Le juge d'expansion à empreinte sha256 INCHANGÉE (9fc325e2… —
+> JUGE-MODIFIÉ est le refus). Aucun chiffre fabriqué ; le verdict manqué publié tel quel.
+
+## Geste
+1. LE PLAN D'ENTRAÎNEMENT PRÉ-ENREGISTRÉ (empreinte consignée avant tout run) : le modèle
+   ouvert capable (la classe 7–14B coder, l'identifiant ET l'empreinte consignés au moment du
+   choix — le geste compute appartient au développeur, la session d'entraînement vit hors
+   bac), l'algorithme (DPO sur les 48 paires du corpus v2.1 PUIS RLVR sur l'environnement à
+   récompense multi-niveaux typée), le budget compute, les critères d'arrêt ; LA CIBLE :
+   ≥ 15/18 à ≤ 3 000 tokens sur les 18 tâches ajouter, le juge INCHANGÉ. La différenciation
+   vs SuperCoder (RL orienté vitesse d'exécution) : la récompense fondée sur juges de
+   conformité, pas sur le runtime.
+2. LA DISCIPLINE DE L'ENVIRONNEMENT : l'entraînement sur le split TRAIN seul ; le held-out
+   aux validateurs seuls, aucune notation dorée ; le canari de contamination vérifié à
+   chaque évaluation ; DIX rebuilds bit-identiques de l'environnement avant tout run (la
+   preuve vécue au bac, les empreintes consignées).
+3. L'ÉVALUATION : l'échelle de capacité re-jouable (les rungs nomment la frontière, jamais
+   une moyenne) ; la matrice checkpoint-kit-juges fail-closed ; chaque refus consigné par
+   classe ; le verdict publié TEL QUEL, manqué inclus.
+4. LA SONDE SERVING DEVENUE GATE DE SÉLECTION D'ENDPOINT : tout endpoint qui accepte
+   response_format sans l'appliquer au décodage est REFUSÉ NOMMÉMENT (la sonde W27DECCO
+   reconduite comme gate, l'identifiant de l'endpoint consigné) ; la campagne ne court JAMAIS
+   sur un endpoint refusé. À défaut d'API conforme : le décodage contraint côté client sur
+   modèle ouvert (le backend grammaire xgrammar/llguidance à brancher au moment du run —
+   la commande consignée) et la sonde re-courue ; le verdict de conformité du serving
+   consigné AVANT toute mesure de campagne.
+5. LA CONSIGNATION : le registre CIBLES (CIB-ADD-STRUC demeure EN ATTENTE telle quelle
+   tant que le gate refuse) et la table des ères mis à jour sans re-tirage ; la recomposition
+   C25/C26 aux cinq pièces ; aucun artefact scellé touché.
+
+## Critères d'acceptation
+- Le plan d'entraînement gelé AVANT tout run (sha256 consignée, le commit d'abord) ; le
+  juge recoupé à l'empreinte INCHANGÉE avant et après chaque évaluation.
+- Les dix rebuilds bit-identiques vécus et consignés (les empreintes).
+- Le gate vécu : la sonde re-courue, l'identifiant de l'endpoint consigné, le verdict
+  SERVING-ABSENT (ou conforme) consigné avant toute mesure.
+- Aucune cible re-tirée ; aucun chiffre fabriqué ; sceau-I 14/14 avant et après.
+
+
+### PLAN-W28IMRAD.md
+# PLAN GELÉ — W28IMRAD (le manuscrit cœur IMRAD et le protocole appliqué à lui-même — gouvernance/pack)
+
+> Vague 28, prompt 7 (dépôt du 26/11/2026). Le manuscrit v0.32.0 fait 41 pages : la section 7
+> « Distance to the floor » est un journal d'optimisation, les notes post-édition 8.1–8.7
+> suivent la conclusion. AUCUNE valeur mesurée ne doit changer. Toute valeur demeure GÉNÉRÉE
+> depuis les registres (aucune donnée tapée) ; chaque médiane/ratio porte son n= et son
+> périmètre ; toute revendication « first/only » porte son scope.
+
+## Geste
+1. LA RESTRUCTURE en cœur IMRAD de 12–15 pages : Introduction, Méthodes (le protocole, les
+   campagnes D204/D210, les pré-enregistrements), Résultats (RQ1–RQ4 + la décomposition 4
+   bras + la table des statuts), Discussion, Menaces sur la validité, Travaux connexes,
+   Conclusion ; LE JOURNAL OPT (la section « Distance to the floor »), LES NOTES
+   POST-ÉDITION 8.1–8.7 et LES TABLES LONGUES renvoyés EN ANNEXES ; le changelog gelé une
+   ligne par vague demeure. La vague 28 au corps du changelog ; l'édition v0.33.0 générée
+   (spec v0.15.18, Livre v1.17) à la chaîne de génération de la vague 27 reconduite.
+2. LES TRAVAUX CONNEXES ENRICHIS : le benchmark des sorties structurées (arXiv 2501.10868)
+   et les backends de décodage contraint (vLLM xgrammar/guidance/outlines) pour positionner
+   SERVING-ABSENT ; AutoVecCoder (arXiv 2605.17978) cité et différencié (eux : la
+   vectorisation source ; ici : la notation scellée gouvernée) ; LLM4Decompile/SLaDe pour
+   le plan IP ; SuperCoder (le RL orienté runtime) — la différenciation TRIADE : la
+   récompense fondée sur juges de conformité.
+3. DEUX CLASSES DE LINTER SUPPLÉMENTAIRES : N-VALUE (C30 — tout n= publié à côté de chaque
+   médiane/ratio) et CLAIM-SCOPE (C31 — tout « first/only » porte son scope et sa source).
+   La porte de génération étendue (V1..V7 + L1..L31) ; les mutations négatives vécues, une
+   par nouvelle classe.
+4. LE BUDGET TOKEN PAR VAGUE : le coût token de génération du pack mesuré par vague et
+   pré-enregistré comme budget (la méta-optimisation : le protocole s'optimise lui-même) —
+   la mesure de la vague 28 consignée au journal OPT (OPT-20), la cible posée pour la vague
+   suivante.
+5. LA GÉNÉRATION v0.33.0 : les cinq pièces régénérées aux sources corrigées, la porte
+   V1..V7 + L1..L31 zéro rouge, l'ancre RFC 3161 v0.33.0 posée, la provenance recomposée,
+   la prose du manuscrit dérivée des registres (le dernier minté v0.31.0/24545339 ; la
+   publication Zenodo de v0.32.0/la vague 28 attend la commande du maître — JAMAIS minté
+   sans commande).
+
+## Critères d'acceptation
+- Le linter d'édition complet (29 classes + les deux nouvelles) vert sur les cinq pièces ;
+  le linter numérique : zéro divergence de valeur, signe, ratio, opérande.
+- L'abstract ≤ 250 mots ; les statuts et cibles recomposés (C25/C26) ; le cœur et le pack
+  complet renvoient aux MÊMES registres.
+- Aucun artefact scellé touché ; AUCUNE valeur mesurée modifiée ; sceau-I 14/14 avant et
+  après ; les vingt mutations négatives reconduites + les deux nouvelles.
+
+
+### rapport.txt
+ATELIER W28VAES — LE COULOIR VAES : DOMAINE RÉFLÉCHI, AMORTISSEMENT, LE SCHEDULE DE
+NOTATION CONTRE LE COMPILATEUR (vague 28, prompt 1 — le plan gelé PLAN-W28VAES.md,
+sha256 consigné AVANT toute mesure, EMPREINTES-PLANS-VAGUE28.txt)
+
+L'ÉTAT À LA REPRISE : le couloir de W27VAES mesuré à 5,66 × EVP (cible ≤ 1,05 × pré-
+enregistrée D273, jamais re-tirée) ; la décomposition nommait quatre causes : (a) l'expansion
++ puissances H par appel (296 ns), (b) la conversion rev128 PAR BLOC, (c) le schedule C non
+préservé, (d) la frontière d'appel (2,3 ×).
+
+1. LES TROIS PIÈCES MESURÉES (la même porte pour chacune, dans l'ordre, AVANT toute mesure) :
+   (i) LE PORTAGE C AMÉLIORÉ (couloir_vaes_v3.c) : le contexte de session (l'expansion et
+       les puissances H posées UNE fois par clé, comme le chemin EVP à contexte posé) ; LE
+       DOMAINE RÉFLÉCHI DE BOUT EN BOUT (la conversion rev256 À LA FRONTIÈRE du pli — deux
+       blocs par passe, quatre passes par pli au lieu de huit rev128) ; LA FRONTIÈRE D'APPEL
+       SUPPRIMÉE (le message part du contexte posé) ; tout le contexte copié en LOCALS au
+       seuil (les lectures e->ct.rk[] sous pointeur non-restrict forçaient le compilateur à
+       RECHARGER les clés à CHAQUE aesenc — la cause dominante de la lenteur de la v2,
+       nommée au source) ; la pile accumulée EN YMM (le franchissement de voie une fois par
+       pli) ; les compteurs en REGISTRES (vpaddd masqué au dword 0 + vpshufb — zéro memcpy).
+       LA MESURE (n=20, quatre passes, cœur épinglé) : 1 012 ns médiane — 1,31 × EVP
+       par appel (771 ns), 2,47 × EVP à contexte posé (409 ns).
+   (ii) LE SCHEDULE DE NOTATION (couloir_sched.S) : le couloir écrit en ASSEMBLAGE sur le
+       calendrier de la notation gelée (couloir-vaes.asm, sha256 7911d03f… INTACTE) : les
+       chaînes CTR pipelinées DEUX À DEUX (l'ILP), la frontière réfléchie au pli, la
+       réduction de Gueron PURE SIMD (zéro franchissement GPR). LA MESURE : 1 082 ns —
+       1,41 × EVP par appel, 2,68 × à contexte posé.
+   (iii) EVP au même volume : 771 ns par appel / 409 ns à contexte posé (le chemin
+       VAES512 — OPENSSL_ia32cap consigné : vaes+vpclmulqdq+avx512f, la 3.5.7 dispatche
+       le chemin zmm depuis la 3.1 ; la convention session recoupée octet pour octet
+       contre la convention par appel — la porte --session-vert).
+
+2. L'ÉCART NOTATION-VS-C — LE RÉSULTAT DISTINCT pré-enregistré : 1 082 / 1 012 = 1,07 × —
+   LE COMPILATEUR TIENT LE SCHEDULE : à algorithme égal (le même domaine réfléchi, les
+   mêmes frontières, la même réduction), le portage C compilé (gcc -O3, le source
+   restructuré en locals/restrict) EST PLUS RAPIDE DE ~7 % que l'assemblage écrit sur le
+   calendrier de la notation. La thèse « le compilateur lâche la co-planification que le
+   scheduleur assembleur tient » N'EST PAS CONDUITE par cette mesure : sur CE hot path,
+   une fois le C écrit en forme ILP-friendly, l'érosion de schedule est AU PLUS 7 % — et
+   l'assemblage paye ses gestes de robustesse (l'acc au cadre, la ligne sauvée/restaurée)
+   plus cher que le compilateur ne paie son allocation de registres. LE NOMBRE PUBLIÉ TEL
+   QUEL : l'érosion mesurée ≤ 7 %, dans l'AUTRE sens (le C gagne).
+
+3. LA DÉCOMPOSITION DU COÛT MISE À JOUR PAR CLASSE :
+   - (a) l'expansion + puissances H par appel : SOLDÉE (le contexte de session — la
+     convention mesurée la porte) ;
+   - (b) la conversion par bloc : la frontière rev256 — le CTR seul à 801 ns, la
+     frontière ~88 ns, le GHASH ~120 ns (les sondages au profilage) ;
+   - (c) le schedule : l'écart notation-vs-C ≤ 7 % AU PROFIT DU C (le résultat ci-dessus) ;
+   - (d) la frontière d'appel : SOLDÉE (inlinée).
+   - LE RÉSIDU STRUCTUREL nommé : 2 47-2,68 × contre le chemin EVP à contexte posé —
+     le plafond ISA : EVP emprunte VAES512 (zmm, QUATRE blocs par vAESENC), la notation
+     gelée est ymm (DEUX blocs par vAESENC) : le corridor porte deux fois plus
+     d'instructions AES pour le même volume. Le plafond mesuré du chemin zmm : 409 ns
+     (≈ 0,28 c/octet) ; le corridor ymm : ≈ 0,70 c/octet. La cible ≤ 1,05 × contre le
+     chemin zmm demande la voie 512-bit — la notation est GELÉE à ymm (l'empreinte
+     7911d03f…, jamais retouchée) : l'écart est nommé, il n'est pas maquillé.
+
+4. LA PORTE (registre-porte.txt, rejeu-porte-*.txt) : la parité 20/20 vecteurs NIST CAVP
+   14.0 contre EVP octet pour octet (4 Kio paddés, tag compris) pour CHACUNE des deux
+   pièces ; LE NÉGATIF : la variante mutée (rk13 ⊕ 0x5a) REFUSÉE au premier vecteur (le
+   refus nommé, le mode --negatif-mutant) ; LE ROUND-TRIP inter-implémentations VERT ; LA
+   CONVENTION SESSION recoupée octet pour octet ; LE REJEU bit-identique (deux passes,
+   rejeu-porte-sched.txt == rejeu-porte-sched-2.txt).
+
+5. LES FAUTES DE PASSE NOMMÉES AU SOURCE (la discipline reconduite) — le développement de
+   l'assemblage en porta SEPT, toutes nommées et corrigées à la source, chacune trouvée
+   par l'épreuve (la porte a refusé à chaque fois — jamais un chiffre maquillé) :
+   (1) r11 non initialisé avant la première frappe ; (2) UN TOUR AES SURAJOUTÉ à la
+   chaîne (14 vaesenc + aesenclast) ; (3) le compteur en petite indentation (l'ordre des
+   octets du vpshufb) ; (4) le masque de la voie à l'envers ; (5) la table ET le contrôle
+   INVERSÉS dans les vpshufb de réflexion (la table DOIT être en registre — le contrôle
+   seul peut être mémoire) ; (6) la règle VEX.128 : UNE ÉCRITURE xmm ZERO la moitié haute
+   du ymm correspondant — l'acc vivant en xmm0/xmm13 tua la ligne des compteurs et le vb1
+   (l'acc vit désormais AU CADRE [rbx+0x200], chargé en xmm0 dont la voie haute est morte
+   à la réduction) ; (7) le produit chargeait c dans ymm0 — la moitié basse EST l'acc :
+   chaque produit détruisait l'accumulateur (le produit vit désormais en ymm9).
+
+6. LES VERDICTS : CIB-AES-105 (≤ 1,05 × EVP) : MANQUÉE — mesurée 1,41 × (par appel,
+   la convention W27VAES) / 2,68 × (à contexte posé, la convention « comme EVP » de
+   l'instruction) — la cible JAMAIS re-tirée, le verdict publié tel quel. LE MOTEUR
+   DE LA THÈSE : l'écart notation-vs-C publié comme RÉSULTAT DISTINCT (1,07 × au
+   profit du C — l'érosion de schedule NON conduite sur ce hot path restructuré).
+
+L'ENVIRONNEMENT : machine virtuelle Intel Xeon (vaes+vpclmulqdq+avx512f), cœur épinglé,
+fréquence NON goupillée — le caveat nommé, le même que W20PERF/W27VAES ; le kit machine
+réelle goupillée : le source, la notation, la porte, les commandes de mesure au présent
+atelier (toutes les commandes reproduites ci-dessous).
+
+LES PIÈCES : couloir-vaes.asm (la notation GELÉE, 7911d03f… INTACTE), couloir_vaes_v2.c
+(la passe 2, la frontière réfléchie), couloir_vaes_v3.c (la passe 3 — le portage C
+amélioré), couloir_sched.c + couloir_sched.S (le schedule de notation et son pilote),
+vecteurs-dores-nist.{json,depouille} (les 20 vecteurs CAVP, intacts), registre-porte.txt,
+rejeu-porte-{v3,sched,sched-2}.txt, mesure-v{2,3,3b}.txt, mesure-sched{,2,3}.txt,
+notation-empreintes.txt, le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  gcc -O3 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_vaes_v3 atelier-w28vaes/couloir_vaes_v3.c -lcrypto
+  cd atelier-w28vaes && ./couloir_vaes_v3 --kat && ./couloir_vaes_v3 --roundtrip && ./couloir_vaes_v3 --session-vert
+  gcc -O3 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_vaes_v2 couloir_vaes_v2.c -lcrypto   # la passe 2
+  gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -c couloir_sched.S -o couloir_sched.o && \
+      gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_sched couloir_sched.c couloir_sched.o -lcrypto
+  ./couloir_sched --kat && ./couloir_sched --roundtrip && ./couloir_sched --negatif-mutant
+  taskset -c 0 ./couloir_vaes_v3 --mesure      # la pièce (i)
+  taskset -c 0 ./couloir_sched --mesure        # la pièce (ii) — le schedule de notation
+  python3 v06/sceau_I.py verifier               # la garde (14/14 avant et après)
+
+
+### rapport.txt
+ATELIER W28OPT16 — ÉDITER PAR DIFF STRUCTURÉ AU PLANCHER TOKEN (OPT-16)
+(vague 28, prompt 2 — le plan gelé PLAN-W28OPT16.md, sha256 consigné AVANT toute mesure
+à EMPREINTES-PLANS-VAGUE28.txt)
+
+LA CIBLE PRÉ-ENREGISTRÉE : médiane ≤ 150 tokens natifs sur les 18 tâches d'édition (le
+ratio plancher ~5,5× attendu contre le diff réel 27,5 tokens). La graine 20261117
+reconduite, l'ordre des 18 tâches JAMAIS re-tiré (l'ordre canonique de taches-edition.json,
+celui des campagnes précédentes). Le budget `usage` natif lu à chaque appel, le cl100k
+compté en parallèle (un compte distinct, jamais le juge).
+
+1. LE RÉSULTAT : MÉDIANE 79,5 TOKENS NATIFS SUR 18 — CIBLE ≤ 150 TENUE. La médiane sur
+   les vertes (9/18) : 79. LE RATIO PLANCHER : 2,89 × LE DIFF RÉEL (27,5) — au lieu de
+   24,5 × (l'éditer adopté à 674). Le plus grand levier token restant : SAISI.
+2. LE SCHÉMA FERMÉ (l'extension de D264 à l'édition) : {"op": "substituer", "dst",
+   "offset", "src"} — additionalProperties false (exactement les quatre clés), l'enum
+   fermée (substituer), l'offset contraint à la plage de lignes du bloc, la src du
+   domaine de notation. L'AGENT NE REND QUE LE DIFF STRUCTURÉ (38-42 tokens par tour) ;
+   LE CLIENT expande (la substitution à l'offset), confronte (le diff exact : la ligne
+   unique révisée == la ligne attendue, AUCUNE autre ligne changée), le round-trip
+   (keystone → capstone → keystone — tout écart un refus).
+3. LES QUATRE REFUS NOMMÉS fail-closed, ÉPROUVÉS sur copies avant la campagne :
+   POINTEUR-INCONNU (dst inconnu), EMPREINTE-DIVERGENTE (la notation diverge de
+   l'empreinte soumise), SCHÉMA-VIOLÉ (les clés, l'enum, la plage, la ligne), HORS-FORMAT
+   (la réponse n'est pas l'objet JSON — les fences tolérées puis validées). L'agrégateur
+   fail-closed ; la boucle de réparation bornée à TROIS tours réinjectant le refus exact
+   et le contre-exemple. Les refus vécus : 7 SCHÉMA-VIOLÉ (l'offset erroné de la première
+   passe le plus fréquent — corrigé au tour 2 dans la plupart des cas).
+4. LA RE-TOKENISATION INDÉPENDANTE : écart 0 (les trois tâches à un tour re-notées à
+   l'identique — 38/38, 38/38, 39/39 ; les tâches à tours multiples portent la SOMME des
+   tours, la convention nommée au journal). Le juge D264 recoupé INTACT
+   (scripts/vague19/expandeur_add.py, sha256 9fc325e2… — JUGE-MODIFIÉ serait le refus) ;
+   l'extension OPT-16 vit au validateur client du présent atelier.
+5. LA LECTURE HONNÊTE : la faisabilité demeure 9/18 verts (les 9 rouges échouèrent la
+   ligne exacte en trois tours — la variance d'écriture machine nommée depuis la vague
+   9, pas guérie par le schéma fermé ; le décodage contraint au bord D264 reste le
+   levier). La session vécut en deux séances (le bord 429 dose l'appel — la reprise par
+   point de contrôle, AUCUN chiffre re-tiré : les 12 premières tâches mesurées, la
+   reprise n'a re-mesuré que les 6 restantes).
+6. LES CONSIGNATIONS : CIBLES.md (la ligne CIB-EDIT-OPT16 : TENUE à 79,5 ; la table des
+   ères : l'éditer par diff structuré 79,5, une convention à part — la boucle ≤ 3 tours
+   comprise) ; JOURNAL_OPTIMISATION.md (OPT-16) ; les statuts C25/C26 recomposés à la
+   génération de l'édition (la vague 28 porte la pièce au cœur IMRAD — W28IMRAD).
+
+LES PIÈCES : campagne_opt16.py (la campagne + le validateur + l'expandeur),
+client_gabarits_rt.py (le round-trip exact), journal-opt16.jsonl (le journal des
+appels — le compte est le LOG, jamais une estimation), resultats-opt16.json (les
+verdicts), resultats-partiels.json (le point de contrôle de la reprise), le présent
+rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w28opt16/campagne_opt16.py            # la campagne (n=18)
+  python3 v06/sceau_I.py verifier                        # la garde (14/14 avant et après)
+
+
+### rapport.txt
+ATELIER W28HARNAIS — LA CARTE MÉMOIRE DÉRIVÉE DE LA CARTE C, LE MOTEUR NATIF
+GÉNÉRALISÉ AUX VOLUMES COMPLETS (prompt 3 de la vague 28, dépôt du 26/11/2026)
+Plan gelé : PLAN-W28HARNAIS.md (EMPREINTES-PLANS-VAGUE28.txt, commit 78bced1 —
+le commit AVANT toute donnée). CIB-HARNAIS-200 pré-enregistrée D273, JAMAIS
+re-tirée ; la cible de régime ≤ 5 × C pré-enregistrée AU PLAN.
+
+1. LE RECOUPEMENT PRÉALABLE — le rapport P3 du coffre (Entrée 412) recoupé
+   byte-byte contre le dépôt : sha256 9fc83eab… IDENTIQUE des trois côtés
+   (coffre, atelier-p3-exec/RAPPORT-P3-EXECUTION.txt, la copie locale) —
+   l'état consigné, AUCUNE valeur re-mesurée sans plan gelé.
+
+2. LA CARTE MÉMOIRE DÉRIVÉE MÉCANIQUEMENT de la carte C (harnais_carte.py) :
+   les 50 blocs ASSEMBLÉS DEPUIS LEURS NOTATIONS, sha256 recoupés 50/50 au
+   manifeste-52 ; le voisinage = les blocs PORTEURS de l'image de contexte
+   (EXE_PAR_BLOC, la couche B source — le même code aux mêmes RVA dans tout
+   artefact qui l'embarque, l'héritage R7 ; l'image de contexte suit la
+   convention P3 « proxy d'abord ») posés à leurs RVA réelles ; LES ENTRÉES
+   D'IAT aux adresses de l'image (la table des slots de la chaîne de build :
+   31 imports proxy, le trio kernel32 de selftest, les 20 d'echo, le trio de
+   hello — JAMAIS la pièce lue) : ExitProcess → TERMINATEUR (V3-2),
+   GetCommandLineW → STUB_GCLW (V4-2), les autres → PAGE_STUB ; LES STUBS
+   CONTRACTUELS pour les globaux lus : les références RIP-relatives de données
+   (65 cibles, extraites par capstone du code assemblé) reçoivent des PAGES
+   ZÉRO — le contrat dérive de la couche I, jamais de la pièce ; les zones du
+   pilote aux conventions du jumeau committé (calendrier 0x500200, entrées
+   0x500400, sortie 0x503000, la pile au probing V4-1).
+
+3. LA PORTE AVANT MESURE — LE HARNAIS v23 re-dérivé à conventions identiques :
+   95/235 exécutables au contexte standard, CONFORME aux 95 committés ; la
+   console du jumeau committé reproduite LIGNE-IDENTIQUE 81/81 (rax + digeste,
+   AUCUNE divergence, AUCUNE régression des 95) ; LE SHIM MUTÉ (l'épilogue pop
+   rsi→pop rdi de b20001, la pile désalignée) ATTRAPÉ au premier vecteur
+   (l'exécution mutée REFUSÉE, jamais une console fausse) ; LE MÉMO
+   CONTENT-ADDRESSED : la clé hashe la carte entière ‖ les vecteurs ‖ la
+   config ‖ la graine 20261128 — le second appel HIT, l'octet de carte muté
+   MISS (une autre clé, refusé).
+
+4. L'EXÉCUTION — 229/235 VECTEURS EXÉCUTABLES à la carte dérivée : CIB-HARNAIS-
+   200 TENUE (229 ≥ 200, publiée telle quelle, jamais re-tirée). LA
+   CONFRONTATION au jumeau : 81/81 ligne-identiques (les 81 OK du jumeau,
+   digeste octet pour octet), 148 NOUVELLEMENT EXÉCUTÉS (les FAULT du jumeau
+   que la carte dérivée exécute — la dérivée TLS13-16..., la classification
+   publiée champ par champ), 0 régression. L'ÉCART NOMMÉ PAR CLASSE : les SIX
+   vecteurs de tls-06 (g70006) refusés DEPASSEMENT (timeout 2 s, RIP dans le
+   bloc — la boucle non bornée au calendrier de la convention) — LE GATE du
+   dépassement ajouté au harnais : l'arrêt propre vit à RIP == 0x60000, un
+   arrêt sur timeout N'EST JAMAIS un OK. L'ÉCART VS P3 nommé : le harnais
+   image v4 comptait OK les exécutions arrêtées au timeout silencieux (g70006
+   6/6 « OK ») — le harnais à carte les REFUSE nommément (235−6 = 229) ; la
+   correction dérive du RIP, elle n'est pas un re-tirage (la cible ≥ 200
+   demeure, tenue aux deux comptes).
+   LES CONTRÔLES NÉGATIFS vécus : VOISINAGE AMPUTÉ (e50001 retiré de la
+   carte — l'appel du voisin FAULT au vecteur qui l'appelle), STUB MUTÉ (le
+   slot GetStdHandle d'a10001 pointé hors carte — l'appel REFUSÉ), GLOBAL NON
+   DÉCLARÉ (la page .data 0x3000 retirée — la lecture d'e50011 FAULT) —
+   chacun refusé nommément. LE REJEU BIT-IDENTIQUE : la session complète
+   rejouée, console-carte.jsonl 235 lignes BYTE-BYTE identiques (31231 o),
+   carte-resultat.json identique.
+
+5. LE MOTEUR NATIF GÉNÉRALISÉ AUX VOLUMES COMPLETS (moteur_volumes.c,
+   session_volumes.py) : 12 000 cas pour tls13-16-aes128-bloc (le corps
+   assemblé depuis la notation, sha256 cd760f14… consigné), la graine 20261128
+   AVANT le tirage, la convention du jumeau (0, 63 bits, 0, 0). LE MOTEUR
+   COMMITTÉ aux trois lots (≤ 4 096 vecteurs, la limite statique) : 46,6 ms
+   de mur — le régime fprintf par vecteur. LE MOTEUR GÉNÉRALISÉ (le lot
+   unique 12 000, le compte en registres bruts — le rax et LE DIGESTE LU par
+   vecteur, JAMAIS retiré —, la console différée en une passe) : la console
+   LIGNE-IDENTIQUE au moteur committé (l'équivalence prouvée octet par octet),
+   le mur 1,9 ms (33 × plus vite que le committé). L'AUDIT 1-SUR-10 CONSERVÉ :
+   1 200 vecteurs confrontés au JUMEAU (l'émulateur du registre 8hguph5ee,
+   champ par champ) — ZÉRO ÉCART. LE RÉGIME contre le PILOTE C au même volume
+   (le même code de bloc appelé directement sans échafaudage d'oracle, gcc
+   -O2 du bac, la boucle nue : l'entrée posée + l'appel), n=9 passes, la
+   médiane, les horloges internes symétriques : le pilote 24,0 µs, la boucle
+   d'exécution du moteur 109,5 µs → 4,56 × C — LA CIBLE ≤ 5 × C TENUE. LES
+   CONVENTIONS PUBLIÉES : le régime de BOUT EN BOUT (le mur du sous-processus
+   : montage + boucle + console différée) 77 × C, publié pareil ; le moteur
+   committé 1 056 × C (le régime de base, l'I/O formatée par vecteur) ; LE
+   JUMEAU 19,1 µs/vecteur contre 0,16 µs/vecteur au moteur généralisé —
+   L'ORDRE DE GRANDEUR vs l'oracle vivant : 123 × (la promesse de
+   l'évaluation tenue et dépassée).
+
+6. LA GARDE : aucun artefact scellé touché (le sceau-I 14/14 avant et après ;
+   les blocs assemblés depuis les notations, sha256 recoupés 50/50 ; la pièce
+   jamais lue — la carte C et la couche B source only) ; aucun verdict
+   fabriqué (les six DEPASSEMENT refusés et consignés, l'écart vs P3 nommé
+   par classe, les cibles jamais re-tirées : CIB-HARNAIS-200 tenue à 229, la
+   cible de régime tenue à 4,56 × C) ; aucun contrôle retiré (le digeste lu
+   par vecteur, l'audit 1-sur-10 conservé, les contrôles négatifs vécus) ;
+   la graine 20261128 consignée ; le registre C17 et la recomposition C25/C26
+   aux cinq pièces vivent à la génération de l'édition v0.33.0 (la chaîne
+   vague 27 reconduite).
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w28harnais/harnais_carte.py     # la carte dérivée (235 vecteurs, la porte)
+  python3 atelier-w28harnais/session_volumes.py    # les volumes (12 000 cas, l'audit, le régime)
+  python3 v06/sceau_I.py verifier                  # la garde (14/14)
+Les sha256 de tous les fichiers produits : EMPREINTES.txt.
+
+
+### rapport.txt
+ATELIER W28ATTR — LA REJOUABILITÉ SYMÉTRIQUE (LA PIÈCE T AU KIT MINIMAL) ET
+L'INDÉPENDANCE INTER-FAMILLES (vague 28, prompt 4 — le plan gelé PLAN-W28ATTR.md,
+sha256 9a30ed93… consigné AVANT toute mesure à EMPREINTES-PLANS-VAGUE28.txt)
+
+1. LA REJOUABILITÉ SYMÉTRIQUE — LA PIÈCE T DE L'UNITÉ 04 D210 (loupe-16 × bras T,
+   loupe.exe, sha256 b382e01b… RECROPÉ INTACT avant le run — l'attendu consigné AVANT :
+   14 VERT ou écart nommé). LE MÉCANISME au bac : l'image loupe.exe montée à sa base
+   réelle 0x140000000, la pièce exécutée à son slot RVA 0x6240 (la notation le porte),
+   les zones au PLAN .data (le cadre 0xE000, la saisie 0xE400, le journal 0xE4A0 — le
+   scénario du kit les y pose), l'appel à la convention WNDPROC (hwnd, WM_CHAR,
+   caractere, 0 — le scénario : SAISIR(0x770001, WM_CHAR, ch, 0)), la feuille
+   InvalidateRect stubbée à son thunk IAT (RIP 0x647a → RVA 0x31A0 — l'unique appel
+   sortant nommé à l'attribution C).
+
+   LE RÉSULTAT (preuve-directe.txt) : LES CINQ SONDES DU CONTRAT NOYAU, 5/5 VERT —
+   (1) E1 : la poignée ~0 → le retour -4 EXACT (le refus sans session, la phrase
+   nommée) ; (2) la paire « 45 » → le journal[0] = (0x22, 0x45) EXACT (l'octet au
+   journal PAR DÉCALAGE — Q2) ; (3) le compte 1 ; (4) le curseur 0x22 → 0x23 EXACT
+   (Q4) ; (5) la fenêtre au 0x22 = 0x45 EXACT (la vue suit — Q3). LA PIÈCE T EST
+   VÉRIFIÉE AU BANC sur son contrat noyau — la notation scellée fait ce que le
+   modèle dit.
+
+   L'ÉCART NOMMÉ : le différentiel complet aux 14 vecteurs (les 10 000 frappes des
+   deux disques) exige le contexte D'APPLICATION entière (la boucle de messages, la
+   gestion de la fenêtre, les chemins de message du cadre — l'épreuve s'est arrêtée
+   sur un fetch hors carte au chemin du message « hors bornes » et la calibration de
+   la vue) — LA CAUSE STRUCTURALE nommée : la pièce C miroir était AUTONOME (son
+   état dans les ARGUMENTS, re-jouable au POSIX bench seul), la pièce T est le bloc
+   de l'APPLICATION scellée (son état au PLAN .data, sa fenêtre, ses chemins de
+   message) — la re-jouabilité symétrique COMPLÈTE vit au kit minimal TERRAIN (le
+   scénario du kit v3 : MÊME juge, MÊMES vecteurs, la graine 20261115 — le kit
+   livré à empreintes consignées, prêt au geste du terrain). Le contrat noyau
+   vérifié au banc + le kit terrain prêt = la vérification honnête possible au
+   bac ; le différentiel complet appartient au geste du terrain.
+
+2. L'INDÉPENDANCE INTER-FAMILLES — LE REFUS NOMMÉ : **FAMILY-ABSENT** — la seule API
+   disponible au bac est la famille GLM (le CLI z-ai, la même famille que l'agent du
+   projet — le bord du bac n'expose QU'UNE famille, le constat de la vague 7
+   reconduit) ; la voie locale open-weights a déjà son écart nommé (Qwen2.5-Coder-1.5B :
+   la récitation 0/64 consignée à la vague 7). LA LIGNE ATT-REPL DEMEURE EN ATTENTE —
+   aucun chiffre fabriqué, la confrontation tripartite (spec ↔ seconde famille ↔
+   définitions) attend une famille distante capable. Les 128 constantes MD5 T[64] et
+   SHA-256 K[64] : les définitions mathématiques demeurent la confrontation
+   vérifiable au bac (la dérivation aux décimales — le protocole peap6ws09, zéro
+   divergence) — l'indépendance EXIGE la seconde famille, nommée.
+
+3. LES EMPREINTES RECROPÉES avant/après : loupe.exe b382e01b… (aucun octet changé —
+   la pièce scellée jamais touchée), la notation-loupe-16-saisie.asm (la pièce à son
+   slot, le plan vérifié sur pièces).
+
+LES PIÈCES : epreuve_t_loupe16.py (l'épreuve symétrique — le mécanisme complet, les
+14 vecteurs structure prête), preuve-directe.txt (les cinq sondes 5/5 VERT), le
+présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  python3 atelier-w28attr/epreuve_t_loupe16.py       # l'épreuve (le mécanisme au plan .data)
+  python3 v06/sceau_I.py verifier                     # la garde (14/14 avant et après)
+
+
+### rapport.txt
+ATELIER W28TERRAIN — LA VAGUE TERRAIN GROUPÉE PRÉ-ENREGISTRÉE : LES DIX ATTENTES D'UN
+SEUL GESTE (vague 28, prompt 5 — le plan gelé PLAN-W28TERRAIN.md, sha256 a0a8c4ff…
+consigné AVANT tout run à EMPREINTES-PLANS-VAGUE28.txt — UN SEUL plan, le commit d'abord)
+
+L'ÉTAT : les dix attentes au registre (STATUTS-EN-ATTENTE.md) attendent le geste du
+développeur ; tous les kits furent livrés à empreintes consignées aux vagues
+précédentes. LA VAGUE 28 ne COURRA PAS les runs au bac (le geste appartient au poste
+réel) — elle livre : LE PLAN GROUPÉ pré-enregistré, LES RECROUPES des kits (les
+autotests vécus au bac — le mécanisme prouvé, jamais la machine), L'INVESTIGATION DES
+PICS DUDECT N=200 pré-enregistrée (les causes candidates nommées AVANT les données),
+et L'AGRÉGATEUR FAIL-CLOSED décrit à la lettre.
+
+1. LE PLAN GROUPÉ (l'ordre des runs, la machine goupillée exigée, les attendus) :
+   (P1) PROVERIF D'ABORD sur la grande RAM — CF3-v3.pv (sha256 98d8e6d1… recoupé), les
+        six requêtes actives, proverif ≥ 2.05 — la machine ≥ 16 Gio conseillés ;
+   (P2) TAMARIN — la décomposition CF3-v3d (f00b039d…) : L1a par sous-lemmes de
+        connaissance (au mur 4 Gio du bac), L2b reformulé au fait persistant (!) —
+        la sémantique d'occurrence nommée (test_occ.spthy, ed66c811…), lemmes [reuse] ;
+   (P3) DUDECT n ≥ 10 × {60, 200, 400} sur ≥ 2 machines GOUILLÉES (l'investigation
+        pré-enregistrée ci-dessous) ;
+   (P4) FENCE.I sur silicium RV64 ;
+   (P5) la 3ᵉ machine Loupe ;
+   (P6) VAES goupillé (le kit W28VAES : source + notation + porte + les commandes —
+        au rapport de l'atelier) ;
+   (P7) le compteur NV TPM matériel ;
+   (P8) la bascule métal nu (le banc 16/16 prêt) ;
+   (P9) la sentinelle Windows SACL/4663 ;
+   (P10) FIDO2 hmac-secret.
+   LA RANDOMISATION STRATIFIÉE POUR H7 : la campagne aux 28 unités — l'effet d'ordre
+   (le tirage T-premier 4/4, l'événement 1/16 consigné) — l'ordre tiré à la graine
+   consignée AVANT la campagne, les deux bras par unité.
+
+2. LES AUTOTESTS VÉCUS AU BAC (le mécanisme prouvé, jamais la machine) — LA RECOUPE
+   DES KITS (recoupe-kits.txt, autotests-kits.txt) : les QUATRE packs de siliciums de
+   commodité (KAGGLE a5a339b4…, ACTIONS ce313bae…, ORACLE 95d43b14…, LINUXONE
+   3b7edee8…) — les sha256 des zips recoupés INTACTS contre EMPREINTES-SILICIUMS-
+   COMMODITE.txt ; les QUATRE vérificateurs (verifier-kit-*.sh) vécus au bac : « TOUTES
+   les pièces recoupées : le paquet est le paquet du labo » — 4/4 VERT ; les preuves
+   symboliques recoupées (CF3-v3.spthy ab84960d…, CF3-v3.pv 98d8e6d1…, le modèle
+   négatif 367e9d09…) ; le kit de run machine réelle (atelier-w27preuv/kit-run-reel.txt)
+   — les commandes exactes, les budgets, les attendus par lemme, les empreintes —
+   RECOPIÉ au présent atelier (recoupe-preuves.txt).
+
+3. L'INVESTIGATION PRÉ-ENREGISTRÉE DES PICS DUDECT N=200 (investigation-dudect-n200.txt)
+   — LES TROIS CANDIDATES NOMMÉES AVANT LES DONNÉES : (1) l'agression DVFS au milieu de
+   la batterie (le pic à N=200 qui embrasse la transition, dilué à N=400) ; (2) le bruit
+   des fenêtres courtes (l'estimateur à bas degrés de liberté, non reproductible au
+   re-tirage) ; (3) la contamination du premier tour (le cache froid, le pic en tête de
+   fenêtre). LA MESURE DÉCISIVE : les trois N re-tirés à la machine GOUILLÉE — le pic
+   qui persiste dirige vers une cause réelle (nommée alors sur pièces), le pic qui
+   disparaît confirme la candidate. AUCUN verdict de cause porté avant les données.
+
+4. L'AGRÉGATEUR FAIL-CLOSED (à la lettre du plan) : un run manquant REFUSE le verdict de
+   la vague ; chaque témoin signé et daté consigné au journal append-only ; les statuts
+   se DÉRIVENT des runs (PREUVES-STATUTS.json), jamais de la frappe ; INCOMPLETE demeure
+   INCOMPLETE tant que la preuve n'est pas close. LES REFUS NOMMÉS à éprouver par kit :
+   ANCRE-PERDUE, RETOUR-EN-ARRIERE, APPEL-MANQUANT selon le kit.
+
+5. CE QUE LE BAC NE COURRA PAS : les dix runs (le geste du développeur au poste réel —
+   les machines goupillées, le TPM, le Windows SACL, le FIDO2, le métal nu) ; la
+   publication des verdicts de vague attend les témoins signés — la vague terrain
+   demeure EN ATTENTE (le registre C16 inchangé, le compte des attentes recomposé à la
+   génération de l'édition).
+
+LES PIÈCES : le plan gelé (PLAN-W28TERRAIN.md, à la racine — l'empreinte à
+EMPREINTES-PLANS-VAGUE28.txt), recoupe-kits.txt, autotests-kits.txt,
+recoupe-preuves.txt, investigation-dudect-n200.txt, le présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  cd atelier-siliciums-commodite-v100 && bash TRIADE_kit_test_KAGGLE_x86_v100/verifier-kit-kaggle.sh
+  (idem oracle, linuxone, actions — les quatre recoups, 4/4 VERT)
+  sha256sum atelier-cf3-verdict-qa3k5putf/CF3-v3.pv        # 98d8e6d1… le port ProVerif
+  python3 v06/sceau_I.py verifier                           # 14/14 avant et après
+
+
+### rapport.txt
+ATELIER W28RLVR — L'ENTRAÎNEMENT SUR JUGES DE CONFORMITÉ, JAMAIS SUR SIMILARITÉ :
+LE PLAN PRÉ-ENREGISTRÉ, LE GATE D'ENDPOINT VÉCU (vague 28, prompt 6 — le plan gelé
+PLAN-W28RLVR.md, sha256 0b0066c8… consigné à EMPREINTES-PLANS-VAGUE28.txt)
+
+1. LE GATE DE SÉLECTION D'ENDPOINT, VÉCU SUR PIÈCES (sonde_gate.mjs — la sonde
+   W27DECCO reconduite comme gate) : LE VERDICT AVANT TOUTE MESURE DE CAMPAGNE :
+   **SERVING-ABSENT — le bord du bac accepte response_format (json_schema strict ET
+   json_object) et NE L'APPLIQUE PAS** : la violation ordonnée (l'op hors enum, l'offset
+   hors bornes) passe INTÉGRALE dans les DEUX modes. LA CONSÉQUENCE DU GATE : tout
+   endpoint qui accepte sans appliquer est REFUSÉ NOMMÉMENT — le bord du bac est
+   REFUSÉ pour la campagne D264/CIB-ADD-STRUC, la cible demeure EN ATTENTE (le
+   registre inchangé, AUCUN chiffre fabriqué) ; la voie nommée au plan : le décodage
+   contraint côté client sur modèle ouvert (xgrammar/llguidance au moment du run) et
+   la sonde re-courée — le verdict de conformité consigné avant toute mesure.
+
+2. LE PLAN D'ENTRAÎNEMENT PRÉ-ENREGISTRÉ (le plan gelé, la lettre reconduite) : le
+   modèle ouvert capable (la classe 7-14B coder, l'identifiant ET l'empreinte
+   consignés au moment du choix — le geste compute appartient au développeur, la
+   session d'entraînement vit hors bac) ; l'algorithme : DPO sur les 48 paires du
+   corpus v2.1 PUIS RLVR sur l'environnement à récompense multi-niveaux typée
+   (syntaxe, expansion, round-trip, oracle, mutation — cumulative et stricte, LA
+   RÉCOMPENSE EST LE VERDICT DU JUGE, jamais une similarité) ; le budget compute et
+   les critères d'arrêt au plan ; LA CIBLE : ≥ 15/18 à ≤ 3 000 tokens sur les 18
+   tâches ajouter, le juge d'expansion à empreinte sha256 INCHANGÉE (9fc325e2…,
+   expandeur_add.py — recoupé INTACT au présent atelier) ; LA DIFFÉRENCIATION vs
+   SuperCoder (le RL orienté vitesse d'exécution) : la récompense fondée sur juges
+   de conformité, pas sur le runtime.
+
+3. L'ENVIRONNEMENT RECOUPÉ (recoupe-corpus.txt) : le corpus TRIADE-CORPUS-v2.1 au
+   dépôt : les SPLITS SCELLÉS INTACTS — train.jsonl (c6f416cf…, 127 lignes),
+   dev.jsonl (38da09a3…, 24), test.jsonl (9c6ce7db…, 19), dpo-paires.jsonl
+   (15ac6408…) : 4/4 conformes au MANIFESTE (la graine 20261126 consignée, les
+   splits par groupe-de-contrat). L'ÉCART NOMMÉ : les deux fichiers auxiliaires
+   (permissif-ccby.jsonl, sonde-contamination.json) divergent de leurs empreintes au
+   manifeste — l'écart consigné TEL QUEL (les fichiers régénérés après le manifeste à
+   une vague postérieure — la re-consignation de leurs empreintes au registre des
+   écarts, jamais masquée). LA DISCIPLINE : l'entraînement sur le split TRAIN seul ;
+   le held-out aux validateurs seuls, aucune notation dorée ; LE CANARI de
+   contamination vérifié à chaque évaluation (la phrase unique TRIADE-CANARI…) ;
+   les dix rebuilds bit-identiques de l'environnement avant tout run (le geste au
+   moment du run — les splits scellés recoupés INTACTS au présent atelier en est la
+   condition d'entrée).
+
+4. L'ÉVALUATION (au plan) : l'échelle de capacité re-jouable (les rungs nomment la
+   frontière, jamais une moyenne) ; la matrice checkpoint-kit-juges fail-closed ;
+   chaque refus consigné par classe ; le verdict publié TEL QUEL, manqué inclus.
+
+5. LA CONSIGNATION : CIBLES.md (CIB-ADD-STRUC demeure EN ATTENTE — le gate refuse
+   le bord, SERVING-ABSENT re-couré le 26/11/2026 au présent atelier) ; le registre
+   des attentes inchangé (ATT-ADD demeure EN ATTENTE — le serving conforme est le
+   geste) ; AUCUN chiffre fabriqué.
+
+LES PIÈCES : sonde_gate.mjs (la sonde reconduite), sonde-verdict.txt (le verdict
+vécu), recoupe-corpus.txt (l'environnement recoupé), le plan gelé PLAN-W28RLVR.md (à
+la racine, l'empreinte à EMPREINTES-PLANS-VAGUE28.txt), le présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  cd atelier-w28rlvr && node sonde_gate.mjs     # le gate — le verdict avant tout
+  sha256sum ../depot-zenodo-corpus-v21/*.jsonl  # la recoupe de l'environnement
+  python3 ../v06/sceau_I.py verifier            # 14/14 avant et après
+
+
+### main.tex (extrait ajouté)
+\paragraph{Structured outputs and constrained decoding.}
+The constrained-generation side of the adoption problem is now
+benchmarked on real schemas: JSONSchemaBench~\cite{jsonschemabench}
+measures constrained-decoding approaches across efficiency, coverage
+and output quality, and the serving engines expose grammar backends
+--- XGrammar~\cite{xgrammar}, Outlines~\cite{outlines} and the
+guidance stack~\cite{guidance} --- that enforce a schema at decode
+time. The SERVING-ABSENT refusal of the present study (the border
+accepts the \code{response\_format} field and does not apply it to
+the decode) was probed on pieces at the twenty-seventh wave and
+re-probed as an endpoint-selection gate at the twenty-eighth: an
+endpoint that accepts a schema without applying it is refused by
+name, which is why the structured-diff campaign (D264/OPT-16) runs
+its bounded repair loop client-side --- the closed schema holding the
+edit diff at a 79.5-native-token median, the free-text writing
+variance remaining the named residual. The benchmark's lesson cuts
+both ways: constraint fidelity is a serving property to be measured,
+never assumed.
+
+\paragraph{Learned vectorisation and decompilation.}
+Two adjacent lines sharpen the positioning. AutoVecCoder
+~\cite{autoveccoder} teaches LLMs to emit \emph{explicitly vectorised}
+source code (an automated vectorisation pipeline with a reinforcement
+stage) --- their vectorisation is a source-level transformation, while
+the SIMD corridors here are hand-written notation under seal, measured
+against the tuned library (the 0.7271 cycles-per-byte interleaved
+corridor) and scheduled against the compiler on the frozen VAES
+notation (the notation-versus-C schedule gap published as a distinct
+result at the twenty-eighth wave). On the decompilation side,
+LLM4Decompile~\cite{llm4decompile} and SLaDe~\cite{slade} erode the
+anti-reverse-engineering premium that the IP plan of the threat model
+leans on --- the pack assumes it: the sealed notation's value is
+governance and provenance, not secrecy, and the decompilation line is
+cited to keep that assumption honest.
+
+\paragraph{RL for code, and what the reward measures.}
+SuperCoder~\cite{supercoder} optimises \emph{execution speed} by
+reinforcement on runtime rewards --- the strongest published RL result
+on assembly optimisation, and the natural contrast for the adoption
+corpus's training plan: the reward there is the conformity judge's own
+verdict (syntax, expansion, round-trip, oracle, mutation --- cumulative
+and strict, never a similarity, never a runtime), because the property
+being trained is the machine-writing stability that the free-text
+refusals (HORS-FORMAT) name, not the speed of the artifact.
+
+
+
+### main.tex (extrait ajouté)
+\subsection{Post-edition note (v0.33.0): the IMRAD core, the derived
+harness, the generalised engine}
+The twenty-eighth wave restructures the manuscript into the core the
+review asked for: this edition's core is Introduction, Methods, Results
+(RQ1--RQ4, the four-arm decomposition hoisted from the journal, the
+status table), Discussion, Threats, Related Work and Conclusion; the
+optimisation journal, the extended-results programmes, the post-edition
+notes and the frozen changelog are annexes, every measured value
+unchanged. The wave's own measurements, all pre-registered: the
+derived-memory harness executes 229 of 235 oracle vectors with the map
+derived mechanically from the card C (the jumeau console line-identical
+81/81, six tls-06 vectors refused as DEPASSEMENT --- the timeout gate:
+an honest stop is not an OK); the generalised native engine runs the
+12,000-case volume at a 4.56x C hot regime against the bare-call pilot
+(the committed engine's 1056x C and the 77x C end-to-end convention
+published alongside); the structured edit holds its 150-token target at
+a 79.5 median. No measured value changed and no target re-aimed.
+
+
+
+### main.tex (extrait ajouté)
+\item v0.33.0 (26 Nov 2026) --- the present edition, the twenty-eighth wave: the manuscript is restructured into the IMRAD core the reviewer asked for --- the optimisation journal, the extended results programmes, the post-edition notes and the frozen changelog moved to annexes, the four-arm decomposition hoisted into the core results, the related-work section enriched with the verified structured-output benchmark and constrained-decoding backends, AutoVecCoder, LLM4Decompile and SLaDe; the wave's measured results are the derived-memory harness (the map derived mechanically from the card C: 229 of 235 vectors executable, the jumeau console line-identical 81/81, six tls-06 vectors refused as DEPASSEMENT --- the timeout gate: an honest stop is not an OK), the generalised native engine at volumes (12,000 cases, the hot regime at 4.56x C against the bare-call pilot, the console deferred and line-identical, the audit one-in-ten at zero discrepancy), the structured edit at the token floor (OPT-16: the median at 79.5 native tokens against the 150 target, HELD), the symmetric replay of the T piece (five core-contract probes green) and the pre-registered terrain-wave plan; two linter classes (C30 N-VALUE, C31 CLAIM-SCOPE) and the per-wave token budget (OPT-20). No measured value changed and no target re-aimed.
+
+### main.tex (extrait ajouté)
+\subsection{The four-arm decomposition and the pre-registered campaigns' summary}\label{sec:quatrebras}
+The decomposition the plan assigns to the core: the lexicographic
+reading, the isolated notation effect and the fourth arm, moved
+unchanged from the optimisation journal (annex) where they previously
+lived, so that the core results answer RQ1--RQ4 \emph{and} the causal
+decomposition of what nota
