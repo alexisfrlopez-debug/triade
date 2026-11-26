@@ -1,0 +1,53 @@
+ATELIER W27RESID — LES RÉSIDUS ÉDITORIAUX SOLDÉS À LA SOURCE, TROIS CLASSES NOUVELLES
+(C26/11/2026, prompt 2)
+====================================================================================================
+Évaluation du pack, prompt 2. Aucune valeur mesurée modifiée ; aucun artefact scellé touché ; le
+verbatim historique demeure octet pour octet (les colonnes historiques restent datées).
+
+1. (a) LA TABLE 12 DE LA SPEC, AXE 3. La cellule d'état disait « treize arbres signés … —
+   verifier 13 arbres VERTS » alors que le sceau de l'Intention porte QUATORZE arbres depuis
+   D177 (loupe.1, le quatorzième). La spécification v0.15.17 (scripts/spec_v159/, née de
+   v0.15.16 par patcher ancré — 7 remplacements) porte « quatorze arbres signés (D177 : loupe.1
+   le quatorzième) … — verifier 14 arbres VERTS » ; les colonnes historiques DÉMEURENT DATÉES
+   (cérémonies d'ère M8 [12 arbres, D162/D163] et M9 [13 arbres, D166/D168] telles quelles).
+2. (b) LES TITRES DUPLIQUÉS §1.23/§1.24. Les deux sous-sections « Ce que change la v0.15.16 »
+   sont DISTINCTES : « Ce que change la v0.15.16 — les six résidus (D274) » et « Ce que change
+   la v0.15.16 — la prose de statut dérivée (D275) ». La section de version v0.15.17 est
+   ajoutée (la révision décrite, les colonnes historiques nommées).
+3. (c) LES FRAGMENTS FRANÇAIS DU MANUSCRIT ANGLAIS §4.1, corrigés à la source
+   (edition-v0230/main.tex) : « installés à la vague 14 » → « installed at wave 14 » ;
+   « 1 122 pas, 29,4 s » → « 1,122 steps, 29.4 s » (la langue de la pièce tranche, D243) ;
+   « INCOMPLETE au mur mémoire 4 Gio » → « L1 incomplete at the 4 GiB memory wall » ;
+   « run non exécuté » → « run not executed ». Les valeurs demeurent intacts.
+4. (d) LA CHRONOLOGIE DU LIVRE (table 13) RÉORDONNÉE aux dates imprimées : 30/10 soir
+   (cérémonie CF1→CF2) → 30/10 20:03 (premier essai refusé) → 20:37 (relance, pile complète)
+   → 20:40 (MIGRER, époque 1, checksum 0cc89a96) → 20:41 (VÉRIFIER VERT — le rapport de boîte
+   noire v1.1 du 30/10 20:41 fait foi, D133) → 31/10 18:10 (attachement, doublon → D131) →
+   18:18 (rapport, question fragments) → 31/10 soir (fenêtre de migration, habit du GUI →
+   D132) → à suivre. Le texte de chaque rangée est inchangé ; seul l'ordre change. Les deux
+   mentions de la spécification courante portées à v0.15.17 (l'avant-propos du patcher v1.16
+   et l'annexe A, deux occurrences).
+5. TROIS CLASSES NOUVELLES (le linter à 29 classes) :
+   C27 COUNT-TABLECELL — tout compte d'arbres/vecteurs est confronté au registre : le compte
+   d'arbres se DÉRIVE du sceau-I (ARBRES, 14 — jamais tapé), les comptes de vecteurs du
+   registre des cibles (CIB-HARNAIS-200 : 235 exécutables sur 320 produits). L'invocation du
+   garde (« verifier N arbres ») est TOUJOURS l'état courant — aucun dateur ne l'excuse ; les
+   comptes narratifs historiques sont admis à leur étiquette d'époque (décision D1xx, ère
+   M8/M9, chaîne spec_vNNN, dates, « passation », « jusque-là », fenêtre ±200).
+   C28 TITLE-UNIQUE — aucun titre de section/sous-section dupliqué par pièce, lu aux SOURCES
+   de la chaîne courante (la spec v159, le Livre v19, le manuscrit).
+   C29 LANG-BODY — la langue du corps par pièce : le manuscrit anglais (les mots français
+   refusés, les régions sanctionnées — le résumé et les Mots-clés — et les noms du métier
+   « Entrées », « relevé », « éditer », les citations « … » et les refus nommés [T0-PÉRIMÉ]
+   admis) ; les quatre pièces françaises (les séquences de mots-outils anglais refusées, les
+   citations admises). Le compte français « N pas » est refusé (steps attendu).
+6. LES CONTRÔLES NÉGATIFS, SIX VÉCUS (atelier-w27resid/controles_negatifs.py, sur copies) :
+   « verifier 13 arbres » ressuscité refusé ; compte de vecteurs muté (234) refusé ; le titre
+   dupliqué de la v0.15.16 ressuscité refusé ; « installés à la vague 14 » ressuscité refusé ;
+   « 1 122 pas » ressuscité refusé ; une séquence anglaise greffée dans la présentation
+   refusée. 6/6. La classe C23 suit la langue de la pièce (le verdict L3 publié à l'anglaise
+   « 1,122 steps » comme à la française « 1 122 pas »).
+7. L'ÉTAT INTERMÉDIAIRE nommé : le linter complet sur les cinq pièces (trois corrigées, les
+   preuves et la présentation v0.31.0 non régénérées) rend C6/C12/C18 — les écarts de version
+   ET le compte de classes (25 ≠ 29) attendent la génération de l'édition v0.32.0, qui porte
+   les cinq pièces à l'état courant. Le sceau-I est 14/14 avant et après l'atelier.

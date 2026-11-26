@@ -548,8 +548,9 @@ def controles_w25(t, racine, version_edition, version_spec):
             refus.append(("C23", "manuscrit", "Tamarin dit « absent » alors que le registre porte un verdict partiel"))
     if re.search(r"Tamarin.{0,160}?outils absents", t.get("presentation", ""), re.S):
         refus.append(("C23", "presentation", "statut Tamarin contradictoire avec le registre"))
-    if "1 122" not in t.get("manuscrit", "") and tam["verdicts"]["L3"].startswith("VERIFIED"):
-        refus.append(("C23", "manuscrit", "le verdict L3 vérifié (1 122 pas) n'est pas publié"))
+    if ("1 122" not in t.get("manuscrit", "") and "1,122" not in t.get("manuscrit", "")
+            and tam["verdicts"]["L3"].startswith("VERIFIED")):
+        refus.append(("C23", "manuscrit", "le verdict L3 vérifié (1 122 pas / 1,122 steps) n'est pas publié"))
 
     # --- C24 : ordre canonique des opérandes du ratio par multiplication ---
     CANON = {63.39, 19.66}
@@ -734,4 +735,125 @@ def controles_w27(t, racine, override=None):
                           r"fence\.i[^.]{0,80}?remain unexecuted"):
                 cherche(piece, txt, motif,
                         f"statut fence.i contredit le registre (prouvé) : « {motif} »")
+    return refus
+
+
+# ==========================================================================
+# C27 COUNT-TABLECELL · C28 TITLE-UNIQUE · C29 LANG-BODY (la vague 27, W27RESID)
+# — tout compte d'arbres/vecteurs se confronte au registre (le sceau-I pour
+# les arbres, CIBLES.md pour les vecteurs) ; aucun titre dupliqué par pièce ;
+# la langue du corps par pièce (le manuscrit anglais, les quatre françaises).
+# ==========================================================================
+MOTS_ARBRES = {"dix": 10, "onze": 11, "douze": 12, "treize": 13, "quatorze": 14, "quinze": 15}
+DATEURS_ARBRES = re.compile(
+    r"D\d{2,3}\b|\bM\d{1,2}\b|v0\.\d+\.\d+|spec_v\d+|passation|jusque-là|l'ère|d'ère|d'époque"
+    r"|\d{1,2}[–-]\d{1,2}/1?0|\d{1,2}/1[0-2]|04/11|05/11|cérémonie terrain|livré \(laboratoire\)")
+
+
+def _nb_arbres_sceau(racine):
+    """Le compte d'arbres se DÉRIVE du sceau-I (jamais tapé)."""
+    src = (racine / "v06" / "sceau_I.py").read_text(encoding="utf-8")
+    m = re.search(r"ARBRES\s*=\s*\{(.*?)\n\}", src, re.S)
+    return len(re.findall(r'^\s{4}"', m.group(1), re.M)) if m else 0
+
+
+def _nb_vecteurs_cibles(racine):
+    """Les comptes de vecteurs se dérivent du registre des cibles (CIB-HARNAIS-200)."""
+    for l in (racine / "CIBLES.md").read_text(encoding="utf-8").splitlines():
+        if l.startswith("| CIB-HARNAIS-200"):
+            c = [x.strip() for x in l.strip("|").split("|")]
+            m = re.search(r"(\d+) exécutables sur (\d+) produits", c[2])
+            if m:
+                return int(m.group(1)), int(m.group(2))
+    return 0, 0
+
+
+def _titres_pieces(racine):
+    """Les titres de section/sous-section des trois pièces SOURCES (la chaîne courante)."""
+    def dernier(glob):
+        c = [p for p in racine.glob(glob) if re.search(r"v\d+$", p.name)]
+        return max(c, key=lambda p: int(re.search(r"v(\d+)$", p.name).group(1))) if c else None
+
+    def extraire(fichiers):
+        out = []
+        for f in fichiers:
+            src = f.read_text(encoding="utf-8")
+            out += [t.strip() for t in re.findall(r"\\(?:sub)?section\*?\{([^}]+)\}", src)]
+        return out
+
+    spec, liv = dernier("scripts/spec_v*"), dernier("scripts/livre_v*")
+    return {
+        "specification": extraire([*sorted(spec.glob("*.tex"))]) if spec else [],
+        "livre": extraire([*sorted(liv.glob("*.tex"))]) if liv else [],
+        "manuscrit": extraire([racine / "edition-v0230" / "main.tex"]),
+    }
+
+
+EN_SEQ = re.compile(
+    r"\b(?:the|and|with|that|which|from|this|these|was|were|are|not|but|has|have|been)\b"
+    r"(?:\s+[a-zà-ÿ'-]{2,15}){0,2}\s+"
+    r"\b(?:the|and|with|that|which|from|this|these|was|were|are|not|but|has|have|been)\b"
+    r"(?:\s+[a-zà-ÿ'-]{2,15}){0,2}\s+"
+    r"\b(?:the|and|with|that|which|from|this|these|was|were|are|but|has|have|been)\b", re.I)
+
+
+def controles_w27b(t, racine, titres_override=None):
+    refus = []
+    corps = {k: re.sub(r"\s+", " ", normalise(v)).replace("\u2019", "'") for k, v in t.items()
+             if k in ("manuscrit", "specification", "livre", "preuves", "presentation")}
+    nb_arbres = _nb_arbres_sceau(racine)
+    nb_exec, nb_prod = _nb_vecteurs_cibles(racine)
+
+    # --- C27 : tout compte d'arbres/vecteurs confronté au registre ------------
+    for piece, txt in corps.items():
+        def fen(m):
+            return txt[max(0, m.start() - 200):m.end() + 200]
+        for m in re.finditer(r"verifier\s*:?\s*(\d{1,2}) arbres", txt):
+            # l'INVOCATION DU GARDE est toujours l'état courant : aucun dateur ne l'excuse
+            if int(m.group(1)) != nb_arbres:
+                refus.append(("C27", piece, f"« verifier {m.group(1)} arbres » ≠ le sceau ({nb_arbres} arbres)"))
+        for m in re.finditer(r"\b(" + "|".join(MOTS_ARBRES) + r")\s+arbres?\b", txt, re.I):
+            if DATEURS_ARBRES.search(fen(m)):
+                continue
+            if MOTS_ARBRES[m.group(1).lower()] != nb_arbres:
+                refus.append(("C27", piece, f"« {m.group(0)} » ≠ le sceau ({nb_arbres} arbres)"))
+        for m in re.finditer(r"\b(\d{1,2})\s+arbres\b", txt):
+            if DATEURS_ARBRES.search(fen(m)):
+                continue
+            if int(m.group(1)) != nb_arbres:
+                refus.append(("C27", piece, f"« {m.group(0)} » ≠ le sceau ({nb_arbres} arbres)"))
+        for m in re.finditer(r"\b(\d{2,3})\s+produits\b", txt):
+            if int(m.group(1)) != nb_prod:
+                refus.append(("C27", piece, f"« {m.group(0)} » ≠ le registre ({nb_prod} produits)"))
+        for m in re.finditer(r"\b(\d{2,3})\s+exécutables\b", txt):
+            if int(m.group(1)) != nb_exec:
+                refus.append(("C27", piece, f"« {m.group(0)} » ≠ le registre ({nb_exec} exécutables)"))
+
+    # --- C28 : aucun titre dupliqué par pièce ----------------------------------
+    titres = titres_override if titres_override is not None else _titres_pieces(racine)
+    for piece, ts in titres.items():
+        for titre in sorted({x for x in ts if ts.count(x) > 1}):
+            refus.append(("C28", piece, f"titre dupliqué : « {titre} »"))
+
+    # --- C29 : la langue du corps par pièce -------------------------------------
+    man = corps.get("manuscrit", "")
+    # les régions françaises SANCTIONNÉES du manuscrit : la ligne Mots-clés, le résumé
+    man = re.sub(r"Mots-clés.*?L'étude est N ?= ?1 ?\.", " ", man)
+    man = re.sub(r"«[^»]*»", "«»", man)          # les citations verbatim (refus nommés) demeurent
+    man = re.sub(r"\[[A-Z0-9][A-Z0-9À-ÿ-]*\]", "[]", man)   # les refus nommés [T0-PÉRIMÉ]… demeurent
+    NOMS_PROPRES = {"Entrée", "Entrées", "relevé", "éditer"}   # les noms du métier, cités tels quels
+    for m in re.finditer(r"\b[\wÀ-ÿ]*[àâäéèêëîïôöùûüçÀÂÄÉÈÊËÎÏÔÖÙÛÜ][\wÀ-ÿ]*\b", man):
+        if m.group(0) in NOMS_PROPRES:
+            continue
+        refus.append(("C29", "manuscrit", f"mot français dans le corps anglais : « {m.group(0)} »"))
+        break
+    for m in re.finditer(r"\b\d[\d ]* pas\b", man):
+        refus.append(("C29", "manuscrit", f"compte français « {m.group(0)} » (steps attendu)"))
+        break
+    for piece in ("specification", "livre", "preuves", "presentation"):
+        txt = re.sub(r"«[^»]*»", "«»", corps.get(piece, ""))
+        txt = re.sub(r"\([A-Za-z][^()]{0,80}\)", "()", txt)   # les parenthèses anglaises des citations
+        if EN_SEQ.search(txt):
+            m = EN_SEQ.search(txt)
+            refus.append(("C29", piece, f"séquence anglaise dans le corps français : « …{txt[m.start():m.end()][:70]}… »"))
     return refus
