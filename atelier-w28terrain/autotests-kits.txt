@@ -1,0 +1,12 @@
+=== verifier-kit-oracle ===
+ (dudect_arm.c EST la pièce du kit-B téléphone, byte-pour-byte :
+  08681278e0efe013ff9e6379eff8ea02219f04a6bdbcb59b4a5d2a1016474a32)
+===================================================================
+=== verifier-kit-linuxone ===
+ (dudect_s390x.c est le DÉRIVÉ NOMMÉ de dudect_arm.c : scellé
+  a9f702a3c2d337bb50217f134a7535f16e1da0ad7afd53ba4b0cac9e56a67301)
+===================================================================
+=== verifier-kit-actions ===
+ (kit-C et kit-D sont les pièces COLLAB et TÉLÉPHONE
+  byte-pour-byte ; kit-G est la pièce neuve, dérivée nommée)
+===================================================================

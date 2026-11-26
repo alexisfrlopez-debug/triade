@@ -1,0 +1,73 @@
+ATELIER W28TERRAIN — LA VAGUE TERRAIN GROUPÉE PRÉ-ENREGISTRÉE : LES DIX ATTENTES D'UN
+SEUL GESTE (vague 28, prompt 5 — le plan gelé PLAN-W28TERRAIN.md, sha256 a0a8c4ff…
+consigné AVANT tout run à EMPREINTES-PLANS-VAGUE28.txt — UN SEUL plan, le commit d'abord)
+
+L'ÉTAT : les dix attentes au registre (STATUTS-EN-ATTENTE.md) attendent le geste du
+développeur ; tous les kits furent livrés à empreintes consignées aux vagues
+précédentes. LA VAGUE 28 ne COURRA PAS les runs au bac (le geste appartient au poste
+réel) — elle livre : LE PLAN GROUPÉ pré-enregistré, LES RECROUPES des kits (les
+autotests vécus au bac — le mécanisme prouvé, jamais la machine), L'INVESTIGATION DES
+PICS DUDECT N=200 pré-enregistrée (les causes candidates nommées AVANT les données),
+et L'AGRÉGATEUR FAIL-CLOSED décrit à la lettre.
+
+1. LE PLAN GROUPÉ (l'ordre des runs, la machine goupillée exigée, les attendus) :
+   (P1) PROVERIF D'ABORD sur la grande RAM — CF3-v3.pv (sha256 98d8e6d1… recoupé), les
+        six requêtes actives, proverif ≥ 2.05 — la machine ≥ 16 Gio conseillés ;
+   (P2) TAMARIN — la décomposition CF3-v3d (f00b039d…) : L1a par sous-lemmes de
+        connaissance (au mur 4 Gio du bac), L2b reformulé au fait persistant (!) —
+        la sémantique d'occurrence nommée (test_occ.spthy, ed66c811…), lemmes [reuse] ;
+   (P3) DUDECT n ≥ 10 × {60, 200, 400} sur ≥ 2 machines GOUILLÉES (l'investigation
+        pré-enregistrée ci-dessous) ;
+   (P4) FENCE.I sur silicium RV64 ;
+   (P5) la 3ᵉ machine Loupe ;
+   (P6) VAES goupillé (le kit W28VAES : source + notation + porte + les commandes —
+        au rapport de l'atelier) ;
+   (P7) le compteur NV TPM matériel ;
+   (P8) la bascule métal nu (le banc 16/16 prêt) ;
+   (P9) la sentinelle Windows SACL/4663 ;
+   (P10) FIDO2 hmac-secret.
+   LA RANDOMISATION STRATIFIÉE POUR H7 : la campagne aux 28 unités — l'effet d'ordre
+   (le tirage T-premier 4/4, l'événement 1/16 consigné) — l'ordre tiré à la graine
+   consignée AVANT la campagne, les deux bras par unité.
+
+2. LES AUTOTESTS VÉCUS AU BAC (le mécanisme prouvé, jamais la machine) — LA RECOUPE
+   DES KITS (recoupe-kits.txt, autotests-kits.txt) : les QUATRE packs de siliciums de
+   commodité (KAGGLE a5a339b4…, ACTIONS ce313bae…, ORACLE 95d43b14…, LINUXONE
+   3b7edee8…) — les sha256 des zips recoupés INTACTS contre EMPREINTES-SILICIUMS-
+   COMMODITE.txt ; les QUATRE vérificateurs (verifier-kit-*.sh) vécus au bac : « TOUTES
+   les pièces recoupées : le paquet est le paquet du labo » — 4/4 VERT ; les preuves
+   symboliques recoupées (CF3-v3.spthy ab84960d…, CF3-v3.pv 98d8e6d1…, le modèle
+   négatif 367e9d09…) ; le kit de run machine réelle (atelier-w27preuv/kit-run-reel.txt)
+   — les commandes exactes, les budgets, les attendus par lemme, les empreintes —
+   RECOPIÉ au présent atelier (recoupe-preuves.txt).
+
+3. L'INVESTIGATION PRÉ-ENREGISTRÉE DES PICS DUDECT N=200 (investigation-dudect-n200.txt)
+   — LES TROIS CANDIDATES NOMMÉES AVANT LES DONNÉES : (1) l'agression DVFS au milieu de
+   la batterie (le pic à N=200 qui embrasse la transition, dilué à N=400) ; (2) le bruit
+   des fenêtres courtes (l'estimateur à bas degrés de liberté, non reproductible au
+   re-tirage) ; (3) la contamination du premier tour (le cache froid, le pic en tête de
+   fenêtre). LA MESURE DÉCISIVE : les trois N re-tirés à la machine GOUILLÉE — le pic
+   qui persiste dirige vers une cause réelle (nommée alors sur pièces), le pic qui
+   disparaît confirme la candidate. AUCUN verdict de cause porté avant les données.
+
+4. L'AGRÉGATEUR FAIL-CLOSED (à la lettre du plan) : un run manquant REFUSE le verdict de
+   la vague ; chaque témoin signé et daté consigné au journal append-only ; les statuts
+   se DÉRIVENT des runs (PREUVES-STATUTS.json), jamais de la frappe ; INCOMPLETE demeure
+   INCOMPLETE tant que la preuve n'est pas close. LES REFUS NOMMÉS à éprouver par kit :
+   ANCRE-PERDUE, RETOUR-EN-ARRIERE, APPEL-MANQUANT selon le kit.
+
+5. CE QUE LE BAC NE COURRA PAS : les dix runs (le geste du développeur au poste réel —
+   les machines goupillées, le TPM, le Windows SACL, le FIDO2, le métal nu) ; la
+   publication des verdicts de vague attend les témoins signés — la vague terrain
+   demeure EN ATTENTE (le registre C16 inchangé, le compte des attentes recomposé à la
+   génération de l'édition).
+
+LES PIÈCES : le plan gelé (PLAN-W28TERRAIN.md, à la racine — l'empreinte à
+EMPREINTES-PLANS-VAGUE28.txt), recoupe-kits.txt, autotests-kits.txt,
+recoupe-preuves.txt, investigation-dudect-n200.txt, le présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  cd atelier-siliciums-commodite-v100 && bash TRIADE_kit_test_KAGGLE_x86_v100/verifier-kit-kaggle.sh
+  (idem oracle, linuxone, actions — les quatre recoups, 4/4 VERT)
+  sha256sum atelier-cf3-verdict-qa3k5putf/CF3-v3.pv        # 98d8e6d1… le port ProVerif
+  python3 v06/sceau_I.py verifier                           # 14/14 avant et après

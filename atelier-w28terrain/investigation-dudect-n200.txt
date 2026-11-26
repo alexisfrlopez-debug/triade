@@ -1,0 +1,26 @@
+L'INVESTIGATION PRÉ-ENREGISTRÉE DES PICS DUDECT N=200 (12,39/5,19 consignés aux runs
+kit-2 de la vague 5) — LES CAUSES CANDIDATES NOMMÉES AVANT LES DONNÉES, aucune élue
+d'avance (le plan gelé PLAN-W28TERRAIN.md, § geste 1) :
+
+CANDIDATE 1 — L'AGRESSION DVFS AU MILIEU DE LA BATTERIE : la fenêtre N=200 tombe à
+  cheval sur l'entrée et la sortie d'un état de fréquence du processeur (le pic
+  N=200 disparaît à N=400 — cohérent avec une fenêtre qui EMBRASSE la transition et
+  une fenêtre plus longue qui la DILUE) ; la signature attendue : le pic présent sur
+  les DEUX machines à la même position relative, absent au N=60.
+
+CANDIDATE 2 — LE BRUIT DES FENÊTRES COURTES : à N=200 l'estimateur de densité de
+  dudect a moins de degrés de liberté qu'à N=400 — le t de Welch gonflé par la
+  variance d'échantillonnage, PAS par une fuite ; la signature attendue : le pic
+  NON reproductible au même sous-ensemble d'un re-tirage (le re-tirage à la
+  machine goupillée le dirigerait).
+
+CANDIDATE 3 — LA CONTAMINATION DU PREMIER TOUR : le cache d'instructions froid au
+  premier tour de la boucle de mesure — le N=200 couvre le régime transitoire, le
+  N=400 le moyenne ; la signature attendue : le pic EN TÊTE de fenêtre, corrélé au
+  volume des fixtures chargées.
+
+LA MESURE DÉCISIVE (le geste du poste réel, pré-enregistré) : les trois N
+{60, 200, 400} re-tirés à la machine GOUILLÉE, le journal par fenêtre consigné —
+le pic qui persiste au N=200 goupillé dirigerait l'investigation vers une cause
+RÉELLE (nommée alors sur pièces), le pic qui disparaît confirme la candidate
+correspondante. AUCUN verdict de cause porté avant les données.
