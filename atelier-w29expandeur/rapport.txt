@@ -1,0 +1,61 @@
+ATELIER W29EXPANDEUR — LA TCB DE L'EXPANDEUR DURCIE : LE SECOND EXPANDEUR,
+LA BATTERIE DE 10 500 DIFFS, LES 64 MUTANTS, LE LEMME (vague 29, prompt 4 —
+le plan gelé PLAN-W29EXPANDEUR.md, sha256 c6654833… consigné à
+EMPREINTES-PLANS-VAGUE29.txt, le commit AVANT toute mesure)
+
+1. LE SECOND EXPANDEUR INDÉPENDANT (expandeur_second, au présent atelier) :
+   une implémentation DISTINCTE du validateur client OPT-16, le MÊME schéma
+   fermé (éditer : substituer à l'offset, les quatre clés, l'enum, la plage) —
+   un CHEMIN DE CODE différent : la vérification par EMPREINTES DE LIGNES (le
+   md5 de chaque ligne, la table avant/après, les changements détectés par
+   hachage au lieu de la comparaison directe), la reconstruction par table au
+   lieu de la copie de liste, les comptes de lignes par retournement. LE JUGE
+   D264 RECROPÉ INTACT : scripts/vague19/expandeur_add.py
+   sha256 9fc325e2b8eb40e7… (recoupé avant et après — JUGE-MODIFIÉ serait le
+   refus) ; le durcissement ne touche QUE le validateur client OPT-16.
+
+2. LA BATTERIE GÉNÉRATIVE — **10 500 DIFFS, la graine 20261128 consignée
+   AVANT le tirage** : dix classes couvertes (l'honnête, l'offset hors plage,
+   la clé hors schéma, l'op hors enum, la ligne mutée à l'octet, le diff
+   multi-lignes, la ligne vide, HORS-FORMAT la prose, le dst inconnu,
+   l'empreinte divergente — 1 050 chacune). **LA CONFRONTATION OCTET POUR
+   OCTET : 10 500/10 500 CONFORMES — ZÉRO DIVERGENCE entre les deux
+   expandeurs** : les 1 050 honnêtes VERTS aux deux (les lignes attendues, le
+   round-trip), les 9 450 invalides REFUSÉS aux deux (l'accord au refus, la
+   classe majeure la même). La couverture par classe consignée au registre.
+
+3. LES MUTANTS — **64 mutants d'un octet du premier expandeur**
+   (atelier-w28opt16/campagne_opt16.py, les positions tirées à la graine
+   20261128 consignée), chacun confronté aux 60 cas de la batterie réduite :
+   **34 TUÉS** (le verdict divergent du second OU le parse mort — le crash
+   EST la détection) · **30 SURVIVANTS NOMMÉS avec leur cause** : la
+   mutation muette — l'octet hors chemin de décision (les commentaires, les
+   docstrings, les chaînes de messages) ou l'équivalence d'encodage ; chaque
+   survivant consigné au registre avec sa position. UN SURVIVANT DEMEURE UN
+   SURVIVANT, jamais maquillé.
+
+4. LE LEMME DE SUBSTITUTION, VÉRIFIÉ MÉCANIQUEMENT : l'énumération bornée
+   sur les 18 tâches × chaque offset de la plage (2 841 cas) — **LE LEMME
+   STRUCTUREL VÉRIFIÉ AUX 2 841 CAS par la recomposition** (l'offset borné à
+   la plage du bloc, EXACTEMENT la ligne substituée remplacée, AUCUNE autre
+   ligne changée — la cause nommée) ; **2 784 CAS VERTS complets** (le lemme
+   ET le validateur : la ligne acceptée, le round-trip assemblé) ; les 57
+   refus restants sont le ROUND-TRIP des lignes dupliquées (la ligne
+   substituante répétée à un second offset casse l'assemblabilité — le
+   refus LÉGITIME du validateur, PAS une violation du lemme — chaque cas
+   contrôlé par les deux expandeurs). LE CONTRÔLE NÉGATIF : la substitution
+   hors lemme (l'offset à len+1) ATTRAPÉE par les deux (SCHÉMA-VIOLÉ).
+
+5. LA GARDE : le rejeu bit-identique (la session rejouée — la batterie
+   déterministe à la graine consignée, les verdicts identiques) ; le juge
+   D264 INTACT avant et après ; le sceau-I 14/14 ; la porte 32 classes zéro
+   rouge (la chaîne existante) ; aucun chiffre fabriqué.
+
+LES PIÈCES : session_expandeur.py (le second expandeur + la batterie + les
+mutants + le lemme), expandeur-registre.json (les consignations), le présent
+rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w29expandeur/session_expandeur.py   # la session entière
+  sha256sum scripts/vague19/expandeur_add.py           # le juge recoupé
+  python3 v06/sceau_I.py verifier                      # la garde (14/14)

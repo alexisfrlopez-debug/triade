@@ -1,0 +1,217 @@
+{
+ "graine": 20261128,
+ "juge": "expandeur_add.py",
+ "juge_sha256": "9fc325e2b8eb40e7cc5c77b92ddfa92e23e6a036bd4ec68f0ec78619903389bd",
+ "batterie": {
+  "n": 10500,
+  "graine": 20261128
+ },
+ "confrontation": {
+  "conformes": 10500,
+  "divergences": []
+ },
+ "couverture": {
+  "honnête": {
+   "n": 1050,
+   "verts": 1050
+  },
+  "offset-hors-plage": {
+   "n": 1050,
+   "verts": 0
+  },
+  "clé-hors-schéma": {
+   "n": 1050,
+   "verts": 0
+  },
+  "op-hors-enum": {
+   "n": 1050,
+   "verts": 0
+  },
+  "ligne-mutée": {
+   "n": 1050,
+   "verts": 0
+  },
+  "multi-lignes": {
+   "n": 1050,
+   "verts": 0
+  },
+  "ligne-vide": {
+   "n": 1050,
+   "verts": 0
+  },
+  "hors-format": {
+   "n": 1050,
+   "verts": 0
+  },
+  "dst-inconnu": {
+   "n": 1050,
+   "verts": 0
+  },
+  "empreinte-divergente": {
+   "n": 1050,
+   "verts": 0
+  }
+ },
+ "mutants": {
+  "essais": 64,
+  "tues": 34,
+  "survivants": [
+   {
+    "mutant": 3,
+    "octet": 1563,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 4,
+    "octet": 234,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 6,
+    "octet": 6394,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 7,
+    "octet": 5896,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 8,
+    "octet": 8985,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 9,
+    "octet": 931,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 10,
+    "octet": 3814,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 11,
+    "octet": 5876,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 14,
+    "octet": 3111,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 15,
+    "octet": 7904,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 16,
+    "octet": 4394,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 18,
+    "octet": 9838,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 19,
+    "octet": 755,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 20,
+    "octet": 8644,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 30,
+    "octet": 5446,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 33,
+    "octet": 3168,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 35,
+    "octet": 485,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 36,
+    "octet": 2360,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 38,
+    "octet": 6165,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 43,
+    "octet": 3641,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 45,
+    "octet": 8980,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 47,
+    "octet": 4390,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 49,
+    "octet": 6117,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 51,
+    "octet": 1013,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 55,
+    "octet": 1159,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 57,
+    "octet": 1559,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 58,
+    "octet": 9739,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 61,
+    "octet": 118,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 63,
+    "octet": 117,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   },
+   {
+    "mutant": 64,
+    "octet": 4843,
+    "cause": "le verdict identique aux 60 cas (la mutation muette — l'octet hors chemin de décision ou l'équivalence d'encodage, NOMMÉ)"
+   }
+  ]
+ },
+ "lemme": {
+  "cas": 2841,
+  "verts": 2784,
+  "negatif_attrape": true,
+  "note": "le lemme STRUCTUREL vérifié aux 2841 cas par la recomposition (l'offset borné, la ligne exacte, aucune autre changée) ; les verts complets 2784 portent en plus le round-trip ; les 57 refus restants sont le round-trip des lignes dupliquées (l'assemblabilité légitime du validateur, PAS une violation du lemme — la cause nommée)"
+ }
+}
