@@ -1,0 +1,57 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.33.1 (l'édition CORRECTIVE de la vague 28, 27 novembre 2026)
+====================================================================================
+COURANTS (cette édition corrective)
+- TRIADE_manuscrit_v0.33.0.pdf (RECONDUIT byte-byte — le patron v0.23.4 : les quatre
+  pièces aux sources inchangées ne bougent pas d'un octet ; le cœur IMRAD 16 pages)
+- Protocole_TRIADE_v0.15.18_Specification.pdf (RECONDUIT byte-byte)
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.17.pdf (RECONDUIT byte-byte)
+- TRIADE_preuves_et_calculs_v0.33.1.pdf (RÉGÉNÉRÉE : elle lit les rapports CORRIGÉS
+  verbatim — les errata, la décomposition OPT-16 et la ligne CIB-EDIT-OPT16 amortie
+  y vivent ; 32 classes au linter)
+- TRIADE_presentation_v0330.pdf (RECONDUIT byte-byte)
+- empreintes_livrables_v0.33.1.txt · rapport_verification_v0.33.1.txt
+- TRIADE_soumission_v0.33.1.zip · TRIADE_presentation_v0331.zip · TRIADE_complet_v0.33.1.zip
+- TRIADE_participer_v1.2.0.zip (inchangé, publié) · TRIADE_kit_developpement_v1.3.0.zip (inchangé, publié)
+- les kits terrain Windows v0.15.0, siliciums de commodité, kits test ARM/COLLAB,
+  surveillants CPU v100-v102, preuves de la campagne ACTIONS et témoins ARM/Collab (inchangés)
+
+CE QUE PORTE CETTE ÉDITION CORRECTIVE — les résidus numériques et de périmètre de la
+vague 28 soldés à la source (la correction prompt de l'évaluation « sans anesthésie »
+du pack v0.33.0, instructions2.txt §10) :
+- LE MUR CANONIQUE : 25,4 ms (la médiane de neuf passes du registre — l'ancienne ligne
+  imprimait la passe froide unique 46,6 ms) ; la vitesse committé→généralisé 13,6×
+  (le quotient des régimes du registre 1 056,04/77,49 — l'ancienne ligne « 33× » ne se
+  recomposait d'aucun opérande imprimé) ; les displays arrondis recomputent à 13,4,
+  l'écart d'arrondi nommé.
+- LES OPERANDES DE CHAQUE PASSE VAES portés à leur ratio : 2,68× se recompose de
+  1 082/404 (SA passe, mesure-sched.txt) ; 2,47× de 1 012/409 (la passe du portage C) ;
+  l'EVP mesuré dans chaque passe, l'écart inter-passes 1,2 % nommé.
+- OPT-16 DÉCOMPOSÉ : prompt 15 519 / réponse 1 542 (total 17 061) ; LE COÛT PAR
+  CHANGEMENT VALIDÉ, ÉCHECS AMORTIS : 1 896 tokens natifs (17 061 ÷ 9 vertes, n=9/18) —
+  l'arbitrage médiane/faisabilité consigné : le gain 79,5-contre-674 ACHETÉ par 9/18.
+- LA CLASSE C32 RATIO-RECOMPOSE au linter (32 classes) : tout ratio canonique publié se
+  recompose de ses opérandes non arrondis lus aux registres — un ratio volontairement
+  faux REFUSÉ nommément (23/23 mutations aux contrôles négatifs).
+- C30 N-VALUE / C31 CLAIM-SCOPE reconstruits (le code perdu avec le bac mort, calibré
+  sur les mutations attendues de la porte) ; l'ancre RFC 3161 v0.33.1 posée et vérifiée
+  hors ligne.
+- L'AUDIT INDÉPENDANT 13/13 VERT (chaque ratio corrigé recalculé du fichier source) ;
+  les cinq sondes du contrat noyau rejouées bit-identiques 5/5 ; le sceau-I 14/14 ;
+  aucune valeur mesurée modifiée au-delà des résidus nommés (les errata documentent
+  chaque correction, l'ancienne valeur demeure lisible) ; aucune cible re-tirée.
+
+DOI (les derniers mintés ; les éditions v0.33.1, v0.33.0 ET v0.32.0 NON mintées —
+la chaîne des trois éditions attend la commande du maître)
+- protocole v0.31.0 : 10.5281/zenodo.24545339 (concept 10.5281/zenodo.24367343)
+- pack de participation v1.2.0 : 10.5281/zenodo.24545356 (concept 10.5281/zenodo.24497299)
+- kit développeur v1.3.0 : 10.5281/zenodo.24499840 (concept 10.5281/zenodo.24457514, inchangé)
+- corpus v2.1 : 10.5281/zenodo.24479882 (inchangé) · entraînement v1.0.0 : 10.5281/zenodo.24495492 (inchangé)
+
+SUPERSÉDÉS (conservés pour l'histoire ; l'édition courante est ci-dessus)
+- le set v0.33.0 complet (onze pièces, les trois packs assemblés compris) — supersédé au
+  lot livrables_supersedes_20261126c de l'ARCHIVE ; la v0.33.0 N'A JAMAIS ÉTÉ mintée
+  (elle portait les trois résidus corrigés par la présente)
+- le set v0.32.0 — déjà supersédé (lot livrables_supersedes_20261126b) ; la v0.32.0
+  N'A JAMAIS ÉTÉ mintée
+- le set v0.31.0 — lot livrables_supersedes_20261126 ; la v0.31.0 publiée demeure sur
+  Zenodo (record 24545339)

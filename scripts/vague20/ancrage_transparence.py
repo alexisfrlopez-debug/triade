@@ -33,10 +33,18 @@ def _pack():
 
 PACK = _pack()
 import re as _re
-_m = _re.search(r"TRIADE_manuscrit_(v\d+\.\d+\.\d+)\.pdf", (PACK / "1-manuscrit").as_posix())
+def _edition_du_pack():
+    # la reprise du 27/11/2026 (la correction v0.33.1) : l'édition suit le MANIFESTE du pack —
+    # le patron correctif reconduit les pièces SOUS LEUR NOM D'ORIGINE, le manifeste dit l'édition
+    mans = sorted(PACK.glob("empreintes_livrables_v*.txt"))
+    if mans:
+        m = _re.search(r"empreintes_livrables_(v[0-9.]+)\.txt", mans[-1].name)
+        if m:
+            return m.group(1)
+    _m2 = next((x for x in (PACK / "1-manuscrit").glob("TRIADE_manuscrit_v*.pdf")), None)
+    return _re.search(r"TRIADE_manuscrit_(v[0-9.]+)\.pdf", _m2.name).group(1) if _m2 else "v0.0.0"
 _m2 = next((x for x in (PACK / "1-manuscrit").glob("TRIADE_manuscrit_v*.pdf")), None)
-EDITION = os.environ.get("TRIADE_EDITION") or (
-    _re.search(r"TRIADE_manuscrit_(v[0-9.]+)\.pdf", _m2.name).group(1) if _m2 else "v0.0.0")
+EDITION = os.environ.get("TRIADE_EDITION") or _edition_du_pack()
 def _piece(dossier, motif):
     return next(iter(sorted((PACK / dossier).glob(motif))), PACK / dossier / "absent.pdf")
 

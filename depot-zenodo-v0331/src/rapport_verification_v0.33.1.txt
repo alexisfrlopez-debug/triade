@@ -1,0 +1,39 @@
+RAPPORT DE VÉRIFICATION — L'ÉDITION CORRECTIVE TRIADE v0.33.1 (la correction de la vague 28, 27 novembre 2026)
+====================================================================================
+LA PORTE DE GÉNÉRATION v0.33.1 — V1..V7 + L1..L32 (le linter EST la porte) — les quatre pièces reconduites byte-byte (le patron v0.23.4), la preuves régénérée portant les errata
+==============================================================================
+[VERT] manuscrit      TRIADE_manuscrit_v0.33.0.pdf
+[VERT] specification  Protocole_TRIADE_v0.15.18_Specification.pdf
+[VERT] livre          Livre_du_Coffre_TRIADE_CF1-CF3_v1.17.pdf
+[VERT] preuves        TRIADE_preuves_et_calculs_v0.33.1.pdf
+[VERT] presentation   TRIADE_presentation_v0330.pdf
+------------------------------------------------------------------------------
+[VERT] V1 empreintes · V2 versions · V3 ratio · V4 provenance · V5 aucun secret · V6 ancrage · V7 tableau
+[VERT] L1..L32 — trente-deux classes, zéro résidu
+==============================================================================
+CONTRÔLES NÉGATIFS — VINGT-TROIS MUTATIONS, VINGT-TROIS REFUS NOMMÉS
+==============================================================================
+[VERT] libellé de version muté → attendu C6 : [('C6', 'presentation', '§10 Manuscrit = v0.24.0 ≠ manifeste v0.33.0')]
+[VERT] ID hors plage → attendu C7 : [('C7', 'preuves', 'ID hors plage : D299 > D276')]
+[VERT] ligne de menace non qualifiée → attendu C11 : [('C11', 'specification', 'ligne « détecté » non qualifiée : détecté — session bloquée (classe')]
+[VERT] compte de banc muté → attendu C10 : [('C10', 'presentation', "le compte recomposé 16/16 n'est pas publié")]
+[VERT] version de prose mutée (Livre) → attendu C12 : [('C12', 'livre', 'version périmée v1.9 dans le Livre')]
+[VERT] résumé trop long → attendu C14 : [('C14', 'manuscrit', 'résumé 531 mots > 250')]
+[VERT] compte du registre muté → attendu C16 : [('C16', 'presentation', 'annonce 11 entrées ≠ registre 10')]
+[VERT] compte oracle muté → attendu C17 : [('C17', 'presentation', "l'annonce ne porte pas « 95 exécutés au contexte standard »")]
+[VERT] compte de classes muté → attendu C18 : [('C18', 'preuves', 'annonce 17 classes ≠ source 32')]
+[VERT] vague de titre périmée → attendu C19 : [('C19', 'presentation', 'titre « vague 19 » ≠ édition vague 28')]
+[VERT] DOI inconnu du registre → attendu C21 : [('C21', 'manuscrit', 'DOI inconnu du registre : 10.5281/zenodo.99999999')]
+[VERT] version anglaise périmée → attendu C22 : [('C22', 'manuscrit', '« specification v0.15.8 … accompanies » ≠ v0.15.18')]
+[VERT] statut Tamarin contredit → attendu C23 : [('C23', 'presentation', 'statut Tamarin contradictoire avec le registre')]
+[VERT] opérandes inversés → attendu C24 : [('C24', 'preuves', 'opérandes inversés (19,66/63,39) — ordre canonique attendu')]
+[VERT] verdict retourné → attendu C25 : [('C25', 'preuves', 'CIB-ADD-COUT-4500 : verdict « MANQUÉE » absent de sa ligne')]
+[VERT] statut d'ancrage contredit → attendu C20 : [('C20', 'preuves', 'statut « NON DÉPLOYÉ » alors que le journal dit DÉPLOYÉ')]
+[VERT] statut partagé contredit (C26) → attendu C26 : [('C26', 'livre', "statut d'ancrage contredit le journal (DÉPLOYÉ) : « déploiement n'est pas fait »")]
+[VERT] compte d'arbres muté (C27) → attendu C27 : [('C27', 'specification', '« verifier 13 arbres » ≠ le sceau (14 arbres)')]
+[VERT] titre de vague dupliqué (C28) → attendu C28 : [('C28', 'specification', 'titre dupliqué : « Ce que change la v0.15.16 »')]
+[VERT] fragment français ressuscité (C29) → attendu C29 : [('C29', 'manuscrit', 'mot français dans le corps anglais : « rejoués »')]
+[VERT] le n= retiré d'une médiane publiée (C30) → attendu C30 : [('C30', 'manuscrit', 'la médiane « median 27.5 native tokens » publiée sans son n= à la portée de la phrase')]
+[VERT] la revendication sans scope (C31) → attendu C31 : [('C31', 'manuscrit', 'la revendication « presents the first system » sans scope ni source à la fenêtre')]
+[VERT] le ratio volontairement faux (C32) → attendu C32 : [('C32', 'preuves', "le ratio vitesse committé→généralisé (13.6) recomposé des registres n'est pas publié en ses formes ['13,6 ×'] — RATIO-RECOMPOSE")]
+23/23

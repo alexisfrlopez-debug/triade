@@ -23,8 +23,12 @@ préservé, (d) la frontière d'appel (2,3 ×).
        calendrier de la notation gelée (couloir-vaes.asm, sha256 7911d03f… INTACTE) : les
        chaînes CTR pipelinées DEUX À DEUX (l'ILP), la frontière réfléchie au pli, la
        réduction de Gueron PURE SIMD (zéro franchissement GPR). LA MESURE : 1 082 ns —
-       1,41 × EVP par appel, 2,68 × à contexte posé.
-   (iii) EVP au même volume : 771 ns par appel / 409 ns à contexte posé (le chemin
+       1,41 × EVP par appel (769 ns), 2,68 × à contexte posé (404 ns — les opérandes
+       de SA PROPRE passe, mesure-sched.txt : 1 082/404 = 2,6782).
+   (iii) EVP au même volume, mesuré dans CHAQUE passe (chaque ratio publié porte
+       les opérandes de sa passe — l'erratum) : 771 ns par appel / 409 ns à contexte
+       posé (la passe du portage C, mesure-v3b) ; 769/404 ns (la passe du schedule,
+       mesure-sched) (le chemin
        VAES512 — OPENSSL_ia32cap consigné : vaes+vpclmulqdq+avx512f, la 3.5.7 dispatche
        le chemin zmm depuis la 3.1 ; la convention session recoupée octet pour octet
        contre la convention par appel — la porte --session-vert).
@@ -47,7 +51,7 @@ préservé, (d) la frontière d'appel (2,3 ×).
      frontière ~88 ns, le GHASH ~120 ns (les sondages au profilage) ;
    - (c) le schedule : l'écart notation-vs-C ≤ 7 % AU PROFIT DU C (le résultat ci-dessus) ;
    - (d) la frontière d'appel : SOLDÉE (inlinée).
-   - LE RÉSIDU STRUCTUREL nommé : 2 47-2,68 × contre le chemin EVP à contexte posé —
+   - LE RÉSIDU STRUCTUREL nommé : 2,47–2,68 × contre le chemin EVP à contexte posé —
      le plafond ISA : EVP emprunte VAES512 (zmm, QUATRE blocs par vAESENC), la notation
      gelée est ymm (DEUX blocs par vAESENC) : le corridor porte deux fois plus
      d'instructions AES pour le même volume. Le plafond mesuré du chemin zmm : 409 ns
@@ -103,3 +107,17 @@ COMMANDES EXACTES (au bac, dépôt à la racine) :
   taskset -c 0 ./couloir_vaes_v3 --mesure      # la pièce (i)
   taskset -c 0 ./couloir_sched --mesure        # la pièce (ii) — le schedule de notation
   python3 v06/sceau_I.py verifier               # la garde (14/14 avant et après)
+
+--- ERRATUM (append-only, posé le 27/11/2026 par la reprise — la correction prompt
+de l'évaluation du pack v0.33.0, instructions2.txt §10 au /instructions) :
+le ratio « 2,68 × à contexte posé » se recompose des opérandes de SA PROPRE passe
+(mesure-sched.txt : 1 082/404 = 2,6782) ; le texte d'origine imprimait à côté
+l'opérande de la passe du portage C (409 ns, mesure-v3b — la passe d'où 2,47 ×)
+sans nommer la passe : un lecteur recomputait 1 082/409 = 2,65 ≠ 2,68. ANCIENNE
+présentation : « 1 082 ns — 1,41 × EVP par appel, 2,68 × à contexte posé » avec
+« (iii) EVP au même volume : 771 ns / 409 ns » ; NOUVELLE : les opérandes de
+chaque passe portés à leur ratio (769/404 la passe du schedule, 771/409 la passe
+du portage C — l'EVP mesuré dans chaque passe, l'écart inter-passes 1,2 % nommé).
+La coquille « 2 47-2,68 » corrigée en « 2,47–2,68 ». AUCUNE valeur mesurée
+modifiée : 1 012 ns, 1 082 ns, 1,41 ×, 2,47 ×, 2,68 ×, 1,07 × demeurent (chacun
+se recompose de son registre).

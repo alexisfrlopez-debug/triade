@@ -1,0 +1,20 @@
+{
+ "edition": "v0.33.1",
+ "packs": {
+  "TRIADE_soumission_v0.33.1.zip": {
+   "bytes": 297692,
+   "sha256": "23eafd927faca7fce8279b862b8cd5aab2bce7320dd983f3de5e771e7b087061",
+   "md5": "710a2cacf20e1b36e64cf03f90f3b86a"
+  },
+  "TRIADE_presentation_v0331.zip": {
+   "bytes": 2233765,
+   "sha256": "bfc33763891bf9af9656441efcf9230e4d7bd3d9e50ea0bf484972699495b68a",
+   "md5": "76cc3651ef42e9a97e2ae42cc98b2fae"
+  },
+  "TRIADE_complet_v0.33.1.zip": {
+   "bytes": 43951257,
+   "sha256": "086e791fe96313f2c8d367d9c96314398f9ffe54b7520879cb356cb96b74f4bd",
+   "md5": "00dfb11764048efb41ec0ab42cd41f20"
+  }
+ }
+}

@@ -61,12 +61,16 @@ re-tirée ; la cible de régime ≤ 5 × C pré-enregistrée AU PLAN.
    session_volumes.py) : 12 000 cas pour tls13-16-aes128-bloc (le corps
    assemblé depuis la notation, sha256 cd760f14… consigné), la graine 20261128
    AVANT le tirage, la convention du jumeau (0, 63 bits, 0, 0). LE MOTEUR
-   COMMITTÉ aux trois lots (≤ 4 096 vecteurs, la limite statique) : 46,6 ms
-   de mur — le régime fprintf par vecteur. LE MOTEUR GÉNÉRALISÉ (le lot
+   COMMITTÉ aux trois lots (≤ 4 096 vecteurs, la limite statique) : 25,4 ms
+   de mur (la MÉDIANE DE NEUF PASSES du registre volumes-resultat.json —
+   med 0,0254 s ; la passe froide unique de la session mesura 46,6 ms, l'écart
+   nommé à l'ERRATUM) — le régime fprintf par vecteur. LE MOTEUR GÉNÉRALISÉ (le lot
    unique 12 000, le compte en registres bruts — le rax et LE DIGESTE LU par
    vecteur, JAMAIS retiré —, la console différée en une passe) : la console
    LIGNE-IDENTIQUE au moteur committé (l'équivalence prouvée octet par octet),
-   le mur 1,9 ms (33 × plus vite que le committé). L'AUDIT 1-SUR-10 CONSERVÉ :
+   le mur 1,9 ms (13,6 × plus vite que le committé — le quotient des régimes
+   du registre : 1 056,04/77,49 ; les displays arrondis 25,4 ms → 1,9 ms
+   recomputent à 13,4, l'écart d'arrondi nommé). L'AUDIT 1-SUR-10 CONSERVÉ :
    1 200 vecteurs confrontés au JUMEAU (l'émulateur du registre 8hguph5ee,
    champ par champ) — ZÉRO ÉCART. LE RÉGIME contre le PILOTE C au même volume
    (le même code de bloc appelé directement sans échafaudage d'oracle, gcc
@@ -96,3 +100,20 @@ COMMANDES EXACTES (au bac, dépôt à la racine) :
   python3 atelier-w28harnais/session_volumes.py    # les volumes (12 000 cas, l'audit, le régime)
   python3 v06/sceau_I.py verifier                  # la garde (14/14)
 Les sha256 de tous les fichiers produits : EMPREINTES.txt.
+
+--- ERRATUM (append-only, posé le 27/11/2026 par la reprise — la correction prompt
+de l'évaluation du pack v0.33.0, instructions2.txt §10 au /instructions) :
+(1) la ligne 5 portait « LE MOTEUR COMMITTÉ ... : 46,6 ms de mur » — la valeur
+    imprimée était la PASSE FROIDE UNIQUE de la session (46,6 ms, la ligne de
+    console rapport-volumes.txt), pas le mur canonique. ANCIENNE valeur : 46,6 ms ;
+    NOUVELLE : 25,4 ms (la médiane de neuf passes du registre
+    volumes-resultat.json, med 0,0254 s — le ratio 1 056 × C se recompose de
+    25,4 ms / 24,0 µs = 1 056,04, la ligne d'opérande désormais imprimée à
+    côté). Le ratio committé→généralisé s'en trouve corrigé :
+(2) la ligne 5 portait « le mur 1,9 ms (33 × plus vite que le committé) » — le
+    ratio ne se recomposait d'AUCUN de ses opérandes imprimés (46,6/1,9 = 24,5 ;
+    25,4/1,9 = 13,4). ANCIENNE valeur : 33 × ; NOUVELLE : 13,6 × (le quotient
+    des régimes du registre : 1 056,04 / 77,49 = 13,63 ; les displays arrondis
+    25,4 ms → 1,9 ms recomputent à 13,4 — l'écart d'arrondi nommé, jamais
+    maquillé). Aucune autre valeur touchée : 229/235, 4,56 × C, 77 × C,
+    1 056 × C, 123 × et 81/81 demeurent (chacun se recompose du registre).

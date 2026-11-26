@@ -6,3 +6,8 @@
 [régime-chaud] le pilote C (la boucle nue, interne) : médiane 24.0 µs ; le moteur généralisé (la boucle d'exécution, interne) : 109.5 µs → 4.56 × C — la cible ≤ 5 × C TENUE
 [régime-bout-en-bout] le moteur committé : 25.4 ms → 1056 × C ; le moteur généralisé : 1.9 ms → 77 × C (montage + boucle + console différée — la convention du mur, publiée pareil)
 [jumeau] l'émulateur aux 1200 vecteurs de l'audit : 22.9 ms → 19.1 µs/vecteur ; le moteur généralisé de bout en bout : 0.16 µs/vecteur — l'ordre de grandeur vs l'oracle vivant : 123 × 
+[ERRATUM 27/11/2026] la ligne « moteur-committé ... 46.6 ms » ci-dessus est la
+passe froide unique de la session (le mur canonique : 25.4 ms, la médiane de neuf
+passes du registre volumes-resultat.json) ; le ratio committé→généralisé correct :
+13.6 × (1 056.04/77.49 du registre — les displays arrondis 25.4/1.9 recomputent à
+13.4). La correction vit à l'erratum du rapport.txt.

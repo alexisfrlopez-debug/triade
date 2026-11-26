@@ -1,0 +1,19 @@
+{
+ "source": "journal-opt16.jsonl (39 appels, 18 tâches)",
+ "decomposition": {
+  "prompt_tokens": 15519,
+  "completion_tokens": 1542,
+  "total_tokens": 17061,
+  "part_prompt_pct": 91.0,
+  "part_completion_pct": 9.0
+ },
+ "conventions": {
+  "mediane_par_tache": "la médiane des SOMMES de completion par tâche (les tours multiples portent la somme des tours — la convention du journal)",
+  "cout_par_changement_valide": "la somme des tokens de TOUS les appels (tours et tentatives compris) divisée par les vertes — les échecs AMORTIS"
+ },
+ "mediane_completion_par_tache": 79.5,
+ "vertes": 9,
+ "taches": 18,
+ "cout_par_changement_valide": 1895.67,
+ "arbitrage_consigne": "un gain token acheté par une perte de faisabilité est un ARBITRAGE À CONSIGNER (politique lexicographique Sécurité>Performance>Optimisation>Coût), pas une tenue silencieuse"
+}

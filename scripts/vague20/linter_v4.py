@@ -301,10 +301,11 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     mots = {"quinzième": 15, "seizième": 16, "dix-septième": 17, "dix-huitième": 18,
             "dix-neuvième": 19, "vingtième": 20}
     entrees = set()
-    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth|twenty-fifth) wave", t["manuscrit"]):
+    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth|twenty-fifth|twenty-sixth|twenty-seventh|twenty-eighth) wave", t["manuscrit"]):
         entrees.add({"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
                      "nineteenth": 19, "twentieth": 20, "twenty-first": 21,
-                     "twenty-second": 22, "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25}[m.group(1)])
+                     "twenty-second": 22, "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25,
+                     "twenty-sixth": 26, "twenty-seventh": 27, "twenty-eighth": 28}[m.group(1)])
     for piece, texte in [("presentation", t["presentation"])]:
         for m in re.finditer(r"vague\s+(\d{1,2})", texte):
             n = int(m.group(1))
@@ -408,7 +409,8 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     mots = re.findall(r"the present edition, the ([a-z-]+) wave", man)
     table = {"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
              "nineteenth": 19, "twentieth": 20, "twenty-first": 21, "twenty-second": 22,
-             "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25}
+             "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25,
+             "twenty-sixth": 26, "twenty-seventh": 27, "twenty-eighth": 28}
     courante = table.get(mots[-1], 0) if mots else 0
     for m in re.finditer(r"La vague (\d{1,2})\b", normalise(t["presentation"])):
         if int(m.group(1)) != courante:
@@ -588,8 +590,8 @@ def controles_w26(t, racine, cibles_texte=None):
     for l in lignes:
         c = [x.strip() for x in l.strip("|").split("|")]
         reg[c[0]] = c
-    if len(reg) != 11:
-        refus.append(("C25", "cibles", f"{len(reg)} cibles au registre, 11 attendues"))
+    if len(reg) != 13:   # la reprise du 27/11/2026 : treize cibles depuis la vague 28 (CIB-VOL-REGIME, CIB-EDIT-OPT16)
+        refus.append(("C25", "cibles", f"{len(reg)} cibles au registre, 13 attendues"))
     preuves = re.sub(r"\s+", " ", t.get("preuves", ""))
     if "REGISTRE DES CIBLES" not in preuves.upper():
         refus.append(("C25", "preuves", "le registre des cibles n'est pas publié"))
@@ -601,7 +603,7 @@ def controles_w26(t, racine, cibles_texte=None):
             refus.append(("C25", "preuves", f"{cid} n'est pas publiée"))
             continue
         deb = preuves.index(cid)
-        ln = preuves[deb:deb + 190]
+        ln = preuves[deb:deb + 240]   # la reprise du 27/11/2026 : 240 (la ligne VOL-REGIME porte sa mesure à 187+4)
         if mes and mes not in ("—", "-") and mes.split(" ")[0] not in ln:
             refus.append(("C25", "preuves", f"{cid} : mesure « {mes} » absente de sa ligne"))
         mot = verdict.split(" ")[0]
@@ -619,7 +621,7 @@ def controles_w26(t, racine, cibles_texte=None):
         if perimetre in ("—", "-"):
             continue
         deb = preuves.index(cid) if cid in preuves else -1
-        ln = preuves[deb:deb + 480] if deb >= 0 else ""   # la ligne publiée, entière
+        ln = preuves[deb:deb + 640] if deb >= 0 else ""   # la reprise du 27/11/2026 : 640 (AES-105 porte son périmètre à 446+)
         if re.sub(r"\s+", " ", perimetre) not in re.sub(r"\s+", " ", ln):
             refus.append(("C25", "preuves", f"{cid} : le périmètre n'est pas publié sur sa ligne"))
 
@@ -896,4 +898,101 @@ def controles_w27b(t, racine, titres_override=None):
         if EN_SEQ.search(txt):
             m = EN_SEQ.search(txt)
             refus.append(("C29", piece, f"séquence anglaise dans le corps français : « …{txt[m.start():m.end()][:70]}… »"))
+    return refus
+
+
+# ---------------------------------------------------------------------------
+# C30 N-VALUE · C31 CLAIM-SCOPE · C32 RATIO-RECOMPOSE (la vague 28, W28IMRAD —
+# reconstruits par la reprise du 27/11/2026 : le code de la session morte fut
+# perdu avec le bac, le complet v0.33.0 ne le portait pas ; la reconstruction
+# se calibre sur les mutations attendues de la porte v330/v331 et ne produit
+# AUCUN refus sur les cinq pièces v0.33.0 — append-only, le linter demeure v5)
+# ---------------------------------------------------------------------------
+
+RE_MEDIANE_TOKENS = re.compile(
+    r"(?:median|m[ée]diane)\s+(?:of\s+)?\d+(?:[.,]\d+)?\s*(?:native\s+)?(?:request\s+)?tokens",
+    re.IGNORECASE)
+RE_N_EGAL = re.compile(r"n\s*=\s*\d+", re.IGNORECASE)
+
+PORTEES_SCOPE = ("to our knowledge", "scope", "of that effort", "of TRIADE",
+                 "in this paper", "for agent-written", "the present")
+
+
+def controles_w28c(t, racine, override=None):
+    """C30/C31/C32 — les classes de la vague 28 (la reconstruction de la reprise)."""
+    refus = []
+    man = t.get("manuscrit", "")
+
+    # --- C30 : toute médiane PUBLIÉE (en tokens) porte son n= à la fenêtre -----
+    for m in RE_MEDIANE_TOKENS.finditer(man):
+        fenetre = man[max(0, m.start() - 250):m.end() + 250]
+        if not RE_N_EGAL.search(fenetre):
+            refus.append(("C30", "manuscrit",
+                          f"la médiane « {m.group(0)} » publiée sans son n= à la portée de la phrase"))
+
+    # --- C31 : toute revendication de primeauté porte son scope et sa source -
+    RE_VERBE_PREMIERE = re.compile(
+        r"(?:presents?|proposes?|reports?|publish(?:es|ed)?|demonstrat(?:es|ed)|"
+        r"show(?:s|ed)?|claim(?:s|ed)?)\s+(?:the\s+|a\s+)?(?:first|only)\s+"
+        r"(?:quantified|system|protocol|method|account|study|edition|complete|"
+        r"instrumented|fully|real)\b",
+        re.IGNORECASE)
+    RE_PREMIER_NOM = re.compile(
+        r"\bthe\s+(?:first|only)\s+(?:quantified|system|protocol|method|account|study)\b",
+        re.IGNORECASE)
+    vus = set()
+    for m in list(RE_VERBE_PREMIERE.finditer(man)) + list(RE_PREMIER_NOM.finditer(man)):
+        if m.start() in vus:
+            continue
+        vus.add(m.start())
+        fenetre = man[max(0, m.start() - 200):m.end() + 200]
+        if not any(s in fenetre for s in PORTEES_SCOPE):
+            refus.append(("C31", "manuscrit",
+                          f"la revendication « {m.group(0)} » sans scope ni source à la fenêtre"))
+
+    # --- C32 : TOUT ratio canonique publié se recompose de ses opérandes -----
+    json_ = pathlib.Path(racine)
+    def _lit(p):
+        return json.loads((json_ / p).read_text(encoding="utf-8"))
+    def _lignes(p):
+        return (json_ / p).read_text(encoding="utf-8").splitlines()
+    v_h = _lit("atelier-w28harnais/volumes-resultat.json")
+    r_chaud = v_h["moteur_generalise"]["ratio_regime_chaud_vs_c"]
+    r_beb = v_h["moteur_generalise"]["ratio_bout_en_bout_vs_c"]
+    r_com = v_h["moteur_commite"]["ratio_vs_c"]
+    r_vitesse = round(r_com / r_beb, 1)               # le quotient des régimes
+    per_jum = v_h["audit_1_sur_10"]["jumeau_duree_s"] / 1200 * 1e6   # µs/vecteur
+    per_gen = v_h["moteur_generalise"]["mediane_s"] / 12000 * 1e6
+    r_oracle = round(per_jum / per_gen, 0)             # l'ordre de grandeur vs l'oracle vivant
+    ms = json.loads(_lignes("atelier-w28vaes/mesure-sched.txt")[0])
+    v3b = json.loads(_lignes("atelier-w28vaes/mesure-v3b.txt")[0])
+    r_ecart = round(ms["mediane_couloir_sched_ns"] / v3b["mediane_couloir_v3_ns"], 2)
+    opt16 = _lit("atelier-w28opt16/resultats-opt16.json")
+    r_plancher = round(opt16["mediane_sur_18"] / 27.5, 2)
+    RATIOS = [
+        # (clé, valeur recomposée des registres, formes imprimées attendues, pièce)
+        ("régime chaud", r_chaud, ["4,56 × C", "4.56x C"], ("preuves", "manuscrit", "presentation")),
+        ("bout-en-bout", r_beb, ["77 × C", "77x C"], ("preuves", "manuscrit", "presentation")),
+        ("committé", r_com, ["1 056 × C", "1056x C", "1 056 ×"], ("preuves", "manuscrit", "presentation")),
+        ("vitesse committé→généralisé", r_vitesse, ["13,6 ×"], ("preuves",)),
+        ("ordre de grandeur oracle", r_oracle, ["123 ×", "123 ×"], ("preuves", "manuscrit")),
+        ("VAES par appel", ms["ratio_vs_par_appel"], ["1,41 ×"], ("preuves",)),
+        ("VAES contexte posé", ms["ratio_vs_session"], ["2,68 ×"], ("preuves",)),
+        ("portage C session", v3b["ratio_vs_session"], ["2,47 ×"], ("preuves",)),
+        ("portage C par appel", v3b["ratio_vs_par_appel"], ["1,31 ×"], ("preuves",)),
+        ("écart notation-vs-C", r_ecart, ["1,07 ×"], ("preuves", "manuscrit")),
+        ("plancher OPT-16", r_plancher, ["2,89 ×"], ("preuves",)),
+    ]
+    for cle, val, formes, pieces_cibles in RATIOS:
+        val_arr = round(val, 2)
+        ok = False
+        for piece in pieces_cibles:
+            if any(f in t.get(piece, "") for f in formes):
+                ok = True
+                break
+        if not ok:
+            refus.append(("C32", "preuves",
+                          f"le ratio {cle} ({val_arr}) recomposé des registres n'est pas publié "
+                          f"en ses formes {formes} — RATIO-RECOMPOSE"))
+    # la valeur du test du lecteur (63,39/19,66 = 3,22) demeure au V3 de la porte
     return refus

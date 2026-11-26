@@ -1,0 +1,15 @@
+L'AUDIT INDÉPENDANT — chaque ratio corrigé RECALCULÉ depuis son fichier source (les opérandes NON ARRONDIS des registres) et confronté à la valeur imprimée (la reprise du 27/11/2026, W28CORRIGE — l'ordre de grandeur oracle recomposé du mur NON ARRONDI du moteur (ratio × pilote), jamais de la médiane affichée arrondie)
+
+régime chaud (×C)                      recomposé 4.56       imprimé 4.56     VERT
+bout-en-bout (×C)                      recomposé 77.49      imprimé 77.49    VERT
+committé (×C)                          recomposé 1056.04    imprimé 1056.04  VERT
+vitesse committé→généralisé            recomposé 13.6       imprimé 13.6     VERT
+ordre de grandeur oracle               recomposé 123.0      imprimé 123      VERT
+VAES par appel                         recomposé 1.407      imprimé 1.41     VERT
+VAES contexte posé                     recomposé 2.6782     imprimé 2.68     VERT
+portage C session                      recomposé 2.4743     imprimé 2.47     VERT
+portage C par appel                    recomposé 1.3126     imprimé 1.31     VERT
+écart notation-vs-C                    recomposé 1.07       imprimé 1.07     VERT
+plancher OPT-16                        recomposé 2.89       imprimé 2.89     VERT
+médiane OPT-16                         recomposé 79.5       imprimé 79.5     VERT
+coût amorti OPT-16                     recomposé 1895.67    imprimé 1895.67  VERT

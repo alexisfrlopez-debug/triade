@@ -1,0 +1,106 @@
+ATELIER W28CORRIGE — SOLDER LES RÉSIDUS NUMÉRIQUES ET DE PÉRIMÈTRE DE LA VAGUE 28
+(la correction prompt de l'évaluation « sans anesthésie » du pack v0.33.0 —
+instructions2.txt §10 déposé au /instructions du coffre le 26/11/2026 au soir ;
+exécutée par la reprise le 27/11/2026. Plan gelé : PLAN-W28CORRIGE.md, sha256
+consigné AVANT toute donnée à EMPREINTES-PLANS-VAGUE28.txt, le commit b483a48.)
+
+1. L'AUDIT (chaque ratio publié des cinq pièces recalculé depuis les opérandes
+   NON ARRONDIS de ses registres — volumes-resultat.json, mesure-sched.txt,
+   mesure-v3b.txt, resultats-opt16.json, journal-opt16.jsonl) : TREIZE ratios
+   canoniques confrontés, TREIZE VERT (audit-ratios.txt) ; les trois résidus
+   nommés par l'évaluateur traités à la source :
+   (a) « 46,6 ms … 33× » (atelier-w28harnais/rapport.txt) : la valeur imprimée
+       était la PASSE FROIDE UNIQUE de la session (46,6 ms — la ligne de console
+       rapport-volumes.txt), pas le mur canonique ; le registre dit 25,4 ms (la
+       médiane de neuf passes) et le ratio committé→généralisé se recompose des
+       régimes du registre : 1 056,04 / 77,49 = 13,6× — l'ancienne ligne « 33× »
+       ne se recomposait d'AUCUN opérande (46,6/1,9 = 24,5 ; 25,4/1,9 = 13,4).
+       CORRIGÉ À LA SOURCE : « 25,4 ms (la médiane de neuf passes…) … 13,6× (le
+       quotient des régimes du registre : 1 056,04/77,49 ; les displays arrondis
+       25,4 ms → 1,9 ms recomputent à 13,4, l'écart d'arrondi nommé) » ;
+   (b) « 2,68× » (atelier-w28vaes/rapport.txt) : le ratio se recompose de SA
+       PROPRE passe (mesure-sched.txt : 1 082/404 = 2,6782) mais le texte
+       imprimait à côté l'opérande de la passe du portage C (409 ns) — un lecteur
+       recomputait 1 082/409 = 2,65 ≠ 2,68. CORRIGÉ : chaque ratio porte les
+       opérandes de sa passe (769/404 le schedule, 771/409 le portage C — l'EVP
+       mesuré dans chaque passe, l'écart inter-passes 1,2 % nommé) ; la coquille
+       « 2 47-2,68 » corrigée en « 2,47–2,68 » ;
+   (c) le ratio 1 056× C (le rapport + CIBLES.md) : la ligne d'opérande
+       harmonisée au mur canonique (25,4 ms / 24,0 µs = 1 056,04) ;
+   ERRATA append-only datés aux trois rapports sources (l'ancienne valeur et la
+   nouvelle demeurent lisibles — atelier-w28harnais/rapport.txt,
+   atelier-w28vaes/rapport.txt, rapport-volumes.txt).
+2. LA DÉCOMPOSITION OPT-16 (journal-opt16.jsonl, 39 appels, 18 tâches) : le
+   PROMPT 15 519 tokens natifs (91,0 %), la RÉPONSE 1 542 (9,0 %), le total
+   17 061 ; LA SECONDE LIGNE publiée : le COÛT PAR CHANGEMENT VALIDÉ, ÉCHECS
+   AMORTIS : 1 896 tokens natifs (17 061 ÷ 9 vertes, n=9/18). L'ARBITRAGE
+   CONSIGNÉ (la politique lexicographique) : le gain de médiane (79,5 contre
+   674) est ACHETÉ par la faisabilité 9/18 — les DEUX lignes publiées côte à
+   côte (atelier-w28opt16/rapport.txt + decomposition-opt16.json + la ligne
+   CIB-EDIT-OPT16 de CIBLES.md). Aucune valeur mesurée modifiée : la médiane
+   79,5 et les vertes 9/18 demeurent, le journal INTACT — la décomposition le
+   RELIT.
+3. C30 N-VALUE ET C31 CLAIM-SCOPE RECONSTRUITS (controles_w28c de linter_v4.py,
+   append-only) : le code de la session morte fut perdu avec le bac (le complet
+   v0.33.0 ne portait pas le linter) ; la reconstruction se calibre sur les
+   mutations attendues de la porte (le n= retiré de « median 27.5 native tokens
+   over the eighteen tasks, n=18 » → refus C30 ; « This study presents the first
+   system ever. » → refus C31) et produit AUCUN refus sur les pièces réelles.
+   Les fenêtres C25 recalibrées aux treize cibles du registre (la comptine
+   11→13, les fenêtres mesure 240 / périmètre 640 — les lignes CIB-VOL-REGIME
+   et CIB-AES-105 portent leurs valeurs au-delà des anciennes bornes), les
+   tables C13/C19 étendues aux vagues 26-28 (twenty-sixth/seventh/eighth).
+4. C32 RATIO-RECOMPOSE — LA CLASSE NOUVELLE : TOUT ratio canonique publié (les
+   treize de l'audit) se recompose de ses opérandes non arrondis LUS AUX
+   REGISTRES (controles_w28c) ; son contrôle négatif : un ratio volontairement
+   faux (« 13,6× » muté en « 33× ») REFUSÉ nommément. Le linter à TRENTE-DEUX
+   classes.
+5. L'ÉDITION CORRECTIVE v0.33.1 (le patron v0.23.4) : les QUATRE pièces aux
+   sources inchangées RECONDUITES byte-byte (manuscrit v0.33.0, spécification
+   v0.15.18, Livre v1.17, présentation v0330 — recoupées sha256 contre le pack
+   v0.33.0) ; la PREUVES SEULE RÉGÉNÉRÉE (TRIADE_preuves_et_calculs_v0.33.1.pdf :
+   elle lit les rapports corrigés verbatim — les errata, la décomposition OPT-16
+   et la ligne CIB-EDIT-OPT16 amortie y vivent) ; l'ancre RFC 3161 v0.33.1 POSÉE
+   ET VÉRIFIÉE hors ligne (temoin-epoch-v0.33.1.tsr 03633c93…, la dérivation de
+   l'édition au manifeste du pack — le patron correctif) ; LA PORTE V1..V7 +
+   L1..L32 ZÉRO ROUGE, VINGT-TROIS mutations refusées 23/23 (les vingt-deux
+   reconduites + la mutation C32) ; le manifeste empreintes v0.33.1 (les quatre
+   reconduites + la preuves régénérée).
+6. LA BATTERIE DE VÉRIFICATION (l'ordre de la prompt) : la porte complète zéro
+   rouge ✓ ; LES CINQ SONDES DU CONTRAT NOYAU REJOUÉES, verdicts bit-identiques
+   5/5 VERT (rejoue_sondes.py → sondes-rejouees.txt : le E1 -4 exact avec la
+   barre « aucun fichier ouvert », la paire « 45 » au journal (0x22, 0x45), le
+   compte 1, le curseur 0x23, la fenêtre 0x45 — la pièce T b382e01b… RECROPÉE
+   INTACTE) ✓ ; sceau_I verifier 14/14 avant et après ✓ ; chaque ratio corrigé
+   RECALCULÉ indépendamment du fichier source et confronté à la valeur imprimée
+   — 13/13 VERT (audit-ratios.txt) ✓ ; git diff : les octets changés vivent aux
+   zones autorisées (les trois rapports corrigés + errata, CIBLES.md,
+   decomposition-opt16.json, linter_v4.py, ancrage_transparence.py, la chaîne
+   v331, le pack-v331) — AUCUN octet hors zones ✓. L'épreuve complète aux 14
+   vecteurs demeure ARRÊTÉE au fetch hors carte (la cause structurelle nommée de
+   la 437e vague — le kit terrain au geste du développeur) : la correction n'y
+   touche pas.
+7. LA GARDE : aucun artefact scellé touché (le sceau-I 14/14 avant et après ;
+   les empreintes des quatre pièces reconduites RECROPÉES byte-byte) ; aucune
+   cible re-tirée ; aucun verdict fabriqué ; aucune valeur mesurée modifiée
+   au-delà des résidus nommés (les errata documentent chaque correction,
+   l'ancienne valeur demeure lisible) ; le /instructions du coffre DEMEURE tel
+   quel (les deux évaluations y vivent : elles ne sont PAS consommées par la
+   présente — la vague 29 aux six prompts attend le geste du maître) ; aucun
+   secret commis ni affiché.
+
+L'ÉDITION v0.33.1 : les cinq pièces (quatre reconduites + la preuves régénérée)
+au pack-v331/, les empreintes au manifeste v0.33.1, les trois packs assemblés à
+depot-zenodo-v0331/ (soumission / présentation / complet), le set au /livrables
+du coffre au jeton relais, le set v0.33.0 supersédé au lot ARCHIVE — la
+publication Zenodo attend LA COMMANDE du maître (v0.32.0, v0.33.0 et v0.33.1 :
+la chaîne des trois éditions attend la commande).
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 scripts/vague28/generer_pieces_v331.py        # la preuves régénérée
+  python3 scripts/vague20/ancrage_transparence.py        # l'ancre (le pack au manifeste)
+  python3 scripts/vague28/porte_generation_v331.py       # la porte (zéro rouge)
+  python3 scripts/vague28/porte_generation_v331.py --controle-negatif   # 23/23
+  python3 atelier-w28corrige/rejoue_sondes.py            # les cinq sondes
+  python3 v06/sceau_I.py verifier                        # la garde (14/14)
+Les sha256 de tous les fichiers produits : EMPREINTES.txt.

@@ -50,3 +50,22 @@ rapport.
 COMMANDES EXACTES (au bac, dépôt à la racine) :
   python3 atelier-w28opt16/campagne_opt16.py            # la campagne (n=18)
   python3 v06/sceau_I.py verifier                        # la garde (14/14 avant et après)
+
+--- LA DÉCOMPOSITION ET LE COÛT AMORTI (append-only, posé le 27/11/2026 par la
+reprise — la correction prompt de l'évaluation du pack v0.33.0, instructions2.txt
+§10 : « Décomposer OPT-16 en prompt / prose / réponse depuis journal-opt16.jsonl,
+et publier une seconde ligne "coût par changement validé, échecs amortis, n=9/18" ») :
+
+7. LA DÉCOMPOSITION (journal-opt16.jsonl, 39 appels, 18 tâches) : le PROMPT
+   (le contexte + la prose de tâche) 15 519 tokens natifs (91,0 %), la RÉPONSE
+   (le diff structuré rendu) 1 542 tokens natifs (9,0 %) — le total 17 061.
+   La médiane par tâche (la convention du journal : les tours multiples portent
+   la SOMME des tours) : 79,5 — LA SECONDE LIGNE, le COÛT PAR CHANGEMENT VALIDÉ,
+   ÉCHECS AMORTIS : 1 896 tokens natifs (17 061 ÷ 9 vertes, n=9/18 — la somme
+   des tours et tentatives ÷ les vertes). L'ARBITRAGE CONSIGNÉ (la politique
+   lexicographique Sécurité > Performance > Optimisation > Coût en tokens) : le
+   gain de médiane (79,5 contre 674) est acheté par la faisabilité 9/18 — un
+   lecteur doit lire les DEUX lignes, la médiane ET l'amorti, l'une sans l'autre
+   est une tenue silencieuse. Registre : decomposition-opt16.json.
+   Aucune valeur mesurée modifiée : la médiane 79,5 et les vertes 9/18 demeurent
+   (le journal et resultats-opt16.json INTACTS — la décomposition les RELIT).
