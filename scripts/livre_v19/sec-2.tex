@@ -1,0 +1,349 @@
+% =====================================================================
+%  CH. 2 CF1 · CH. 3 CF2 · CH. 4 CF3 — LES TROIS GÉNÉRATIONS
+% =====================================================================
+\section{CF1 — le coffre à phrase (D75)}\label{sec:cf1}
+
+\subsection{L'idée, et pourquoi elle a suffi un temps}
+
+CF1 est né d'une demande du développeur : « stocker toutes les phrases maîtresses par
+projet ». L'idée est la plus ancienne de la cryptographie symétrique : une phrase que
+seul le maître connaît, dérivée en clé par une fonction coûteuse, protège tout le reste.
+Elle a suffi un temps parce que la menace modélisée était simple — le \emph{vol au
+repos} : un tiers qui s'empare du disque ou du dépôt ne doit rien pouvoir lire. Contre
+cette menace, une phrase forte dérivée par Argon2id est une réponse complète.
+
+Ce qui a fait grandir le coffre, c'est une autre menace, venue du terrain du
+développeur : l'\emph{expropriation} (D84) — un tiers qui s'empare de la machine
+\emph{pendant qu'elle vit}, phrase comprise. Contre elle, une phrase seule ne protège
+pas : il faut que la clé n'existe nulle part entière. C'est l'histoire des deux
+générations suivantes — CF1 n'est pas une erreur, c'est le socle : même CF3 dérive
+K\_user par la même Argon2id aux mêmes planchers.
+
+\subsection{La cérémonie de la clé}
+
+\begin{lstlisting}
+phrase (choisie par le maitre, D110 : alphanumerique, sans plafond)
+  -> Argon2id(phrase, sel_argon 16 o, t=65536 Kio, m=3 it, p=1) = K_user 32 o
+  -> HKDF-SHA256(K_user, sel_hkdf, info "coffre=v1") = KEK 32 o
+  -> XChaCha20-Poly1305(JSON base, KEK, nonce 24 o frais, AAD = en-tete clair)
+\end{lstlisting}
+
+Le sel est propre au coffre (posé à l'init, 16 octets) ; le nonce est frais à
+\emph{chaque écriture} ; l'empreinte du chiffretexte (sha256, posée dans l'en-tête)
+nomme la corruption avant l'AEAD. La base claire est le JSON commun aux trois
+générations :
+
+\begin{lstlisting}
+{ "format": ..., "protocole": ..., "cree": ..., "modifie": ...,
+  "description": ..., "projets": { "<nom>": { "phrase": ..., ... }, ... } }
+\end{lstlisting}
+
+Chaque projet du dépôt y vit avec sa phrase maîtresse et ses métadonnées. Les gestes :
+\code{init}, \code{lister}, \code{obtenir} (vers l'écran ou vers un fichier 0600),
+\code{ajouter}, \code{retirer}, \code{verifier}, \code{changer-phrase},
+\code{exporter}/\code{importer} (continuité), \code{bruler} (destruction manuelle).
+L'autotest de falsification (19 contrôles à la naissance, D75) a établi la règle de la
+maison : mauvaise phrase refusée ; mutation d'UN octet — chiffretexte, sel, nonce,
+empreinte — chacune refusée nommément ; \code{lister} ne divulgue aucune phrase ;
+l'export round-trip est exact.
+
+\subsection{La garde de la phrase (D81) — le fichier fut la remise}\label{sec:guarded81}
+
+L'épisode fondateur mérite d'être raconté, parce qu'il explique toute la discipline
+actuelle. La rotation D80 avait produit une phrase neuve dont la remise — prévue « en
+fin de tour » par affichage unique — n'a jamais eu lieu : la session d'exécution est
+morte avant, d'une panne d'infrastructure de plus. La phrase ne vivait plus que dans le
+bac à sable éphémère. Un décès d'infra de plus, et le coffre entier devenait
+indéchiffrable à jamais. L'arbitrage est consigné : le risque de \textsc{perte} (vécu,
+répété) dépasse le risque d'\textsc{exposition} (URL non devinable). De D81 au 19 novembre 2026 : dès sa
+production — init, rotation, changement — la phrase était écrite dans
+\code{PHRASE-CONTROLE-COFFRE.txt} (une ligne, rien d'autre), commitée au dépôt, poussée
+(GitHub + miroir Drive par le hook) et posée au racine du coffre Drive, \emph{avant
+toute autre action de la session}. Une phrase entrée dans l'histoire git y demeure à
+vie : on ne compte plus sur sa confidentialité, la rotation reste le remède.
+La garde plus dure EST VÉCUE depuis le 19 novembre 2026 (D223) : le
+séquestre chiffré D183 — la phrase répartie en cinq parts à seuil trois
+(cf. § \ref{sec:cerd183}) — la cérémonie VÉCUE, la garde ACTIVE est le
+séquestre 5/3 ; la garde D81 est AMENDÉE (la phrase tournée, l'ancienne
+demeurant ACTIVE jusqu'au geste vécu de sa destruction).
+
+\section{CF2 — la clé répartie (D86)}\label{sec:cf2}
+
+\subsection{L'idée : le secret qui n'existe nulle part}
+
+CF2 répond à la question que CF1 laisse ouverte : que faire si l'adversaire tient la
+machine \emph{vivante} ? La réponse de D86 : découper la clé maîtresse en fragments
+tels qu'aucun supports ne suffise, et armer une sentinelle qui brûle les fragments si
+un processus non autorisé lit la couche C. Le secret maître \textbf{M} (32 octets du
+CSPRNG) n'est jamais écrit entier — nulle part, jamais : il vit reconstitué en RAM le
+temps d'un déverrouillage, vérifié, puis effacé.
+
+\subsection{Le découpage Shamir, en mots}
+
+Un secret peut être \emph{réparti} : on le découpe en N fragments tels que n'importe
+quels T d'entre eux le reconstituent, et que T$-1$ n'en disent \emph{rien} — pas
+« difficile à calculer », \emph{rien} : la sécurité est informationnelle. Le mécanisme
+(Shamir sur le champ GF($2^8$), polynôme générateur 0x11B — celui d'AES) : pour chacun
+des 32 octets de M, un polynôme distinct de degré $T-1$ dont les coefficients sont
+frais du CSPRNG ; le fragment $j$ porte les évaluations de ces polynômes au point
+$x_j$. T fragments régressent les polynômes (Lagrange en $x=0$) et retrouvent M ;
+T$-1$ fragments laissent tout M' possible — aucune discrimination, aucune attaque.
+
+L'arbitrage terrain : \textbf{N = 5, T = 3}. Cinq gardes machine (répertoires distincts,
+un fragment chacun, mode 0700) ; la relève exige \textbf{T copies hors-ligne} — trois
+à seuil 3 : deux copies laisseraient le coffre mort si les gardes machine brûlaient
+(l'autotest le prouve par restauration partielle refusée). Brûler les cinq gardes
+machine = mort du coffre ; le code volé reste inexploitable (les enveloppes de carte
+sont mortes avec lui) ; restaurer trois copies hors-ligne = résurrection. C'est un
+contrat clair : \emph{ce que vous acceptez de perdre} contre \emph{ce que vous refusez
+de voir exfiltré}.
+
+\subsection{Les fragments — le format qui se transporte sur papier}
+
+\begin{lstlisting}
+TRIADE-CF2-FRAG v1
+coffre: <sel HKDF du conteneur, 64 hex - l'identite STABLE du coffre>
+x: <indice, decimal>
+seuil: t=3/n=5
+fragment: <64 hex - 32 o>
+tag: <16 hex - sha256("TRIADE-CF2-frag" || x || fragment) tronque>
+\end{lstlisting}
+
+Le fragment est ASCII autodescriptif : il se lit, s'imprime, se recopie — l'exfiltration
+d'un fragment est un vol physique, hors du modèle. Il est lié au \emph{sel} du coffre
+(l'identité stable, posée à l'init) et jamais à l'empreinte de l'en-tête (le nonce
+change à chaque écriture ; une liaison à l'en-tête invaliderait les copies papier à
+chaque mutation — la faute a été dénoncée par le parcours CLI complet avant d'être
+commise, D106). Le \code{tag} nomme le fragment fautif sans le divulguer : corruption,
+mélange de fragments d'un autre coffre (sel divergent), collision d'indice — refus
+nommés à l'import comme à la reconstitution.
+
+\begin{terrain}[— les cinq originaux, la feuille et les copies (D131)]
+La question du terrain, 31/10 : « la cérémonie m'a produit un fragments-cf2.txt et le
+système attend 3 fragment-*.cf2 ». Les CINQ originaux vivent sous
+\code{.keys\textbackslash gardes-cf2\textbackslash g1...g5\textbackslash
+fragment-N.cf2f} — un fichier par garde, dans un dossier caché du clone. La FEUILLE
+est l'export papier des TROIS fragments g3--g5 (les tags sont vérifiés avant
+impression) : c'est une empreinte humaine, à ranger au sachet. Les COPIES USB sont les
+fichiers \code{.cf2f} eux-mêmes, copiés hors-ligne : c'est eux que le contrôle de
+relecture relit. La feuille et les copies ne sont pas le même objet — l'un se recopie
+à la main, l'autre se restaure.
+\end{terrain}
+
+\subsection{Le conteneur, la sentinelle, la porte}
+
+Le conteneur \code{TRIADE-CF2} dérive sa clé de M (HKDF, contexte \code{coffre=v2} —
+nul chevauchement avec CF1 ni avec les fragments de carte) ; le champ \code{verif}
+(16 octets) vérifie toute reconstitution avant que l'AEAD ne parle. La
+\textbf{sentinelle} surveille la couche C (jamais les gardes ni le conteneur) à
+\emph{double seuil} : un processus hors liste blanche \emph{et} une lecture de
+contenu — deux signaux indépendants, parce qu'une fausse alerte serait une perte
+auto-infligée. Moteur laboratoire : inotify + attribution \code{/proc} ; moteur de
+production Windows : SACL + journal 4663 ou ETW (exigence consignée). La
+\textbf{PORTE D120} — née de la demande du terrain : « si le déverrouillage est tenté
+et qu'elle n'est pas lancée, tous nos efforts sont inutiles » — exige une sentinelle
+vivante pour déverrouiller ; sur plateforme sans moteur, la porte \emph{avertit
+nommément} à chaque déverrouillage. Le chapitre 5 raconte la fin de cette histoire.
+
+La \textbf{liste blanche} de la sentinelle mérite son mot : elle blanchit par motifs
+regex sur l'image de processus résolue \emph{et} sur la ligne de commande complète —
+jamais « tout python3 » : c'est la ligne qui distingue \code{build\_m4.py} d'un
+\code{-c} jetable. La liste est MINIMALE par construction (chaînes de build,
+vérificateurs, l'éditeur du maître, la sentinelle elle-même) et testée par
+falsifiabilité : un motif trop large blanchirait l'adversaire — c'est le défaut que
+la suite prouve ne pas avoir.
+
+La \textbf{destruction} (\code{bruler}) : trois passes d'écrasement (aléa, 0xFF, 0x00),
+troncature, renommage aléatoire, unlink, fsync — et un \textbf{procès-verbal} nommant
+le déclencheur (pid, image, fichier lu). Le conteneur et les gardes vides restent sur
+place : le PV dit la mort, la vérification la confirme. La \textbf{restauration}
+(\code{restaurer}) est atomique : chaque fragment est vérifié (tag + sel + indice
+libre) et toute anomalie laisse \emph{rien} s'écrire — une remise partielle serait un
+coffre menteur.
+
+\subsection{Les critères de sortie de CF2 — et leurs preuves}
+
+La spec scellée lie chaque promesse D86 à une preuve mesurable
+(\code{v06/test\_cf2.py}) ; le maître peut les re-voir à volonté :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Critères de sortie D86 et leurs preuves (CF2).}
+\label{tab:sortiecf2}
+\begin{tabularx}{\textwidth}{@{}Y Y@{}}
+\toprule
+\textbf{Critère D86} & \textbf{Preuve} \\
+\midrule
+Shamir : reconstitution, seuil, refus nommés & T1 — KAT + 1000 vecteurs, interop
+exhaustive C(5,3) \\
+Sous T : informationnellement mort & T2 — un M' arbitraire accepté par les fragments
+seuls : aucune discrimination \\
+Conteneur : round-trip + fail-closed & T3 — en-tête, AEAD, \code{verif}, empreinte :
+refus nommés \\
+Exfiltration simulée $\to$ fragments détruits, indéchiffrable & F1 — sentinelle en
+sous-processus, lecture non blanchie, PV + mort du coffre, restauration $\to$ vie : le
+cycle complet \\
+Fausses alertes NULLES en essai nominal & T4 — opérations blanches (build,
+vérificateur simulés) : journal « blanchi », zéro brûlage \\
+Latence détection $\to$ destruction bornée & F1 — mesurée, assertée sous la borne
+consignée \\
+Remise douteuse refusée sans écrire & F2 — atomicité, octet pour octet \\
+Santé de la sentinelle & T5 — heart-beat frais, mort visible \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{CF3 — la serrure piégée (D121)}\label{sec:cf3}
+
+\subsection{L'idée : le témoin qui ne peut pas mentir}
+
+CF3 est né de deux demandes du terrain, servies ensemble : « plutôt qu'une sentinelle
+externe, une serrure du coffre piégée » et « une vulnérabilité réside durant le temps
+où la session est ouverte ». L'idée : couper la clé en trois éléments dont l'un vit
+\emph{hors machine} — le piège. Sans lui, le déverrouillage n'est pas refusé, il est
+\emph{impossible} : il manque une moitié de la serrure. Et comme le piège est hors
+machine, aucun état de machine falsifiable ne peut le remplacer : c'est un témoin que
+le logiciel ne peut ni imiter ni truquer.
+
+\subsection{Les trois éléments et l'époque}
+
+\begin{itemize}
+\item \textbf{K\_user} — la clé de l'utilisateur, \code{Argon2id(phrase,
+sel\_argon)} : \emph{invariable à travers les époques} (la demande du terrain : « clé
+utilisateur qui ne change pas »). Le sel et les paramètres sont posés à l'init et
+jamais retouchés.
+\item \textbf{S\_serrure} — la moitié « serrure » : 32 octets frais du CSPRNG à
+\emph{chaque époque}, logée dans l'en-tête clair du conteneur (côté machine).
+\item \textbf{S\_piège} — la moitié « piège » : 32 octets frais à chaque époque,
+logée \emph{exclusivement sur le média séparé} — jamais écrite sur la machine hors
+l'instant de l'acte.
+\end{itemize}
+
+L'\textbf{époque} (u64, posée à 1, incrémentée à chaque clôture) est l'horloge de la
+métamorphose : chaque clôture renouvelle les moitiés, si bien qu'un secret volé ne
+sert qu'une époque. \textbf{H\_projet} (sha256 de l'état scellé) lie la clé de clôture
+au contenu — la course de clôture, § \ref{sec:course}.
+
+\subsection{La dérivation et le champ qui ferme l'essai-hors-ligne}
+
+\begin{lstlisting}
+KEK = HKDF-SHA256(ikm = K_user || S_serrure || S_piege ;
+                  salt = sel_hkdf ;
+                  info = "triade-CF3/v1|" || epoque(le64) || H_projet)
+verif = sha256(HKDF(ikm = K_user || V_piege ;
+                    info = "triade-CF3/verif/v1"))[:16]
+chiffretexte = XChaCha20-Poly1305(clair, KEK, nonce 24 o,
+                                  AAD = en-tete jusqu'au nonce, 168 o)
+\end{lstlisting}
+
+Le champ \code{verif} est subtil et il mérite une phrase : le voleur de la
+\emph{machine seule} ne peut même pas \emph{tester} des phrases contre le conteneur —
+il lui manque V\_piège, la valeur publique qui vit sur le média. Le brute-force
+hors-ligne n'est pas difficile, il est \emph{sans objet}. Contre le voleur de tout
+(machine + média), la défense est Argon2id — borne consignée, même famille que CF1.
+
+\subsection{Le fichier piège — un ASCII par époque}
+
+\begin{lstlisting}
+TRIADE-CF3-PIEGE v1
+epoque: <u64 decimal>
+projet: <H_projet hex (64)>
+piege: <S_piege hex (64)>
+verif: <V_piege hex (32)>
+tag: <hex (16)>
+\end{lstlisting}
+
+Un fichier par époque, sur le média du sachet : \code{piege-CF3-epoque-1.txt},
+\code{-2.txt}, \ldots{} Une clôture \textbf{ajoute} le piège N+1 et ne ronge jamais
+les pièges passés — l'ancien piège est la relève du canonique précédent (si le média
+perd le dernier piège, l'avant-dernier ne résurrect rien, mais il témoigne). Le
+\code{tag} nomme la corruption du média sans divulguer ; un piège entièrement forgé se
+présente comme une phrase erronée — bénin, refus nommé, jamais de destruction. Demain,
+le média pourra être une clé USB à bouton physique (FIDO2) : seul le support change.
+
+\subsection{Le cycle en deux actes — la fenêtre de session bornée}\label{sec:deuxactes}
+
+\begin{enumerate}
+\item \textbf{Acte I — ouverture.} Phrase + piège branché $\to$ sentinelle
+instantanée (§ \ref{sec:sentinst}) $\to$ clair $\to$ \emph{brouillon} chiffré sur
+disque sous une clé de session éphémère K\_session, qui ne vit qu'en RAM dans l'objet
+Session. Puis K\_user, KEK et les moitiés sont effacés ; le média du piège est
+\textbf{débranché} — geste humain, consigné au journal de cérémonie ; le conteneur
+canonique n'est \emph{jamais} réécrit pendant la session.
+\item \textbf{Session.} Lecture et écriture sur le brouillon (AEAD sous K\_session).
+Une panne ou un abandon tue K\_session avec le processus : le brouillon devient un
+déchet indéchiffrable, le canonique reste scellé. \emph{Une panne auto-nettoie.}
+\item \textbf{Acte II — clôture.} Média rebranché, phrase \textbf{retapée} (une faute
+de frappe est bénigne — aucun scellement n'a lieu). H\_final = sha256 du brouillon
+final, checksum court de 8 hex \emph{affiché} : l'humain recoupe avec sa carte. Moitiés
+fraîches, époque N+1, KEK de clôture dérivé \emph{avec} H\_final. Écriture du piège
+N+1 (additive) puis du conteneur en \emph{staging} ; \textbf{re-lecture à froid} du
+staging par la sentinelle complète — verte : remplacement atomique ; échec : staging
+détruit, canonique et brouillon intacts, la clôture est rejouable.
+\end{enumerate}
+
+\subsection{La course de clôture et l'étiquette}\label{sec:course}
+
+L'attaque : un malware attend la frappe de phrase à la clôture, vole la clé dérivée et
+scelle \emph{son} état à la place. La parade est double. D'abord, la clé de clôture
+est dérivée \emph{avec} H\_final : elle ne peut sceller que l'état exact dont le hash a
+servi à la dériver. Ensuite, l'\textbf{étiquette} est vérifiée à l'ouverture : le clair
+déchiffré doit hacher vers le H\_projet de l'en-tête. Le faux conteneur « étiquette
+honnête, contenu substitué » est démasqué : sha256(contenu) $\neq$ H\_projet —
+falsification \emph{prouvée}, destruction locale. Un KEK volé ne produit donc aucun
+conteneur ouvrable pour un autre contenu, et le faux conteneur exige en outre d'écrire
+le média du piège pendant qu'il est branché.
+
+\subsection{Les trois témoins d'époque}\label{sec:temoins}
+
+Le roll-back restaure un \emph{couple} cohérent (conteneur N + piège N) — l'AEAD
+passerait seul. La défense est graduée : le \textbf{journal local}
+(\code{.keys/journal-cf3.txt}) contrôle automatiquement à chaque acte (époque du
+conteneur $\geq$ époque du miroir, sinon « RETOUR EN ARRIÈRE » nommé) mais un attaquant
+admin peut l'effacer ; la \textbf{carte papier du sachet} consigne le checksum de 8 hex
+à la main à chaque clôture — indécevable par logiciel ; le \textbf{journal Git}
+(consigné à chaque cérémonie de clôture, poussé) est le témoin archivé hors machine.
+Le verdict à froid (\code{verifier}) affiche le checksum pour le recoupement humain :
+\emph{la machine dit, la carte confirme, vous seul jugez}.
+
+\begin{terrain}[— ce que dit un verdict réel]
+Extrait du rapport de migration du coffre réel (30/10/2026, boîte noire du GUI) — le
+format que vous verrez à chaque \code{verifier} :
+\begin{lstlisting}
+[CF3] VERDICT : VERT - epoque 1, checksum 0cc89a96
+    (carte papier / journal Git : recoupez), 1 projet(s)
+\end{lstlisting}
+Époque, checksum, projet(s) : les trois choses à recouper. Le checksum se note sur la
+carte du sachet, l'époque se suit d'une clôture à l'autre, le compte de projets doit
+être le vôtre.
+\end{terrain}
+
+\subsection{Les critères de sortie de CF3 — et leurs preuves}
+
+Même loi (\code{v06/test\_coffre\_cf3.py}, la suite de falsifiabilité) :
+
+\begin{table}[htbp]
+\centering\small
+\caption{Critères de sortie CF3 et leurs preuves.}
+\label{tab:sortiecf3}
+\begin{tabularx}{\textwidth}{@{}Y Y@{}}
+\toprule
+\textbf{Critère} & \textbf{Preuve attendue} \\
+\midrule
+Round-trip deux actes & init $\to$ ouvrir $\to$ modifier $\to$ fermer $\to$ ouvrir :
+contenu exact, époque incrémentée, moitiés remplacées, \code{sel\_argon} invariant \\
+Phrase erronée (acte I ET II) & refus nommé, JAMAIS de destruction, aucune écriture \\
+Piège absent & déverrouillage impossible, refus nommé \\
+Piège périmé / roll-back du couple & refus nommé + journal \\
+Tag du piège invalide & refus nommé SANS destruction (média hors limite) \\
+Falsification prouvée côté machine & destruction locale + PV nommé, média et fragments
+intacts \\
+Course de clôture & KEK volé + faux conteneur (étiquette menteuse OU honnête à
+contenu substitué) : refus + destruction, jamais une ouverture \\
+Panne simulée à chaque phase de clôture & canonique intact, cycle rejouable \\
+Auto-nettoyage par panne & brouillon indéchiffrable sans K\_session, canonique jamais
+réécrit pendant la session \\
+Non-régression & sceau\_I verifier CODE 0, suites CF2/sceau-I/GUI vertes \\
+\bottomrule
+\end{tabularx}
+\end{table}

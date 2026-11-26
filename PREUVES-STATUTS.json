@@ -32,5 +32,13 @@
   "ancrage": {
     "statut": "DÉPLOYÉ (RFC 3161, journal append-only)",
     "source": "atelier-w20-sec"
+  },
+  "sentinelle_windows": {
+    "statut": "livrée au protocole (moteur POSIX éprouvé) ; le déploiement Windows SACL/4663 et IMA/Authenticode configurés au poste réel",
+    "source": "spec §7 (sentinelle) + Livre §5 (refus honnête de démarrer sur Windows) + preuves §5"
+  },
+  "fence_i": {
+    "statut": "non prouvé sur silicium (le terrain M7 fut l'émulation TCG — jamais revendiqué)",
+    "source": "spec D190 (M7 requalifié) + manuscrit RQ4 (instrumental reserve)"
   }
 }

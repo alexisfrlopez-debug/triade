@@ -1,0 +1,42 @@
+ATELIER W27RECON — LA RÉCONCILIATION SÉMANTIQUE INTER-PIÈCES : LA DIVERGENCE D267 SOLDÉE,
+LA CLASSE C26 STATUS-INTERPIECES (26/11/2026, priorité 1)
+====================================================================================================
+Évaluation du pack, prompt 1. Aucune valeur mesurée modifiée ; aucun artefact scellé touché.
+
+1. LE CONSTAT, DÉMONTRÉ SUR PIÈCES. Le statut de l'ancrage de transparence (D267) divergeait
+   entre les cinq pièces : le Livre v1.15 portait « la règle est adoptée et outillée, le
+   déploiement n'est pas fait : aucun témoin ancré n'existe à cette révision, et la porte de
+   release le dit EN ATTENTE » — alors que la spécification §7.11, la présentation §4 et les
+   preuves §5 portent le statut dérivé du journal : DÉPLOYÉ. La cause est nommée : la classe
+   C20 (vague 24) ne couvrait que trois pièces — le Livre lui échappait.
+2. LE STATUT UNIQUE, DÉRIVÉ DU JOURNAL. Le journal d'ancrage append-only
+   (atelier-w20-sec/ancrage-journal.jsonl) détient les entrées vérifiées v0.27.0 → v0.31.0
+   (TSA freetsa.org, RFC 3161, jetons recoupés à chaque porte V6). Le statut dérivé
+   (scripts/vague24/statut_ancrage.py) : DÉPLOYÉ.
+3. LA PIÈCE DIVERGENTE RÉGÉNÉRÉE À LA SOURCE. Le Livre du Coffre v1.16 (scripts/livre_v19/,
+   né de v1.15 par patcher ancré — 11 remplacements) : le paragraphe D267 réécrit au statut
+   dérivé, les deux ères nommées (la règle adoptée à la vague 20, le déploiement appliqué
+   depuis, les entrées du journal citées) ; l'en-tête, le running header, le pdftitle, la
+   couverture et l'avant-propos portés à v1.16 / spécification courante v0.15.17.
+4. LA CLASSE C26 STATUS-INTERPIECES. Tout statut sémantique partagé — ancrage (journal
+   append-only), compteur NV, Tamarin/ProVerif, sentinelle Windows, fence.i (le registre
+   PREUVES-STATUTS.json, étendu aux deux familles nouvelles : sentinelle_windows livrée au
+   protocole / moteur SACL/4663 au poste réel ; fence_i non prouvé sur silicium) — est
+   RECOMPOSÉ des registres et aucune des CINQ pièces ne peut le contredire, dans les deux
+   sens. Les citations d'un défaut (« … », « still said », les références de décision datées)
+   ne sont pas le défaut ; la liste des restants au poste réel n'est pas un déploiement.
+5. LA PREUVE VÉCUE. C26 sur les cinq pièces v0.31.0 TELLES QUE PUBLIÉES : trois refus nommés
+   sur le Livre (le déploiement n'est pas fait ; aucun témoin ancré n'existe ; la porte de
+   release le dit EN ATTENTE). C26 sur l'état corrigé (le Livre v1.16 aux côtés des quatre
+   autres pièces) : VERT.
+6. LES CONTRÔLES NÉGATIFS, SIX VÉCUS (atelier-w27recon/controles_negatifs_c26.py, sur
+   copies) : (i) le statut muté dans une pièce — le Livre v1.15 ressuscité refusé nommément ;
+   (i-bis) la présentation mutée « NON DÉPLOYÉ » refusée ; (ii) le registre muté — le journal
+   amputé de l'édition courante fait passer le statut dérivé à EN ATTENTE, les pièces disant
+   DÉPLOYÉ (Livre, preuves, présentation) refusées nommément ; (iii) le registre NV muté
+   (run matériel mesuré) — les pièces disant EN ATTENTE refusées ; (iv) le statut ProVerif
+   muté dans une pièce (run exécuté) refusé. 6/6.
+7. SUITE. La régénération des cinq pièces (édition v0.32.0) et la porte complète
+   V1..V7 + L1..L26 arrivent au geste de génération de la vague — les ateliers suivants
+   (résidus, cibles) modifient encore les sources ; le sceau-I demeure 14/14 (vérifié avant
+   et après le présent atelier).

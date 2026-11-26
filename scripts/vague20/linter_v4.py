@@ -610,3 +610,128 @@ def controles_w26(t, racine):
     if re.search(r"1,26[^.]{0,80}(manqu|missed)", preuves):
         refus.append(("C25", "preuves", "le couloir entrelacé est dit « manqué » contre 1,05 × — il est hors sujet"))
     return refus
+
+
+# ==========================================================================
+# C26 STATUS-INTERPIECES (la vague 27, W27RECON) — tout statut sémantique
+# PARTAGÉ (ancrage, compteur NV, Tamarin/ProVerif, sentinelle Windows,
+# fence.i) se recompose des REGISTRES et aucune des CINQ pièces ne peut le
+# contredire. Le trou de C20 est nommé : il couvrait trois pièces, le Livre
+# divergent (D267, « le déploiement n'est pas fait ») lui échappait.
+# ==========================================================================
+def _statuts_partages(racine, override=None):
+    """Les cinq statuts partagés, recomposés de leurs registres — jamais tapés."""
+    if override is not None:
+        return override
+    import importlib.util as _iu
+    sp = _iu.spec_from_file_location("sa", str(racine / "scripts/vague24/statut_ancrage.py"))
+    sa = _iu.module_from_spec(sp); sp.loader.exec_module(sa)
+    reg = json.loads((racine / "PREUVES-STATUTS.json").read_text(encoding="utf-8"))
+    return {
+        "ancrage": sa.statut(strict=False)["statut"],
+        "nv": reg["nv"]["statut"],
+        "tamarin": reg["tamarin"]["statut"],
+        "proverif": reg["proverif"]["statut"],
+        "sentinelle_windows": reg["sentinelle_windows"]["statut"],
+        "fence_i": reg["fence_i"]["statut"],
+    }
+
+
+def _cite_defaut(avant):
+    """La citation d'un défaut n'est pas le défaut (la garde de C24, partagée)."""
+    return ("«" in avant and "»" not in avant) or "traversait" in avant or "disait" in avant
+
+
+def controles_w27(t, racine, override=None):
+    """C26 — refuse toute pièce qui contredit un statut partagé dérivé des registres."""
+    statuts = _statuts_partages(racine, override)
+    refus = []
+    corps = {k: re.sub(r"\s+", " ", normalise(v)).replace("\u2019", "'") for k, v in t.items()
+             if k in ("manuscrit", "specification", "livre", "preuves", "presentation")}
+
+    def cherche(piece, texte, motif, msg):
+        for m in re.finditer(motif, texte):
+            avant = texte[max(0, m.start() - 90):m.start()]
+            apres = texte[m.end():m.end() + 70]
+            if _cite_defaut(avant) or any(k in (avant + m.group(0)) for k in
+                                           ("still said", "disait", "portait", "traversait")):
+                continue        # la citation d'un défaut n'est pas le défaut (l'histoire datée non plus)
+            if re.search(r"\(D\d{2,3}\)", apres):
+                continue        # une référence de décision DATE l'énoncé : l'histoire, pas l'état courant
+            if "poste réel" in avant and "configuré" in m.group(0):
+                continue        # la liste des restants n'est pas un déploiement
+            refus.append(("C26", piece, msg))
+            return
+
+    # --- 1. ANCRAGE (D267) : dérivé du journal append-only -------------------
+    if statuts["ancrage"] == "DÉPLOYÉ":
+        for piece, txt in corps.items():
+            for motif in (r"déploiement n'est pas fait", r"NON\s*DÉPLOYÉ",
+                          r"aucun témoin ancré n'existe", r"porte de release le dit EN ATTENTE"):
+                cherche(piece, txt, motif,
+                        f"statut d'ancrage contredit le journal (DÉPLOYÉ) : « {motif} »")
+    else:
+        for piece, txt in corps.items():
+            for motif in (r"l'ancrage de transparence est[^.]{0,60}?DÉPLOYÉ",
+                          r"le déploiement est APPLIQUÉ", r"déploiement est DÉPLOYÉ"):
+                cherche(piece, txt, motif,
+                        f"statut d'ancrage contredit le journal (EN ATTENTE) : « {motif} »")
+
+    # --- 2. COMPTEUR NV : le registre dit le run matériel --------------------
+    if "EN ATTENTE" in statuts["nv"]:
+        for piece, txt in corps.items():
+            for motif in (r"run matériel (?:est )?VERT", r"NV matériel (?:a été )?(?:mesuré|vérifié|exécuté)",
+                          r"compteur NV (?:matériel )?(?:a été )?mesuré"):
+                cherche(piece, txt, motif, f"statut NV contredit le registre ({statuts['nv']}) : « {motif} »")
+    else:
+        for piece, txt in corps.items():
+            cherche(piece, txt, r"run matériel (?:est )?EN ATTENTE",
+                    "statut NV contredit le registre (mesuré) : « run matériel EN ATTENTE »")
+
+    # --- 3. TAMARIN/PROVERIF : les verdicts du registre ----------------------
+    if "incomplets" in statuts["tamarin"] or "INCOMPLETE" in statuts["tamarin"]:
+        for piece, txt in corps.items():
+            for motif in (r"(?:Tamarin|tamarin-prover)[^.]{0,80}?(?:est |sont |is |are )?absents?\b",
+                          r"L1/L2 (?:sont )?vérifiés", r"les trois lemmes (?:sont )?vérifiés"):
+                cherche(piece, txt, motif,
+                        f"statut Tamarin contredit le registre ({statuts['tamarin']}) : « {motif} »")
+    else:
+        for piece, txt in corps.items():
+            for motif in (r"L1/L2 incomplets", r"INCOMPLETE au mur", r"L1/L2 INCOMPLETE"):
+                cherche(piece, txt, motif,
+                        f"statut Tamarin contredit le registre ({statuts['tamarin']}) : « {motif} »")
+    if "non exécuté" in statuts["proverif"] or "NON exécuté" in statuts["proverif"]:
+        for piece, txt in corps.items():
+            cherche(piece, txt, r"ProVerif[^.]{0,80}?(?<!non )(?<!not )exécut\w+|ProVerif[^.]{0,80}?(?<!not )executed",
+                    f"statut ProVerif contredit le registre ({statuts['proverif']})")
+    else:
+        for piece, txt in corps.items():
+            cherche(piece, txt, r"ProVerif[^.]{0,80}?(?:non exécuté|not executed)",
+                    f"statut ProVerif contredit le registre ({statuts['proverif']})")
+
+    # --- 4. SENTINELLLE WINDOWS : au poste réel tant que le registre le dit ---
+    if "poste réel" in statuts["sentinelle_windows"]:
+        for piece, txt in corps.items():
+            for motif in (r"sentinelle Windows[^.]{0,60}?(?:est )?(?:déployée|active|en production|en place)",
+                          r"moteur SACL[^.]{0,40}?(?:est )?(?:déployé|actif|configuré)\b"):
+                cherche(piece, txt, motif,
+                        f"statut sentinelle contredit le registre : « {motif} »")
+    else:
+        for piece, txt in corps.items():
+            cherche(piece, txt, r"sentinelle Windows[^.]{0,60}?(?:au poste réel|restant)",
+                    "statut sentinelle contredit le registre (déployée) : « au poste réel »")
+
+    # --- 5. FENCE.I : non prouvé sur silicium tant que le registre le dit ----
+    if "non prouvé" in statuts["fence_i"]:
+        for piece, txt in corps.items():
+            for motif in (r"fence\.i[^.]{0,80}?(?<!NON )(?<!non )prouv(?:ée?|en) sur silicium",
+                          r"fence\.i[^.]{0,80}?(?<!not )proven on (?:physical )?silicon"):
+                cherche(piece, txt, motif,
+                        f"statut fence.i contredit le registre : « {motif} »")
+    else:
+        for piece, txt in corps.items():
+            for motif in (r"fence\.i[^.]{0,80}?NON prouv", r"fence\.i[^.]{0,80}?non prouv",
+                          r"fence\.i[^.]{0,80}?remain unexecuted"):
+                cherche(piece, txt, motif,
+                        f"statut fence.i contredit le registre (prouvé) : « {motif} »")
+    return refus
