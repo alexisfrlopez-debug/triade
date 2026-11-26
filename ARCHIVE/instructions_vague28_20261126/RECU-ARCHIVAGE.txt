@@ -1,0 +1,15 @@
+REÇU D'ARCHIVAGE — l'empreinte prouve, la suppression est un confort
+(vague 28, les sept prompts de l'évaluation du 26/11/2026 — VAES, OPT16, HARNAIS,
+ATTR, TERRAIN, RLVR, IMRAD ; l'évaluation « vague 25 » du pack v0.32.0 consommée intégralement)
+
+6c23ddc2ee0a0dd3e984533e3ac5e3b313e71f026d2f38fd2a3d5b670ce0e7fe  Qwen__20261126_6w0b61juk.txt  SUPPRIMÉE du coffre /instructions
+dc842a59b4a196f328c28895feb6209cbce435cd020adb987983d9f23a321486  instructions.txt  SUPPRIMÉE du coffre /instructions (l'analyse « vague 25 » de l'évaluateur)
+
+2 fichiers : copies identiques aux originaux (recoup byte-byte), les originaux retirés
+du coffre /instructions par le geste en deux étapes puis posés au dossier ARCHIVE du
+coffre (recoup md5 au bord : Qwen__20261126_6w0b61juk.txt et instructions.txt, tous
+deux VERTS). Le /instructions est LAISSÉ VIDE. Les sept plans gelés (PLAN-W28*.md,
+EMPREINTES-PLANS-VAGUE28.txt) et les sept ateliers exécutés (atelier-w28vaes, -opt16,
+-harnais, -attr, -terrain, -rlvr, -imrad) vivent au dépôt, chacun avec son rapport ;
+la présente reprise a restauré du complet v0.33.0 (le pack déposé au /livrables du
+coffre) les deux ateliers et les sources que la session morte n'avait pas pu consigner.

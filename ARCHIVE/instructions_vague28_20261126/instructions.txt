@@ -1,0 +1,217 @@
+# Analyse du pack TRIADE v0.32.0 — vague 25 (26 novembre 2026)
+
+---
+
+## 1. Résumé clair et concis
+
+**Le protocole.** TRIADE fait écrire à un agent LLM le code natif directement en notation d'assemblage (x86-64, RISC-V, TLS 1.3), sous trois couches verrouillées : Intention signée (I), Binaire scellé (B), Carte chiffrée fragmentée (C). Le round-trip assemble→désassemble→réassemble garantit que ce qui est écrit est ce qui s'exécute. Une épistémologie sépare la preuve d'oracle (émulation) de la preuve de terrain (machine réelle), et chaque défaut échappé est nommé avant tout correctif.
+
+**Ce que la vague 25 ajoute (6 chantiers) :**
+
+| Chantier | Résultat |
+|---|---|
+| Divergence D267 (ancrage) | **Soldée** : statut unique dérivé du journal append-only (RFC 3161), Livre régénéré v1.16, classe C26 recompose 5 statuts sur 5 pièces, 6 contrôles négatifs vécus |
+| Résidus éditoriaux | 14 arbres (pas 13), titres distingués, fragments français rendus à l'anglais, chronologie réordonnée — linter à **29 classes** (C27–C29) |
+| Cibles au périmètre explicite | Table des ères visible (M1 daté / pointeur-seul / adopté) ; tout verdict TENUE cite son périmètre ou porte HISTORIQUE-DATÉ ; C25 étendue, 3 contrôles négatifs |
+| Décodage contraint (add) | **SERVING-ABSENT** : la sonde prouve que le bord accepte `response_format` mais ne l'applique pas ; harnais prêt (schéma fermé, 11 opcodes, boucle ≤3 tours, agrégateur fail-closed), cible ≥15/18 à ≤3 000 tokens **jamais re-tirée**, aucun chiffre fabriqué |
+| Preuves symboliques | L3 rejoué bit-identique (1 122 pas), L1c (52 pas) et L2a (7 pas) vérifiés ; première formulation L2b **réfutée** par la sémantique d'occurrence de Tamarin (fait ancré à sa consommation — sémantique d'outil, pas attaque) ; L1a/L2 entiers au mur 4 Gio, kit machine réelle consigné |
+| Couloir VAES + oracle natif | Porte verte d'abord (20/20 CAVP contre EVP, mutant refusé au 1er vecteur) ; **cible ≤1,05× EVP manquée à 5,66×, publiée telle quelle** ; 5 fautes de première passe nommées ; session native : 235 vecteurs, classification 235/235 identique au jumeau, **0,266 s médiane** (cible <10 s tenue) |
+
+**État global :** 29 livraisons témoins, zéro échappé imputable à la notation ; 10 entrées en attente au registre, toutes bornées au geste du développeur (machine réelle, serving conforme, seconde famille).
+
+---
+
+## 2. Points forts
+
+1. **Discipline épistémique exceptionnelle.** Statuts dérivés (jamais tapés), cibles pré-enregistrées jamais re-tirées, ères explicites, médianes non additives nommées, opérandes non arrondis publiés. La divergence D267 est le cas d'école : démontrée sur pièces, cause nommée (C20 ne couvrait que 3 pièces), corrigée à la source, garde élargie, contrôles négatifs vécus.
+2. **Résultats négatifs publiés sans maquillage.** VAES 5,66× (cible 1,05×), add 5/18 (cible ≥15/18), H3/H5/H8 falsifiées, 15,3× retiré, « |t|=0 » retiré, SERVING-ABSENT consigné. C'est rare et c'est la force scientifique majeure du pack.
+3. **Le linter d'édition auto-auditeur (29 classes)** est un artefact d'ingénierie original : la documentation devient un produit de build vérifié (statuts, cibles, comptes, langues, titres recomposés des registres).
+4. **Décomposition causale à quatre bras** (T / C+G+ / C+G / C) : effet notation propre 55,7 %, régime de vérification 44,3 %, gouvernance 0,213 s, fermeture exacte aux opérandes non arrondis. Méthodologiquement solide.
+5. **Diagnostic VAES de haute qualité** : 5 fautes nommées (réflexion, appariement des puissances, voies Karatsuba), trouvées par référence GCM indépendante + juge croisé ; décomposition du coût par classe (expansion hors boucle, conversion par bloc, schedule C non préservé, frontière d'appel 2,3×).
+6. **Moteur d'oracle natif** : 0,266 s pour 235 vecteurs, parity 235/235 avec le jumeau, les 4 écarts nommés d'une seule classe (rax non défini) — la vérification différentielle devient abordable à grand volume.
+7. **Preuves formelles sérieuses** : invariant inductif non borné + lemme de couverture + checkers indépendants (TLC/Apalache) + campagne générative 30 000 traces à zéro divergence après fermeture de l'écart découvert par ddmin.
+8. **Modèle de menace honnête** : atomicité bornée à 8 octets, quiescence obligatoire, restauration cohérente invisible aux ancres locales, compteur NV avec ses limites écrites.
+
+---
+
+## 3. Points faibles
+
+1. **N=1 persistant** : un développeur, une famille d'agent (glm-4-plus), une machine. Les paires métriques clés restent n=1 ou n=5 ; l'IC Clopper-Pearson est descriptif, pas inférentiel.
+2. **Le couloir VAES mesuré est le portage C, pas la notation.** La notation est gelée mais l'implémentation exécutable est `couloir_vaes.c` — et le diagnostic accuse précisément « le calendrier écrit en C que le compilateur ne préserve pas ». **La thèse centrale de TRIADE (le scheduleur assembleur tient ce que le compilateur lâche) n'est donc pas encore testée sur ce hot path.** La cible manquée est celle d'un proxy.
+3. **Anomalie interne non exploitée** : le VAES inliné (~1 916 ns ≈ 1,31 c/B) est *plus lent* que leur propre couloir entrelacé AVX2 (0,7271 c/B, 1,26× EVP). Le problème est structurel (conversion rev128 par bloc, puissances H, schedule), pas micro-architectural. Or OpenSSL intègre le chemin VAES/VPCLMULQDQ depuis la 3.1 [[1]] et l'ISA atteint ~0,1 c/B en CTR pur sur cœur récent [[2]] : la marge est énorme.
+4. **Add toujours en échec de faisabilité** (5/18 à 4 604 tokens) ; la cause nommée est la variance d'écriture machine du modèle (HORS-FORMAT), pas la connaissance du domaine — mais le levier (décodage contraint) est bloqué par le serving, et le corpus d'entraînement (127 triples + 48 DPO) n'est pas encore exploité par un run RL.
+5. **27 blocs sans exécution de harnais** (95/235 vecteurs, cible 200 manquée) : causes nommées (fetch voisin non mappé, global non mappé) mais le correctif structurel — dériver la carte mémoire du harnais depuis la carte C — n'est pas fait.
+6. **Attribution asymétrique** : la pièce C a été rejouée au kit minimal (14 VERT), pas la pièce T. Le confondus « le kit fautif a couru côté T » est levé par le mécanisme (juge partagé) mais pas par la symétrie expérimentale.
+7. **Circularité de l'oracle** : dérivé de la couche I qu'il vérifie ; l'indépendance inter-familles reste ouverte (seconde famille locale 0/64).
+8. **Structure du manuscrit diluée** : section 7 « Distance to the floor » = journal OPT ; notes post-édition 8.1–8.7 après la conclusion ; 41 pages. Un relecteur IMRAD se noie. Le pack complet est excellent comme artefact, pas comme article soumissible en l'état.
+9. **Dépendance au geste développeur** : 10 attentes (dudect répété, fence.i silicium, NV matériel, bascule métal nu, 3ᵉ machine Loupe, VAES goupillé, Tamarin/ProVerif grande RAM, serving conforme, sentinelle Windows, FIDO2). Tout est prêt, rien ne ferme sans une session matérielle groupée.
+
+---
+
+## 4. Pertinence scientifique
+
+**Solide et scopé :**
+- La **taxonomie quantifiée des défauts invisibles à l'émulation** (RQ3 : chargeur/image, ABI/SSE, sémantique du chargeur, conventions d'erreurs, hypothèses du rig) est une cartographie du *reality-gap* pour code natif écrit par agent — le pendant « notation scellée » des travaux SWE-agent au niveau source. C'est la contribution la plus mûre.
+- L'**épistémologie oracle/terrain** avec comptabilité de défauts nommés et falsification permanente est une méthode réutilisable, indépendante du protocole.
+- La **décomposition 4 bras** isole ce que coûte la notation de ce que coûte la gouvernance — question que personne n'avait posée ainsi.
+- Le constat **SERVING-ABSENT** (schéma accepté mais non appliqué au décodage) est un résultat empirique utile à l'écosystème des sorties structurées, qui se benchmarkent activement (Guidance, Outlines, llama.cpp, XGrammar, OpenAI, Gemini) [[11]].
+
+**Limites de portée :** N=1 interdit toute inférence population ; les revendications « first quantified account » sont scopées au niveau notation scellée sous gouvernance — défendable, mais la réplication (second développeur, second domaine, seconde famille) reste le prix d'entrée pour une revue de premier plan.
+
+---
+
+## 5. Rigueur académique
+
+**Très haute sur la mesure :** pré-enregistrements à empreinte consignée avant toute mesure, graines fixes, rejeux bit-identiques, re-tokenisation indépendante (écart ≤1), conventions de médiane nommées, ères/périmètres jamais comparés sans note, table de statuts systématique (Table 9), linter numérique qui refuse tout écart de signe/valeur/ratio.
+
+**Résidus à corriger :**
+- Le manuscrit mélange IMRAD et journal d'optimisation (section 7) + notes post-édition en 8.x : à restructurer en cœur + annexes.
+- H7 (effet d'ordre) reste non testé (tirage T-premier 4/4, événement 1/16 consigné) — la randomisation stratifiée est pré-enregistrée mais la campagne aux 28 unités attend.
+- Le critère D210 « n≥6 unités instrumentées » clos à N=7 sur la lecture *livraison* (5 instrumentées + 3 closes au cap) — la relaxation est nommée, c'est honnête, mais un relecteur strict la relèvera ; garder les deux lectures côte à côte (déjà fait).
+- « Zero escapes attributable to notation » : ajouter la rejouabilité symétrique (point 6 ci-dessus) fermerait la dernière objection de construit.
+
+---
+
+## 6. Neutralité
+
+**Excellente.** Cibles manquées publiées (5,66× ; 5/18 ; 3,264 vs 3,0), falsifications conservées et datées (H5-D204 falsifiée *même après* l'amendement OPT-04 qui la réhabilite — les deux verdicts datés jamais fondus), L2b réfutée documentée au modèle avec verdict attendu FALSIFIED, « INCOMPLETE demeure INCOMPLETE ». Le ton emphatique (majuscules « LA MÉTHODE ENTIÈRE PROUVÉE ») vit dans la spécification et la présentation — documents internes normatifs — pas dans le manuscrit, qui reste sobre. Résidu mineur : « existence proof », « spectacular premium does not exist » — acceptable.
+
+---
+
+## 7. Transparence
+
+**Exemplaire et vérifiable :** journaux append-only (13 651 + 14 092 lignes, D1–D276+), dépôt public (D220), BSL 1.1 avec grant académique explicite (D209), DOIs Zenodo versionnés (dernier minté v0.31.0 ; v0.32.0 explicitement non minté), empreintes sha-256 des modules et des pièces, contrôles négatifs vécus et nommés, gaps nommés jamais reconstruits (M2 de l'attribution, bornes M3 déposées, paramètres d'échantillonnage non loggés par appel, checkpoint exact non exposé). Les élisions du verbatim (C26/C27) sont nommées avec renvoi au rapport committé — bonne pratique. Le registre des 10 attentes (C16) est recomposé par la porte.
+
+---
+
+## 8. Nouveauté vs état de l'art
+
+**Déjà fait (le pack le cite et le reconnaît) :** génération/superoptimisation d'assembleur par LLM — SuperCoder (95,0 % test-pass, 1,46× vs gcc-O3, et déjà du RL orienté vitesse d'exécution [[22]][[23]]), Nova, LaaC/CompilerEval ; superoptimisation stochastique (STOKE) ; compilation vérifiée (CompCert) ; supply-chain (in-toto, SLSA, TUF, Sigstore, reproducible builds) ; design by contract (Meyer) ; N-version/property-based ; hot patching (Kitsune, POLUS, kpatch) ; dudect ; TLA+/Tamarin ; Shamir/Argon2/AEAD.
+
+**Genuinement nouveau dans ce pack :**
+1. L'**intégration gouvernance** : intention signée → plages d'octets scellés → carte, appliquée au développement natif par agent, avec round-trip WYSIWYG à chaque build.
+2. L'**épistémologie oracle/terrain** opérationnalisée en comptabilité de défauts nommés + falsification permanente.
+3. Le **linter d'édition à statuts/cibles dérivés** : la documentation comme artefact de build vérifié inter-pièces — original comme artefact d'ingénierie logicielle.
+4. La **décomposition causale 4 bras** du coût de la notation.
+5. La **discipline de mesure tokens** (périmètres, ères, usage logs natifs, planchers publiés).
+6. Le **constat SERVING-ABSENT** documenté sur pièces.
+
+**Références à ajouter (vérifiées) :** benchmark des sorties structurées [[11]] et backends vLLM xgrammar/guidance/outlines [[12]] pour positionner SERVING-ABSENT et la boucle de réparation ; **AutoVecCoder** (génération de code explicitement vectorisé par LLM, mai 2026) [[27]] — directement adjacent aux couloirs SIMD, à citer et différencier (eux : vectorisation source ; vous : notation scellée gouvernée) ; **LLM4Decompile** (EMNLP 2024) [[34]] et SLaDe pour le plan IP (l'érosion de l'avantage anti-rétro-ingénierie par les LLM de décompilation, que le pack assume déjà).
+
+---
+
+## 9. Suggestions pour consolider et créer une véritable avancée
+
+Classées par axe, avec cibles chiffrées à **pré-enregistrer** (jamais re-tirer).
+
+### A. Performance — faire du couloir VAES la validation de la thèse centrale
+Le diagnostic est déjà à moitié fait ; le levier est structurel :
+1. **GHASH en domaine réfléchi de bout en bout** : convertir une fois aux frontières, garder H et ses puissances en bitref8 — supprime la conversion rev128 *par bloc* (cause b).
+2. **Amortir l'expansion de clé + puissances H par session** (contexte, comme EVP) — supprime les 296 ns d'init par appel (cause a).
+3. **Écrire le schedule depuis la notation gelée** (couloir-vaes.asm) : c'est le test réel de « le compilateur ne préserve pas la co-planification VAES/VPCLMULQDQ » (cause c). Si la notation schedulée bat le portage C à algorithme égal, **c'est un résultat systèmes publiable en soi** : l'érosion de schedule compilateur sur co-planification SIMD, mesurée et contrôlée.
+4. **Supprimer la frontière d'appel** (inline/carrier scellé) — cause d, 2,3×.
+5. Vérifier le chemin EVP réellement emprunté (`OPENSSL_ia32cap` — OpenSSL a le chemin VAES512 depuis 3.1 [[1]]) et goupiller la fréquence ; le plafond ISA est ~0,1–0,3 c/B [[2]], la cible 1,05× EVP est réaliste après 1–4.
+
+### B. Coût en tokens — attaquer le plancher d'édition (24,5×)
+- **Edit-by-diff structuré (OPT-16)** : réutiliser le schéma fermé D264 pour *éditer* — réponse `{block, offset, op, operands}` (~30–80 tokens), expansion client + round-trip + 4 refus nommés. Cible pré-enregistrée : **médiane ≤150 tokens** sur les 18 tâches (ratio plancher ~5,5× au lieu de 24,5×). C'est le plus grand levier token restant.
+- **Add par RLVR** : l'environnement existe (récompense multi-niveaux syntaxe/expansion/round-trip/oracle/mutation, anti-hacking, échelle de capacité, corpus v2.1 127/24/19 + 48 DPO). L'entraîner sur un modèle ouvert capable (7–14B coder) avec juge à empreinte inchangée ; cible ≥15/18 à ≤3 000. Différenciation vs SuperCoder (RL orienté vitesse [[23]]) : récompense **fondée sur juges de conformité**, pas sur le runtime.
+- **Serving** : faire de la sonde SERVING-ABSENT un **gate de sélection d'endpoint** (tout endpoint qui accepte sans appliquer est refusé nommément) ; à défaut d'API conforme, décodage contraint côté client sur modèle ouvert (xgrammar/llguidance [[12]][[14]]) — le harnais D264 est déjà prêt à courir.
+
+### C. Sécurité — fermer les 10 attentes par une vague terrain groupée
+Un seul plan pré-enregistré (empreinte consignée), ≥2 machines + carte RV64 : dudect n≥10×{60,200,400}×2 machines (investigation des pics 12,39/5,19 pré-enregistrée), fence.i sur silicium, 3ᵉ machine Loupe, VAES goupillé, compteur NV TPM réel, bascule métal nu (banc 16/16 prêt), Tamarin/ProVerif grande RAM. **ProVerif d'abord** (souvent plus rapide que Tamarin sur les implications de secret non bornées) ; pour Tamarin : faits persistants (`!`) ou événement de naissance explicite pour L2b, lemmes `[reuse]`, décomposition de L1a par sous-lemmes de connaissance. Agrégateur fail-closed : un run manquant refuse le verdict.
+
+### D. Optimisation/vérification — pousser le régime oracle au plancher
+- **Harnais 235/235** : dériver la carte mémoire de chaque harnais depuis frag-loc (voisinage mappé + stubs contractuels pour les globaux) → CIB-HARNAIS-200 tenue. Le jumeau ligne-identique sur les 95 existants + shim muté attrapé = la porte.
+- **Généraliser le moteur natif aux volumes complets** (12 000 cas/bloc critique) : 0,266 s/235 vecteurs suggère que les 33,48 s d'oracles vivants (66× vs compilé, 81 % du poste T) peuvent tomber d'un ordre de grandeur. Pré-enregistrer une cible de régime (ex. ≤5× C au lieu de 18×), audit 1/10 conservé, aucun contrôle retiré.
+- **Attribution symétrique** : rejouer la pièce T au kit minimal (attendu 14 VERT) + régénérer constantes et échantillon de contrats par une **seconde famille API** (ou refus nommé si absente) — ferme la circularité résiduelle.
+
+### E. Gouvernance/pack — le protocole appliqué à lui-même
+- **Manuscrit cœur IMRAD 12–15 pages** + annexes (journal OPT, notes post-édition, tables longues) pour soumission ; le pack complet reste l'artefact.
+- **Mesurer le coût token de génération du pack par vague** et le pré-enregistrer comme budget — la méta-optimisation ultime : le protocole s'optimise lui-même.
+- Deux classes de linter supplémentaires : **N-VALUE** (tout n= publié à côté de chaque médiane/ratio) et **CLAIM-SCOPE** (tout « first/only » porte son scope et sa source).
+
+---
+
+## 10. Prompts à soumettre à un agent IA
+
+*(Sans rôle assigné ; étape de vérification après modification incluse ; contraintes du protocole rappelées : append-only, aucun artefact scellé touché, aucune cible re-tirée, R11 mesure avant optimisation.)*
+
+---
+
+**Prompt 1 — Couloir VAES : domaine réfléchi, amortissement, schedule de notation**
+
+> Le couloir VAES/VPCLMULQDQ (atelier-w27vaes) est mesuré à 5,66× EVP, cible pré-enregistrée ≤1,05× manquée et publiée. La décomposition nomme quatre causes : expansion+puissances H hors boucle par appel (296 ns), conversion rev128 par bloc côté GHASH, schedule C non préservé, frontière d'appel (2,3×). Le couloir entrelacé AVX2 existant fait 0,7271 c/B (1,26× EVP) : le VAES inliné (~1,31 c/B) est structurellement en retard.
+> 1. Pré-enregistrer le plan (sha256 consigné AVANT toute mesure) : mêmes 20 vecteurs CAVP, même volume 4 Kio, n=20, cœur épinglé, contre EVP au même volume ; consigner le chemin EVP réel (OPENSSL_ia32cap) et l'état de fréquence (VM non goupillée = caveat nommé, machine réelle goupillée = kit).
+> 2. Porter GHASH en domaine réfléchi de bout en bout : conversion une seule fois aux frontières, H et puissances pré-calculées en bitref8 ; amortir l'expansion de clé et les puissances H par contexte de session ; supprimer la frontière d'appel (inline ou carrier).
+> 3. Exécuter la notation gelée couloir-vaes.asm comme schedule de référence (assemblage round-trip vert) et la confronter au portage C à algorithme égal : mesurer l'écart de schedule isolément.
+> 4. Porte AVANT toute mesure : parité 20/20 CAVP contre EVP octet pour octet, variant muté refusé au premier vecteur, round-trip inter-implémentations vert, rejeu bit-identique.
+> 5. Publier le verdict tel quel (tenu ou manqué), la décomposition du coût mise à jour par classe, et l'écart notation-vs-C comme résultat distinct. Aucune cible re-tirée ; aucun chiffre fabriqué.
+> **Vérification après modification :** rejouer la porte entière bit-identique ; recomposer chaque ratio publié de ses opérandes non arrondis (linter numérique, zéro divergence) ; recomposer les statuts et cibles aux cinq pièces (C25/C26) ; contrôles négatifs vécus (mutant de schedule, puissance H mutée, vecteur CAVP muté — chacun refusé nommément) ; sceau-I 14/14 avant et après ; aucun artefact scellé touché.
+
+---
+
+**Prompt 2 — OPT-16 : éditer par diff structuré, au plancher**
+
+> L'opération éditer adoptée coûte 674 tokens natifs médians ; le plancher du diff réel est 27,5 tokens (ratio 24,5×). Le schéma fermé D264 {op, dst, src, offset} et son expandeur à empreinte consignée existent pour l'opération ajouter.
+> 1. Pré-enregistrer OPT-16 (empreinte consignée avant mesure) : cible médiane ≤150 tokens natifs sur les 18 tâches d'édition, même graine 20261117, ordre jamais re-tiré, budget usage natif lu à chaque appel, cl100k en parallèle.
+> 2. Étendre le schéma fermé à l'édition (offsets dans la plage du bloc, opcodes du domaine, additionalProperties false) ; l'agent ne rend QUE le diff structuré ; le client expande, assemble, round-trip, confronte au bloc soumis.
+> 3. Quatre refus nommés fail-closed : POINTEUR-INCONNU, EMPREINTE-DIVERGENTE, SCHÉMA-VIOLÉ, HORS-FORMAT ; agrégateur fail-closed (un appel manquant refuse le verdict) ; boucle de réparation bornée à trois tours réinjectant le refus exact.
+> 4. Mesurer sur les 18 tâches ; publier médianes sur 18 et sur vertes (deux conventions nommées), re-tokenisation indépendante à écart ≤1 ; consigner chaque conversion par classe de refus ; la cible est tenue ou manquée, publiée telle quelle.
+> **Vérification après modification :** rejeu bit-identique à graine consignée (deux passes) ; fixtures 18/18 vertes ; les quatre refus éprouvés sur copies ; l'expandeur importé à empreinte sha256 recoupée (JUGE-MODIFIÉ refusé) ; table des ères et registre CIBLES mis à jour sans re-tirage ; recomposition C25/C26 aux cinq pièces ; aucun artefact scellé touché.
+
+---
+
+**Prompt 3 — Harnais par bloc : 235/235 exécutables, voisinage dérivé de la carte**
+
+> 95 des 235 vecteurs d'oracle s'exécutent au contexte standard ; 27 blocs faultent pour causes nommées (fetch non mappé dans un bloc voisin, lecture non mappée d'un global). La cible CIB-HARNAIS-200 (200 vecteurs) est manquée et publiée. La carte C (frag-loc) porte les adresses et plages de tous les blocs.
+> 1. Dériver mécaniquement la carte mémoire de chaque harnais depuis frag-loc : mapper le voisinage réel des blocs appelés, émettre des stubs contractuels pour les globaux lus (le contrat dérive de la couche I, jamais de la pièce).
+> 2. Porte avant mesure : les 95 vecteurs déjà exécutables rendent une console LIGNE-IDENTIQUE à l'original ; un shim muté est attrapé au premier vecteur ; le mémo content-addressed refuse à l'octet muté.
+> 3. Exécuter les 235 vecteurs ; confronter classification et digeste au jumeau ; nommer tout écart restant par classe (le rax non défini de b20006 demeure nommé, jamais masqué).
+> 4. Publier le compte exécutables/235 tel quel ; la cible 200 est tenue ou manquée sans re-tirage ; recomposer le registre C17 depuis les fichiers.
+> **Vérification après modification :** rejeu bit-identique de la session complète ; confrontation champ par champ au jumeau (pages de sortie, digeste) ; contrôles négatifs vécus (voisinage amputé, stub muté, global non déclaré — chacun refusé nommément) ; aucun artefact scellé touché ; sceau-I 14/14 ; statuts recomposés aux cinq pièces (C26).
+
+---
+
+**Prompt 4 — Attribution symétrique et indépendance inter-familles**
+
+> L'attribution D210 a rejoué la pièce C au kit minimal (14 VERT, 0 ROUGE) ; la pièce T n'a pas été rejouée au même kit. L'indépendance de l'oracle est same-family (la seconde famille locale récite 0/64, l'écart de capacité est nommé).
+> 1. Pré-enregistrer la rejouabilité symétrique : la pièce T de la quatrième unité livrée au kit minimal standard, même juge, mêmes vecteurs ; attendu consigné AVANT le run (14 VERT ou écart nommé) ; le verdict est publié tel quel.
+> 2. Régénérer les constantes MD5 T[64] et SHA-256 K[64] ET un échantillon pré-enregistré de vecteurs contractuels non crypto par une seconde famille d'agent distante (identifiant consigné à chaque appel) ; confrontation tripartite spec↔seconde famille↔définitions ; zéro divergence exigée, tout écart nommé avant correctif.
+> 3. Si aucune seconde famille capable n'est disponible : refus nommé FAMILY-ABSENT consigné au registre, aucun chiffre fabriqué, la ligne demeure EN ATTENTE.
+> **Vérification après modification :** rejeu bit-identique des deux sessions ; empreintes des pièces T et C recoupées avant/après (aucun octet changé) ; les 128 constantes confrontées une à une ; statuts et registres recomposés aux cinq pièces (C26) ; aucun artefact scellé touché ; le gap, s'il demeure, est nommé et non reconstruit.
+
+---
+
+**Prompt 5 — Vague terrain groupée pré-enregistrée (fermer les 10 attentes)**
+
+> Dix entrées attendent le geste du développeur (STATUTS-EN-ATTENTE.md) : dudect n≥10×{60,200,400} sur ≥2 machines, fence.i sur silicium RV64, 3ᵉ machine Loupe, VAES goupillé, compteur NV TPM matériel, bascule métal nu (banc 16/16 prêt), Tamarin L1a/L2 et ProVerif grande RAM, sentinelle Windows SACL/4663, FIDO2, serving conforme. Tous les kits sont livrés à empreintes consignées.
+> 1. Pré-enregistrer UN plan de vague terrain (sha256 consigné avant tout run) : ordre des runs, machines (empreintes CPU, état de fréquence), budgets, attendus par kit, critères de verdict ; randomisation stratifiée là où un contraste est requis (H7).
+> 2. Exécuter les autotests de chaque kit AVANT son run (mécanisme prouvé, jamais la machine) ; ProVerif d'abord sur la grande RAM (port CF3-v3.pv livré) ; pour Tamarin, reformuler L2b avec fait persistant ou événement de naissance explicite (la sémantique d'occurrence est nommée), lemmes [reuse], décomposition L1a par sous-lemmes de connaissance ; le modèle-témoin test_occ.spthy reste la référence de la sémantique.
+> 3. Agrégateur fail-closed : un run manquant refuse le verdict de la vague ; chaque témoin signé et daté est consigné au journal append-only ; les statuts se DÉRIVENT des runs (PREUVES-STATUTS.json), jamais de la frappe ; INCOMPLETE demeure INCOMPLETE tant que la preuve n'est pas close.
+> 4. Publier chaque verdict tel quel, y compris les pics dudect N=200 s'ils persistent (investigation pré-enregistrée : causes candidates nommées avant les données, aucune élue d'avance).
+> **Vérification après modification :** chaque run rejoué bit-identique là où le kit le permet ; empreintes des modèles et kits recoupées avant/après ; les refus nommés éprouvés (ANCRE-PERDUE, RETOUR-EN-ARRIERE, APPEL-MANQUANT selon le kit) ; recomposition C16 du compte d'attentes et C26 des statuts aux cinq pièces ; aucun artefact scellé touché ; aucun chiffre fabriqué.
+
+---
+
+**Prompt 6 — RLVR pour l'opération ajouter : entraîner sur juges, pas sur similarité**
+
+> L'opération ajouter stagne à 5–7/18 (cible ≥15/18 à ≤3 000 tokens, SERVING-ABSENT consigné) ; la cause nommée est la variance d'écriture machine (HORS-FORMAT), pas la connaissance du domaine. L'écosystème d'adoption existe : corpus v2.1 (127/24/19 + 48 DPO, splits scellés à graine consignée, held-out aux validateurs seuls, canari de contamination unique), environnement d'entraînement à récompense multi-niveaux typée (syntaxe, expansion, round-trip, oracle, mutation — cumulative et stricte, la récompense est le verdict du juge, jamais une similarité), échelle de capacité re-jouable, check anti-hacking.
+> 1. Pré-enregistrer le plan d'entraînement (empreinte consignée) : modèle ouvert capable (7–14B coder, identifiant et empreinte consignés), algorithme (DPO puis RLVR), budget compute, critères d'arrêt ; cible ≥15/18 à ≤3 000 tokens sur les 18 tâches, juge d'expansion à empreinte sha256 INCHANGÉE (9fc325e2...).
+> 2. Entraîner sur le split train seul ; le held-out ne porte que les validateurs, aucune notation dorée ; le canari de contamination est vérifié à chaque évaluation ; dix rebuilds bit-identiques de l'environnement avant tout run.
+> 3. Évaluer sur l'échelle de capacité (les rungs nomment la frontière, jamais une moyenne) ; matrice checkpoint-kit-juges fail-closed ; consigner chaque refus par classe ; publier le verdict tel quel, manqué inclus.
+> 4. Si le décodage contraint côté client est requis (API fermée), brancher le backend grammaire (xgrammar/llguidance) sur le modèle entraîné et re-courir la sonde SERVING-ABSENT : le verdict de conformité du serving est consigné avant toute mesure de campagne.
+> **Vérification après modification :** rejeu bit-identique de l'évaluation à graine consignée ; empreinte du juge recoupée (JUGE-MODIFIÉ refusé) ; canari de contamination vert ; les quatre refus nommés éprouvés ; re-tokenisation indépendante à écart ≤1 ; registre CIBLES et table des ères mis à jour sans re-tirage ; recomposition C25/C26 aux cinq pièces ; aucun artefact scellé touché.
+
+---
+
+**Prompt 7 — Manuscrit cœur IMRAD pour soumission**
+
+> Le manuscrit v0.32.0 fait 41 pages : la section 7 « Distance to the floor » est un journal d'optimisation, les notes post-édition 8.1–8.7 suivent la conclusion, et le pack complet est l'artefact. Aucune valeur mesurée ne doit changer.
+> 1. Restructurer en cœur IMRAD de 12–15 pages : Introduction, Méthodes (protocole, campagnes D204/D210, pré-enregistrements), Résultats (RQ1–RQ4 + décomposition 4 bras + table des statuts), Discussion, Menaces sur la validité, Travaux connexes, Conclusion ; renvoyer le journal OPT, les notes post-édition et les tables longues en annexes ; garder le changelog gelé une ligne par vague.
+> 2. Ajouter aux travaux connexes : le benchmark des sorties structurées (arXiv 2501.10868) et les backends de décodage contraint pour positionner SERVING-ABSENT ; AutoVecCoder (arXiv 2605.17978) à différencier (vectorisation source vs notation scellée gouvernée) ; LLM4Decompile/SLaDe pour le plan IP ; noter que SuperCoder fait déjà du RL orienté runtime — la différenciation TRIADE est la récompense fondée sur juges de conformité.
+> 3. Toute valeur demeure GÉNÉRÉE depuis les registres (aucune donnée tapée) ; chaque médiane/ratio porte son n= et son périmètre ; toute revendication « first/only » porte son scope.
+> **Vérification après modification :** linter d'édition complet (29 classes) vert sur les cinq pièces ; linter numérique : zéro divergence de valeur, signe, ratio, opérande ; abstract ≤250 mots ; statuts et cibles recomposés (C25/C26) ; le pack complet et le cœur renvoient aux mêmes registres ; aucun artefact scellé touché ; aucune valeur mesurée modifiée.
+
+---
+
+**Synthèse en une phrase :** la vague 25 est une vague de *gouvernance de la preuve* (statuts dérivés, ères explicites, refus nommés) d'une rigueur rare ; les trois percées qui transformeront le pack en avance scientifique irréfutable sont maintenant identifiées et outillées — **le schedule de notation VAES confronté au compilateur** (validation directe de la thèse), **l'édition au plancher token** (OPT-16), et **la vague terrain groupée** qui ferme les dix attentes d'un seul geste pré-enregistré.
