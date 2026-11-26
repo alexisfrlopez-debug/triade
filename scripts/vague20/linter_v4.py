@@ -214,7 +214,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
 
     # C9 — NUMEROTATION : une seule convention, sur la PARTIE NARRATIVE des preuves
     # (les rapports d'atelier sont lus verbatim : ils peuvent citer une règle du linter)
-    narratif = t["preuves"].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0]
+    narratif = t["preuves"].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0].split("W27RECON —")[0]
     fautifs = [m for m in re.finditer(r"§\s*(?!spec\b)\d+\.\d+", narratif)
                if not any(x in narratif[max(0, m.start() - 40):m.end() + 60]
                           for x in ("de la spécification", "de la spec", "Spécification",
@@ -281,7 +281,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
         attendu_ed = SP if piece == "livre" else ED
         # les rapports d'atelier sont lus verbatim : ils peuvent citer un résidu soldé
         if piece == "preuves":
-            texte = texte.split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0]
+            texte = texte.split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0].split("W27RECON —")[0]
         for m in re.finditer(r"(?:édition courante|Édition courante|current edition)\s+(v\d+\.\d+(?:\.\d+)?)", texte):
             if m.group(1) != attendu_ed:
                 refus.append(("C12", piece, f"« édition courante {m.group(1)} » ≠ {attendu_ed}"))
@@ -301,10 +301,10 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     mots = {"quinzième": 15, "seizième": 16, "dix-septième": 17, "dix-huitième": 18,
             "dix-neuvième": 19, "vingtième": 20}
     entrees = set()
-    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth) wave", t["manuscrit"]):
+    for m in re.finditer(r"the (fifteenth|sixteenth|seventeenth|eighteenth|nineteenth|twentieth|twenty-first|twenty-second|twenty-third|twenty-fourth|twenty-fifth) wave", t["manuscrit"]):
         entrees.add({"fifteenth": 15, "sixteenth": 16, "seventeenth": 17, "eighteenth": 18,
                      "nineteenth": 19, "twentieth": 20, "twenty-first": 21,
-                     "twenty-second": 22, "twenty-third": 23, "twenty-fourth": 24}[m.group(1)])
+                     "twenty-second": 22, "twenty-third": 23, "twenty-fourth": 24, "twenty-fifth": 25}[m.group(1)])
     for piece, texte in [("presentation", t["presentation"])]:
         for m in re.finditer(r"vague\s+(\d{1,2})", texte):
             n = int(m.group(1))
@@ -421,7 +421,7 @@ def verifie(t, manifeste=None, recompte=None, pack=None):
     sa = _iu.module_from_spec(sp); sp.loader.exec_module(sa)
     statut = sa.statut()["statut"]
     for piece in ("presentation", "preuves", "specification"):
-        txt = normalise(t[piece].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0])   # les rapports sont lus verbatim
+        txt = normalise(t[piece].split("W24AUDT —")[0].split("W25DERV —")[0].split("W23PROP —")[0].split("W27RECON —")[0])   # les rapports sont lus verbatim
         if statut == "DÉPLOYÉ" and re.search(r"NON\s*DÉPLOYÉ", txt):
             refus.append(("C20", piece, "statut « NON DÉPLOYÉ » alors que le journal dit DÉPLOYÉ"))
         if statut == "EN ATTENTE" and re.search(r"ancrage[^.]{0,80}DÉPLOYÉ", txt, re.I):
