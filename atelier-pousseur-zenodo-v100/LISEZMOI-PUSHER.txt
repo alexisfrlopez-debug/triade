@@ -1,84 +1,92 @@
-LE POUSSEUR ZENODO 1-CLIC WINDOWS — ÉDITION f (le correctif « le PUBLISH tranche »)
+LE POUSSEUR ZENODO 1-CLIC WINDOWS — ÉDITION g (le correctif « la voie des quatre formes »)
 ================================================================================
-Le 26/11/2026 (la nuit, après le retour 02:25). L'édition e a tourné à ton poste
-à 02:25 : le lot 4/4 OK, les brouillons 24545339/24545356 repris, les quatre
-packs sautés (md5 conformes), les métadonnées posées (HTTP 200 — le brouillon
-fut touché à 02:25:11) — puis LA NOUVELLE VÉRIFICATION a rendu ROUGE :
-  protocole    ROUGE — creators : le bord ne tient pas le champ en tableau
-               (HTTP 200)
+Le 26/11/2026 (la matinée, après le retour 09:59). L'édition f a tourné à ton
+poste à 09:59 : le lot 4/4 OK, les brouillons 24545339/24545356 repris, les
+quatre packs sautés (md5 conformes), les métadonnées posées (HTTP 200) — puis le
+PUBLISH, lui qui tranche, a rendu son verdict aux DEUX flux :
+  protocole     ROUGE — PUBLISH : HTTP 400 {"field": "metadata.creators",
+                "messages": ["Missing data for required field."]}
   participation ROUGE — le même refus, mot pour mot.
+Et les diagnostiques de l'édition f (NOUVEAUTÉ de f) ont nommé l'état réel du
+bord : le brouillon relu, brut, par les DEUX vues (records ET deposits —
+l'ancienne porte) : title, publication_date, description… —
+ET AUCUN CHAMP creators, NI TABLEAU NI OBJET.
 
-CE QUE CE RETOUR ENSEIGNE — LA PORTE A REFUSÉ UN BORD PEUT-ÊTRE SAIN :
-la vérification de l'édition e exigeait que la VUE BROUILLON montre creators
-en tableau — or personne n'avait prouvé que cette vue ÉCHOÏE creators. La vue
-du record PUBLIÉ l'échoïe, elle (vérifié au bac le 26/11 par la voie de
-lecture de la plateforme, sur le record 24499428 : «creators»: [{"name":
-"Lopez, Alexis", "affiliation": null}]). Si la vue brouillon ne l'échoïe pas,
-l'édition e a empêché le PUBLISH SANS LE TENTER — et un PUBLISH refusé ne
-coûte RIEN : il est atomique, le brouillon vit, rien ne se perd. La preuve
-se prend donc au PUBLISH même, pas avant.
+CE QUE CE RETOUR ENSEIGNE — LA PREUVE EST TENUE :
+le corps f (HTTP 200) a bien été ACCEPTÉ par la porte records — mais le champ
+creators N'A PAS TENU : le bord JETTE la forme «[{"name": "Lopez, Alexis"}]»
+silencieusement (HTTP 200 d'apparence, champ non retenu). Ce n'était donc NI
+l'encodage (b : octets UTF-8 ; f : ASCII pur — même chute), NI le champ
+publisher (f l'avait retiré — même chute), NI le sérialiseur (e : le corps
+explicite — même chute) : c'est LA FORME DU CHAMP CRÉATEURS sur la porte
+records qui ne vit plus. Or le mint réussi du 24/11 (v0.26.0, Entrée 403)
+ passa par cette même porte avec une forme de creators «TROUVÉE PAR ESSAIS»
+— jamais consignée en script : les patrons (python comme powershell) portent
+la forme legacy, et le bord la jette. La preuve est dans les records publiés
+eux-mêmes : v0.26.0 et v1.1.0 montrent creators [{"name": "Lopez, Alexis",
+"affiliation": null}] — la forme ÉCHOÏÉE par le bord.
 
-LA CAUSE PROBABLE DU 400 DU 02:01 (en plus du tableau brisé par ConvertTo-
-Json) : le champ «publisher». Le corps de l'édition b/c/d/e portait HUIT
-champs — dont «publisher: Zenodo», un champ que le DERNIER MINT RÉUSSI
-(v0.26.0, 24/11) N'AVAIT PAS PORTÉ : c'était la seule différence jamais
-inventée. Le bord met «Zenodo» par défaut (le v0.26.0 publié ne porte pas
-la clef et montre pourtant «Publisher: Zenodo») — le retirer ne perd rien.
+LE GESTE DE L'ÉDITION g (moteur_zenodo.ps1 SEUL ; le lot, le jeton, les GUI,
+les cibles et les textes : INCHANGÉS byte-byte) :
+1. LA VOIE DES QUATRE FORMES — le moteur ne devine plus : il ÉPROUVE. Quatre
+   formes de creators, chacune posée par PUT puis VÉRIFIÉE par la relecture
+   brute du brouillon (la leçon de e ET de f : ni l'absence de porte, ni la
+   confiance aveugle — la vérification APRES le geste, et la forme gagnante
+   est nommée au journal) :
+   - forme 1, LA PORTE deposits (l'ancienne décennale, DOCUMENTÉE — le schéma
+     legacy : upload_type/publication_type, licence en chaîne, access_right) ;
+     c'est la porte qui signe les records v0.26.0/v1.1.0 (access_right: "open",
+     affiliation null au dump) ;
+   - forme 2, records + person_or_org STRUCTURÉ (family_name/given_name) ;
+   - forme 3, records + person_or_org NOM SIMPLE ;
+   - forme 4, records + LA FORME ÉCHO DU DUMP (name + affiliation null).
+   La première dont creators vit en TABLEAU VIVANT au bord gagne — le journal
+   la nomme («[metadata] posées — creators VIVANT au bord (forme X)»).
+2. AUCUNE FORME NE TIENT → ROUGE, AUCUN PUBLISH — le 400 du PUBLISH est alors
+   CERTAIN (le retour 09:59 l'a prouvé) : le moteur rend «creators-non-
+   posables», les diagnostiques complets (les DEUX vues, 1600 caractères — le
+   700 de f coupait AVANT les champs qui décident), et ne tente rien.
+3. DEUX GESTES DE FIDÉLITÉ AU MINT RÉUSSI en sus : «publisher»: "Zenodo"
+   REVIENT dans le corps records (l'Entrée 403 le nomme parmi les métadonnées
+   posées au mint v0.26.0 et «exigé au PUBLISH» ; toléré aux PUT des éditions
+   b–e, HTTP 200 — ce n'était pas lui, le retour 09:59 l'a prouvé), et le
+   resource_type de la participation s'aligne sur le parent v1.1.0 publié
+   («other», non «article» — le dump du v1.1.0 le montre : "Other").
+Le PATRON PYTHON (depot/scripts/vague19/publier_zenodo_v0310.py) porte LA MÊME
+voie des quatre formes — le cron 548803 du bac tire protégé pareil.
 
-LE GESTE DE L'ÉDITION f (moteur_zenodo.ps1 SEUL ; le lot, le jeton, les cibles
-et les textes : INCHANGÉS byte-byte) :
-1. LE CORPS RETOURNE AUX SEPT CHAMPS DU DERNIER MINT RÉUSSI — title, version,
-   description, creators (en TABLEAU [{"name":"Lopez, Alexis"}]), license,
-   resource_type, publication_date. Publisher RETIRÉ. Et le corps part en
-   ASCII PUR (le non-ASCII échappé \uXXXX, exactement json.dumps côté patron
-   python — le dernier corps qui a PASSÉ) : plus aucun caprice de codage ne
-   demeure. La preuve a tourné ici : les deux corps composés par le VRAI code
-   du moteur f sont du JSON valide, IDENTIQUES à la dict du patron python
-   (scripts/verifie_corps_f.py — creators en tableau, ordre du patron,
-   ASCII pur, publisher absent) ;
-2. LA VÉRIFICATION NE GATE PLUS — le brouillon est relu (version, creators :
-   s'il y vit, le journal le nomme — INFORMATIF), puis le PUBLISH est TENTÉ :
-   c'est LUI qui tranche. Refusé ? Le brouillon vit, rien ne se perd ;
-3. AU REFUS DU PUBLISH : LE DIAGNOSTIC COMPLET — les mots exacts du bord,
-   puis le brouillon relu EN BRUT (métadonnées entières) ET la vue deposits
-   (l'ancienne porte) : le prochain journal dira ce que le bord tient
-   vraiment, le geste suivant se décidera sur des faits.
-Le PATRON PYTHON (depot/scripts/vague19/publier_zenodo_v0310.py) porte LE MÊME
-GESTE : publisher retiré, les sept champs — le cron 548803 du bac tire protégé
-pareil.
-
-TON GESTE — UN CLIC (l'édition f)
+TON GESTE — UN CLIC (l'édition g)
 --------------------------------------------------------------------------------
 Remplace SEUL moteur_zenodo.ps1 (même nom) dans le dossier déjà dézippé — ou
-dézippe PUSHER-ZENODO-WINDOWS-v0310f.zip à part et jette l'ancien — puis UN CLIC
+dézippe PUSHER-ZENODO-WINDOWS-v0310g.zip à part et jette l'ancien — puis UN CLIC
 (ou : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1,
 et -DryRun pour tout voir sans toucher au bord).
 
-LE JOURNAL ATTENDU, pour chaque flux (si le bord tient creators — le cas le
-plus probable, le PUT de 02:25 l'avait peut-être déjà posé) :
+LE JOURNAL ATTENDU, pour chaque flux (si le bord tient creators — une des
+quatre formes, la porte deposits d'abord) :
   [fichier] … déjà déposé (md5 conforme) — sauté
-  [metadata] posées
-  [lecture] brouillon relu — version v0.31.0 ; creators : … — le PUBLISH suit
+  [metadata] posées — creators VIVANT au bord (forme <la gagnante>, PUT HTTP 200)
+  [lecture] brouillon relu — version v0.31.0 ; creators : tableau-vivant au bord
   [garde UTC] (rien — le bord vit déjà le 26/11 UTC, la fenêtre est ouverte)
   [PUBLISH] record … — DOI 10.5281/…
   RESULTAT|…|VERT|<doi>|<record>
   [vérification] VERT — les md5 du bord == le lot, pièce à pièce
-SI LE PUBLISH EST REFUSÉ, le journal portera alors (NOUVEAUTÉ) :
-  RESULTAT|…|ROUGE|PUBLISH-HTTP-…|—
-  [diagnostic] le brouillon relu (brut, depuis metadata) : {…les métadonnées
-   ENTIÈRES telles que le bord les tient…}
-  [diagnostic] la vue deposits (l'ancienne porte) : {…}
-→ RENVOIE-MOI LE JOURNAL TEL QUEL : ces deux lignes diront enfin ce que le
-bord tient, et le geste suivant (la voie deposits elle-même, l'ancienne porte
-décennale) se décidera sur des faits, pas sur une supposition.
+SI LE BORD REFUSE LES QUATRE FORMES (le journal le dira alors :
+  [metadata] forme porte-legacy : PUT HTTP …, creators <état> au bord — forme suivante
+   (×4 : porte-legacy, person_or_org-structure, person_or_org-nom, echo-du-dump)
+  RESULTAT|…|ROUGE|creators-non-posables|—
+  [diagnostic] le brouillon relu (brut, depuis metadata) : {…1600 caractères…}
+  [diagnostic] la vue deposits (l'ancienne porte), depuis metadata : {…}
+→ RENVOIE-MOI LE JOURNAL TEL QUEL : les diagnostiques porteront les métadonnées
+ENTIÈRES des deux vues — le geste suivant se décidera sur des faits.
 
-LE CONTENU DU LOT (inchangé des éditions b/c/d/e)
+LE CONTENU DU LOT (inchangé des éditions b/c/d/e/f)
 --------------------------------------------------------------------------------
 PUSHER-ZENODO.bat ......... le clic unique (double-cliquer, la fenêtre s'ouvre)
 gui_zenodo.ps1 ............ la fenêtre : table du lot aux empreintes, cibles, journal en direct
-moteur_zenodo.ps1 ......... le moteur ÉDITION f (le patron v19 + la garde UTC + la reprise des
-                            fichiers + le corps aux sept champs + le PUBLISH qui tranche + le
-                            diagnostic complet au refus)
+moteur_zenodo.ps1 ......... le moteur ÉDITION g (le patron v19 + la garde UTC + la reprise des
+                            fichiers + LA VOIE DES QUATRE FORMES + le PUBLISH sur creators
+                            vérifié + le diagnostic étendu 1600 aux refus)
 token-zenodo.txt .......... TON JETON ZENODO — DONNÉE SENSIBLE : garde ce dossier privé
 PUSHER-JOURNAL.log ........ créé au premier clic : la preuve de chaque geste
 lot\TRIADE_soumission_v0.31.0.zip ....... 289 496 o   sha256 bdf0e1596703341ec8…
@@ -97,24 +105,26 @@ CE QUE ÇA PUBLIE (et ce que ça ne touche pas) — inchangé
 KIT DÉVELOPPEUR v1.3.0, CORPUS v2.1, TRIADE-TRAIN v1.0.0 : INCHANGÉS — aucune
 version creuse (la doctrine), le lot ne les republie pas. Les métadonnées posées
 sont celles du script préparé et vérifié à l'Entrée 429 (le patron v19) — le
-contenu est inchangé, seuls la mise en octets et le champ publisher sont corrigés.
+contenu est inchangé, seules la forme du champ creators (quatre formes éprouvées
+l'une après l'autre) et la porte qui le pose varient, chaque forme vérifiée par
+relecture avant d'engager le PUBLISH.
 
 BON À SAVOIR
 --------------------------------------------------------------------------------
 - Idempotent, ENTIÈREMENT : interrompu ? RELANCE (un clic) — le moteur reprend le
   brouillon vivant, saute les pièces déjà déposées conformes, redépose seules les
-  divergentes, saute ce qui est déjà publié, RE-POSE les métadonnées (le PUT aux
-  sept champs, creators en tableau) puis tente le PUBLISH. Aucune publication
-  partielle : le PUBLISH n'est appelé qu'après les pièces conformes au bord et
-  la garde UTC.
+  divergentes, saute ce qui est déjà publié, RE-POSA les métadonnées (les quatre
+  formes) puis, creators tenu, tente le PUBLISH. Aucune publication partielle :
+  le PUBLISH n'est appelé qu'après les pièces conformes au bord, creators vérifié
+  vivant au bord ET la garde UTC.
 - La fenêtre UTC est OUVERTE depuis 01:00 (le bord vit déjà le 26/11 UTC) : le
   PUBLISH passe d'emblée ; la garde demeure pour une relance après minuit Paris.
 - Si un 403 «unusual traffic» apparaît CHEZ TOI (improbable : c'est l'IP du bac
-  qui est bloquée — vérifiée bloquée encore ce 26/11 à 02:31, même l'accueil
-  rend 403) : attends une heure ou change de réseau, puis relance.
+  qui est bloquée — vérifiée bloquée encore ce 26/11) : attends une heure ou
+  change de réseau, puis relance.
 - Le bac veille : le cron 548803 (toutes les 8 h) tire par le PATRON PYTHON —
-  porte lui aussi les sept champs depuis ce correctif. SI TU PUBLIES ICI AVANT
-  LUI, DIS-LE AU BAC : il supprimera le retry et enchaînera la chaîne complète
-  (livrables du coffre, ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
+  porte lui aussi la voie des quatre formes depuis ce correctif. SI TU PUBLIES
+  ICI AVANT LUI, DIS-LE AU BAC : il supprimera le retry et enchaînera la chaîne
+  complète (livrables du coffre, ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
 - Durée : tout est déjà déposé conforme — quelques secondes par flux ; si une
   pièce diverge, l'envoi de cette pièce seule (31 Mo ≈ quelques minutes).

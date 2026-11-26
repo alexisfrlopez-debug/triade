@@ -14,6 +14,22 @@ métadonnées revient aux SEPT CHAMPS du dernier mint réussi (v0.26.0) — publ
 retiré (valeur par défaut du bord, champ jamais éprouvé au mint) ; json.dumps
 déjà en ASCII pur (ensure_ascii), creators en tableau — rien d'autre ne change.
 
+(correctif g, 26/11 — le retour du poste 09:59, moteur édition f) : LE PUBLISH A
+TRANCHÉ — le corps f fut posé (HTTP 200) et le PUBLISH rendit 400 « metadata.
+creators — Missing data for required field » aux DEUX flux ; les diagnostiques
+montrent le brouillon relu SANS creators (les deux vues). La forme «[{"name": …}]»
+est JETÉE par la porte records (200 d'apparence, champ non tenu). Le mint réussi
+du 24/11 (Entrée 403) passa par une forme «trouvée par essais», jamais consignée.
+LA VOIE DES QUATRE FORMES : la porte deposits (l'ancienne décennale documentée —
+schéma legacy), puis records + person_or_org (structuré, nom simple), puis la
+forme écho du dump (name + affiliation null) — chaque forme POSÉE puis VÉRIFIÉE
+par relecture (creators en tableau vivant) ; la première qui tient gagne ; aucune
+ne tient : ROUGE, diagnostiques complets, AUCUN PUBLISH (atomique). Deux gestes
+de fidélité au mint réussi : «publisher»: «Zenodo» revient dans le corps records
+(l'Entrée 403 le nomme posé au mint et exigé au PUBLISH — toléré aux PUT des
+éditions b–e), et le resource_type de la participation s'aligne sur le parent
+v1.1.0 («other», non «article»).
+
 LE KIT DÉVELOPPEUR N'EST PAS RE-PUBLIÉ : la source kit-developpement-triade-v1.3.0/
 est INCHANGÉE depuis le commit de sa publication (b86e74b, Entrée 403 — diff git
 vide) ; le corpus v2.1 (24479882) et TRIADE-TRAIN v1.0.0 (24495492) demeurent aussi
@@ -176,17 +192,113 @@ def televerse(draft, fichiers):
         print(f"  [fichier] {f.name} déposé ({f.stat().st_size} o)")
 
 
-def metadonnees(draft, meta):
-    st, d = appel("PUT", draft["links"]["self"], {"metadata": meta})
-    if st not in (200, 201):
-        # le PUT du brouillon peut rendre 500 EN PERSISTANT la valeur (vu vague 19) :
-        # relire alors le brouillon pour vérifier que les métadonnées y vivent
+def creators_vivant(dr):
+    """(correctif g) le champ creators vit-il en TABLEAU VIVANT au bord ? La
+    relecture tranche — pas le code du PUT : le retour 09:59 a montré un PUT
+    200 d'apparence sur un champ non tenu. Vivant = une liste non vide dont une
+    entrée porte «name» ou «person_or_org» (les formes muettes — [], [{}],
+    objet, null — ne comptent pas : le PUBLISH y rendrait 400)."""
+    c = (dr.get("metadata") or {}).get("creators")
+    if not isinstance(c, list) or not c:
+        return False
+    for e in c:
+        if isinstance(e, dict) and ("name" in e or "person_or_org" in e):
+            return True
+    return False
+
+
+def _etat_creators(dr):
+    c = (dr.get("metadata") or {}).get("creators")
+    if c is None:
+        return "absent"
+    if isinstance(c, dict):
+        return "objet"
+    if isinstance(c, list):
+        if not c:
+            return "tableau-vide"
+        if any(isinstance(e, dict) and ("name" in e or "person_or_org" in e) for e in c):
+            return "tableau-vivant"
+        return "tableau-muet"
+    return "null"
+
+
+def _vue_metadata(d, taille=1600):
+    """le diagnostic : les métadonnées entières telles que le bord les tient,
+    depuis «metadata» (le 700 de l'édition f coupait AVANT les champs qui
+    décident : creators, license, resource_type vivent APRÈS la description)."""
+    try:
+        ext = json.dumps(d, ensure_ascii=False)
+    except Exception:
+        return ""
+    i = ext.find('"metadata"')
+    if i >= 0:
+        ext = ext[i:]
+    return ext[:taille]
+
+
+def metadonnees_quatre_formes(draft, titre, version, description, type_ressource, publication_type):
+    """(correctif g, le retour 09:59) LA VOIE DES QUATRE FORMES : la forme
+    «[{"name": …}]» est jetée par la porte records (HTTP 200, champ non tenu) ;
+    la forme qui passa au mint v0.26.0 fut «trouvée par essais» (Entrée 403),
+    jamais consignée. On épreuve donc quatre formes, chacune VÉRIFIÉE par la
+    relecture brute du brouillon — la première dont creators vit en tableau
+    vivant au bord gagne ; aucune ne tient : diagnostiques complets, aucun
+    PUBLISH (le 400 est certain, le geste reste atomique)."""
+    base = {
+        "title": titre,
+        "version": version,
+        "description": description,
+        "license": {"id": "busl-1.1"},
+        "resource_type": {"id": type_ressource},
+        "publication_date": DATE_PUB,
+        "publisher": "Zenodo",
+    }
+    legacy = {
+        "title": titre,
+        "upload_type": "publication",
+        "publication_type": publication_type,
+        "description": description,
+        "creators": [{"name": "Lopez, Alexis"}],
+        "license": "busl-1.1",
+        "publication_date": DATE_PUB,
+        "version": version,
+        "access_right": "open",
+    }
+    formes = [
+        ("porte-legacy", "deposits", {"metadata": legacy}),
+        ("person_or_org-structure", "records",
+         {"metadata": dict(base, creators=[
+             {"person_or_org": {"type": "personal", "family_name": "Lopez",
+                                "given_name": "Alexis"}}])}),
+        ("person_or_org-nom", "records",
+         {"metadata": dict(base, creators=[
+             {"person_or_org": {"name": "Lopez, Alexis"}}])}),
+        ("echo-du-dump", "records",
+         {"metadata": dict(base, creators=[
+             {"name": "Lopez, Alexis", "affiliation": None}])}),
+    ]
+    dernier_etat = "illisible"
+    for nom, porte, corps in formes:
+        uri = (f"{API}/deposit/depositions/{draft.get('id')}" if porte == "deposits"
+               else draft["links"]["self"])
+        st, d = appel("PUT", uri, corps)
         st2, dr = appel("GET", f"{API}/records/{draft.get('id')}/draft")
-        if st2 == 200 and dr.get("metadata", {}).get("version") == meta.get("version"):
-            print(f"  [metadata] PUT HTTP {st} — REPRIS : la valeur persiste (précédent v19)")
+        if st2 == 200:
+            dernier_etat = _etat_creators(dr)
+        if st2 == 200 and creators_vivant(dr):
+            print(f"  [metadata] posées — creators VIVANT au bord (forme {nom}, PUT HTTP {st})")
+            ver = (dr.get("metadata") or {}).get("version", "?")
+            print(f"  [lecture] brouillon relu — version {ver} ; creators : tableau-vivant au bord")
             return dr
-        raise SystemExit(f"metadata : HTTP {st} {d}")
-    return d
+        print(f"  [metadata] forme {nom} : PUT HTTP {st}, creators {dernier_etat} au bord — forme suivante")
+    print(f"  [diagnostic] le brouillon relu (brut, depuis metadata) : {_vue_metadata(dr)}")
+    st3, dv = appel("GET", f"{API}/deposit/depositions/{draft.get('id')}")
+    if st3 == 200:
+        print(f"  [diagnostic] la vue deposits (l'ancienne porte), depuis metadata : {_vue_metadata(dv)}")
+    else:
+        print(f"  [diagnostic] la vue deposits (l'ancienne porte) : HTTP {st3}")
+    raise SystemExit("metadata : aucune des quatre formes n'a tenu creators au bord — "
+                     "PUBLISH non tenté (atomique)")
 
 
 def publier(draft):
@@ -256,25 +368,14 @@ def brouillon_existant(draft_id):
         "publish": f"{API}/records/{draft_id}/draft/actions/publish"}}
 
 
-def publier_flux(record, titre, version, description, fichiers, draft_id=None):
+def publier_flux(record, titre, version, description, fichiers, draft_id=None,
+                 type_ressource="publication-article", publication_type="article"):
     print(f"\n=== {record} → {version} ===")
     draft = brouillon_existant(draft_id) if draft_id else nouvelle_version(record)
     print(f"  [newversion] brouillon {draft.get('id')}")
     televerse(draft, fichiers)
-    meta = {
-        "title": titre,
-        "version": version,
-        "description": description,
-        "creators": [{"name": "Lopez, Alexis"}],
-        "license": {"id": "busl-1.1"},
-        "resource_type": {"id": "publication-article"},
-        "publication_date": DATE_PUB,
-        # (correctif f, 26/11) publisher RETIRÉ : la classe du corps du dernier
-        # mint réussi (v0.26.0) — le bord le met par défaut, le champ n'apportait
-        # rien et n'avait jamais été éprouvé au bord.
-    }
-    metadonnees(draft, meta)
-    print("  [metadata] posées")
+    metadonnees_quatre_formes(draft, titre, version, description,
+                               type_ressource, publication_type)
     # la garde UTC (correctif c) : le bord vit la date UTC — une publication_date
     # encore «demain» au bord rend 400 au PUBLISH. On attend 00:00 UTC (au plus
     # une heure) ; les brouillons vivent, aucun publish partiel.
@@ -316,15 +417,18 @@ def main():
             "TRIADE: Enabling LLM Agents to Write Native Code by Hand Under Signed-Intent "
             "Governance (Academic Edition v0.31.0) — manuscript, data tables, complete sources "
             "and verification evidence",
-            "v0.31.0", DESC_PROTO, f, draft_id=draft_id)
+            "v0.31.0", DESC_PROTO, f, draft_id=draft_id,
+            type_ressource="publication-article", publication_type="article")
     if "participation" in actions:
         f = [OUT / "TRIADE_participer_v1.2.0.zip"]
         for x in f:
             print(f"  [empreinte] {x.name} sha256 {sha(x)[:16]}… md5 {md5(x)}")
         res["participation"] = publier_flux(
             24499847, "TRIADE Participation Pack v1.2.0: the five kits, evaluation and "
-            "contribution", "v1.2.0", DESC_PART, f, draft_id=draft_id
-            if len(actions) == 1 else None)
+            "contribution", "v1.2.0", DESC_PART, f,
+            draft_id=draft_id if len(actions) == 1 else None,
+            # (correctif g) l'alignement au parent v1.1.0 publié : «Other», non «article»
+            type_ressource="publication-other", publication_type="other")
     print(json.dumps(res, indent=1, ensure_ascii=False))
     return 0
 

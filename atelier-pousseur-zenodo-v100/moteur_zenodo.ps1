@@ -44,44 +44,43 @@
 #   2. le corps de l init fichier : idem, [{"key": …}] explicite (l ancien
 #      tenait seulement par le hasard du -InputObject de premier niveau) ;
 #   3. la verification au bord : apres le PUT, le brouillon est RE_LU EN BRUT
-#      (Corps-Bord) et creators doit vivre en TABLEAU au bord — le refus arrive
-#      ici, avec les mots du bord, PAS au PUBLISH (les brouillons vivants
-#      24545339/24545356 portent encore creators en objet : la relance les
-#      corrige par le PUT neuf, puis le prouve avant d engager le PUBLISH).
+#      (Corps-Bord) et creators doit vivre en TABLEAU au bord.
 # correctif f (26/11/2026, apres le retour 02:25) — la porte de l edition e a
 #   refuse un bord PEUT-ETRE SAIN : le corps neuf (creators en tableau) fut pose
 #   (HTTP 200, le brouillon touche a 02:25:11) et la verification «creators au
-#   bord» a rendu ROUGE SANS TENTER LE PUBLISH — or nul n avait prouve que la vue
-#   brouillon ECHOIE creators (la vue du record PUBLIE l echoie, elle). Trois
-#   gestes :
+#   bord» a rendu ROUGE SANS TENTER LE PUBLISH. Trois gestes :
 #   1. le corps retourne aux SEPT CHAMPS du dernier mint reussi (v0.26.0, 24/11)
-#      : publisher RETIRE (la valeur par defaut du bord — le v0.26.0 publie ne
-#      porte pas la clef et montre pourtant «Publisher: Zenodo») et le corps part
-#      en ASCII PUR (non-ASCII echappe en \uXXXX, exactement json.dumps cote
-#      patron python — la classe du corps qui a PASSE) ;
+#      : publisher RETIRE, le corps part en ASCII PUR (non-ASCII echappe en
+#      \uXXXX, exactement json.dumps cote patron python) ;
 #   2. la verification ne GATE PLUS : le brouillon est relu (version + creators,
 #      INFORMATIF), puis le PUBLISH est tente — ATOMIQUE : refuse, le brouillon
 #      vit, rien ne se perd ;
 #   3. au refus du PUBLISH : LE DIAGNOSTIC COMPLET — les mots exacts du bord,
 #      puis le brouillon relu en brut (metadonnees entieres) ET la vue deposits
-#      (l ancienne porte) — le journal dira ce que le bord tient vraiment.
-# correctif f (26/11/2026, apres le retour 02:25) — la porte de l edition e a
-#   refuse un bord PEUT-ETRE SAIN : le corps neuf (creators en tableau) fut pose
-#   (HTTP 200, le brouillon touche a 02:25:11) et la verification «creators au
-#   bord» a rendu ROUGE SANS TENTER LE PUBLISH — or nul n avait prouve que la vue
-#   brouillon ECHOIE creators (la vue du record PUBLIE l echoie, elle). Trois
-#   gestes :
-#   1. le corps retourne aux SEPT CHAMPS du dernier mint reussi (v0.26.0, 24/11)
-#      : publisher RETIRE (la valeur par defaut du bord — le v0.26.0 publie ne
-#      porte pas la clef et montre pourtant «Publisher: Zenodo») et le corps part
-#      en ASCII PUR (non-ASCII echappe en \uXXXX, exactement json.dumps cote
-#      patron python — la classe du corps qui a PASSE) ;
-#   2. la verification ne GATE PLUS : le brouillon est relu (version + creators,
-#      INFORMATIF), puis le PUBLISH est tente — ATOMIQUE : refuse, le brouillon
-#      vit, rien ne se perd ;
-#   3. au refus du PUBLISH : LE DIAGNOSTIC COMPLET — les mots exacts du bord,
-#      puis le brouillon relu en brut (metadonnees entieres) ET la vue deposits
-#      (l ancienne porte) — le journal dira ce que le bord tient vraiment.
+#      (l ancienne porte).
+# correctif g (26/11/2026, apres le retour 09:59) — LE PUBLISH A TRANCHE, LA
+#   PREUVE EST TENUE : le corps f aux sept champs fut pose (HTTP 200) et le
+#   PUBLISH rendit 400 « metadata.creators — Missing data for required field »
+#   aux DEUX flux ; les diagnostiques f montrent le brouillon relu SANS creators
+#   (les DEUX vues concordantes : records et deposits). La forme «[{"name": …}]»
+#   sur la porte records est donc JETEE par le bord : le PUT rend 200, le champ
+#   ne tient pas. Or le mint reussi du 24/11 (Entree 403) passa par la meme
+#   porte avec une forme de creators « TROUVEE PAR ESSAIS » — jamais consignee
+#   en script. Le moteur tente donc QUATRE formes, chacune VERIFIEE par la
+#   relecture brute du brouillon (creators en tableau VIVANT) :
+#   1. la porte deposits (l ancienne decennale, documentee — creators
+#      [{"name": …}], le schéma legacy : upload_type/publication_type, licence
+#      en chaîne, access_right) ;
+#   2. records + person_or_org structure (family_name/given_name) ;
+#   3. records + person_or_org nom simple ;
+#   4. records + la forme echo du dump (name + affiliation null).
+#   La premiere qui tient gagne. AUCUNE ne tient : ROUGE, diagnostiques
+#   complets, AUCUN PUBLISH (le 400 est certain ; le geste reste atomique).
+#   Deux gestes de fidelite au mint reussi en sus : «publisher»: «Zenodo»
+#   REVIENT dans le corps records (l Entree 403 le nomme parmi les metadonnees
+#   posees au mint et «exige au PUBLISH» ; tole re aux PUT des editions b–e,
+#   HTTP 200), et le resource_type de la participation s aligne sur le parent
+#   v1.1.0 publie («other», non «article»).
 # usage : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1 [-DryRun]
 #         [-BrouillonProtocole <id>] [-BrouillonParticipation <id>]
 
@@ -166,6 +165,27 @@ function Corps-Bord { param([string]$Uri)
         try { $code = [int]$_.Exception.Response.StatusCode } catch {}
         return @{ Code = $code; Brut = (Corps-Erreur $_) }
     }
+}
+
+# l ETAT du champ creators au bord (correctif g) — lu sur le BRUT du brouillon :
+#   tableau-vivant   : "creators": [ … ] non vide, une entree porte name ou
+#                      person_or_org — LA SEULE ETAT QUI AUTORISE LE PUBLISH ;
+#   tableau-vide      : "creators": [] — pose mais vide, le PUBLISH rendra 400 ;
+#   tableau-muet      : le tableau tient des entres vides ([{}] ou [null]) ;
+#   objet / null / absent : les formes que le bord ne tient pas.
+function Etat-Creators { param([string]$Brut)
+    if (-not $Brut) { return 'absent' }
+    if ($Brut -match '"creators"\s*:\s*\[\s*\]') { return 'tableau-vide' }
+    $m = [regex]::Match($Brut, '"creators"\s*:\s*\[(.*?)\]',
+        [System.Text.RegularExpressions.RegexOptions]::Singleline)
+    if ($m.Success) {
+        $zone = $m.Groups[1].Value
+        if ($zone -match '"name"\s*:' -or $zone -match '"person_or_org"\s*:') { return 'tableau-vivant' }
+        return 'tableau-muet'
+    }
+    if ($Brut -match '"creators"\s*:\s*\{') { return 'objet' }
+    if ($Brut -match '"creators"\s*:\s*null') { return 'null' }
+    return 'absent'
 }
 
 # ------------------------------------------- l'appel au bord (reprises 5xx)
@@ -336,7 +356,8 @@ if (-not ($FaireProto -or $FairePart)) {
 # ------------------------------------------------------------- 4. le flux v19
 function Publier-Flux {
     param([string]$NomFlux, [int]$Ancien, [int]$BrouillonId, [string]$Titre,
-          [string]$Version, [string]$Description, [string[]]$Chemins)
+          [string]$Version, [string]$Description, [string[]]$Chemins,
+          [string]$TypeRessource, [string]$PublicationType)
 
     Ecrire ("`n=== {0} : {1} -> {2} ===" -f $NomFlux, $Ancien, $Version)
 
@@ -422,56 +443,112 @@ function Publier-Flux {
         Ecrire ("  [fichier] {0} déposé ({1} o)" -f $nom, $taille)
     }
 
-    # 3. les métadonnées — SEPT CHAMPS, LA CLASSE DU DERNIER MINT RÉUSSI
-    #    (correctif f, le retour 02:25) : exactement le corps du v0.26.0 (24/11,
-    #    json.dumps côté patron) — title, version, description, creators (en
-    #    TABLEAU), license, resource_type, publication_date. Le champ publisher
-    #    est RETIRÉ : le bord le met par défaut (le v0.26.0 publié ne porte pas
-    #    la clef et montre pourtant «Publisher: Zenodo») — c'était le seul champ
-    #    que le dernier mint réussi n'avait PAS porté. Le non-ASCII est échappé
-    #    par Json-Texte (correctif f) : le corps part en ASCII pur. Aucun
-    #    ConvertTo-Json sur ce corps (correctif e) : creators part en
-    #    [{"name":"Lopez, Alexis"}] comme le patron.
-    $corpsMeta = [string]::Join('', @(
+    # 3. les métadonnées — LA VOIE DES QUATRE FORMES (correctif g, le retour
+    #    09:59) : le corps f fut posé (HTTP 200) et le PUBLISH trancha — creators
+    #    ABSENT au brouillon (les DEUX vues l'ont nommé) : la forme «[{"name":…}]»
+    #    est JETÉE par la porte records. Le mint réussi du 24/11 passa par une
+    #    forme «trouvée par essais» (Entrée 429/403), jamais consignée. QUATRE
+    #    formes sont donc tentées — la porte deposits (l'ancienne décennale
+    #    DOCUMENTÉE : créateurs [{"name":…}], schéma legacy), puis trois variantes
+    #    records — et CHACUNE est VÉRIFIÉE par la relecture brute du brouillon :
+    #    la première dont creators vit en tableau vivant au bord GAGNE. Aucune
+    #    ne tient : ROUGE, diagnostiques complets, AUCUN PUBLISH (atomique).
+    #    Le corps records porte huit champs : les sept du mint v0.26.0 PLUS
+    #    «publisher»: «Zenodo» (l'Entrée 403 le nomme posé au mint et exigé au
+    #    PUBLISH — toléré aux PUT des éditions b–e, HTTP 200 ; le champ que f
+    #    retira n'était pas la cause : les diagnostiques l'ont prouvé).
+    $corpsRecords = [string]::Join('', @(
         '{"metadata":{'
         ('"title":' + (Json-Texte $Titre) + ',')
         ('"version":' + (Json-Texte $Version) + ',')
         ('"description":' + (Json-Texte $Description) + ',')
-        '"creators":[{"name":"Lopez, Alexis"}],'
+        '__CREATORS__'
         '"license":{"id":"busl-1.1"},'
-        '"resource_type":{"id":"publication-article"},'
-        ('"publication_date":' + (Json-Texte $DatePub))
+        ('"resource_type":{"id":"' + $TypeRessource + '"},')
+        ('"publication_date":' + (Json-Texte $DatePub) + ',')
+        '"publisher":"Zenodo"'
         '}}'
     ))
-    $r = Invoke-Zenodo -Methode Put -Uri $brouillon.links.self -CorpsJson $corpsMeta
-    if ($r.Code -in 200, 201) { Ecrire '  [metadata] posées' }
-    else {
-        # le PUT 500-persistant (vu vague 19) : relire — la valeur peut vivre
-        $r4 = Invoke-Zenodo -Methode Get -Uri "$Api/records/$($brouillon.id)/draft"
-        if ($r4.Code -eq 200 -and ([string]$r4.Donnees.metadata.version -eq $Version)) {
-            Ecrire "  [metadata] PUT HTTP $($r.Code) — REPRIS : la valeur persiste (précédent v19)"
-        } else {
-            Ecrire ('RESULTAT|{0}|ROUGE|metadata-HTTP-{1}|—' -f $NomFlux, $r.Code)
-            throw "metadata : HTTP $($r.Code) $($r.Corps)"
-        }
-    }
+    $corpsDeposits = [string]::Join('', @(
+        '{"metadata":{'
+        ('"title":' + (Json-Texte $Titre) + ',')
+        '"upload_type":"publication",'
+        ('"publication_type":"' + $PublicationType + '",')
+        ('"description":' + (Json-Texte $Description) + ',')
+        '"creators":[{"name":"Lopez, Alexis"}],'
+        '"license":"busl-1.1",'
+        ('"publication_date":' + (Json-Texte $DatePub) + ',')
+        ('"version":' + (Json-Texte $Version) + ',')
+        '"access_right":"open"'
+        '}}'
+    ))
+    $formes = @(
+        @{ porte = 'deposits'; nom = 'porte-legacy'; corps = $corpsDeposits
+           uri = "$Api/deposit/depositions/$($brouillon.id)" },
+        @{ porte = 'records'; nom = 'person_or_org-structure'; corps = $null
+           uri = $brouillon.links.self },
+        @{ porte = 'records'; nom = 'person_or_org-nom'; corps = $null
+           uri = $brouillon.links.self },
+        @{ porte = 'records'; nom = 'echo-du-dump'; corps = $null
+           uri = $brouillon.links.self }
+    )
+    $formes[1].corps = $corpsRecords.Replace('__CREATORS__',
+        '"creators":[{"person_or_org":{"type":"personal","family_name":"Lopez","given_name":"Alexis"}}],')
+    $formes[2].corps = $corpsRecords.Replace('__CREATORS__',
+        '"creators":[{"person_or_org":{"name":"Lopez, Alexis"}}],')
+    $formes[3].corps = $corpsRecords.Replace('__CREATORS__',
+        '"creators":[{"name":"Lopez, Alexis","affiliation":null}],')
 
-    # 3b. la relecture (correctif f) — INFORMATIVE, elle ne GATE PLUS : le retour
-    #     de 02:25 a montré que nul n'avait prouvé que la vue brouillon échoïe
-    #     creators (la vue du record PUBLIÉ l'échoïe, elle) — la porte de
-    #     l'édition e a refusé un bord peut-être sain SANS tenter le PUBLISH.
-    #     Désormais : le brouillon est relu (version, creators — s'il y vit), le
-    #     journal le nomme, et le PUBLISH tranche — ATOMIQUE : refusé, le
-    #     brouillon vit, rien ne se perd.
-    $rb = Corps-Bord -Uri "$Api/records/$($brouillon.id)/draft"
-    if ($rb.Code -eq 200) {
-        $noteCreators = 'en tableau dans la vue'
-        if ($rb.Brut -notmatch '"creators"\s*:\s*\[') { $noteCreators = 'ABSENT de la vue brouillon' }
-        $ver = '?'
-        try { if ($rb.Brut -match '"version"\s*:\s*"([^"]*)"') { $ver = $Matches[1] } } catch {}
-        Ecrire ("  [lecture] brouillon relu — version {0} ; creators : {1} — le PUBLISH suit (il tranche)" -f $ver, $noteCreators)
-    } else {
-        Ecrire ("  [lecture] brouillon relu : HTTP {0} — le PUBLISH suit (il tranche)" -f $rb.Code)
+    $formeGagnante = $null
+    foreach ($forme in $formes) {
+        $r = Invoke-Zenodo -Methode Put -Uri $forme.uri -CorpsJson $forme.corps
+        # la relecture tranche (pas le code du PUT : un 500 peut PERSISTER la
+        # valeur — le précédent v19 — et un 200 peut ne rien tenir — le retour
+        # 09:59) : le brouillon relu en brut, creators en tableau vivant ?
+        $rb = Corps-Bord -Uri "$Api/records/$($brouillon.id)/draft"
+        $etat = 'illisible'
+        if ($rb.Code -eq 200) { $etat = Etat-Creators $rb.Brut }
+        if ($etat -eq 'tableau-vivant') {
+            $formeGagnante = ('{0}/{1}' -f $forme.porte, $forme.nom)
+            $ver = '?'
+            try { if ($rb.Brut -match '"version"\s*:\s*"([^"]*)"') { $ver = $Matches[1] } } catch {}
+            Ecrire ("  [metadata] posées — creators VIVANT au bord (forme {0}, PUT HTTP {1})" -f $forme.nom, $r.Code)
+            Ecrire ("  [lecture] brouillon relu — version {0} ; creators : tableau-vivant au bord" -f $ver)
+            break
+        }
+        Ecrire ("  [metadata] forme {0} : PUT HTTP {1}, creators {2} au bord — forme suivante" -f $forme.nom, $r.Code, $etat)
+    }
+    if (-not $formeGagnante) {
+        Ecrire ('RESULTAT|{0}|ROUGE|creators-non-posables|—' -f $NomFlux)
+        # le diagnostic complet (correctif f étendu) : les métadonnées ENTIÈRES
+        # que le bord tient, par les DEUX portes — 1600 caractères chacune (le
+        # 700 de f coupait avant les champs qui décident : creators, license,
+        # resource_type vivent APRÈS la description longue).
+        try {
+            $rd = Corps-Bord -Uri "$Api/records/$($brouillon.id)/draft"
+            if ($rd.Code -eq 200 -and $rd.Brut) {
+                $ext = $rd.Brut
+                $di = $ext.IndexOf('"metadata"')
+                if ($di -ge 0) { $ext = $ext.Substring($di) }
+                if ($ext.Length -gt 1600) { $ext = $ext.Substring(0, 1600) }
+                Ecrire "  [diagnostic] le brouillon relu (brut, depuis metadata) : $ext"
+            } else {
+                Ecrire ('  [diagnostic] le brouillon relu : HTTP {0}' -f $rd.Code)
+            }
+        } catch {}
+        try {
+            $rl = Corps-Bord -Uri "$Api/deposit/depositions/$($brouillon.id)"
+            if ($rl.Code -eq 200 -and $rl.Brut) {
+                $extl = $rl.Brut
+                $dj = $extl.IndexOf('"metadata"')
+                if ($dj -ge 0) { $extl = $extl.Substring($dj) }
+                if ($extl.Length -gt 1600) { $extl = $extl.Substring(0, 1600) }
+                Ecrire "  [diagnostic] la vue deposits (l'ancienne porte), depuis metadata : $extl"
+            } else {
+                Ecrire ('  [diagnostic] la vue deposits (l ancienne porte) : HTTP {0}' -f $rl.Code)
+            }
+        } catch {}
+        throw 'metadata : aucune des quatre formes n a tenu creators au bord — PUBLISH non tenté (atomique)'
     }
 
     # 4. PUBLISH — la garde UTC d abord : le bord vit la date UTC et refuse une
@@ -491,7 +568,7 @@ function Publier-Flux {
                 $ext = $rd.Brut
                 $di = $ext.IndexOf('"metadata"')
                 if ($di -ge 0) { $ext = $ext.Substring($di) }
-                if ($ext.Length -gt 700) { $ext = $ext.Substring(0, 700) }
+                if ($ext.Length -gt 1600) { $ext = $ext.Substring(0, 1600) }
                 Ecrire "  [diagnostic] le brouillon relu (brut, depuis metadata) : $ext"
             } else {
                 Ecrire ('  [diagnostic] le brouillon relu : HTTP {0}' -f $rd.Code)
@@ -503,7 +580,7 @@ function Publier-Flux {
                 $extl = $rl.Brut
                 $dj = $extl.IndexOf('"metadata"')
                 if ($dj -ge 0) { $extl = $extl.Substring($dj) }
-                if ($extl.Length -gt 700) { $extl = $extl.Substring(0, 700) }
+                if ($extl.Length -gt 1600) { $extl = $extl.Substring(0, 1600) }
                 Ecrire "  [diagnostic] la vue deposits (l'ancienne porte), depuis metadata : $extl"
             } else {
                 Ecrire ('  [diagnostic] la vue deposits (l ancienne porte) : HTTP {0}' -f $rl.Code)
@@ -586,7 +663,8 @@ if ($FaireProto) {
     try {
         $sortie['protocole'] = Publier-Flux -NomFlux 'protocole' -Ancien 24499428 `
             -BrouillonId $BrouillonProtocole -Titre $TitreProtocole -Version 'v0.31.0' `
-            -Description $DescriptionProtocole -Chemins $f
+            -Description $DescriptionProtocole -Chemins $f `
+            -TypeRessource 'publication-article' -PublicationType 'article'
     } catch { Ecrire "  ROUGE — $($_.Exception.Message)"; $sortie['protocole'] = $null }
 } else { Ecrire '  (protocole déjà publié — sauté)' }
 
@@ -595,7 +673,8 @@ if ($FairePart) {
     try {
         $sortie['participation'] = Publier-Flux -NomFlux 'participation' -Ancien 24499847 `
             -BrouillonId $BrouillonParticipation -Titre $TitreParticipation -Version 'v1.2.0' `
-            -Description $DescriptionParticipation -Chemins $f
+            -Description $DescriptionParticipation -Chemins $f `
+            -TypeRessource 'publication-other' -PublicationType 'other'
     } catch { Ecrire "  ROUGE — $($_.Exception.Message)"; $sortie['participation'] = $null }
 } else { Ecrire '  (participation déjà publiée — sautée)' }
 
