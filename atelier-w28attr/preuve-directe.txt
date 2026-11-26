@@ -1,0 +1,6 @@
+E1 (poignée ~0) : retour -4 — attendu -4 : VERT
+la paire « 45 » : journal[0] = (0x22, 0x45) — attendu (0x22, 0x45) : VERT
+le compte : 1 (attendu 1) : VERT
+le curseur : 0x23 (attendu 0x23) : VERT
+la fenêtre au 0x22 : 0x45 (attendu 0x45) : VERT
+LES CINQ SONDES DU CONTRAT NOYAU : la pièce T (b382e01b) VÉRIFIÉE au banc — le journal par décalage, le curseur, la vue, le E1 exact, l'acceptation de session.

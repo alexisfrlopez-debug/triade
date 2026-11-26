@@ -1,0 +1,57 @@
+ATELIER W28ATTR — LA REJOUABILITÉ SYMÉTRIQUE (LA PIÈCE T AU KIT MINIMAL) ET
+L'INDÉPENDANCE INTER-FAMILLES (vague 28, prompt 4 — le plan gelé PLAN-W28ATTR.md,
+sha256 9a30ed93… consigné AVANT toute mesure à EMPREINTES-PLANS-VAGUE28.txt)
+
+1. LA REJOUABILITÉ SYMÉTRIQUE — LA PIÈCE T DE L'UNITÉ 04 D210 (loupe-16 × bras T,
+   loupe.exe, sha256 b382e01b… RECROPÉ INTACT avant le run — l'attendu consigné AVANT :
+   14 VERT ou écart nommé). LE MÉCANISME au bac : l'image loupe.exe montée à sa base
+   réelle 0x140000000, la pièce exécutée à son slot RVA 0x6240 (la notation le porte),
+   les zones au PLAN .data (le cadre 0xE000, la saisie 0xE400, le journal 0xE4A0 — le
+   scénario du kit les y pose), l'appel à la convention WNDPROC (hwnd, WM_CHAR,
+   caractere, 0 — le scénario : SAISIR(0x770001, WM_CHAR, ch, 0)), la feuille
+   InvalidateRect stubbée à son thunk IAT (RIP 0x647a → RVA 0x31A0 — l'unique appel
+   sortant nommé à l'attribution C).
+
+   LE RÉSULTAT (preuve-directe.txt) : LES CINQ SONDES DU CONTRAT NOYAU, 5/5 VERT —
+   (1) E1 : la poignée ~0 → le retour -4 EXACT (le refus sans session, la phrase
+   nommée) ; (2) la paire « 45 » → le journal[0] = (0x22, 0x45) EXACT (l'octet au
+   journal PAR DÉCALAGE — Q2) ; (3) le compte 1 ; (4) le curseur 0x22 → 0x23 EXACT
+   (Q4) ; (5) la fenêtre au 0x22 = 0x45 EXACT (la vue suit — Q3). LA PIÈCE T EST
+   VÉRIFIÉE AU BANC sur son contrat noyau — la notation scellée fait ce que le
+   modèle dit.
+
+   L'ÉCART NOMMÉ : le différentiel complet aux 14 vecteurs (les 10 000 frappes des
+   deux disques) exige le contexte D'APPLICATION entière (la boucle de messages, la
+   gestion de la fenêtre, les chemins de message du cadre — l'épreuve s'est arrêtée
+   sur un fetch hors carte au chemin du message « hors bornes » et la calibration de
+   la vue) — LA CAUSE STRUCTURALE nommée : la pièce C miroir était AUTONOME (son
+   état dans les ARGUMENTS, re-jouable au POSIX bench seul), la pièce T est le bloc
+   de l'APPLICATION scellée (son état au PLAN .data, sa fenêtre, ses chemins de
+   message) — la re-jouabilité symétrique COMPLÈTE vit au kit minimal TERRAIN (le
+   scénario du kit v3 : MÊME juge, MÊMES vecteurs, la graine 20261115 — le kit
+   livré à empreintes consignées, prêt au geste du terrain). Le contrat noyau
+   vérifié au banc + le kit terrain prêt = la vérification honnête possible au
+   bac ; le différentiel complet appartient au geste du terrain.
+
+2. L'INDÉPENDANCE INTER-FAMILLES — LE REFUS NOMMÉ : **FAMILY-ABSENT** — la seule API
+   disponible au bac est la famille GLM (le CLI z-ai, la même famille que l'agent du
+   projet — le bord du bac n'expose QU'UNE famille, le constat de la vague 7
+   reconduit) ; la voie locale open-weights a déjà son écart nommé (Qwen2.5-Coder-1.5B :
+   la récitation 0/64 consignée à la vague 7). LA LIGNE ATT-REPL DEMEURE EN ATTENTE —
+   aucun chiffre fabriqué, la confrontation tripartite (spec ↔ seconde famille ↔
+   définitions) attend une famille distante capable. Les 128 constantes MD5 T[64] et
+   SHA-256 K[64] : les définitions mathématiques demeurent la confrontation
+   vérifiable au bac (la dérivation aux décimales — le protocole peap6ws09, zéro
+   divergence) — l'indépendance EXIGE la seconde famille, nommée.
+
+3. LES EMPREINTES RECROPÉES avant/après : loupe.exe b382e01b… (aucun octet changé —
+   la pièce scellée jamais touchée), la notation-loupe-16-saisie.asm (la pièce à son
+   slot, le plan vérifié sur pièces).
+
+LES PIÈCES : epreuve_t_loupe16.py (l'épreuve symétrique — le mécanisme complet, les
+14 vecteurs structure prête), preuve-directe.txt (les cinq sondes 5/5 VERT), le
+présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  python3 atelier-w28attr/epreuve_t_loupe16.py       # l'épreuve (le mécanisme au plan .data)
+  python3 v06/sceau_I.py verifier                     # la garde (14/14 avant et après)
