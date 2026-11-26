@@ -1,0 +1,59 @@
+LE KIT DE RUN MACHINE RÉELLE — les preuves symboliques complètes (W27PREUV, la vague 27)
+=======================================================================================
+Tout run se rejoue à EMPREINTE IDENTIQUE. Les commandes exactes, les budgets, les attendus.
+
+EMPREINTES CONSIGNÉES (sha256) :
+  atelier-cf3-verdict-qa3k5putf/CF3-v3.spthy         — le modèle v3 (la pièce courante de la vague 15)
+  atelier-w27preuv/CF3-v3d.spthy                     — le modèle DÉCOMPOSÉ (v3 verbatim + les sous-lemmes)
+  atelier-cf3-verdict-qa3k5putf/CF3-v3-negatif.spthy — le modèle négatif (le témoin falsifiant)
+  atelier-cf3-verdict-qa3k5putf/CF3-v3.pv             — le port ProVerif (six requêtes actives)
+  (les empreintes vivent à empreintes-run.txt, recalculées au geste)
+
+OUTILS (les versions exactes) :
+  tamarin-prover 1.12.0 (linux64-ubuntu, le binaire statique de la release GitHub)
+  Maude 3.4 (les paquets Debian : maude, libbdd0c2, libtecla1t64, libsigsegv2 — MAUDE_LIB posé)
+  proverif ≥ 2.05 (ABSENT du bac de la vague 27 — les voies de téléchargement refusées)
+
+1. LE REJEU (l'identité prouvée d'abord) :
+     tamarin-prover --prove --lemma=absence_de_destruction_par_corruption CF3-v3.spthy
+   ATTENDU : verified (1122 steps) — VÉCU AU BAC (30,5 s, bit-identique à la vague 15).
+
+2. LA DÉCOMPOSITION (le modèle CF3-v3d) :
+     tamarin-prover --prove --lemma=l1c_reconstitution_exige_trois_parts CF3-v3d.spthy
+   ATTENDU : verified (52 steps) — VÉCU AU BAC (17,6 s).
+     tamarin-prover --prove --lemma=l2a_chaine_des_phrases_hotes CF3-v3d.spthy
+   ATTENDU : verified (7 steps) — VÉCU AU BAC (16,8 s).
+
+3. LES DEUX AU MUR DU BAC (4 Gio) — la machine réelle les franchit :
+     tamarin-prover --prove --lemma=l1a_connaissance_par_reconstitution CF3-v3d.spthy
+   AU BAC : OOM à 97-104 s (avec et sans induction). Machine : ≥ 16 Gio conseillés.
+     tamarin-prover --prove --lemma=l2_compose_induction CF3-v3d.spthy
+   AU BAC : OOM à 145 s. Machine : ≥ 16 Gio conseillés.
+   L'ORDRE : L1c et L2a D'ABORD (les étages vérifiés), puis L1a, puis le composé —
+   chaque verdict consigné tel quel (INCOMPLETE demeure INCOMPLETE tant que non clos).
+
+4. LE NÉGATIF (le contrôle : le modèle muté doit rendre un contre-exemple) :
+     tamarin-prover --prove --lemma=temoin_falsification_et_destruction \
+       --stop-on-trace=BFS CF3-v3-negatif.spthy
+   ATTENDU : falsified - found trace. AU BAC : OOM à 100-123 s (DFS et BFS) — fidèle au
+   constat original de la vague 15 (preuve-NEGATIF-lemme1.txt : « out of memory »).
+   La machine réelle doit rendre LA TRACE (le témoin falsifiant archivé en JSON).
+
+5. PROVERIF (le port livré, six requêtes actives, événements miroir, oracle de seuil) :
+     proverif CF3-v3.pv
+   ATTENDU : les six requêtes (les événements miroir des trois lemmes et des trois
+   témoins ; l'oracle de seuil). AU BAC : prouveur ABSENT (releases 404, paquet absent,
+   bproversuite injoignable) — le run EST le geste machine réelle.
+   Le verdict se consigne à PREUVES-STATUTS.json UNIQUEMENT depuis la sortie du run.
+
+LA SÉMANTIQUE D'OCCURRENCE, nommée pour le runneur : la première formulation de l'étage
+immédiat (Ex #j. PhraseHote(p) @ #j & #j < #i) est REFUTÉE par tamarin 1.12.0 — l'occurrence
+d'un fait linéaire s'ancre à sa CONSOMMATION (le modèle-témoin atelier-w27preuv/
+test_occ.spthy le démontre en trois pas) : ce n'est PAS une attaque du protocole. Les
+formulations vivant au modèle v3d sont les bonnes.
+
+L'ARGUMENT DE COMPOSITION (consigné, lisible par le relecteur) : L2 = L2a (vérifié) + la
+disjointure des actions — aucune règle ne tire PhraseVivante ET CleUtilisateurEmployee (la
+création et le changement tirent la naissance ; les cinq règles de clé ne la tirent pas) —
+donc la naissance de la phrase consommée est STRICTEMENT antérieure à l'emploi de la clé.
+L1 = L1a (au mur) + L1c (vérifié) par la transitivité de <.

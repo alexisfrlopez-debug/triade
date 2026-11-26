@@ -1,0 +1,74 @@
+[
+ {
+  "run": "L3-rejeu",
+  "modele": "/home/z/my-project/depot/atelier-cf3-verdict-qa3k5putf/CF3-v3.spthy",
+  "lemme": "absence_de_destruction_par_corruption",
+  "modele_sha256": "ab84960dde83083a2c23dc322b3f63d3064ba4203938528c6008275e27eb9772",
+  "secondes": 30.1,
+  "code": 0,
+  "verdict": "absence_de_destruction_par_corruption (all-traces): verified (1122 steps)"
+ },
+ {
+  "run": "NEGATIF-temoin",
+  "modele": "/home/z/my-project/depot/atelier-cf3-verdict-qa3k5putf/CF3-v3-negatif.spthy",
+  "lemme": "temoin_falsification_et_destruction",
+  "modele_sha256": "367e9d0936639e683225f601c601218c93b075f3a7ae528493b6fb8e6cfbe9ce",
+  "secondes": 93.3,
+  "code": -9,
+  "verdict": "?"
+ },
+ {
+  "run": "L1a",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l1a_connaissance_par_reconstitution",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 96.9,
+  "code": -9,
+  "verdict": "?"
+ },
+ {
+  "run": "L1c",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l1c_reconstitution_exige_trois_parts",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 17.5,
+  "code": 0,
+  "verdict": "l1c_reconstitution_exige_trois_parts (all-traces): verified (52 steps)"
+ },
+ {
+  "run": "L2a",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l2a_chaine_des_phrases_hotes",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 16.1,
+  "code": 0,
+  "verdict": "l2a_chaine_des_phrases_hotes (all-traces): verified (7 steps)"
+ },
+ {
+  "run": "L2b-naissance",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l2b_emploi_exige_naissance",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 145.3,
+  "code": -9,
+  "verdict": "?"
+ },
+ {
+  "run": "L2-compose-ind",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l2_compose_induction",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 144.4,
+  "code": -9,
+  "verdict": "?"
+ },
+ {
+  "run": "L2b-premiere-formulation-REFUTEE",
+  "modele": "/home/z/my-project/depot/atelier-w27preuv/CF3-v3d.spthy",
+  "lemme": "l2b_refutee_occurrence",
+  "modele_sha256": "f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742",
+  "secondes": 17.6,
+  "code": 0,
+  "verdict": "l2b_refutee_occurrence (all-traces): falsified - found trace (6 steps)"
+ }
+]

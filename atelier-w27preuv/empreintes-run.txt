@@ -1,0 +1,5 @@
+ab84960dde83083a2c23dc322b3f63d3064ba4203938528c6008275e27eb9772  atelier-cf3-verdict-qa3k5putf/CF3-v3.spthy
+f00b039d79070c31bf643eb84d97fbdfaf8da843e05726dc96086057e8edc742  atelier-w27preuv/CF3-v3d.spthy
+367e9d0936639e683225f601c601218c93b075f3a7ae528493b6fb8e6cfbe9ce  atelier-cf3-verdict-qa3k5putf/CF3-v3-negatif.spthy
+98d8e6d162b02cf627b8e507d1b2b231f0d2269a03d6adc694240a8052d3edf0  atelier-cf3-verdict-qa3k5putf/CF3-v3.pv
+ed66c81100dd91885ee1beb2a9e94ffd46deb7c093ad14edd81106c765b32122  atelier-w27preuv/test_occ.spthy

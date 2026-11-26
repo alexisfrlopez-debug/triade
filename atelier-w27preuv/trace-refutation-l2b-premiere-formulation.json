@@ -1,0 +1,514 @@
+{
+    "graphs": [
+        {
+            "jgAbbrevs": [
+                {
+                    "jgaAbbrev": {
+                        "jgnConst": "SE1"
+                    },
+                    "jgaExpansion": {
+                        "jgnFunct": "senc",
+                        "jgnParams": [
+                            {
+                                "jgnConst": "~m"
+                            },
+                            {
+                                "jgnFunct": "h",
+                                "jgnParams": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ],
+                                "jgnShow": "h(~p)"
+                            }
+                        ],
+                        "jgnShow": "senc(~m,h(~p))"
+                    },
+                    "jgaTerm": {
+                        "jgnFunct": "senc",
+                        "jgnParams": [
+                            {
+                                "jgnConst": "~m"
+                            },
+                            {
+                                "jgnFunct": "h",
+                                "jgnParams": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ],
+                                "jgnShow": "h(~p)"
+                            }
+                        ],
+                        "jgnShow": "senc(~m,h(~p))"
+                    }
+                }
+            ],
+            "jgClusters": [],
+            "jgDirected": true,
+            "jgEdges": [
+                {
+                    "jgeRelation": "ProtoFact",
+                    "jgeSource": "#vr:c0",
+                    "jgeTarget": "#i:p0"
+                },
+                {
+                    "jgeRelation": "ProtoFact",
+                    "jgeSource": "#vr:c1",
+                    "jgeTarget": "#i:p1"
+                }
+            ],
+            "jgLabel": "trace_CF3_SL2-AS0-CL0-A1-C1-NB_l2b_emploi_exige_phrase_hotenon_empty_trace-case_1-migration_cf1_vers_cf2-creation_du_coffre-creation_du_coffre",
+            "jgNodes": [
+                {
+                    "jgnId": "#i",
+                    "jgnLabel": "migration_cf1_vers_cf2",
+                    "jgnMetadata": {
+                        "jgnActs": [
+                            {
+                                "jgnFactId": "action",
+                                "jgnFactMult": "",
+                                "jgnFactName": "MigrationCF2",
+                                "jgnFactShow": "MigrationCF2( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "action",
+                                "jgnFactMult": "",
+                                "jgnFactName": "CleUtilisateurEmployee",
+                                "jgnFactShow": "CleUtilisateurEmployee( h(~p) )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnFunct": "h",
+                                        "jgnParams": [
+                                            {
+                                                "jgnConst": "~p"
+                                            }
+                                        ],
+                                        "jgnShow": "h(~p)"
+                                    }
+                                ]
+                            }
+                        ],
+                        "jgnConcs": [
+                            {
+                                "jgnFactId": "#i:c0",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PhraseHote",
+                                "jgnFactShow": "PhraseHote( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c1",
+                                "jgnFactMult": "",
+                                "jgnFactName": "GardeFragments",
+                                "jgnFactShow": "GardeFragments( ~garde )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~garde"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c2",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Coffre",
+                                "jgnFactShow": "Coffre( ~ep1, senc(~m, h(<h(~p), ~garde>)) )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~ep1"
+                                    },
+                                    {
+                                        "jgnFunct": "senc",
+                                        "jgnParams": [
+                                            {
+                                                "jgnConst": "~m"
+                                            },
+                                            {
+                                                "jgnFunct": "h",
+                                                "jgnParams": [
+                                                    {
+                                                        "jgnFunct": "pair",
+                                                        "jgnParams": [
+                                                            {
+                                                                "jgnFunct": "h",
+                                                                "jgnParams": [
+                                                                    {
+                                                                        "jgnConst": "~p"
+                                                                    }
+                                                                ],
+                                                                "jgnShow": "h(~p)"
+                                                            },
+                                                            {
+                                                                "jgnConst": "~garde"
+                                                            }
+                                                        ],
+                                                        "jgnShow": "pair(h(~p),~garde)"
+                                                    }
+                                                ],
+                                                "jgnShow": "h(pair(h(~p),~garde))"
+                                            }
+                                        ],
+                                        "jgnShow": "senc(~m,h(pair(h(~p),~garde)))"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c3",
+                                "jgnFactMult": "!",
+                                "jgnFactName": "!PartsDe",
+                                "jgnFactShow": "!PartsDe( ~p, ~x1, ~x2, ~x3, ~x4, ~x5 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    },
+                                    {
+                                        "jgnConst": "~x1"
+                                    },
+                                    {
+                                        "jgnConst": "~x2"
+                                    },
+                                    {
+                                        "jgnConst": "~x3"
+                                    },
+                                    {
+                                        "jgnConst": "~x4"
+                                    },
+                                    {
+                                        "jgnConst": "~x5"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c4",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PartSurMedia",
+                                "jgnFactShow": "PartSurMedia( ~x1 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x1"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c5",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PartSurMedia",
+                                "jgnFactShow": "PartSurMedia( ~x2 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x2"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c6",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PartSurMedia",
+                                "jgnFactShow": "PartSurMedia( ~x3 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x3"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c7",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PartSurMedia",
+                                "jgnFactShow": "PartSurMedia( ~x4 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x4"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c8",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PartSurMedia",
+                                "jgnFactShow": "PartSurMedia( ~x5 )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x5"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:c9",
+                                "jgnFactMult": "",
+                                "jgnFactName": "CompteurParts",
+                                "jgnFactShow": "CompteurParts( nul )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnFunct": "nul",
+                                        "jgnParams": [],
+                                        "jgnShow": "nul"
+                                    }
+                                ]
+                            }
+                        ],
+                        "jgnPrems": [
+                            {
+                                "jgnFactId": "#i:p0",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PhraseHote",
+                                "jgnFactShow": "PhraseHote( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p1",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Coffre",
+                                "jgnFactShow": "Coffre( ~ep1, senc(~m, h(~p)) )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~ep1"
+                                    },
+                                    {
+                                        "jgnFunct": "senc",
+                                        "jgnParams": [
+                                            {
+                                                "jgnConst": "~m"
+                                            },
+                                            {
+                                                "jgnFunct": "h",
+                                                "jgnParams": [
+                                                    {
+                                                        "jgnConst": "~p"
+                                                    }
+                                                ],
+                                                "jgnShow": "h(~p)"
+                                            }
+                                        ],
+                                        "jgnShow": "senc(~m,h(~p))"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p2",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~garde )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~garde"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p3",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~x1 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x1"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p4",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~x2 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x2"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p5",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~x3 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x3"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p6",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~x4 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x4"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#i:p7",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~x5 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~x5"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "jgnType": "isProtocolRule"
+                },
+                {
+                    "jgnId": "#vr",
+                    "jgnLabel": "creation_du_coffre",
+                    "jgnMetadata": {
+                        "jgnActs": [
+                            {
+                                "jgnFactId": "action",
+                                "jgnFactMult": "",
+                                "jgnFactName": "CreationCoffre",
+                                "jgnFactShow": "CreationCoffre( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "action",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PhraseVivante",
+                                "jgnFactShow": "PhraseVivante( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            }
+                        ],
+                        "jgnConcs": [
+                            {
+                                "jgnFactId": "#vr:c0",
+                                "jgnFactMult": "",
+                                "jgnFactName": "PhraseHote",
+                                "jgnFactShow": "PhraseHote( ~p )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#vr:c1",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Coffre",
+                                "jgnFactShow": "Coffre( ~ep1, senc(~m, h(~p)) )",
+                                "jgnFactTag": "ProtoFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~ep1"
+                                    },
+                                    {
+                                        "jgnFunct": "senc",
+                                        "jgnParams": [
+                                            {
+                                                "jgnConst": "~m"
+                                            },
+                                            {
+                                                "jgnFunct": "h",
+                                                "jgnParams": [
+                                                    {
+                                                        "jgnConst": "~p"
+                                                    }
+                                                ],
+                                                "jgnShow": "h(~p)"
+                                            }
+                                        ],
+                                        "jgnShow": "senc(~m,h(~p))"
+                                    }
+                                ]
+                            }
+                        ],
+                        "jgnPrems": [
+                            {
+                                "jgnFactId": "#vr:p0",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~p )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~p"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#vr:p1",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~m )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~m"
+                                    }
+                                ]
+                            },
+                            {
+                                "jgnFactId": "#vr:p2",
+                                "jgnFactMult": "",
+                                "jgnFactName": "Fr",
+                                "jgnFactShow": "Fr( ~ep1 )",
+                                "jgnFactTag": "FreshFact",
+                                "jgnFactTerms": [
+                                    {
+                                        "jgnConst": "~ep1"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "jgnType": "isProtocolRule"
+                },
+                {
+                    "jgnId": "#i",
+                    "jgnLabel": "#i",
+                    "jgnType": "lastAtom"
+                }
+            ],
+            "jgType": "Tamarin prover constraint system"
+        }
+    ]
+}

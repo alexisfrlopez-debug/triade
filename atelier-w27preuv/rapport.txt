@@ -1,0 +1,48 @@
+ATELIER W27PREUV — LES PREUVES SYMBOLIQUES : LA DÉCOMPOSITION VÉCUE AU BAC, LE MUR NOMMÉ,
+LE KIT MACHINE RÉELLE (26/11/2026, prompt 5)
+====================================================================================================
+Évaluation du pack, prompt 5 — sécurité. INCOMPLETE demeure INCOMPLETE tant que la preuve n'est
+pas close ; aucun verdict fabriqué ; tout verdict dérive des runs, jamais de la frappe.
+
+1. LES OUTILS, INSTALLÉS AU BAC (la procédure §3.5 du REPRISE) : tamarin-prover 1.12.0 (le
+   binaire statique de la release) + Maude 3.4 (les paquets, MAUDE_LIB posé). Le bac de la
+   vague 27 détient donc les prouveurs — le mur demeure sa MÉMOIRE (4 Gio).
+2. LE REJEU À EMPREINTE IDENTIQUE, VÉCU : le lemme 3 (absence de destruction par corruption)
+   rend « verified (1122 steps) » en 30,1 s — BIT-IDENTIQUE au verdict de la vague 15 consigné
+   au registre (1 122 pas, 29,4 s alors). L'identité du rejeu est prouvée sur pièces.
+3. LA DÉCOMPOSITION (CF3-v3d.spthy, sha256 f00b039d…, le modèle v3 VERBATIM + les
+   sous-lemmes, fabrique_cf3_v3d.py) :
+   L1c — LE PONT DES PARTS : « toute reconstitution illicite est précédée des trois fuites
+   TENUES » : VERIFIED (52 pas, 17,5 s) ;
+   L2a — LA CHAÎNE DES PHRASES HÔTES PAR INDUCTION : « toute consommation d'une phrase hôte
+   remonte à une naissance » : VERIFIED (7 pas, 16,1 s) ;
+   L1a — L'ÉTAGE CONNAISSANCE : AU MUR (OOM à 97 s, avec et sans induction) — l'étage attend
+   la machine réelle ;
+   L2 COMPOSÉ INDUCTIF (l'énoncé du lemme 2, l'annotation en plus) : AU MUR (OOM à 145 s) ;
+   L2b (l'étage immédiat ancré à la naissance) : AU MUR (OOM à 145 s).
+4. LA SÉMANTIQUE D'OCCURRENCE, DÉCOUVERTE NOMMÉE : la première formulation de l'étage
+   immédiat (« Ex #j. PhraseHote(p) @ #j & #j < #i ») est REFUTÉE par tamarin 1.12.0 —
+   falsified, trace en 6 pas (creation + migration CF1, bénigne). L'occurrence d'un fait
+   linéaire s'ancre à sa CONSOMMATION, pas à sa production : le modèle-témoin test_occ.spthy
+   (sha256 ed66c811…) le démontre en TROIS pas sur deux règles. CE N'EST PAS UNE ATTAQUE DU
+   PROTOCOLE — c'est la sémantique d'occurrence, nommée pour le runneur ; la formulation
+   réfutée demeure AU MODÈLE (l2b_refutee_occurrence), documentée, son verdict attendu étant
+   FALSIFIED.
+5. L'ARGUMENT DE COMPOSITION, CONSIGNÉ (lisible par le relecteur) : L2 = L2a (vérifié) + la
+   DISJOINTURE des actions — aucune règle ne tire PhraseVivante ET CleUtilisateurEmployee
+   (la création et le changement tirent la naissance ; les cinq règles de clé ne la tirent
+   pas) — la naissance de la phrase consommée est donc STRICTEMENT antérieure à l'emploi de
+   la clé. L1 = L1a (au mur) + L1c (vérifié) par la transitivité de <.
+6. LE NÉGATIF, FIDÈLE : le témoin du modèle négatif (la falsification attendue avec trace)
+   demeure AU MUR (OOM à 93-100 s, DFS et BFS pareil) — fidèle au constat ORIGINAL de la
+   vague 15 (preuve-NEGATIF-lemme1.txt : « tamarin-prover: out of memory »). La machine
+   réelle rendra la trace.
+7. PROVERIF : le prouveur est ABSENT du bac — les voies de téléchargement refusées (releases
+   404, paquet Debian absent, bproversuite.org injoignable). Le port livré (CF3-v3.pv, sha256
+   98d8e6d1…) attend la machine réelle ; le kit imprime la commande exacte.
+8. LES STATUTS, DÉRIVÉS DES RUNS (PREUVES-STATUTS.json) : tamarin « partiel — L3 vérifié
+   (rejeu), la décomposition porte L1c et L2a vérifiés au bac ; L1a et les lemmes entiers
+   L1/L2 au mur 4 Gio, le run à la machine réelle » ; ATT-TAMARIN passe REFUSÉ → PARTIEL (la
+   vague 27) ; proverif « run NON exécuté — prouveur absent ». Le kit (kit-run-reel.txt)
+   imprime chaque commande, chaque budget, chaque attendu, à empreinte consignée
+   (empreintes-run.txt) ; la matrice des runs vécus vit à matrix-resultats.json.

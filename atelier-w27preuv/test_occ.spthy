@@ -1,0 +1,7 @@
+theory TestOcc
+begin
+builtins: hashing
+rule a: [ Fr(~x) ] --[ Nee(~x) ]-> [ Hote(~x) ]
+rule b: [ Hote(x) ] --[ Act(x) ]-> [ G(x) ]
+lemma etape_stricte: "All x #i. Act(x) @ #i ==> Ex #j. Hote(x) @ #j & #j < #i"
+end

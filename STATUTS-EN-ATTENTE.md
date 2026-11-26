@@ -12,7 +12,7 @@
 | ATT-ORACLE | mesure native du moteur d'oracle (T < 10 s) | EN ATTENTE | machine avec mmap 0xC000 autorisé | D264 | 0 |
 | ATT-VAES | couloir AES-GCM VAES/VPCLMULQDQ | EN ATTENTE | implémentation et mesure sur silicium | OPT | 0 |
 | ATT-GARDES | spécialisation des onze gardes (22→7) | EN ATTENTE | modification du corridor scellé et mesure | OPT | 0 |
-| ATT-TAMARIN | Tamarin/ProVerif sur machine réelle | REFUSÉ (outils absents du bac) | run au poste réel, commande imprimée | P1–P4 | 0 |
+| ATT-TAMARIN | Tamarin/ProVerif sur machine réelle | PARTIEL (outils AU bac à la vague 27 : L3 rejeu bit-identique, la décomposition L1c/L2a vérifiée ; L1a/L2 entier au mur 4 Gio ; ProVerif absent) | le run machine réelle à empreinte consignée (atelier-w27preuv/kit-run-reel.txt) | P1–P4 | 27 |
 | ATT-FIDO2 | prototype média FIDO2 hmac-secret | EN ATTENTE | authentificateur réel | D270 | 0 |
 | ATT-DUDECT | dudect matériel n ≥ 10, ≥ 2 machines | EN ATTENTE | run au poste réel | H7 | 0 |
 | ATT-REPL | réplication N > 1 (autre famille d'agent) | EN ATTENTE | trois tâches du corpus sur un second agent | D251 | 0 |

@@ -1,21 +1,30 @@
 {
   "tamarin": {
-    "outil": "tamarin-prover 1.12.0 + Maude 3.4 (installés à la vague 14 dans le bac d'alors ; binaires ABSENTS du bac courant — vérifié le 24/11/2026)",
+    "outil": "tamarin-prover 1.12.0 + Maude 3.4 (INSTALLÉS AU BAC à la vague 27 — binaire statique + paquets, la procédure §3.5 du REPRISE)",
     "modele": "CF3-v3",
     "verdicts": {
-      "L3": "VERIFIED (1 122 pas, 29,4 s)",
-      "L1": "INCOMPLETE au mur mémoire 4 Gio (cause : décomposition du goal de connaissance)",
-      "L2": "INCOMPLETE au mur mémoire 4 Gio"
+      "L3": "VERIFIED (1 122 pas — rejeu bit-identique à la vague 27, 30,5 s)",
+      "L1": "INCOMPLETE au mur mémoire 4 Gio (l'étage connaissance L1a : OOM à 97-104 s au bac, avec et sans induction)",
+      "L2": "INCOMPLETE au mur mémoire 4 Gio (le lemme composé inductif : OOM à 145 s au bac)"
     },
-    "statut": "partiel — L3 vérifié, L1/L2 incomplets",
-    "source": "atelier-qa3k5putf",
-    "disponibilite": "absents du bac courant ; verdicts obtenus aux vagues 14-15"
+    "decomposition_v3d": {
+      "fichier": "atelier-w27preuv/CF3-v3d.spthy",
+      "L1c": "VERIFIED (52 pas, 17,6 s — le pont des parts : toute reconstitution est précédée des trois fuites tenues)",
+      "L2a": "VERIFIED (7 pas, 16,8 s — la chaîne des phrases hôtes par induction : toute consommation remonte à une naissance)",
+      "L1a": "au mur (OOM) — l'étage connaissance attend la machine réelle",
+      "L2b": "la première formulation (PhraseHote @ #j < #i) REFUTÉE — la sémantique d'occurrence de tamarin 1.12.0 (le fait s'ancre à sa consommation ; le modèle-témoin test_occ.spthy le démontre en 3 pas) — PAS une attaque du protocole ; l'étage immédiat attend la machine réelle pareil",
+      "composition": "L2 = L2a (vérifié) + la disjointure des actions (aucune règle ne tire PhraseVivante ET CleUtilisateurEmployee) — l'argument consigné au rapport ; L1 = L1a (au mur) + L1c (vérifié)"
+    },
+    "negatif": "le témoin du modèle négatif demeure au mur (OOM à 100-123 s, DFS et BFS — fidèle au constat original de la vague 15, preuve-NEGATIF-lemme1.txt)",
+    "statut": "partiel — L3 vérifié (rejeu), la décomposition porte L1c et L2a vérifiés au bac ; L1a et les lemmes entiers L1/L2 au mur 4 Gio, le run à la machine réelle",
+    "source": "atelier-qa3k5putf (vague 15) + atelier-w27preuv (vague 27)",
+    "disponibilite": "installés au bac à la vague 27 ; le mur mémoire du bac (4 Gio) demeure pour L1a/L2"
   },
   "proverif": {
     "outil": "port livré (CF3-v3.pv, six requêtes, six écarts de sémantique nommés)",
-    "statut": "run NON exécuté",
+    "statut": "run NON exécuté — prouveur ABSENT du bac (les voies de téléchargement refusées : releases 404, paquet absent, bproversuite injoignable)",
     "source": "atelier-qa3k5putf",
-    "disponibilite": "port livré ; prouveur absent du bac courant ; run non exécuté"
+    "disponibilite": "port livré ; prouveur absent du bac ; le kit de run machine réelle à empreinte consignée (atelier-w27preuv/kit-run-reel.txt)"
   },
   "nv": {
     "statut": "simulateur 12/12, run matériel EN ATTENTE",
