@@ -1,0 +1,96 @@
+{
+ "bloc": "tls13-16-aes128-bloc",
+ "corps_sha256": "cd760f141bf7d4b63f449ca68029034d274067ab2804741d0e6ac9d46b8e1309",
+ "corps_octets": 129,
+ "marge": 57088,
+ "graine": 20261128,
+ "n_vecteurs": 12000,
+ "moteur_commite": {
+  "lots": [
+   {
+    "offset": 0,
+    "n": 4096
+   },
+   {
+    "offset": 4096,
+    "n": 4096
+   },
+   {
+    "offset": 8192,
+    "n": 3808
+   }
+  ],
+  "durees_s": [
+   0.0259,
+   0.0252,
+   0.0302,
+   0.0253,
+   0.0252,
+   0.0256,
+   0.0252,
+   0.0254,
+   0.0254
+  ],
+  "mediane_s": 0.0254,
+  "ratio_vs_c": 1056.04,
+  "console": "fprintf par vecteur (le régime de base)"
+ },
+ "moteur_generalise": {
+  "lot_unique": 12000,
+  "durees_s": [
+   0.0018,
+   0.002,
+   0.0019,
+   0.0019,
+   0.0019,
+   0.0019,
+   0.0019,
+   0.0018,
+   0.0018
+  ],
+  "mediane_s": 0.0019,
+  "ratio_bout_en_bout_vs_c": 77.49,
+  "regime_chaud_s": [
+   0.000136,
+   0.000113,
+   0.00011,
+   0.000109,
+   0.000106,
+   0.000105,
+   0.000114,
+   0.000103,
+   0.000107
+  ],
+  "regime_chaud_mediane_s": 0.000109,
+  "ratio_regime_chaud_vs_c": 4.56,
+  "console_ligne_identique": true
+ },
+ "pilote_c": {
+  "boucle": "entrée posée + appel, ni console ni digeste",
+  "gcc": "gcc -O2 du bac",
+  "durees_s": [
+   2.6e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05,
+   2.4e-05
+  ],
+  "mediane_s": 2.4e-05
+ },
+ "audit_1_sur_10": {
+  "vecteurs": 1200,
+  "ecarts": [],
+  "jumeau_duree_s": 0.0229
+ },
+ "conventions_regime": {
+  "chaud": "boucles internes des deux côtés, montage hors temps",
+  "bout_en_bout": "mur du sous-processus (montage + boucle + console)",
+  "pilote": "entrée posée + appel, ni console ni digeste"
+ },
+ "cible_regime": "≤ 5 × C (régime chaud)",
+ "verdict_regime": "TENUE"
+}

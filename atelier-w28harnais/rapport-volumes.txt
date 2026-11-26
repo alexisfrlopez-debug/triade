@@ -1,0 +1,8 @@
+[corps] tls13-16 assemblé depuis la notation — 129 octets, sha256 cd760f141bf7d4b6…
+[vecteurs] 12000 cas à la convention du jumeau — graine 20261128
+[moteur-committé] 12000 vecteurs aux 3 lots — 46.6 ms (le régime fprintf par vecteur)
+[moteur-généralisé] 12000 vecteurs au lot unique — 2.1 ms ; la console LIGNE-IDENTIQUE au moteur committé
+[audit-1-sur-10] 1200 vecteurs confrontés au jumeau — ZÉRO ÉCART
+[régime-chaud] le pilote C (la boucle nue, interne) : médiane 24.0 µs ; le moteur généralisé (la boucle d'exécution, interne) : 109.5 µs → 4.56 × C — la cible ≤ 5 × C TENUE
+[régime-bout-en-bout] le moteur committé : 25.4 ms → 1056 × C ; le moteur généralisé : 1.9 ms → 77 × C (montage + boucle + console différée — la convention du mur, publiée pareil)
+[jumeau] l'émulateur aux 1200 vecteurs de l'audit : 22.9 ms → 19.1 µs/vecteur ; le moteur généralisé de bout en bout : 0.16 µs/vecteur — l'ordre de grandeur vs l'oracle vivant : 123 × 

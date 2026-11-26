@@ -1,0 +1,310 @@
+{
+ "carte": {
+  "images": {
+   "hello": 3,
+   "proxy": 42,
+   "selftest": 10,
+   "echo": 19
+  },
+  "sha256_recoupes": 52,
+  "slots_iat": {
+   "proxy": 31,
+   "selftest": 3,
+   "echo": 20,
+   "hello": 3
+  }
+ },
+ "total_vecteurs": 235,
+ "executes_ok": 229,
+ "fault": 6,
+ "cible": 200,
+ "cible_verdict": "TENUE",
+ "confrontation_jumeau": {
+  "ligne_identique": 81,
+  "jumeau_ok_attendu": 81,
+  "divergences": [],
+  "nouvellement_executes": 148
+ },
+ "porte": {
+  "v23_rederive": 95,
+  "v23_conforme": true,
+  "regressions": [],
+  "shim_mute_attrape": true,
+  "shim_forme": "l'exécution mutée REFUSÉE (jamais une console fausse)",
+  "memo_hit": true,
+  "memo_miss_octet_mute": true
+ },
+ "controles_negatifs": {
+  "voisinage-ampute": {
+   "refuse": true,
+   "voisin": "e50001",
+   "vecteur": 0,
+   "motif": "UcError:Invalid memory read "
+  },
+  "stub-mute": {
+   "slot": "0x20B0 (GetStdHandle)",
+   "attrape": true,
+   "statut": "FAULT",
+   "motif": "UcError:Invalid memory fetch "
+  },
+  "global-non-declare": {
+   "refuse": true,
+   "page": "B+0x3000 (.data)",
+   "vecteur": 0,
+   "motif": "UcError:Invalid memory read "
+  }
+ },
+ "par_bloc": {
+  "a10001": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "a10002": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "a10003": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20001": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20002": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20003": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20004": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20005": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20006": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20007": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "b20008": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30001": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30002": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30003": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30004": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30005": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30006": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30007": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "c30008": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30009": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30010": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "c30011": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "c30013": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "e50001": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50002": {
+   "vecteurs": 7,
+   "ok": 7,
+   "fault": 0
+  },
+  "e50003": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "e50004": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50005": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50006": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "e50007": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50008": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50009": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50010": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  },
+  "e50011": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "e50012": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  },
+  "e50013": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "g70001": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "g70002": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "g70003": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "g70004": {
+   "vecteurs": 8,
+   "ok": 8,
+   "fault": 0
+  },
+  "g70005": {
+   "vecteurs": 5,
+   "ok": 5,
+   "fault": 0
+  },
+  "g70006": {
+   "vecteurs": 6,
+   "ok": 0,
+   "fault": 6
+  },
+  "g70007": {
+   "vecteurs": 7,
+   "ok": 7,
+   "fault": 0
+  },
+  "g70008": {
+   "vecteurs": 7,
+   "ok": 7,
+   "fault": 0
+  },
+  "g70009": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "g70010": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  },
+  "g70011": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  },
+  "g80001": {
+   "vecteurs": 4,
+   "ok": 4,
+   "fault": 0
+  },
+  "g80002": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  },
+  "g80003": {
+   "vecteurs": 6,
+   "ok": 6,
+   "fault": 0
+  }
+ },
+ "graine": 20261128
+}

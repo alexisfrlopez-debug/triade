@@ -1,0 +1,98 @@
+ATELIER W28HARNAIS — LA CARTE MÉMOIRE DÉRIVÉE DE LA CARTE C, LE MOTEUR NATIF
+GÉNÉRALISÉ AUX VOLUMES COMPLETS (prompt 3 de la vague 28, dépôt du 26/11/2026)
+Plan gelé : PLAN-W28HARNAIS.md (EMPREINTES-PLANS-VAGUE28.txt, commit 78bced1 —
+le commit AVANT toute donnée). CIB-HARNAIS-200 pré-enregistrée D273, JAMAIS
+re-tirée ; la cible de régime ≤ 5 × C pré-enregistrée AU PLAN.
+
+1. LE RECOUPEMENT PRÉALABLE — le rapport P3 du coffre (Entrée 412) recoupé
+   byte-byte contre le dépôt : sha256 9fc83eab… IDENTIQUE des trois côtés
+   (coffre, atelier-p3-exec/RAPPORT-P3-EXECUTION.txt, la copie locale) —
+   l'état consigné, AUCUNE valeur re-mesurée sans plan gelé.
+
+2. LA CARTE MÉMOIRE DÉRIVÉE MÉCANIQUEMENT de la carte C (harnais_carte.py) :
+   les 50 blocs ASSEMBLÉS DEPUIS LEURS NOTATIONS, sha256 recoupés 50/50 au
+   manifeste-52 ; le voisinage = les blocs PORTEURS de l'image de contexte
+   (EXE_PAR_BLOC, la couche B source — le même code aux mêmes RVA dans tout
+   artefact qui l'embarque, l'héritage R7 ; l'image de contexte suit la
+   convention P3 « proxy d'abord ») posés à leurs RVA réelles ; LES ENTRÉES
+   D'IAT aux adresses de l'image (la table des slots de la chaîne de build :
+   31 imports proxy, le trio kernel32 de selftest, les 20 d'echo, le trio de
+   hello — JAMAIS la pièce lue) : ExitProcess → TERMINATEUR (V3-2),
+   GetCommandLineW → STUB_GCLW (V4-2), les autres → PAGE_STUB ; LES STUBS
+   CONTRACTUELS pour les globaux lus : les références RIP-relatives de données
+   (65 cibles, extraites par capstone du code assemblé) reçoivent des PAGES
+   ZÉRO — le contrat dérive de la couche I, jamais de la pièce ; les zones du
+   pilote aux conventions du jumeau committé (calendrier 0x500200, entrées
+   0x500400, sortie 0x503000, la pile au probing V4-1).
+
+3. LA PORTE AVANT MESURE — LE HARNAIS v23 re-dérivé à conventions identiques :
+   95/235 exécutables au contexte standard, CONFORME aux 95 committés ; la
+   console du jumeau committé reproduite LIGNE-IDENTIQUE 81/81 (rax + digeste,
+   AUCUNE divergence, AUCUNE régression des 95) ; LE SHIM MUTÉ (l'épilogue pop
+   rsi→pop rdi de b20001, la pile désalignée) ATTRAPÉ au premier vecteur
+   (l'exécution mutée REFUSÉE, jamais une console fausse) ; LE MÉMO
+   CONTENT-ADDRESSED : la clé hashe la carte entière ‖ les vecteurs ‖ la
+   config ‖ la graine 20261128 — le second appel HIT, l'octet de carte muté
+   MISS (une autre clé, refusé).
+
+4. L'EXÉCUTION — 229/235 VECTEURS EXÉCUTABLES à la carte dérivée : CIB-HARNAIS-
+   200 TENUE (229 ≥ 200, publiée telle quelle, jamais re-tirée). LA
+   CONFRONTATION au jumeau : 81/81 ligne-identiques (les 81 OK du jumeau,
+   digeste octet pour octet), 148 NOUVELLEMENT EXÉCUTÉS (les FAULT du jumeau
+   que la carte dérivée exécute — la dérivée TLS13-16..., la classification
+   publiée champ par champ), 0 régression. L'ÉCART NOMMÉ PAR CLASSE : les SIX
+   vecteurs de tls-06 (g70006) refusés DEPASSEMENT (timeout 2 s, RIP dans le
+   bloc — la boucle non bornée au calendrier de la convention) — LE GATE du
+   dépassement ajouté au harnais : l'arrêt propre vit à RIP == 0x60000, un
+   arrêt sur timeout N'EST JAMAIS un OK. L'ÉCART VS P3 nommé : le harnais
+   image v4 comptait OK les exécutions arrêtées au timeout silencieux (g70006
+   6/6 « OK ») — le harnais à carte les REFUSE nommément (235−6 = 229) ; la
+   correction dérive du RIP, elle n'est pas un re-tirage (la cible ≥ 200
+   demeure, tenue aux deux comptes).
+   LES CONTRÔLES NÉGATIFS vécus : VOISINAGE AMPUTÉ (e50001 retiré de la
+   carte — l'appel du voisin FAULT au vecteur qui l'appelle), STUB MUTÉ (le
+   slot GetStdHandle d'a10001 pointé hors carte — l'appel REFUSÉ), GLOBAL NON
+   DÉCLARÉ (la page .data 0x3000 retirée — la lecture d'e50011 FAULT) —
+   chacun refusé nommément. LE REJEU BIT-IDENTIQUE : la session complète
+   rejouée, console-carte.jsonl 235 lignes BYTE-BYTE identiques (31231 o),
+   carte-resultat.json identique.
+
+5. LE MOTEUR NATIF GÉNÉRALISÉ AUX VOLUMES COMPLETS (moteur_volumes.c,
+   session_volumes.py) : 12 000 cas pour tls13-16-aes128-bloc (le corps
+   assemblé depuis la notation, sha256 cd760f14… consigné), la graine 20261128
+   AVANT le tirage, la convention du jumeau (0, 63 bits, 0, 0). LE MOTEUR
+   COMMITTÉ aux trois lots (≤ 4 096 vecteurs, la limite statique) : 46,6 ms
+   de mur — le régime fprintf par vecteur. LE MOTEUR GÉNÉRALISÉ (le lot
+   unique 12 000, le compte en registres bruts — le rax et LE DIGESTE LU par
+   vecteur, JAMAIS retiré —, la console différée en une passe) : la console
+   LIGNE-IDENTIQUE au moteur committé (l'équivalence prouvée octet par octet),
+   le mur 1,9 ms (33 × plus vite que le committé). L'AUDIT 1-SUR-10 CONSERVÉ :
+   1 200 vecteurs confrontés au JUMEAU (l'émulateur du registre 8hguph5ee,
+   champ par champ) — ZÉRO ÉCART. LE RÉGIME contre le PILOTE C au même volume
+   (le même code de bloc appelé directement sans échafaudage d'oracle, gcc
+   -O2 du bac, la boucle nue : l'entrée posée + l'appel), n=9 passes, la
+   médiane, les horloges internes symétriques : le pilote 24,0 µs, la boucle
+   d'exécution du moteur 109,5 µs → 4,56 × C — LA CIBLE ≤ 5 × C TENUE. LES
+   CONVENTIONS PUBLIÉES : le régime de BOUT EN BOUT (le mur du sous-processus
+   : montage + boucle + console différée) 77 × C, publié pareil ; le moteur
+   committé 1 056 × C (le régime de base, l'I/O formatée par vecteur) ; LE
+   JUMEAU 19,1 µs/vecteur contre 0,16 µs/vecteur au moteur généralisé —
+   L'ORDRE DE GRANDEUR vs l'oracle vivant : 123 × (la promesse de
+   l'évaluation tenue et dépassée).
+
+6. LA GARDE : aucun artefact scellé touché (le sceau-I 14/14 avant et après ;
+   les blocs assemblés depuis les notations, sha256 recoupés 50/50 ; la pièce
+   jamais lue — la carte C et la couche B source only) ; aucun verdict
+   fabriqué (les six DEPASSEMENT refusés et consignés, l'écart vs P3 nommé
+   par classe, les cibles jamais re-tirées : CIB-HARNAIS-200 tenue à 229, la
+   cible de régime tenue à 4,56 × C) ; aucun contrôle retiré (le digeste lu
+   par vecteur, l'audit 1-sur-10 conservé, les contrôles négatifs vécus) ;
+   la graine 20261128 consignée ; le registre C17 et la recomposition C25/C26
+   aux cinq pièces vivent à la génération de l'édition v0.33.0 (la chaîne
+   vague 27 reconduite).
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w28harnais/harnais_carte.py     # la carte dérivée (235 vecteurs, la porte)
+  python3 atelier-w28harnais/session_volumes.py    # les volumes (12 000 cas, l'audit, le régime)
+  python3 v06/sceau_I.py verifier                  # la garde (14/14)
+Les sha256 de tous les fichiers produits : EMPREINTES.txt.

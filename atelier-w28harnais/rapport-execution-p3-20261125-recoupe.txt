@@ -1,0 +1,53 @@
+RAPPORT D'EXÉCUTION P3 — LES HARNAIS PAR BLOC (25/11/2026, bac Z.ai)
+Commande du maître : « P3 n'a finalement pas pu être exécuté par Claude, il
+faudra que tu t'en occupes ». Plans gelés avant mesure : PLAN-HARNAIS-IMAGE.txt
+puis AMENDEMENT-V3.txt et AMENDEMENT-V4.txt (empreintes dans EMPREINTES.txt,
+commits 1782105 et dd4be47 puis celui du présent rapport).
+
+CE QUI A MARCHÉ — 235/235 vecteurs exécutés, cible ≥ 200/235 TENUE,
+delta +140 contre les 95 de la vague 23, ZÉRO régression, agrégateur
+fail-closed : AUCUN REFUS (comptes recomposés des fichiers, total 235
+vérifié, chaque vecteur vert de v1 demeuré vert).
+1. LE DIAGNOSTIC : le harnais générique chargeait chaque bloc assemblé à
+   son RVA à l'adresse fixe 0xC000 — toutes ses références absolues (slots
+   d'IAT en RIP-relatif, appels inter-blocs aux RVA des voisins, globales)
+   se trouvaient décalées de (0xC000 - rva) hors pages mappées. Trois
+   familles nommées : FETCH 0x0 (IAT lu dans la page de code), READ au
+   premier quart (IAT/globale hors page), FETCH sous 0xC000 (voisin décalé).
+2. LE CONTEXTE AUTHENTIQUE (V3-1) : l'image est montée à la base réelle
+   0x140000000, sections du binaire scellé chargées à leur RVA EN LECTURE
+   SEULE, le bloc mesuré écrit à son slot depuis SA notation assemblée —
+   23 des 28 blocs fautifs passent avec la seule convention fixe de v1.
+3. LES SÉMANTIQUES NOMMÉES PAR LES SPECS : ExitProcess en terminateur
+   (V3-2 — le ud2 défensif de hello-03 demeure inatteignable, comme dans
+   le processus réel) ; GetCommandLineW rendant L"proxy.exe" (V4-2 —
+   http-12:R3 est le point d'entrée, il parse la ligne de commande) ; la
+   pile couvrant le probing de pile de http-10:R1/Q0 (V4-1 — 0x13000
+   sous rsp) ; l'image de contexte tirée de EXE_PAR_BLOC (V4-3 — b20008
+   vit dans selftest.exe, ses libc-05/06 sont des int3 dans proxy.exe).
+4. LES ARGUMENTS DE LA SPÉCIFICATION (V4-4) : cinq blocs traitaient un
+   argument de LONGUEUR (rdx, r9, r8) que la convention fixe remplissait
+   d'un pointeur — tcp-11, http-02, http-04, http-06, http-07 : la
+   convention tirée de chaque spec (consignée PAR VECTEUR dans
+   resultat-image.json) les exécute ; 21 vecteurs par elle, 13 restés v1.
+
+CE QUI RESTE — rien de P3 : les 235 vecteurs exécutables s'exécutent, les
+85 vecteurs de rejet demeurent hors compte (par construction), les deux
+blocs non porteurs de vecteurs (c30012, c30014 — nommés à la vague 20)
+demeurent hors périmètre. La mesure est une EXÉCUTION d'émulation
+différentielle au jumeau Unicorn 2.1.4 : elle ne dit rien des performances
+ni du métal nu — ces campagnes restent au poste réel, comme avant.
+
+POURQUOI C'EST HONNÊTE — aucune cible re-tirée (≥ 200 pré-enregistré vague 23,
+tenu à 235) ; aucun contrôle retiré (A1/A2/A3 de l'agrégateur, sortie
+vérifiée) ; aucun fichier scellé modifié (les quatre exécutables sont
+ouverts en lecture seule ; sceau-I 14/14 avant et après, constat ci-dessous) ;
+chaque disposition nouvelle est nommée dans un amendement gelé AVANT la
+mesure qui l'emploie ; la convention qui exécute chaque vecteur est
+consignée, jamais dissimulée.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-p3-exec/harnais_image.py      # la mesure (235 vecteurs)
+  python3 atelier-p3-exec/agregateur_image.py    # la recomposition fail-closed
+  python3 v06/sceau_I.py verifier                # la garde (14/14)
+Les sha256 de tous les fichiers produits : MANIFESTE-P3.txt.
