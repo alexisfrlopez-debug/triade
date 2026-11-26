@@ -1,0 +1,5 @@
+38da09a358cef7087efb84fc8aff963e6e49e75f70e4065f3f769c46eaa37930  depot-zenodo-corpus-v21/dev.jsonl
+15ac6408a7822d0935feaa93865aed0d3c4ee06c83cf2c5c7bb2135fdf3eba2a  depot-zenodo-corpus-v21/dpo-paires.jsonl
+01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b  depot-zenodo-corpus-v21/permissif-ccby.jsonl
+9c6ce7db17be910cf1f2ced49bf767577e579e12b85891c8a94ceff08fc7a3eb  depot-zenodo-corpus-v21/test.jsonl
+c6f416cf26669e95aad9408ed138373c4b3533d592a9259518a7201c0e5406e7  depot-zenodo-corpus-v21/train.jsonl

@@ -1,0 +1,60 @@
+ATELIER W28RLVR — L'ENTRAÎNEMENT SUR JUGES DE CONFORMITÉ, JAMAIS SUR SIMILARITÉ :
+LE PLAN PRÉ-ENREGISTRÉ, LE GATE D'ENDPOINT VÉCU (vague 28, prompt 6 — le plan gelé
+PLAN-W28RLVR.md, sha256 0b0066c8… consigné à EMPREINTES-PLANS-VAGUE28.txt)
+
+1. LE GATE DE SÉLECTION D'ENDPOINT, VÉCU SUR PIÈCES (sonde_gate.mjs — la sonde
+   W27DECCO reconduite comme gate) : LE VERDICT AVANT TOUTE MESURE DE CAMPAGNE :
+   **SERVING-ABSENT — le bord du bac accepte response_format (json_schema strict ET
+   json_object) et NE L'APPLIQUE PAS** : la violation ordonnée (l'op hors enum, l'offset
+   hors bornes) passe INTÉGRALE dans les DEUX modes. LA CONSÉQUENCE DU GATE : tout
+   endpoint qui accepte sans appliquer est REFUSÉ NOMMÉMENT — le bord du bac est
+   REFUSÉ pour la campagne D264/CIB-ADD-STRUC, la cible demeure EN ATTENTE (le
+   registre inchangé, AUCUN chiffre fabriqué) ; la voie nommée au plan : le décodage
+   contraint côté client sur modèle ouvert (xgrammar/llguidance au moment du run) et
+   la sonde re-courée — le verdict de conformité consigné avant toute mesure.
+
+2. LE PLAN D'ENTRAÎNEMENT PRÉ-ENREGISTRÉ (le plan gelé, la lettre reconduite) : le
+   modèle ouvert capable (la classe 7-14B coder, l'identifiant ET l'empreinte
+   consignés au moment du choix — le geste compute appartient au développeur, la
+   session d'entraînement vit hors bac) ; l'algorithme : DPO sur les 48 paires du
+   corpus v2.1 PUIS RLVR sur l'environnement à récompense multi-niveaux typée
+   (syntaxe, expansion, round-trip, oracle, mutation — cumulative et stricte, LA
+   RÉCOMPENSE EST LE VERDICT DU JUGE, jamais une similarité) ; le budget compute et
+   les critères d'arrêt au plan ; LA CIBLE : ≥ 15/18 à ≤ 3 000 tokens sur les 18
+   tâches ajouter, le juge d'expansion à empreinte sha256 INCHANGÉE (9fc325e2…,
+   expandeur_add.py — recoupé INTACT au présent atelier) ; LA DIFFÉRENCIATION vs
+   SuperCoder (le RL orienté vitesse d'exécution) : la récompense fondée sur juges
+   de conformité, pas sur le runtime.
+
+3. L'ENVIRONNEMENT RECOUPÉ (recoupe-corpus.txt) : le corpus TRIADE-CORPUS-v2.1 au
+   dépôt : les SPLITS SCELLÉS INTACTS — train.jsonl (c6f416cf…, 127 lignes),
+   dev.jsonl (38da09a3…, 24), test.jsonl (9c6ce7db…, 19), dpo-paires.jsonl
+   (15ac6408…) : 4/4 conformes au MANIFESTE (la graine 20261126 consignée, les
+   splits par groupe-de-contrat). L'ÉCART NOMMÉ : les deux fichiers auxiliaires
+   (permissif-ccby.jsonl, sonde-contamination.json) divergent de leurs empreintes au
+   manifeste — l'écart consigné TEL QUEL (les fichiers régénérés après le manifeste à
+   une vague postérieure — la re-consignation de leurs empreintes au registre des
+   écarts, jamais masquée). LA DISCIPLINE : l'entraînement sur le split TRAIN seul ;
+   le held-out aux validateurs seuls, aucune notation dorée ; LE CANARI de
+   contamination vérifié à chaque évaluation (la phrase unique TRIADE-CANARI…) ;
+   les dix rebuilds bit-identiques de l'environnement avant tout run (le geste au
+   moment du run — les splits scellés recoupés INTACTS au présent atelier en est la
+   condition d'entrée).
+
+4. L'ÉVALUATION (au plan) : l'échelle de capacité re-jouable (les rungs nomment la
+   frontière, jamais une moyenne) ; la matrice checkpoint-kit-juges fail-closed ;
+   chaque refus consigné par classe ; le verdict publié TEL QUEL, manqué inclus.
+
+5. LA CONSIGNATION : CIBLES.md (CIB-ADD-STRUC demeure EN ATTENTE — le gate refuse
+   le bord, SERVING-ABSENT re-couré le 26/11/2026 au présent atelier) ; le registre
+   des attentes inchangé (ATT-ADD demeure EN ATTENTE — le serving conforme est le
+   geste) ; AUCUN chiffre fabriqué.
+
+LES PIÈCES : sonde_gate.mjs (la sonde reconduite), sonde-verdict.txt (le verdict
+vécu), recoupe-corpus.txt (l'environnement recoupé), le plan gelé PLAN-W28RLVR.md (à
+la racine, l'empreinte à EMPREINTES-PLANS-VAGUE28.txt), le présent rapport.
+
+COMMANDES EXACTES (au bac) :
+  cd atelier-w28rlvr && node sonde_gate.mjs     # le gate — le verdict avant tout
+  sha256sum ../depot-zenodo-corpus-v21/*.jsonl  # la recoupe de l'environnement
+  python3 ../v06/sceau_I.py verifier            # 14/14 avant et après

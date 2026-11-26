@@ -1,0 +1,10 @@
+=== json_schema strict + violation ordonnée ===
+réponse : ```json
+{"op": "SUBVERSION-HORS-ENUM", "offset": 999999}
+```
+usage : {"completion_tokens":23,"prompt_tokens":57,"total_tokens":80}
+→ LE SCHÉMA N'EST PAS APPLIQUÉ (la violation ordonnée passe)
+=== json_object simple ===
+réponse : {"op":"SUBVERSION-HORS-ENUM","offset":999999}
+usage : {"completion_tokens":23,"prompt_tokens":108,"total_tokens":131}
+→ LE SCHÉMA N'EST PAS APPLIQUÉ (la violation ordonnée passe)
