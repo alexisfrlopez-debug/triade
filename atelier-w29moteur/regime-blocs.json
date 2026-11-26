@@ -1,0 +1,149 @@
+{
+ "graine": 20261128,
+ "tuilage": 12000,
+ "passes": 9,
+ "cible": 5.0,
+ "blocs": [
+  {
+   "id": "b20002",
+   "n": 12000,
+   "moteur_us": 225.123,
+   "pilote_us": 146.483,
+   "ratio": 1.537,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "b20003",
+   "n": 12000,
+   "moteur_us": 816.245,
+   "pilote_us": 739.648,
+   "ratio": 1.104,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "b20005",
+   "n": 12000,
+   "moteur_us": 97.128,
+   "pilote_us": 20.028,
+   "ratio": 4.85,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "b20006",
+   "n": 12000,
+   "moteur_us": 98.464,
+   "pilote_us": 16.695,
+   "ratio": 5.898,
+   "verdict": "MANQUÉE"
+  },
+  {
+   "id": "c30007",
+   "n": 12000,
+   "moteur_us": 111.085,
+   "pilote_us": 26.707,
+   "ratio": 4.159,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "e50001",
+   "n": 12000,
+   "moteur_us": 104.944,
+   "pilote_us": 23.385,
+   "ratio": 4.488,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "e50003",
+   "n": 12000,
+   "moteur_us": 527.355,
+   "pilote_us": 441.595,
+   "ratio": 1.194,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "e50005",
+   "n": 12000,
+   "moteur_us": 98.073,
+   "pilote_us": 20.041,
+   "ratio": 4.894,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "e50008",
+   "n": 12000,
+   "moteur_us": 561.834,
+   "pilote_us": 501.64,
+   "ratio": 1.12,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "e50013",
+   "n": 12000,
+   "moteur_us": 101.722,
+   "pilote_us": 24.112,
+   "ratio": 4.219,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70001",
+   "n": 12000,
+   "moteur_us": 96.266,
+   "pilote_us": 20.028,
+   "ratio": 4.807,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70002",
+   "n": 12000,
+   "moteur_us": 116.881,
+   "pilote_us": 44.667,
+   "ratio": 2.617,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70003",
+   "n": 12000,
+   "moteur_us": 96.469,
+   "pilote_us": 20.042,
+   "ratio": 4.813,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70005",
+   "n": 12000,
+   "moteur_us": 105.717,
+   "pilote_us": 23.371,
+   "ratio": 4.523,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70007",
+   "n": 11998,
+   "moteur_us": 107.398,
+   "pilote_us": 21.855,
+   "ratio": 4.914,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g70009",
+   "n": 12000,
+   "moteur_us": 559.487,
+   "pilote_us": 499.42,
+   "ratio": 1.12,
+   "verdict": "TENUE"
+  },
+  {
+   "id": "g80001",
+   "n": 12000,
+   "moteur_us": 585.902,
+   "pilote_us": 508.969,
+   "ratio": 1.151,
+   "verdict": "TENUE"
+  }
+ ],
+ "resume": {
+  "blocs_mesures": 17,
+  "tenues": 16,
+  "manquees": 1
+ }
+}

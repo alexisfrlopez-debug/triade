@@ -1,0 +1,93 @@
+ATELIER W29MOTEUR — LE MOTEUR NATIF GÉNÉRALISÉ AUX 52 BLOCS, LA RACINE DE
+MERKLE, L'OUVERTURE DE SESSION AU PLANCHER (vague 29, prompt 2 — le plan gelé
+PLAN-W29MOTEUR.md, sha256 3ecf95d7… consigné à EMPREINTES-PLANS-VAGUE29.txt,
+le commit AVANT toute donnée)
+
+1. LE CORPUS GÉNÉRALISÉ (session_w29moteur.py) : les 50 blocs résolus du
+   manifeste-52 (les deux non-résolus c30012/c30014 exclus et nommés),
+   l'assemblage DEPUIS LES NOTATIONS (R5, le sha256 recoupé 50/50 au
+   manifeste — un écart refuse la session), le corpus des 235 vecteurs du
+   w20-orac. **235/235 VECTEURS IDENTIQUES AUX DEUX MOTEURS** : le moteur
+   généralisé (moteur_volumes — le lot unique, le compte en registres bruts,
+   rax ET digeste lus par vecteur, la console différée en une passe) et le
+   moteur committé (moteur_oracles) rendent LA MÊME CONSOLE par vecteur, le
+   statut compris (les FAULT nommés vecteur par vecteur, la passe entière
+   d'abord — le patron W27VAES : un SIGSEGV nomme le VECTEUR, jamais la
+   session). LA CLASSIFICATION au jumeau : 231/235 (les 4 vecteurs de b20006 :
+   L'ÉCART DE MOTIF NOMMÉ du précédent W27VAES — b20006 rend 0xC000 natif
+   contre 0 au jumeau, la même divergence consignée au registre 77/81, jamais
+   re-tirée). L'AUDIT 1-SUR-10 conservé : chaque vecteur audité confronté
+   champ par champ (17/50 identiques, 18 vivants — le b20006 audité nommé).
+
+2. LA RACINE DE MERKLE (le scellage de la trace entière) : le digeste de
+   trace complet par vecteur (bloc ‖ index ‖ rax ‖ digeste, les 235 feuilles)
+   engagé dans UN ARBRE de Merkle — **la racine 8f717b1a8f106f06… CONSIGNÉE**
+   au registre session-corpus.json ; la recomposition depuis les traces
+   recoupée ; LA RACINE DIVERGENTE REFUSÉE nommément (le contrôle négatif
+   vécu : la feuille mutée → la racine mutée ≠ la racine consignée → refus).
+   L'audit 1/10 DEVIENT vérifiable sélectivement à coût constant (la feuille
+   par la feuille, la racine par la recomposition).
+
+3. LE RÉGIME CHAUD PAR BLOC (la cible ≤ 5 × C pré-enregistrée au plan, n=9
+   passes médianes, le volume 12 000 du W28HARNAIS — le corpus canonique
+   TUIÉ, AUCUN nouveau tirage, la convention nommée) : 17 blocs mesurés (les
+   33 FAULT au corpus ne passent pas la boucle — le moteur meurt avant le
+   HOT, la classe nommée), **16 TENUE, 1 MANQUÉE** — b20006 à 5,90 × (98,5
+   vs 16,7 µs, le bloc au régime d'échafaudage dominant — le verdict publié
+   TEL QUEL, la cible jamais re-tirée). Les pires après lui : g70007 4,91 ×,
+   e50005 4,89 ×, b20005 4,85 ×. LA MÉDIANE DES 17 : ~4,2 × — le régime
+   généralisé tient la cible par bloc à une exception près.
+
+4. L'OUVERTURE DE SESSION — LA LIGNE CIBLE CIB-VOL-SESSION (session_
+   ouverture.py + moteur_session.{c,S}) : le chemin critique restant, le
+   md5+sha256 du TÉMOIN 196 609 o PAR LES BLOCS SCELLÉS. LE MONTAGE : l'image
+   loupe EXTRAITE DU HARNAIS aux octets mêmes (extraire_image.py : les
+   notations du noyau assemblées, LES HÉRITAGES EXTRAITS DES SCELLÉS posés —
+   libc-01/07 du scellé M1, tls13-01/03/04 du scellé 1.0.0, les tables MD5,
+   l'IAT aux 34 slots — le harnais est LE LECTEUR CANONIQUE, le moteur natif
+   reçoit LES MÊMES OCTETS), LES SIX FEUILLES kernel32 DU NOYAU PORTÉES EN
+   AMORCES NATIVES (le pont msx64→SysV : les arguments réordonnés, rdi/rsi
+   sauvés — volatiles en SysV, non-volatiles en msx64), LE TÉMOIN lu par les
+   amorces (la graine 20261107 de composer_temoins, la même génération FIXE).
+   L'APPEL : loupe-01(rcx=le chemin) — la session née ENTIÈRE, l'ouverture
+   seule horlogée (le montage et la remise au vierge HORS TEMPS, la
+   convention W28HARNAIS), n=5 passes médiane. **LE RÉSULTAT : 1 263,7 µs —
+   LA CIBLE ≤ 1 s TENUE** (0,001 264 s, la marge ×791) ; **LA RÉFÉRENCE
+   JUMEAU re-mesurée au présent bac : 9,836 s médiane (passes 9,843/9,833/
+   9,836)** — le « ~10 s » du p8-m4 confirmé, L'ÉCAR ×7 782 vendu au chemin
+   natif. LES CONDENSÉS RECROPÉS À HASHLIB (le juge croisé) : md5
+   2f4b7bb7f90ccfa1… ✓, sha256 c5fc1f28e471059d… ✓ — la session native rend
+   LES MÊMES EMPREINTES que le jumeau (le panneau R_EMPREINTES 0xE3C0/0xE3D0,
+   la confrontation byte-byte). LE REJEU bit-identique : deux sessions
+   complètes, les condensés IDENTIQUES. NOTE : rax est NON SPÉCIFIÉ sur le
+   chemin de succès (l'épilogue de loupe-01 ne le pose pas — les refus seules
+   posent leurs codes négatifs) : LES CONDENSÉS SONT LE VERDICT, jamais rax.
+
+5. LES QUATRE CONTRÔLES NÉGATIFS, VÉCUS : (1) LE SHIM MUTÉ ATTRAPÉ — la
+   première position mutante du corps (b20002, l'octet 1 : 31 c0 → 31 96)
+   diverge à la confrontation (l'état FAULT-SIG11, la console divergente —
+   l'exécution mutée REFUSÉE, jamais une console fausse) ; (2) L'OCTET DE
+   CARTE MUTÉ → MISS du mémo content-addressed (la clé sha256 du corps muté
+   diverge — une AUTRE clé, le MISS nommé) ; (3) LE VOISINAGE AMPUTÉ → FAULT
+   nommé (le calendrier absent : le moteur refuse, code 2 — CALENDRIER-
+   ABSENT) ; (4) LA RACINE DE MERKLE DIVERGENTE → REFUS nommé (la feuille
+   mutée, la racine mutée ≠ la consignée). 4/4 VERT.
+
+6. LA GARDE : aucun contrôle retiré (le compte rax+digeste par vecteur
+   conservé — la preuve d'équivalence aux deux moteurs) ; l'ordre du corpus
+   JAMAIS re-tiré (la graine 20261128 consignée AVANT, l'ordre canonique du
+   w20-orac) ; aucune pièce scellée touchée (l'image extraite EST la lecture
+   du harnais — les octets des notations recoupés au manifeste 50/50 ; les
+   scellés relus à leurs empreintes canoniques avant l'extraction).
+
+LES PIÈCES : session_w29moteur.py + session-corpus.json (le corpus et la
+racine), regime-blocs.json (les 17 régimes), extraire_image.py + image-bas.bin
+(48 Ko) + image-data.bin (72 Ko) + temoin-3f.bin (196 609 o, sha256 c5fc1f28…),
+moteur_session.c + moteur_session.S + le binaire, session_ouverture.py +
+session-ouverture.json (la cible CIB-VOL-SESSION), le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w29moteur/session_w29moteur.py        # le corpus + le régime
+  python3 atelier-w29moteur/extraire_image.py           # l'image extraite
+  python3 atelier-w29moteur/session_ouverture.py       # la cible ≤ 1 s
+  python3 v06/sceau_I.py verifier                       # la garde (14/14)

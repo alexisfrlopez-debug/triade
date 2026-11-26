@@ -1,0 +1,447 @@
+{
+ "graine": 20261128,
+ "blocs": [
+  {
+   "id": "a10001",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "a10002",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "a10003",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "b20001",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "b20002",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "b20003",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "b20004",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "b20005",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "b20006",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 0,
+   "ok_natifs": 4
+  },
+  {
+   "id": "b20007",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "b20008",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30001",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30002",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30003",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30004",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30005",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30006",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30007",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 5
+  },
+  {
+   "id": "c30008",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30009",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30010",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30011",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "c30013",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50001",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "e50002",
+   "vecteurs": 7,
+   "identiques_aux_deux": 7,
+   "classes_comme_jumeau": 7,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50003",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 5
+  },
+  {
+   "id": "e50004",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50005",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "e50006",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 1
+  },
+  {
+   "id": "e50007",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50008",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "e50009",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50010",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50011",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50012",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "e50013",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "g70001",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 5
+  },
+  {
+   "id": "g70002",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "g70003",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 5
+  },
+  {
+   "id": "g70004",
+   "vecteurs": 8,
+   "identiques_aux_deux": 8,
+   "classes_comme_jumeau": 8,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g70005",
+   "vecteurs": 5,
+   "identiques_aux_deux": 5,
+   "classes_comme_jumeau": 5,
+   "ok_natifs": 5
+  },
+  {
+   "id": "g70006",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g70007",
+   "vecteurs": 7,
+   "identiques_aux_deux": 7,
+   "classes_comme_jumeau": 7,
+   "ok_natifs": 7
+  },
+  {
+   "id": "g70008",
+   "vecteurs": 7,
+   "identiques_aux_deux": 7,
+   "classes_comme_jumeau": 7,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g70009",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "g70010",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g70011",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g80001",
+   "vecteurs": 4,
+   "identiques_aux_deux": 4,
+   "classes_comme_jumeau": 4,
+   "ok_natifs": 4
+  },
+  {
+   "id": "g80002",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  },
+  {
+   "id": "g80003",
+   "vecteurs": 6,
+   "identiques_aux_deux": 6,
+   "classes_comme_jumeau": 6,
+   "ok_natifs": 0
+  }
+ ],
+ "controles": {
+  "shim-mute": {
+   "bloc": "b20002",
+   "octet": 1,
+   "etat": "FAULT-SIG11",
+   "note": "la première position mutante divergente (la console ou l'état) — le mutant REFUSÉ à la confrontation",
+   "attrape": true
+  },
+  "octet-carte-mute": {
+   "cle_honnete": "a839f95712415e3302f7660aad6bbed5a2171406ac41929adb588212f8512972",
+   "cle_mutee": "bfcc66e5462c6241a24e65cf4fc6f5b11cd5566f9a20ffb23821ec71a1cb6fee",
+   "miss": true,
+   "note": "la clé content-addressed du corps muté diverge — MISS nommé"
+  },
+  "voisinage-ampute": {
+   "code": 2,
+   "fault": true,
+   "nom": "CALENDRIER-ABSENT"
+  },
+  "racine-divergente": {
+   "racine_consignee": "8f717b1a8f106f060f11268b801c5a80e67d9f675c72777c0c23fc49bc30b0c1",
+   "racine_mutee": "c7dcc5d6e19920abab2f294a30ecd59706462ed84a125bf6d49dc39f35090cdf",
+   "refusee": true
+  }
+ },
+ "racine_merkle": "8f717b1a8f106f060f11268b801c5a80e67d9f675c72777c0c23fc49bc30b0c1",
+ "feuilles": 235,
+ "total_vecteurs": 235,
+ "identiques_aux_deux_moteurs": 235,
+ "classes_comme_jumeau": 231,
+ "divergences_moteurs": [],
+ "divergences_jumeau": [
+  {
+   "bloc": "b20006",
+   "vecteur": 0,
+   "jumeau": {
+    "statut": "OK",
+    "rax": 0
+   },
+   "natif": {
+    "statut": "OK",
+    "rax": 49152,
+    "digeste": "00000000000000000000000000000000"
+   }
+  },
+  {
+   "bloc": "b20006",
+   "vecteur": 1,
+   "jumeau": {
+    "statut": "OK",
+    "rax": 0
+   },
+   "natif": {
+    "statut": "OK",
+    "rax": 49152,
+    "digeste": "00000000000000000000000000000000"
+   }
+  },
+  {
+   "bloc": "b20006",
+   "vecteur": 2,
+   "jumeau": {
+    "statut": "OK",
+    "rax": 0
+   },
+   "natif": {
+    "statut": "OK",
+    "rax": 49152,
+    "digeste": "00000000000000000000000000000000"
+   }
+  },
+  {
+   "bloc": "b20006",
+   "vecteur": 3,
+   "jumeau": {
+    "statut": "OK",
+    "rax": 0
+   },
+   "natif": {
+    "statut": "OK",
+    "rax": 49152,
+    "digeste": "00000000000000000000000000000000"
+   }
+  }
+ ],
+ "note_b20006": "l'écart de motif nommé (le précédent W27VAES : b20006 rend 0xC000 natif contre 0 au jumeau — les 4 vecteurs, la même divergence consignée au registre 77/81)",
+ "audit_1sur10": {
+  "audites": 50,
+  "vivants": 18,
+  "identiques": 17
+ },
+ "duree_s": 0.421
+}

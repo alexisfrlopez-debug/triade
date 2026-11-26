@@ -1,0 +1,49 @@
+{
+ "cible_us": 1000000.0,
+ "temoin": {
+  "octets": 196609,
+  "md5": "2f4b7bb7f90ccfa1b4735aaa648295c7",
+  "sha256": "c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3",
+  "graine": 20261107
+ },
+ "natif": {
+  "code": 0,
+  "ouverture": "OUVERTURE rax=16512 md5=2f4b7bb7f90ccfa1b4735aaa648295c7(1) sha256=c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3(1)",
+  "md5_confronte": true,
+  "sha_confronte": true,
+  "mediane_us": 1263.745,
+  "passes_us": [
+   1234.974,
+   1248.196,
+   1263.745,
+   1283.17,
+   1285.442
+  ]
+ },
+ "natif_rejeu": {
+  "code": 0,
+  "ouverture": "OUVERTURE rax=16512 md5=2f4b7bb7f90ccfa1b4735aaa648295c7(1) sha256=c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3(1)",
+  "md5_confronte": true,
+  "sha_confronte": true,
+  "mediane_us": 1262.242,
+  "passes_us": [
+   1254.585,
+   1257.406,
+   1262.242,
+   1268.379,
+   1523.663
+  ]
+ },
+ "jumeau": {
+  "mediane_s": 9.836,
+  "passes_s": [
+   9.843,
+   9.833,
+   9.836
+  ],
+  "empreintes_hex": "2f4b7bb7f90ccfa1b4735aaa648295c7c5fc1f28e471059d56a892ba82df1e215f5263aafd8c43fdb0e76e110d1d5ca3"
+ },
+ "rejeu_bit_identique": true,
+ "verdict": "TENUE",
+ "note_rax": "rax non spécifié sur le chemin de succès (l'épilogue ne le pose pas — les condensés sont le verdict, la confrontation à hashlib)"
+}
