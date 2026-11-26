@@ -1,0 +1,81 @@
+{
+ "horodatage": "2026-11-26T22:14:18+00:00",
+ "modele": "Qwen/Qwen2.5-Coder-7B-Instruct",
+ "empreinte_tokenizer_json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+ "empreinte_config_json": "c0242402ad6a13b331ea320feea8c7e3776ffb7a4eff0757b9cd667e116d9a28",
+ "decodeur": "llguidance 1.9.1",
+ "decodeur_empreinte": "dfac6021d9c4c5ef16b3a1d336c05ca5e8208ff30dec29d1c63ebcafbee3a346",
+ "schema": "D264/OPT-16 étendu à ajouter (union éditer/ajouter)",
+ "probes": [
+  {
+   "nom": "op-hors-enum",
+   "prefixe": "{\"op\": \"",
+   "la_violation": "SUBVERSION-HORS-ENUM",
+   "tokens_violation": [
+    29038,
+    17636,
+    11278,
+    9821,
+    12,
+    68742
+   ],
+   "au_masque": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "refusee_au_decodage": true,
+   "les_honnetes_au_masque": {
+    "substituer": [
+     true,
+     false,
+     false
+    ],
+    "mov": [
+     true
+    ]
+   },
+   "honnets_autorises": false
+  },
+  {
+   "nom": "offset-hors-bornes",
+   "prefixe": "{\"op\": \"mov\", \"dst\": \"CST-1\", \"offset\": ",
+   "la_violation": "999999 (et tout 5-digit > 65535 après la borne)",
+   "borne": "0..65535 (l'offset du juge D264)",
+   "apres_65535_chiffre_au_masque": [
+    false
+   ],
+   "apres_9999_suite_9_au_masque": [
+    false
+   ],
+   "refusee_au_decodage": true
+  },
+  {
+   "nom": "cle-hors-schema",
+   "prefixe": "{\"",
+   "la_violation": "subversion (clé inconnue)",
+   "au_masque": [
+    false,
+    false
+   ],
+   "cle_legitime_au_masque": [
+    true
+   ],
+   "refusee_au_decodage": true
+  }
+ ],
+ "controle_positif": {
+  "objet": "{\"op\": \"mov\", \"dst\": \"CST-1\", \"offset\": 32, \"src\": {\"type\": \"reg\", \"valeur\": \"eax\"}}",
+  "is_error": false,
+  "is_accepting": true
+ },
+ "controle_positif_editer": {
+  "objet": "{\"op\": \"substituer\", \"dst\": \"b20004\", \"offset\": 17, \"src\": \"je 0x4997\"}",
+  "is_error": false,
+  "is_accepting": true
+ },
+ "VERDICT": "GATE-VERT — LE DÉCODEUR CLIENT REFUSE LA VIOLATION AU DÉCODAGE (au masque de bits, pas seulement au validateur) ; les objets honnêtes consommés jusqu'à l'acceptation."
+}

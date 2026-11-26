@@ -1,0 +1,71 @@
+ATELIER W29DECCO — LE DÉCODAGE CONTRAINT CÔTÉ CLIENT : LE GATE D'ABORD, LE
+HARNAIS LIVRÉ, LA CAMPAGNE AU GESTE COMPUTE (vague 29, prompt 1 — le plan gelé
+PLAN-W29DECCO.md, sha256 4adf5d73… consigné à EMPREINTES-PLANS-VAGUE29.txt, le
+commit AVANT toute donnée)
+
+1. LE GATE SUR LE NOUVEL ENDPOINT, VÉCU SUR PIÈCES (sonde_gate.py — la mesure
+   AVANT toute campagne, la lettre du prompt) : le « nouvel endpoint » = LE
+   DÉCODEUR CONTRAIT CÔTÉ CLIENT. La grammaire du schéma fermé D264/OPT-16
+   étendu à l'opération ajouter compilée sur le vocabulaire du modèle choisi ;
+   LE VERDICT : **GATE-VERT — la violation ordonnée est REFUSÉE AU DÉCODAGE**
+   (au masque de bits de tokens, pas seulement au validateur) :
+   - l'OP HORS ENUM (« SUBVERSION-HORS-ENUM ») : AUCUN token de la violation
+     permis au masque après le préfixe valide «{"op": " » — REFUSÉE ;
+   - l'OFFSET HORS BORNES (« 999999 » au-delà de 65535, la borne du juge) :
+     après « 9999 », la suite « 9 » AUCUN token permis ; après la borne exacte
+     « 65535 », AUCUN chiffre permis — REFUSÉE ;
+   - la CLÉ HORS SCHÉMA (« subversion », additionalProperties false) : REFUSÉE.
+   - LES CONTRÔLES POSITIFS : les deux objets honnêtes (ajouter et éditer)
+     consommés jusqu'à l'ACCEPTATION du matcher — le gate ne refuse pas tout,
+     il refuse la violation. LE REJEU bit-identique (deux passes, les verdicts
+     identiques hors horodatage).
+
+2. LE DÉCODEUR ET LE MODÈLE CHOISIS (identifiants ET empreintes consignés, la
+   lettre du prompt) : le décodeur **llguidance 1.9.1** (la roue
+   sha256 dfac6021…) — le choix xgrammar/llguidance du prompt TOMBÉ à
+   llguidance au bac : xgrammar exige torch+cuda (~5 Go de paquets CUDA — le
+   disque du bac refusa l'installation à « No space left on device », l'écart
+   nommé) ; llguidance est le décodeur contraint ÉQUIVALENT (JsonCompiler →
+   LLMatcher → le masque de bits par pas). LE MODÈLE : **Qwen2.5-Coder-7B-
+   Instruct** (Qwen/Qwen2.5-Coder-7B-Instruct, la classe 7–14B coder, une
+   famille DISTINCTE de GLM) — tokenizer.json 7 031 645 o sha256 c0382117…,
+   config.json 663 o sha256 c0242402… (les octets mêmes téléchargés au présent
+   atelier et committés).
+
+3. LA CAMPAGNE (la mesure des deux opérations) : **EN ATTENTE DU GESTE COMPUTE
+   — MODÈLE-ABSENT nommé** : le modèle 7–14B NE PEUT PAS tourner au bac (4 Gio
+   de RAM / 2 vCPU / aucun GPU — la limite STRUCTURELLE du bac, la doctrine
+   W28RLVR reconduite : le geste compute appartient au poste réel). LE HARNAIS
+   COMPLET LIVRÉ (campagne_w29.py) : la grammaire, les 18 tâches d'édition à la
+   graine 20261117 (l'ordre canonique, jamais re-tiré), la boucle ≤ 3 tours,
+   le journal usage natif, les cibles pré-enregistrées du plan (éditer ≥ 17/18
+   à ≤ 150 tokens médians par changement validé ; ajouter ≥ 15/18 à ≤ 3 000
+   tokens — CIB-ADD-STRUC inchangée, EN ATTENTE au registre). AUCUN chiffRE de
+   campagne fabriqué au bac.
+
+4. LES CONTRÔLES NÉGATIFS DU CLIENT, ÉPROUVÉS (controles_negatifs.py — le
+   validateur OPT-16 reconduit à l'import, le juge D264 jamais touché) :
+   l'octet muté du diff REFUSÉ (SCHÉMA-VIOLÉ : la ligne substituée ≠
+   l'attendue) ; la ligne non assemblable REFUSÉE (SCHÉMA-VIOLÉ au
+   round-trip) ; l'offset hors plage REFUSÉ (SCHÉMA-VIOLÉ) ; la clé hors
+   schéma REFUSÉE (SCHÉMA-VIOLÉ) ; l'op hors enum REFUSÉE au validateur
+   aussi (le masque déjà prouvé au gate). LE HONNÊTE PASSE (contrôle positif).
+   5/5 négatifs refusés nommément.
+
+5. LE JUGE recoupé INTACT : scripts/vague19/expandeur_add.py
+   sha256 9fc325e2b8eb40e7… — recoupé avant et après l'atelier (JUGE-MODIFIÉ
+   serait le refus). Le schéma étendu VIT à l'atelier (l'union éditer/ajouter
+   du squelette+dictionnaire D264), le juge DEMEURE la pièce scellée.
+
+LES PIÈCES : tokenizer.json + config.json (le modèle choisi consigné),
+sonde_gate.py (le gate — la mesure avant toute campagne), gate-verdict.json +
+gate-verdict-2.json (le rejeu bit-identique), controles_negatifs.py +
+controles-verdict.json (les cinq négatifs), campagne_w29.py (le harnais livré),
+le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w29decco/sonde_gate.py            # le gate (passe 1)
+  python3 atelier-w29decco/sonde_gate.py --passe 2   # le rejeu bit-identique
+  python3 atelier-w29decco/controles_negatifs.py     # les cinq négatifs
+  python3 atelier-w29decco/campagne_w29.py --statut  # l'état de campagne
+  python3 v06/sceau_I.py verifier                    # la garde (14/14)

@@ -1,0 +1,33 @@
+{
+ "controles": [
+  {
+   "nom": "octet-mute-du-diff",
+   "refuse": true,
+   "classe": "SCHÉMA-VIOLÉ",
+   "detail": "la ligne substituée «jeX0x4997…» != l'attendue «je 0x4997…»"
+  },
+  {
+   "nom": "ligne-non-assemblable",
+   "refuse": true,
+   "classe": "SCHÉMA-VIOLÉ",
+   "detail": "la ligne substituée «zzzz9 0x4997…» != l'attendue «je 0x4997…»"
+  },
+  {
+   "nom": "offset-hors-plage",
+   "refuse": true,
+   "classe": "SCHÉMA-VIOLÉ"
+  },
+  {
+   "nom": "cle-hors-schema",
+   "refuse": true,
+   "classe": "SCHÉMA-VIOLÉ"
+  },
+  {
+   "nom": "op-hors-enum-validateur",
+   "refuse": true,
+   "classe": "SCHÉMA-VIOLÉ"
+  }
+ ],
+ "controle_positif": true,
+ "tous_refuses": true
+}
