@@ -1,0 +1,2 @@
+premier vecteur : couloir==EVP VERT
+--kat : 20/20 vecteurs couloir==EVP octet pour octet (4 Kio paddés, tag compris)

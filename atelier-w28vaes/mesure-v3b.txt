@@ -1,0 +1,1 @@
+{"mediane_couloir_v3_ns": 1012.0, "mediane_evp_session_ns": 409.0, "mediane_evp_par_appel_ns": 771.0, "ratio_vs_session": 2.4743, "ratio_vs_par_appel": 1.3126, "cible": 1.05, "verdict_session": "MANQUÉE", "verdict_par_appel": "MANQUÉE"}

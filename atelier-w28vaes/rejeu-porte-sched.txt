@@ -1,0 +1,2 @@
+premier vecteur : couloir-sched==EVP VERT
+--kat : 20/20 vecteurs couloir-sched==EVP octet pour octet (4 Kio paddés, tag compris)

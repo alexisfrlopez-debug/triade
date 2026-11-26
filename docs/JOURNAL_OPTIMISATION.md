@@ -355,3 +355,34 @@ nommée.
 **La mesure (n=20, cœur épinglé 0, 4 Kio, OpenSSL EVP 3.5.7 au même volume, quatre passes : 5,6468/5,6637/5,6904/5,6709 — IQR ≤ 116 ns ; l'environnement consigné : VM Xeon @ 2 793 MHz, fréquence non goupillée, le caveat nommé).** Le couloir 4 463 ns médian contre EVP 787 ns — **RATIO 5,66 × : LA CIBLE ≤ 1,05 × MANQUÉE, consignée telle quelle**. La décomposition du coût (le gap nommé par classe, puits anti-code-mort) : l'init 296 ns (l'expansion scalaire + les puissances H — 38 % de la session EVP entière), le chiffre seul 1 679 ns (1,145 c/octet estimé), le combiné inliné avec puits 1 916 ns (2,44 × — manque encore : le verdict robuste à la lecture), la frontière d'appel hors ligne 2,3× (4 462 vs 1 916 ns). LES CAUSES NOMMÉES : l'expansion hors boucle non spécialisée, la conversion rev128 PAR BLOC côté GHASH, le calendrier d'entrelacement écrit en C (le compilateur ne préserve pas la co-scheduling VAES/VPCLMULQDQ qu'un scheduleur assembleur tient — OpenSSL mesure 0,54 c/B sur la même machine). **LA SESSION NATIVE : 0,246/0,246/0,266/0,269/0,274 s — MÉDIANE 0,266 s, LA CIBLE T < 10 S (CIB-ORACLE-T) TENUE à 26,6× sous la borne ; la classification 235/235 identique au jumeau (81 OK / 154 FAULT), le digeste 81/81 identique, 77/81 strictement ligne-identiques, les quatre écarts d'UNE classe nommée (b20006 ne définit pas rax — le jumeau initialise à zéro, le natif y laisse 0xC000 ; le digeste identique aux quatre).**
 
 **Les contrôles.** LA PORTE AVANT TOUTE MESURE (registre-porte.txt, le rejeu bit-identique rejeu-porte.txt) : la parité 20/20 vecteurs NIST CAVP 14.0 couloir == EVP octet pour octet (4 Kio paddés, tags compris — le juge croisé EVP au point scellé, les tags E_K(J0) des vecteurs vides recoupés à part) ; LE NÉGATIF : la variante mutée (rk13 ⊕ 0x5a) refusée AU PREMIER VECTEUR, le refus nommé ; LE ROUND-TRIP inter-implémentations couloir→EVP VERT. Le diagnostic qui départagea les fautes : la référence GCM Python (polynôme direct, validée sur le vecteur CAVP 13 octets ET le tag EVP 4 Kio), la trace du compte pli par pli, le juge croisé. Les scellés 14/14 avant et après (le sceau-I) ; la notation gelée INTACTE (7911d03f… inchangée) ; aucun artefact scellé touché, le couloir est une pièce de laboratoire autonome. **Ce que la mesure ne prouve pas** : aucun chiffre au silicium goupillé (VM, fréquence non goupillée — le kit machine réelle livré : source + notation + porte + la commande) ; les ~12 000 cas par bloc critique du protocole complet ne sont pas au corpus (les 235 vecteurs de la vague 20 demeurent l'échelle, l'attente de la vague 19 pour les 50 blocs au-delà).
+
+## OPT-19 — LE COULOIR VAES, SECONDE CAMPAGNE : LES QUATRE CAUSES ATTAQUÉES, L'ÉCART
+NOTATION-VS-C PUBLIÉ AU PROFIT DU COMPILATEUR (W28VAES, la vague 28 ; le plan gelé
+sha256 37a4707e… AVANT toute mesure, EMPREINTES-PLANS-VAGUE28.txt)
+
+L'AVANT (OPT-18, la vague 27) : 4 463 ns, 5,66 × EVP par appel (787 ns) — la cible
+≤ 1,05 × manquée, la décomposition nommée par classes. L'APRÈS (la même porte d'abord :
+20/20 CAVP pour CHACUNE des deux pièces, le mutant refusé, le round-trip vert, le rejeu
+bit-identique — la convention session recoupée octet pour octet) :
+- le portage C restructuré (le contexte de session, la frontière rev256 au pli, les
+  locals/restrict — la cause dominante de la v2 était le rechargement des clés sous
+  pointeur aliasable, nommée au source) : **1 012 ns** = 1,31 × EVP par appel, 2,47 × à
+  contexte posé ;
+- le schedule de notation en ASSEMBLAGE (les chaînes pipelinées deux à deux, la
+  réduction pure SIMD) : **1 082 ns** = 1,41 × par appel, 2,68 × à contexte posé ;
+- **L'ÉCART NOTATION-VS-C : 1,07 × AU PROFIT DU C** — le résultat distinct pré-enregistré :
+  l'érosion de schedule N'EST PAS CONDUITE sur ce hot path ; le compilateur tient le
+  calendrier dès que le C est écrit en forme ILP-friendly ; l'assemblage paye ses gestes
+  de robustesse (l'acc au cadre, la ligne sauvée) plus cher que le compilateur ne paie son
+  allocation de registres ;
+- LE RÉSIDU STRUCTUREL nommé : EVP emprunte le chemin VAES512 (zmm, quatre blocs par
+  vAESENC — le plafond mesuré 409 ns ≈ 0,28 c/octet à contexte posé), la notation gelée
+  est ymm (deux blocs par vAESENC) — le corridor porte deux fois plus d'instructions AES ;
+  la cible ≤ 1,05 × contre le chemin zmm demande la voie 512-bit — la notation est gelée
+  (7911d03f… INTACTE), l'écart est nommé.
+
+R11 : la mesure avant l'optimisation reconduite (la porte verte d'abord, chaque pièce) ;
+la cible pré-enregistrée D273 JAMAIS re-tirée ; le verdict MANQUÉE publié tel quel ;
+aucun artefact scellé touché (le sceau-I 14/14 avant et après) ; l'environnement consigné
+(VM, cœur épinglé, fréquence non goupillée — le caveat nommé ; le kit machine réelle :
+source, notation, porte, commandes — au rapport de l'atelier).

@@ -1,0 +1,105 @@
+ATELIER W28VAES — LE COULOIR VAES : DOMAINE RÉFLÉCHI, AMORTISSEMENT, LE SCHEDULE DE
+NOTATION CONTRE LE COMPILATEUR (vague 28, prompt 1 — le plan gelé PLAN-W28VAES.md,
+sha256 consigné AVANT toute mesure, EMPREINTES-PLANS-VAGUE28.txt)
+
+L'ÉTAT À LA REPRISE : le couloir de W27VAES mesuré à 5,66 × EVP (cible ≤ 1,05 × pré-
+enregistrée D273, jamais re-tirée) ; la décomposition nommait quatre causes : (a) l'expansion
++ puissances H par appel (296 ns), (b) la conversion rev128 PAR BLOC, (c) le schedule C non
+préservé, (d) la frontière d'appel (2,3 ×).
+
+1. LES TROIS PIÈCES MESURÉES (la même porte pour chacune, dans l'ordre, AVANT toute mesure) :
+   (i) LE PORTAGE C AMÉLIORÉ (couloir_vaes_v3.c) : le contexte de session (l'expansion et
+       les puissances H posées UNE fois par clé, comme le chemin EVP à contexte posé) ; LE
+       DOMAINE RÉFLÉCHI DE BOUT EN BOUT (la conversion rev256 À LA FRONTIÈRE du pli — deux
+       blocs par passe, quatre passes par pli au lieu de huit rev128) ; LA FRONTIÈRE D'APPEL
+       SUPPRIMÉE (le message part du contexte posé) ; tout le contexte copié en LOCALS au
+       seuil (les lectures e->ct.rk[] sous pointeur non-restrict forçaient le compilateur à
+       RECHARGER les clés à CHAQUE aesenc — la cause dominante de la lenteur de la v2,
+       nommée au source) ; la pile accumulée EN YMM (le franchissement de voie une fois par
+       pli) ; les compteurs en REGISTRES (vpaddd masqué au dword 0 + vpshufb — zéro memcpy).
+       LA MESURE (n=20, quatre passes, cœur épinglé) : 1 012 ns médiane — 1,31 × EVP
+       par appel (771 ns), 2,47 × EVP à contexte posé (409 ns).
+   (ii) LE SCHEDULE DE NOTATION (couloir_sched.S) : le couloir écrit en ASSEMBLAGE sur le
+       calendrier de la notation gelée (couloir-vaes.asm, sha256 7911d03f… INTACTE) : les
+       chaînes CTR pipelinées DEUX À DEUX (l'ILP), la frontière réfléchie au pli, la
+       réduction de Gueron PURE SIMD (zéro franchissement GPR). LA MESURE : 1 082 ns —
+       1,41 × EVP par appel, 2,68 × à contexte posé.
+   (iii) EVP au même volume : 771 ns par appel / 409 ns à contexte posé (le chemin
+       VAES512 — OPENSSL_ia32cap consigné : vaes+vpclmulqdq+avx512f, la 3.5.7 dispatche
+       le chemin zmm depuis la 3.1 ; la convention session recoupée octet pour octet
+       contre la convention par appel — la porte --session-vert).
+
+2. L'ÉCART NOTATION-VS-C — LE RÉSULTAT DISTINCT pré-enregistré : 1 082 / 1 012 = 1,07 × —
+   LE COMPILATEUR TIENT LE SCHEDULE : à algorithme égal (le même domaine réfléchi, les
+   mêmes frontières, la même réduction), le portage C compilé (gcc -O3, le source
+   restructuré en locals/restrict) EST PLUS RAPIDE DE ~7 % que l'assemblage écrit sur le
+   calendrier de la notation. La thèse « le compilateur lâche la co-planification que le
+   scheduleur assembleur tient » N'EST PAS CONDUITE par cette mesure : sur CE hot path,
+   une fois le C écrit en forme ILP-friendly, l'érosion de schedule est AU PLUS 7 % — et
+   l'assemblage paye ses gestes de robustesse (l'acc au cadre, la ligne sauvée/restaurée)
+   plus cher que le compilateur ne paie son allocation de registres. LE NOMBRE PUBLIÉ TEL
+   QUEL : l'érosion mesurée ≤ 7 %, dans l'AUTRE sens (le C gagne).
+
+3. LA DÉCOMPOSITION DU COÛT MISE À JOUR PAR CLASSE :
+   - (a) l'expansion + puissances H par appel : SOLDÉE (le contexte de session — la
+     convention mesurée la porte) ;
+   - (b) la conversion par bloc : la frontière rev256 — le CTR seul à 801 ns, la
+     frontière ~88 ns, le GHASH ~120 ns (les sondages au profilage) ;
+   - (c) le schedule : l'écart notation-vs-C ≤ 7 % AU PROFIT DU C (le résultat ci-dessus) ;
+   - (d) la frontière d'appel : SOLDÉE (inlinée).
+   - LE RÉSIDU STRUCTUREL nommé : 2 47-2,68 × contre le chemin EVP à contexte posé —
+     le plafond ISA : EVP emprunte VAES512 (zmm, QUATRE blocs par vAESENC), la notation
+     gelée est ymm (DEUX blocs par vAESENC) : le corridor porte deux fois plus
+     d'instructions AES pour le même volume. Le plafond mesuré du chemin zmm : 409 ns
+     (≈ 0,28 c/octet) ; le corridor ymm : ≈ 0,70 c/octet. La cible ≤ 1,05 × contre le
+     chemin zmm demande la voie 512-bit — la notation est GELÉE à ymm (l'empreinte
+     7911d03f…, jamais retouchée) : l'écart est nommé, il n'est pas maquillé.
+
+4. LA PORTE (registre-porte.txt, rejeu-porte-*.txt) : la parité 20/20 vecteurs NIST CAVP
+   14.0 contre EVP octet pour octet (4 Kio paddés, tag compris) pour CHACUNE des deux
+   pièces ; LE NÉGATIF : la variante mutée (rk13 ⊕ 0x5a) REFUSÉE au premier vecteur (le
+   refus nommé, le mode --negatif-mutant) ; LE ROUND-TRIP inter-implémentations VERT ; LA
+   CONVENTION SESSION recoupée octet pour octet ; LE REJEU bit-identique (deux passes,
+   rejeu-porte-sched.txt == rejeu-porte-sched-2.txt).
+
+5. LES FAUTES DE PASSE NOMMÉES AU SOURCE (la discipline reconduite) — le développement de
+   l'assemblage en porta SEPT, toutes nommées et corrigées à la source, chacune trouvée
+   par l'épreuve (la porte a refusé à chaque fois — jamais un chiffre maquillé) :
+   (1) r11 non initialisé avant la première frappe ; (2) UN TOUR AES SURAJOUTÉ à la
+   chaîne (14 vaesenc + aesenclast) ; (3) le compteur en petite indentation (l'ordre des
+   octets du vpshufb) ; (4) le masque de la voie à l'envers ; (5) la table ET le contrôle
+   INVERSÉS dans les vpshufb de réflexion (la table DOIT être en registre — le contrôle
+   seul peut être mémoire) ; (6) la règle VEX.128 : UNE ÉCRITURE xmm ZERO la moitié haute
+   du ymm correspondant — l'acc vivant en xmm0/xmm13 tua la ligne des compteurs et le vb1
+   (l'acc vit désormais AU CADRE [rbx+0x200], chargé en xmm0 dont la voie haute est morte
+   à la réduction) ; (7) le produit chargeait c dans ymm0 — la moitié basse EST l'acc :
+   chaque produit détruisait l'accumulateur (le produit vit désormais en ymm9).
+
+6. LES VERDICTS : CIB-AES-105 (≤ 1,05 × EVP) : MANQUÉE — mesurée 1,41 × (par appel,
+   la convention W27VAES) / 2,68 × (à contexte posé, la convention « comme EVP » de
+   l'instruction) — la cible JAMAIS re-tirée, le verdict publié tel quel. LE MOTEUR
+   DE LA THÈSE : l'écart notation-vs-C publié comme RÉSULTAT DISTINCT (1,07 × au
+   profit du C — l'érosion de schedule NON conduite sur ce hot path restructuré).
+
+L'ENVIRONNEMENT : machine virtuelle Intel Xeon (vaes+vpclmulqdq+avx512f), cœur épinglé,
+fréquence NON goupillée — le caveat nommé, le même que W20PERF/W27VAES ; le kit machine
+réelle goupillée : le source, la notation, la porte, les commandes de mesure au présent
+atelier (toutes les commandes reproduites ci-dessous).
+
+LES PIÈCES : couloir-vaes.asm (la notation GELÉE, 7911d03f… INTACTE), couloir_vaes_v2.c
+(la passe 2, la frontière réfléchie), couloir_vaes_v3.c (la passe 3 — le portage C
+amélioré), couloir_sched.c + couloir_sched.S (le schedule de notation et son pilote),
+vecteurs-dores-nist.{json,depouille} (les 20 vecteurs CAVP, intacts), registre-porte.txt,
+rejeu-porte-{v3,sched,sched-2}.txt, mesure-v{2,3,3b}.txt, mesure-sched{,2,3}.txt,
+notation-empreintes.txt, le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  gcc -O3 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_vaes_v3 atelier-w28vaes/couloir_vaes_v3.c -lcrypto
+  cd atelier-w28vaes && ./couloir_vaes_v3 --kat && ./couloir_vaes_v3 --roundtrip && ./couloir_vaes_v3 --session-vert
+  gcc -O3 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_vaes_v2 couloir_vaes_v2.c -lcrypto   # la passe 2
+  gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -c couloir_sched.S -o couloir_sched.o && \
+      gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_sched couloir_sched.c couloir_sched.o -lcrypto
+  ./couloir_sched --kat && ./couloir_sched --roundtrip && ./couloir_sched --negatif-mutant
+  taskset -c 0 ./couloir_vaes_v3 --mesure      # la pièce (i)
+  taskset -c 0 ./couloir_sched --mesure        # la pièce (ii) — le schedule de notation
+  python3 v06/sceau_I.py verifier               # la garde (14/14 avant et après)

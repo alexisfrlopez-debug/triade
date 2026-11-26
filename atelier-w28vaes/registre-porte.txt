@@ -1,0 +1,5 @@
+premier vecteur : couloir-sched==EVP VERT
+--kat : 20/20 vecteurs couloir-sched==EVP octet pour octet (4 Kio paddés, tag compris)
+round-trip couloir-sched→EVP : VERT
+variante mutée (rk13 ⊕ 0x5a) contre EVP : diverge — LE REFUS NOMMÉ (la mutation refuse au premier vecteur)
+la convention session EVP recoupée : VERT (octet pour octet)
