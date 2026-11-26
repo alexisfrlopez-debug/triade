@@ -1,0 +1,49 @@
+=== LA PORTE DU COULOIR VAES (les sorties vecues, dans l'ordre) ===
+$ gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -o couloir_vaes couloir_vaes.c -lcrypto
+$ gcc -O2 -mavx2 -mvaes -mvpclmulqdq -maes -DMUTATION -o couloir_vaes_mute couloir_vaes.c -lcrypto
+
+--- 1. PARITE AUX VECTEURS DORES (le juge croise : EVP au meme point) ---
+$ taskset -c 0 ./couloir_vaes --kat
+premier vecteur : couloir==EVP VERT ; tag CAVP divergent (cas paddé — voir rapport)
+--kat : 20/20 vecteurs couloir==EVP octet pour octet (4 Kio paddés, tag compris)
+code de sortie : 0
+NOTE : le tag CAVP des vecteurs courts correspond au message court ; le couloir
+   chiffre 4 Kio (le volume scellé de la mesure) — le juge est EVP AU MEME POINT.
+   Les vecteurs PT vide : leur tag CAVP == E_K(J0), recoupé à part (le debug
+   imprime ej0 ; la référence Python le confirme sur le vecteur 0).
+
+--- 2. LE CONTROLE NEGATIF (la variante mutee, refusee au PREMIER vecteur) ---
+$ ./couloir_vaes_mute --negatif
+premier vecteur : couloir==EVP ROUGE ; tag CAVP divergent (cas paddé — voir rapport)
+KAT ROUGE AU PREMIER VECTEUR — COMPORTEMENT ATTENDU DE LA VARIANTE MUTÉE (le refus nommé)
+code de sortie : 0 (le refus nommé attendu)
+
+--- 3. LE ROUND-TRIP INTER-IMPLEMENTATIONS ---
+$ ./couloir_vaes --roundtrip
+round-trip couloir→EVP : VERT
+code de sortie : 0
+
+--- 4. LA MESURE (n=20, coeur epingle, 4 Kio, contre EVP au meme volume) ---
+$ taskset -c 0 ./couloir_vaes --mesure   (quatre passes consecutives)
+{"mediane_couloir_ns": 4461.0, "iqr_couloir": 13.0, "mediane_evp_ns": 790.0, "iqr_evp": 22.0, "ratio": 5.6468, "cible": 1.05, "verdict": "MANQUÉE"}
+{"mediane_couloir_ns": 4463.0, "iqr_couloir": 7.0,  "mediane_evp_ns": 788.0, "iqr_evp": 116.0, "ratio": 5.6637, "cible": 1.05, "verdict": "MANQUÉE"}
+{"mediane_couloir_ns": 4467.0, "iqr_couloir": 17.0, "mediane_evp_ns": 785.0, "iqr_evp": 31.0, "ratio": 5.6904, "cible": 1.05, "verdict": "MANQUÉE"}
+{"mediane_couloir_ns": 4463.0, "iqr_couloir": 10.0, "mediane_evp_ns": 787.0, "iqr_evp": 45.0, "ratio": 5.6709, "cible": 1.05, "verdict": "MANQUÉE"}
+
+--- 5. LA DECOMPOSITION DU COUT (le gap nomme par classe, puits anti-code-mort) ---
+init (expansion + puissances H)  : mediane   296 ns
+chiffre seul (inlined, puits)    : mediane  1679 ns  (1,145 c/octet estime)
+combine inlined avec puits       : mediane  1916 ns  (2,44 x EVP — manque quand meme)
+combine hors ligne (delivre)     : mediane  4462 ns  (5,66 x EVP — le verdict)
+EVP (init+chiffre+final)         : mediane   787 ns
+LE VERDICT : MANQUEE a 5,66 x EVP tel que delivre ; meme la lecture la plus
+   favorable (2,44 x, inlining au-dela de la frontiere scellee) manque la cible
+   <= 1,05 x. Les causes nommees : (a) l'expansion scalaire + les puissances H
+   hors boucle (296 ns, 38 % de la session EVP entiere) ; (b) la conversion
+   rev128 PAR BLOC coté GHASH (deux PSHUFB + masques par bloc) ; (c) le
+   calendrier d'entrelacement ecrit en C — le compilateur ne preserve pas la
+   co-scheduling VAES/VPCLMULQDQ qu'un scheduleur assembleur tient ; (d) la
+   frontiere d'appel hors ligne (2,3 x entre 4462 et 1916 ns).
+
+--- 6. LE REJEU BIT-IDENTIQUE (la porte entiere une seconde fois) ---
+consigne ci-dessous au fichier rejeu-porte.txt (le diff vide fait foi).

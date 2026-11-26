@@ -1,0 +1,121 @@
+ATELIER W27VAES — LE COULOIR VAES/VPCLMULQDQ + LA SESSION NATIVE DU MOTEUR D'ORACLE
+(prompt 6 de la vague 27, 26/11/2026 — le plan gelé PLAN-W27VAES.md, sha256 consigné)
+=========================================================================================
+
+L'ÉTAT À LA REPRISE : la session précédente mourut au milieu de l'atelier — la
+notation écrite et empreintée (7911d03f…), les vecteurs dorés dépouillés, le moteur
+natif re-prouvé (console-native-vague27.json, 128 vecteurs) et une PREMIÈRE PASSE du
+couloir C laissée FAUTIVE (le binaire compilé avant la dernière retouche du source).
+La présente reprise acheva le geste : les fautes trouvées, nommées et corrigées à la
+source ; la porte passée ; la mesure consignée TELLE QUELLE.
+
+1. LE COULOIR AES-256-GCM VAES/VPCLMULQDQ (CIB-AES-105, la cible ≤ 1,05 × EVP)
+--------------------------------------------------------------------------------
+La notation (couloir-vaes.asm, empreinte 7911d03f… consignée AVANT l'implémentation)
+demeure INTACTE — la reprise n'y toucha rien. L'implémentation exécutable
+(couloir_vaes.c) porte CINQ FAUTES DE LA PREMIÈRE PASSE, toutes nommées au source :
+  (1) rev128 : PSHUFB annule l'octet dont l'indice porte le bit 7 — les quartets
+      devaient être masqués avant la lecture de table ;
+  (2) rev128 : les décalages 16 bits font saigner le quartet du voisin — la
+      composition re-masque 0xF0 ;
+  (3) rev128 : un bswap16 surajouté — la réduction d'Intel (décalages 1/2/7) vit
+      dans le monde « bitrev8 par octet, ordre des octets préservé », recoupé
+      empiriquement contre la référence GCM (gfmul(bitrev8(X), bitrev8(Y)) ==
+      bitrev8(X•Y)) ;
+  (4) le pli GHASH : vb assemblait [h1|h0] — la voie basse (C_{2p+1}) recevait
+      H^{7-2p} au lieu de H^{8-2p} : les produits croisés ;
+  (5) le pli GHASH : a01/b01 par permute2x128⊕va rendaient les voies échangées
+      [x1|x0] au lieu du (lo⊕hi) de Karatsuba — l'idiome juste est
+      unpacklo⊕unpackhi par voie ; ET les moitiés du produit de la voie 1
+      tombaient dans les tas croisés (LO_1 au tas haut, HI_1 au tas bas).
+LE DIAGNOSTIC qui les départagea : la référence GCM indépendante (Python,
+polynôme direct — validée sur le vecteur CAVP 13 octets ET sur le tag EVP 4 Kio),
+la trace du compte pli par pli, et le juge croisé EVP octet par octet. Les
+vecteurs dorés eux-mêmes furent recoupés SAINS (mon premier test les crut fautifs :
+je lisais la clé du vecteur 1 avec le PT du vecteur 4 — l'erreur était au test,
+pas au fichier ; nommée).
+
+LA PORTE (dans l'ordre, AVANT toute mesure — registre-porte.txt, rejeu-porte.txt) :
+  - PARITÉ : 20/20 vecteurs NIST CAVP 14.0 couloir == EVP octet pour octet
+    (4 Kio paddés, tag compris). Le tag CAVP des vecteurs courts correspond au
+    message court ; le juge est EVP AU MÊME POINT (le volume scellé du couloir),
+    et les tags E_K(J0) des vecteurs vides recoupés à part. ;
+  - NÉGATIF : la variante mutée (rk13 ⊕ 0x5a) REFUSÉE AU PREMIER VECTEUR —
+    le refus nommé, code 0 ;
+  - ROUND-TRIP : couloir-chiffré puis EVP-déchiffré == le clair, VERT ;
+  - REJEU : la porte entière rejouée bit-identique (rejeu-porte.txt).
+
+LA MESURE (n=20, cœur épinglé 0, 4 Kio, contre OpenSSL EVP 3.5.7 au même volume,
+quatre passes : 5,6468 / 5,6637 / 5,6904 / 5,6709 — IQR ≤ 116 ns) :
+  médiane couloir 4 463 ns · médiane EVP 787 ns · RATIO 5,66 × · CIBLE ≤ 1,05 ×
+  ** VERDICT : MANQUÉE — consignée telle quelle, jamais maquillée. **
+LA DÉCOMPOSITION DU COÛT (le gap nommé par classe, puits anti-code-mort) :
+  init (expansion + puissances H) 296 ns ; chiffre seul 1 679 ns (1,145 c/octet
+  estimé) ; combiné inliné avec puits 1 916 ns (2,44 × EVP — manque encore) ;
+  délivré hors ligne 4 462 ns. Les causes : (a) l'expansion scalaire + les
+  puissances H hors boucle (38 % de la session EVP entière à elles seules) ;
+  (b) la conversion rev128 PAR BLOC côté GHASH ; (c) le calendrier
+  d'entrelacement écrit en C — le compilateur ne préserve pas la co-scheduling
+  VAES/VPCLMULQDQ qu'un scheduleur assembleur tient ; (d) la frontière d'appel
+  hors ligne (2,3 × entre 4 462 et 1 916 ns). L'ENVIRONNEMENT consigné : machine
+  virtuelle Intel Xeon @ 2 793 MHz, cœur épinglé, fréquence NON goupillée — le
+  caveat nommé, le même que W20PERF ; la cible machine réelle demeure le geste
+  du poste (le kit : le source, la notation, la porte, la commande de mesure).
+
+2. LA SESSION NATIVE DU MOTEUR D'ORACLE (CIB-ORACLE-T, la cible T < 10 s)
+--------------------------------------------------------------------------------
+LE REFUS mmap 0xC000 RE-ÉPROUVÉ : vm.mmap_min_addr = 4 096 au bac — l'adresse
+0xC000 vit au-dessus du plancher, la cartographie PASSE. Le moteur rejoua la
+console 128 vecteurs BIT-IDENTIQUE (console-native-vague27.json reproduite au
+rejeu), et LA PORTE COMPLÈTE du moteur re-vécut verte : le jumeau LIGNE-IDENTIQUE
+aux deux corps (tls13-16, tls13-17), le shim muté ATTRAPÉ au premier vecteur, la
+mémo content-addressed MISS à l'octet muté, l'audit 1-sur-10 ZÉRO ÉCART (le_gate.py
+— les registres historiques 8hguph5ee RESTÉS INTACTS, la reprise les restaura après
+le passage de l'outil).
+
+LA SESSION AU-DELÀ DU MÉMO HIT (session_native_50.py, session-native-50.json) :
+le corpus de la vague 20 — les 50 blocs résolus, 235 vecteurs exécutables (les 320
+de la génération comptent 85 tests de rejet qui ne s'exécutent pas — nommé),
+la graine 20261124 consignée — exécuté NATIVEMENT, chaque bloc en sous-processus
+(un SIGSEGV nomme le vecteur FAULT, jamais la session) :
+  - l'assemblage DEPUIS LES NOTATIONS (R5), les sha256 recoupés au manifeste-52 :
+    50/50 INTACTS ;
+  - la classification : 81 natifs OK / 154 FAULT natifs — LA MÊME CLASSE QUE LE
+    JUMEAU (81/154), 235/235 d'accord ;
+  - la confrontation champ par champ : les pages de sortie IDENTIQUES 81/81 (le
+    digeste) ; 77/81 strictement ligne-identiques (rax compris) ; LES QUATRE
+    ÉCARTS nommés d'une seule classe : le bloc b20006 ne définit pas rax — le
+    jumeau l'initialise à zéro, le moteur natif y laisse l'adresse d'appel
+    0xC000 ; le digeste (la sortie du contrat) est IDENTIQUE aux quatre ;
+  - LA MESURE : cinq sessions complètes (assemblage + exécution native +
+    confrontation), chronomètre monotone : 0,246 / 0,246 / 0,266 / 0,269 / 0,274 s
+    — MÉDIANE 0,266 s · CIBLE < 10 s
+  ** VERDICT : TENUE (26,6 × sous la cible). **
+  L'ÉCHELLE nommée : la session mesure le corpus de 235 vecteurs aux volumes
+  égalisés du jumeau — pas les ~12 000 cas par bloc critique du protocole
+  complet (ces vecteurs-là n'existent pas au registre, l'attente de la vague 19
+  demeure pour les 50 blocs au-delà des 235).
+
+3. LES REGISTRES ET LA GARDE
+--------------------------------------------------------------------------------
+  - CIBLES.md : CIB-AES-105 → MANQUÉE (5,66 × EVP, mesuré VM, l'environnement
+    nommé) ; CIB-ORACLE-T → TENUE (0,266 s, n=5) — la ligne ATT-ORACLE soldée ;
+  - STATUTS-EN-ATTENTE.md : ATT-ORACLE → solder (la mesure native VÉCUE au bac,
+    vague 27) ; ATT-VAES → solder (le couloir écrit et mesuré, la cible manquée
+    consignée ; la machine réelle goupillée demeure le geste du poste) ;
+  - docs/JOURNAL_OPTIMISATION.md : OPT-18 (R11 — l'avant/après est la mesure
+    contre EVP, le référentiel au même volume ; le verdict manqué consigné tel
+    quel) ;
+  - LE SCEAU-I 14/14 avant et après (aucune adresse scellée déplacée, R4/R7 :
+    le couloir est une pièce de laboratoire autonome, les arbres scellés intacts) ;
+  - les empreintes : couloir-vaes.asm 7911d03f… (INCHANGÉE — la notation gelée
+    avant l'implémentation) ; couloir_vaes.c cca65973… ; session_native_50.py
+    81a9a9a1… (notation-empreintes.txt).
+
+LES PIÈCES DE L'ATELIER : couloir-vaes.asm (la notation), couloir_vaes.c
+(l'implémentation + la porte + la mesure), vecteurs-dores-nist.{json,depouille}
+(les 20 vecteurs CAVP), moteur_oracles (le binaire du moteur, la source vit à
+atelier-oracles-8hguph5ee — inchangée), console-native-vague27.json (le re-preuve
+mmap), session_native_50.py + session-native-50.json (la session native),
+registre-porte.txt + rejeu-porte.txt (la porte vécue et son rejeu),
+notation-empreintes.txt, le présent rapport.

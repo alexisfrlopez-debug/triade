@@ -1,0 +1,11 @@
+build ok
+premier vecteur : couloir==EVP VERT ; tag CAVP divergent (cas paddé — voir rapport)
+--kat : 20/20 vecteurs couloir==EVP octet pour octet (4 Kio paddés, tag compris)
+code=0
+premier vecteur : couloir==EVP ROUGE ; tag CAVP divergent (cas paddé — voir rapport)
+KAT ROUGE AU PREMIER VECTEUR — COMPORTEMENT ATTENDU DE LA VARIANTE MUTÉE (le refus nommé)
+code=0
+round-trip couloir→EVP : VERT
+code=0
+{"mediane_couloir_ns": 4467.0, "iqr_couloir": 290.0, "mediane_evp_ns": 790.0, "iqr_evp": 38.0, "ratio": 5.6544, "cible": 1.05, "verdict": "MANQUÉE"}
+code=0
