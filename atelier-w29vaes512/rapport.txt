@@ -1,0 +1,104 @@
+ATELIER W29VAES512 — L'ÈRE NOUVELLE 512-BIT : LA NOTATION ZMM, LES DEUX BRAS,
+LA CIBLE CIB-AES-512 (vague 29, prompt 3 — le plan gelé PLAN-W29VAES512.md,
+sha256 83af57f9… consigné à EMPREINTES-PLANS-VAGUE29.txt, le commit AVANT
+toute mesure)
+
+1. LA NOTATION NOUVELLE : couloir-vaes512.asm (sha256 a2c3a393… CONSIGNÉE AVANT
+   l'implémentation exécutable) — le couloir AES-256-GCM en VAES512/
+   VPCLMULQDQ zmm : QUATRE blocs AES par vAESENC, le pli de 512 octets (32
+   blocs) aux HUIT frappes, les vb [H^{32-4p} | H^{31-4p} | H^{30-4p} |
+   H^{29-4p}] par voie, la pile ZMM pliée aux quatre voies UNE fois par pli,
+   la réduction de Gueron, la queue GCM (le bloc des longueurs, le tag au
+   dernier retournement). LA DETTE DE CÉRÉMONIE NOMMÉE À LA NAISSANCE :
+   l'ère n'est scellée que par la clé hors-ligne du développeur — le
+   laboratoire ne signe JAMAIS (D87/D183) ; la notation vit SUR COPIE
+   LABORATOIRE, exécutable et éprouvée ; LE KIT DE REMISE préparé (la
+   notation, l'empreinte, la consigne de cérémonie). LA NOTATION ymm GELÉE
+   couloir-vaes.asm 7911d03f… INTACTE (aucun octet changé — vérifiée).
+
+2. LES DEUX BRAS (la même porte pour chacun, AVANT toute mesure) :
+   - (i) LE SCHEDULE DE NOTATION (couloir_sched512.S — le calendrier de la
+     notation écrit en assemblage : les chaînes CTR pipelinées DEUX À DEUX,
+     la frontière réfléchie au zmm (la table en REGISTRE — la faute (5) de la
+     vague 28 reconduite à l'ère 512), les QUATRE produits par vpclmulqdq,
+     la pile ZMM, la repli C fold_pli pour la réduction 128-bit (la
+     frontière asm/C NOMMÉE : huit appels par message, hors chaîne critique) ;
+   - (ii) LE PORTAGE C (couloir_vaes512.c — le même algorithme compilé
+     gcc -O3, les leçons v3 portées : locals/restrict, le domaine réfléchi,
+     la frontière d'appel supprimée, les compteurs en registres).
+   LA PORTE (registre-porte-{c,sched}.txt) : **20/20 VECTEURS NIST CAVP 14.0
+   contre EVP octet pour octet (le clair paddé, tag compris) POUR CHACUNE** ;
+   LA VARIANTE MUTÉE (rk13 ⊕ 0x5a) REFUSÉE au premier vecteur POUR CHACUNE
+   (negatif-mutant.txt) ; LE ROUND-TRIP inter-implémentations VERT (EVP
+   déchiffre, le tag vérifié) ; LA CONVENTION SESSION recoupée octet pour
+   octet VERT ; le rejeu bit-identique (la porte rejouée plusieurs fois,
+   verdicts identiques).
+
+3. LES FAUTES DE PASSE NOMMÉES AU SOURCE (la discipline reconduite — le
+   développement porta CINQ, chacune trouvée par l'épreuve, la porte refusant
+   à chaque fois) : (1) le COMPTEUR INITIAL à 4 (le premier bloc du message
+   est J1 = le compteur 2 — la ligne doit partir de [2|3|4|5], pas [4|5|6|7]) ;
+   (2) le PLI compté à 256 octets alors que les HUIT frappes en portent 512
+   (le bornage TAILLE/512, le débordement nommé) ; (3) LA QUEUE GCM ABSENTE
+   (le bloc des longueurs [alen_bits || 4096×8_bits] et le retournement
+   final du tag — la queue du v3 à porter) ; (4) les décalages du contrat
+   .S/C DIVERGENTS (le ctx C réel contre le contrat écrit — CTL à 0x840, les
+   piles à 0x9C0/0xA00) ; (5) LA REPLI C CLOBBERANT zmm0/zmm5 (la ligne des
+   compteurs et la table de réflexion SAUVÉES autour de l'appel — le
+   clmul-volatil en SysV, la ligne rendue après la repli).
+
+4. LA MESURE (chaque pièce À SON PROPRE PROCESSUS, la convention par-appel,
+   n=20) — l'ARTEFACT DU BAC NOMMÉ : la boucle serrée est THROTTLÉE ~75× par
+   la virtualisation (l'EVP mesuré 60 µs/appel en boucle nue contre ~800 ns
+   séparé — la recette empirique : une pré-boucle d'appels soutenus rend
+   l'état rapide aux mesures par appel, la MÊME convention aux deux côtés de
+   chaque ratio) ; le caveat VM (fréquence non goupillée — le même que
+   W20PERF/W27VAES/W28VAES) ; LE CHEMIN EVP zmm consigné : OPENSSL_ia32cap
+   0xfffab2035f8bffff… (vaes+vpclmulqdq+avx512f, OpenSSL 3.5.7 — le chemin
+   zmm dispatché depuis la 3.1). LES VALEURS (mesure-*.txt, les opérandes
+   consignées) :
+   - EVP : par-appel 833,0 ns · À CONTEXTE POSÉ 143,4 ns ;
+   - LE PORTAGE C : par-appel 911,9 ns · à contexte posé 524,8 ns ;
+   - LE SCHEDULE DE NOTATION : par-appel 1 515,8 ns · à contexte posé 760,5 ns.
+
+5. LES VERDICTS (chacun recomposé de ses opérandes consignées, le linter
+   C32 vérifie) : **CIB-AES-512 (≤ 1,05 × EVP à contexte posé, pré-enregistrée
+   au plan) : MANQUÉE** — le portage C à 3,66 × (524,8/143,4), le schedule à
+   5,30 × (760,5/143,4). LA LECTURE HONNÊTE : le chemin EVP zmm au bac mesure
+   0,035 c/octet à contexte posé (143,4 ns les 4 Kio) — LE PLAFOND DE
+   L'ÈRE : la cible 1,05 × demandait de battre le chemin le plus optimisé
+   d'OpenSSL ; les deux pièces tiennent 0,17-0,23 c/octet ; l'écart est le
+   régime du couloir (l'épilogue de Gueron par pli + l'entrelacement des
+   clés en LOCALS), nommé, jamais maquillé. CIB-AES-105 DEMEURE MANQUÉE et
+   datée (jamais re-tirée — l'ère nouvelle OUvre la voie, l'ancienne garde
+   son verdict).
+   L'ÉCART NOTATION-VS-C — LE RÉSULTAT DISTINCT pré-enregistré : 760,5/524,8
+   = **1,45 × AU PROFIT DU C** — la direction de la vague 28 (1,07 × à ymm)
+   REPRODUITE à l'ère 512, l'amplitude creusée : le schedule paie la frontière
+   de la repli (huit appels par message — la limite nommée au point 2) et les
+   stores/reloads de la ligne ; le compilateur tient le calendrier, le
+   résultat systems confirmé aux deux ères.
+
+6. LA GARDE : la notation ymm 7911d03f… INTACTE ; le sceau-I 14/14 avant et
+   après ; les 20 vecteurs CAVP reconduits INTACTS (aucun nouveau tirage) ;
+   aucune cible re-tirée (CIB-AES-105 inchangée, la ligne CIBLES CIB-AES-512
+   NOUVELLE au plan) ; aucun chiffre fabriqué (chaque ratio recomposé de ses
+   opérandes).
+
+LES PIÈCES : couloir-vaes512.asm (la notation, a2c3a393…), couloir_vaes512.c
+(+ le binaire), couloir_sched512.S + couloir_sched512.c (+ .o + le binaire),
+vecteurs-dores-nist.json (les 20 CAVP reconduits), registre-porte-{c,sched}.txt,
+negatif-mutant.txt, mesure-{vp,c,sched}.txt, le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  gcc -O3 -mavx512f -mavx512bw -mavx512dq -mvaes -mvpclmulqdq -maes -o \
+      atelier-w29vaes512/couloir_vaes512 atelier-w29vaes512/couloir_vaes512.c -lcrypto
+  gcc -O2 -mavx512f -mavx512bw -mavx512dq -mvaes -mvpclmulqdq -maes -c \
+      atelier-w29vaes512/couloir_sched512.S -o atelier-w29vaes512/couloir_sched512.o && \
+      gcc -O2 -mavx512f -mavx512bw -mavx512dq -mvaes -mvpclmulqdq -maes -o \
+      atelier-w29vaes512/couloir_sched512 atelier-w29vaes512/couloir_sched512.c \
+      atelier-w29vaes512/couloir_sched512.o -lcrypto
+  cd atelier-w29vaes512 && ./couloir_vaes512 --kat && ./couloir_sched512 --kat
+  ./couloir_vaes512 --mesure-evp 20 && ./couloir_vaes512 --mesure 20 && \
+      ./couloir_sched512 --mesure 20
+  python3 ../v06/sceau_I.py verifier

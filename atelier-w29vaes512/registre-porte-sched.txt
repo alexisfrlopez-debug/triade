@@ -1,0 +1,3 @@
+PORTE CAVP (schedule) : 20/20 verts (octet pour octet, tag compris)
+ROUND-TRIP (schedule) : chiffre→EVP déchiffré VERT · tag vérifié VERT
+SESSION (schedule) : la convention recoupée octet pour octet VERT

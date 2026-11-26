@@ -1,0 +1,2 @@
+MESURE-EVP par-appel 833.0 ns
+MESURE-EVP contexte-posé 143.4 ns

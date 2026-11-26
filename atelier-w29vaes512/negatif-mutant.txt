@@ -1,0 +1,2 @@
+NÉGATIF MUTANT : REFUSÉ au premier vecteur (VERT)
+NÉGATIF MUTANT (schedule) : REFUSÉ au premier vecteur (VERT)

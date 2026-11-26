@@ -1,0 +1,3 @@
+PORTE CAVP : 20/20 verts (octet pour octet, tag compris)
+ROUND-TRIP : chiffre→EVP déchiffré VERT · tag vérifié VERT
+SESSION : la convention recoupée octet pour octet VERT
