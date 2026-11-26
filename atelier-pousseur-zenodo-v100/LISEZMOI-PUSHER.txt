@@ -1,46 +1,59 @@
-LE POUSSEUR ZENODO 1-CLIC WINDOWS — ÉDITION c (le correctif du PUBLISH-400)
+LE POUSSEUR ZENODO 1-CLIC WINDOWS — ÉDITION d (le correctif de la reprise des fichiers)
 ================================================================================
-Le 26/11/2026 (la nuit). L'édition b a tourné à ton poste à 00:31 : TOUT a
-passé — brouillons 24545339 (protocole) et 24545356 (participation) créés, les
-quatre packs déposés, les métadonnées posées — SAUF LE PUBLISH : HTTP 400 aux
-deux flux, mot pour mot « Le serveur distant a retourné une erreur : (400)
-Demande incorrecte. »
+Le 26/11/2026 (la nuit, après le retour 01:14). L'édition c a tourné à ton
+poste à 01:14 : le lot 4/4 OK, les brouillons 24545339/24545356 repris — puis
+DEUX refus :
+  protocole    ROUGE — commit TRIADE_soumission_v0.31.0.zip : HTTP 404
+               {"status": 404, "message": "Record '24545339' has no file
+               'TRIADE_soumission_v0.31.0.zip'."}
+  participation ROUGE — upload TRIADE_participer_v1.2.0.zip : HTTP 0 La
+               connexion sous-jacente a été fermée (six essais).
 
-LA CAUSE NOMMÉE — LA FENÊTRE UTC : le bord vit la date UTC, et à 00:31 chez
-toi il était 23:31 UTC LE 25/11. publication_date = 2026-11-26 était donc
-ENCORE DEMAIN au bord : un PUBLISH portant une date future est refusé (400)
-tandis que brouillon, fichiers et métadonnées passent — exactement ce que ton
-journal montre. La fenêtre : de 23:00 à 01:00 heure de Paris quand la date
-porte le jour de Paris ; aucun des mints précédents ne l'a croisée (tous en
-journée). Dès 01:00 chez toi, le bord vit le 26/11 UTC : la même relance passe.
+LA CAUSE NOMMÉE — LA REPRISE RE-DÉPOSAIT LES PIÈCES DÉJÀ COMMISES : le run de
+00:31 (l'édition b) avait déjà déposé les QUATRE packs aux brouillons et posé
+les métadonnées — seul le PUBLISH avait été refusé (la fenêtre UTC, correctif
+c). À 01:14 la relance a re-POSTé, re-PUTé et re-committé ces pièces DÉJÀ
+COMMISES : le bord refuse le re-PUT sur une pièce commise — le 404 « has no
+file » au commit de la petite pièce, la connexion coupée au corps de 31 Mo.
+La promesse « le moteur est idempotent » était vraie pour les BROUILLONS et
+pour le PUBLIÉ — PAS pour les FICHIERS : l'écart est nommé.
 
-LES DEUX GESTES DE L'ÉDITION c (moteur_zenodo.ps1 seul ; LE LOT, LE JETON, LES
-CIBLES ET LES MÉTADONNÉES : INCHANGÉS byte-byte — mêmes quatre packs au
-manifeste, mêmes records 24499428→v0.31.0 et 24499847→v1.2.0) :
-1. LA GARDE UTC — avant le PUBLISH, le moteur attend minuit UTC du jour voulu
-   (au plus une heure ; journal : « [garde UTC] attente de N min jusqu'à 00:00
-   UTC… puis le PUBLISH suit »). Les brouillons vivent pendant l'attente, rien
-   ne se perd, aucun publish partiel — les fichiers sont déjà vérifiés.
-2. LES MOTS EXACTS DU BORD — si un refus survient malgré tout, le moteur lit
-   maintenant le CORPS JSON de la réponse (ErrorDetails, lu sous 5.1 comme
-   sous 7) : la raison du refus s'écrira mot pour mot au journal, plus jamais
-   le seul message .NET.
+LE GESTE DE L'ÉDITION d (moteur_zenodo.ps1 SEUL ; le lot, le jeton, les cibles
+et les métadonnées : INCHANGÉS byte-byte) — les fichiers sont désormais
+IDEMPOTENTS AU BORD, trois cas :
+1. une pièce déjà déposée et CONFORME (md5 du bord == md5 du lot) : SAUTÉE —
+   plus aucun renvoi ;
+2. une pièce présente mais divergente (ou jamais commise) : RETIRÉE du
+   brouillon (DELETE, état 200/201/204/404 accepté) puis REDÉPOSÉE à
+   l'identique sur entrée neuve — le geste éprouvé de 00:31 ;
+3. une pièce absente : déposée (le même geste).
+La table des fichiers est LUE AVANT tout geste ; le PUBLISH ne suit qu'une
+fois les quatre pièces conformes au bord. Le patron python du dépôt porte LE
+MÊME GESTE (televerse — le cron du bac tire par la même voie).
 
-TON GESTE — DEUX VOIES, TOUTES DEUX SÛRES (le moteur est idempotent : brouillon
-repris, publié sauté) :
-- VOIE COURTE : après 01:00 (heure de Paris), RELANCE TON ÉDITION b TELLE
-  QUELLE — le bord vit le 26/11 UTC, le PUBLISH passe, les brouillons vivants
-  sont repris (l'envoi des 93 Mo se refait : quelques minutes).
-- VOIE c : remplace SEUL moteur_zenodo.ps1 dans le dossier déjà dézippé par
-  celui de cette édition — ou dézippe PUSHER-ZENODO-WINDOWS-v0310c.zip à part
-  et jette l'ancien — puis UN CLIC À N'IMPORTE QUELLE HEURE : le moteur attend
-  lui-même le passage UTC, publie, vérifie les md5.
+TON GESTE — UN CLIC, ET LA RELANCE EST MAINTENANT RAPIDE
+--------------------------------------------------------------------------------
+Remplace SEUL moteur_zenodo.ps1 (même nom) dans le dossier déjà dézippé — ou
+dézippe PUSHER-ZENODO-WINDOWS-v0310d.zip à part et jette l'ancien — puis UN
+CLIC (ou : powershell -NoProfile -ExecutionPolicy Bypass -File
+moteur_zenodo.ps1, et -DryRun pour tout voir sans toucher au bord).
 
-LE CONTENU DU LOT (inchangé de l'édition b)
+POURQUOI RAPIDE : les brouillons 24545339/24545356 portent déjà leurs packs
+commis — l'édition d les SAUTE (plus de 93 Mo à renvoyer) : le journal doit
+lire, pour chaque pièce, « [fichier] … déjà déposé (md5 conforme) — sauté »,
+puis « [metadata] posées », puis « [PUBLISH] record … — DOI 10.5281/… », puis
+RESULTAT … VERT. La fenêtre UTC est OUVERTE depuis 01:00 (Paris) : le bord
+vit le 26/11 UTC, le PUBLISH passe. SI une pièce vivait en état divergent au
+bord (l'état de la participation après la coupure de 01:14 n'a pu être lu
+d'ici), le moteur la retire et la redépose — l'envoi reprend alors pour cette
+pièce seule, vers une entrée neuve (comme à 00:31, qui passa) ; quelques
+minutes selon ta liaison montante.
+
+LE CONTENU DU LOT (inchangé des éditions b/c)
 --------------------------------------------------------------------------------
 PUSHER-ZENODO.bat ......... le clic unique (double-cliquer, la fenêtre s'ouvre)
 gui_zenodo.ps1 ............ la fenêtre : table du lot aux empreintes, cibles, journal en direct
-moteur_zenodo.ps1 ......... le moteur ÉDITION c (le patron v19 + la garde UTC + les mots du bord)
+moteur_zenodo.ps1 ......... le moteur ÉDITION d (le patron v19 + la garde UTC + la reprise des fichiers)
 token-zenodo.txt .......... TON JETON ZENODO — DONNÉE SENSIBLE : garde ce dossier privé
 PUSHER-JOURNAL.log ........ créé au premier clic : la preuve de chaque geste
 lot\TRIADE_soumission_v0.31.0.zip ....... 289 496 o   sha256 bdf0e1596703341ec8…
@@ -60,24 +73,16 @@ KIT DÉVELOPPEUR v1.3.0, CORPUS v2.1, TRIADE-TRAIN v1.0.0 : INCHANGÉS — aucun
 version creuse (la doctrine), le lot ne les republie pas. Les métadonnées posées
 sont celles du script préparé et vérifié à l'Entrée 429 (le patron v19).
 
-LA VÉRIFICATION DEMANDÉE : AUCUNE nouvelle version à produire depuis la v0.31.0
---------------------------------------------------------------------------------
-Trois preuves relevées au bac (26/11) : le worklog clos à l'Entrée 429 (la
-préparation même de la v0.31.0) ; la tête du dépôt GitHub == fe91130 puis les
-commits 430/431 (le pousseur et son correctif b — RIEN sur les pièces) ; le
-coffre /livrables et /test sans rien de plus récent que le 25/11 soir. Le
-travail « après la 0.31 » est ANTÉRIEUR à la préparation et déjà NOMMÉ à la
-description du record — la prochaine édition le portera dans les pièces.
-
 BON À SAVOIR
 --------------------------------------------------------------------------------
-- Idempotent : interrompu ? RELANCE (un clic) — le moteur reprend le brouillon
-  vivant et saute ce qui est déjà publié. Aucune publication partielle : le
-  PUBLISH n'est appelé qu'après la vérification des fichiers déposés, et
-  désormais qu'après la garde UTC.
-- Les brouillons 24545339 / 24545356 vivent au bord de la nuit : la relance les
-  REPREND (l'envoi se refait ; tu peux aussi nommer : -BrouillonProtocole
-  24545339, -BrouillonParticipation 24545356).
+- Idempotent, ENTIÈREMENT cette fois : interrompu ? RELANCE (un clic) — le
+  moteur reprend le brouillon vivant, saute les pièces déjà déposées conformes,
+  redépose seules les divergentes, saute ce qui est déjà publié. Aucune
+  publication partielle : le PUBLISH n'est appelé qu'après les pièces conformes
+  au bord, et après la garde UTC (la fenêtre 23:00–01:00 Paris reste gardée).
+- Les brouillons 24545339 / 24545356 vivent au bord : la relance les REPREND
+  (tu peux aussi nommer : -BrouillonProtocole 24545339, -BrouillonParticipation
+  24545356).
 - Si Windows (SmartScreen) demande une confirmation à l'ouverture :
   « Informations supplémentaires » puis « Exécuter quand même ».
 - Si un 403 « unusual traffic » apparaît CHEZ TOI (improbable : c'est l'IP du
@@ -87,8 +92,6 @@ BON À SAVOIR
   bac il mint et enchaîne. SI TU PUBLIES ICI AVANT LUI, DIS-LE AU BAC : il
   supprimera le retry et enchaînera la chaîne complète (livrables du coffre,
   supersédés à l'ARCHIVE, miroirs, DEPOTS.jsonl, worklog).
-- En ligne de commande : powershell -NoProfile -ExecutionPolicy Bypass -File
-  moteur_zenodo.ps1  (et -DryRun pour tout vérifier sans toucher au bord).
-- Durée : l'envoi des 93 Mo dépend de ta liaison montante ; si tu cliques dans
-  la fenêtre UTC, compte en plus l'attente jusqu'à 00:00 UTC (au plus une
-  heure, le journal la compte en direct).
+- Durée : si tout est déjà déposé conforme, quelques secondes par flux ; si
+  une pièce diverge, l'envoi de cette pièce seule (31 Mo ≈ quelques minutes
+  selon ta liaison montante).

@@ -5,6 +5,10 @@ pack de participation v1.2.0. Le jeton vient de l'environnement (ZENODO_TOKEN),
 jamais affiché ni écrit. Reprises sur 5xx/504 ; aucune publication partielle : le
 PUBLISH n'est appelé qu'après la re-vérification des empreintes déposées.
 
+(correctif d, 26/11 — le retour du poste 01:14) : televerse idempotente au bord —
+le re-PUT sur une pièce DÉJÀ COMMISE rend 404 au commit et coupe la connexion ;
+un fichier conforme (md5) est sauté, un fichier divergent est retiré puis redéposé.
+
 LE KIT DÉVELOPPEUR N'EST PAS RE-PUBLIÉ : la source kit-developpement-triade-v1.3.0/
 est INCHANGÉE depuis le commit de sa publication (b86e74b, Entrée 403 — diff git
 vide) ; le corpus v2.1 (24479882) et TRIADE-TRAIN v1.0.0 (24495492) demeurent aussi
@@ -127,17 +131,35 @@ def _entree(liste, cle):
 
 
 def televerse(draft, fichiers):
+    """(correctif d, 26/11) Idempotente au bord : le retour du poste 01:14 —
+    la reprise re-PUTait les pièces DÉJÀ COMMISES des brouillons de 00:31 et le
+    bord rendait 404 au commit («Record '24545339' has no file …») et coupait
+    la connexion au corps de 31 Mo. Désormais : une pièce déjà commise et
+    conforme (md5 du bord == md5 local, taille égale) est SAUTÉE ; une pièce
+    présente mais divergente (ou jamais commise) est retirée du brouillon puis
+    redéposée ; une pièce absente est déposée (le geste éprouvé de 00:31)."""
     base_files = draft["links"]["files"]
+    st, d = appel("GET", base_files)
+    table = d if st == 200 else {}
     for f in fichiers:
         f = pathlib.Path(f)
+        attendu = md5(f)
+        ent = _entree(table, f.name)
+        if ent is not None:
+            api_md5 = (ent.get("checksum") or "").replace("md5:", "")
+            taille_bord = ent.get("size") or 0
+            if api_md5 and api_md5.lower() == attendu and taille_bord == f.stat().st_size:
+                print(f"  [fichier] {f.name} déjà déposé (md5 conforme) — sauté")
+                continue
+            st2, d2 = appel("DELETE", f"{base_files}/{f.name}")
+            if st2 not in (200, 201, 204, 404):
+                raise SystemExit(f"retrait {f.name} : HTTP {st2} {d2}")
+            print(f"  [fichier] {f.name} retiré du brouillon (divergent au bord : "
+                  f"{taille_bord} o, md5 {api_md5 or '—'}) — redéposé")
         st, d = appel("POST", base_files, [{"key": f.name}])
         if st not in (200, 201):
-            if "already exists" not in json.dumps(d):
-                raise SystemExit(f"creation fichier {f.name} : HTTP {st} {d}")
-            st2, d = appel("GET", base_files)
-            ent = _entree(d, f.name)
-        else:
-            ent = _entree(d, f.name)
+            raise SystemExit(f"creation fichier {f.name} : HTTP {st} {d}")
+        ent = _entree(d, f.name)
         if ent is None:
             raise SystemExit(f"entrée {f.name} introuvable")
         st, d = appel("PUT", ent["links"]["content"], brut=f.read_bytes())

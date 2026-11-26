@@ -20,6 +20,16 @@
 #   2. les mots exacts du bord : le corps JSON du refus vit dans
 #      ErrorDetails.Message sous 5.1 comme sous 7 — on le lit D ABORD (le 400
 #      de 00:31 n avait rendu que le message .NET faute de le lire).
+# correctif d (26/11/2026, apres le retour 01:14) — la reprise des FICHIERS :
+#   les brouillons de 00:31 avaient leurs packs DEJA COMMIS ; la relance
+#   re-POSTait, re-PUTait et re-committait ces pieces engagees : le bord
+#   rendait 404 au commit («Record '24545339' has no file 'TRIADE_soumission
+#   _v0.31.0.zip'.») et coupait la connexion au corps de 31 Mo (participation,
+#   six essais). Les fichiers sont desormais idempotents au bord : une piece
+#   conforme (md5 du bord == md5 du lot) est SAUTEE ; une piece presente mais
+#   divergente (ou jamais commise) est RETIREE du brouillon puis redeposee a
+#   l identique ; une piece absente est deposee (le geste eprouve de 00:31).
+#   Le patron python porte le meme geste (televerse).
 # usage : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1 [-DryRun]
 #         [-BrouillonProtocole <id>] [-BrouillonParticipation <id>]
 
@@ -269,18 +279,41 @@ function Publier-Flux {
     }
     Ecrire ("  [newversion] brouillon {0}" -f $brouillon.id)
 
-    # 2. les fichiers
+    # 2. les fichiers — idempotents au bord (correctif d : le retour 01:14 —
+    #    la reprise re-deposait les pieces DEJA COMMISES des brouillons de
+    #    00:31 : le bord rendait 404 au commit et coupait la connexion au
+    #    corps de 31 Mo ; une piece conforme n est plus re-téléversée).
     $FilesUrl = $brouillon.links.files
+    $table = $null
+    $r = Invoke-Zenodo -Methode Get -Uri $FilesUrl
+    if ($r.Code -eq 200) { $table = $r.Donnees }
     foreach ($chemin in $Chemins) {
         $nom = [System.IO.Path]::GetFileName($chemin)
+        $taille = (Get-Item -LiteralPath $chemin).Length
+        $attendu = (Get-FileHash -LiteralPath $chemin -Algorithm MD5).Hash.ToLower()
+        $entree = $null
+        if ($table) { $entree = Trouve-Entree $table $nom }
+        if ($entree) {
+            $apiMd5 = ([string]$entree.checksum) -replace '^md5:', ''
+            $tailleBord = 0
+            try { $tailleBord = [int64]$entree.size } catch {}
+            if ($apiMd5 -and ($apiMd5.ToLower() -eq $attendu) -and ($tailleBord -eq $taille)) {
+                Ecrire ("  [fichier] {0} déjà déposé (md5 conforme) — sauté" -f $nom)
+                continue
+            }
+            # present mais divergent (ou jamais commis) : le retirer d abord
+            $r = Invoke-Zenodo -Methode Delete -Uri "$FilesUrl/$nom"
+            if ($r.Code -notin 200, 201, 204, 404) {
+                Ecrire ('RESULTAT|{0}|ROUGE|retrait-{1}-HTTP-{2}|—' -f $NomFlux, $nom, $r.Code)
+                throw "retrait $nom : HTTP $($r.Code) $($r.Corps)"
+            }
+            $apibref = $apiMd5
+            if (-not $apibref) { $apibref = '—' }
+            Ecrire ("  [fichier] {0} retiré du brouillon (divergent au bord : {1} o, md5 {2}) — redéposé" -f $nom, $tailleBord, $apibref)
+        }
         $r = Invoke-Zenodo -Methode Post -Uri $FilesUrl -CorpsJson (Convertir-Corps @(@{ key = $nom }))
         $entree = $null
         if ($r.Code -in 200, 201) { $entree = Trouve-Entree $r.Donnees $nom }
-        if (-not $entree) {
-            # peut-être déjà créé (reprise) : relire la table
-            $r3 = Invoke-Zenodo -Methode Get -Uri $FilesUrl
-            if ($r3.Code -eq 200) { $entree = Trouve-Entree $r3.Donnees $nom }
-        }
         if (-not $entree) {
             Ecrire ('RESULTAT|{0}|ROUGE|fichier-{1}-HTTP-{2}|—' -f $NomFlux, $nom, $r.Code)
             throw "fichier $nom : HTTP $($r.Code) $($r.Corps)"
@@ -295,7 +328,7 @@ function Publier-Flux {
             Ecrire ('RESULTAT|{0}|ROUGE|commit-{1}-HTTP-{2}|—' -f $NomFlux, $nom, $r.Code)
             throw "commit $nom : HTTP $($r.Code) $($r.Corps)"
         }
-        Ecrire ("  [fichier] {0} déposé ({1} o)" -f $nom, (Get-Item -LiteralPath $chemin).Length)
+        Ecrire ("  [fichier] {0} déposé ({1} o)" -f $nom, $taille)
     }
 
     # 3. les métadonnées (celles du script préparé et vérifié à l'Entrée 429)
@@ -345,8 +378,8 @@ function Publier-Flux {
             $ent = $null
             if ($r.Donnees.files -and $r.Donnees.files.entries) { $ent = Trouve-Entree $r.Donnees.files $nom }
             if (-not $ent) { $ecarts += $nom; continue }
-            $api = ([string]$ent.checksum) -replace '^md5:', ''
-            if ($api -and ($api.ToLower() -ne $attendu)) { $ecarts += $nom }
+            $apiMd5 = ([string]$ent.checksum) -replace '^md5:', ''
+            if ($apiMd5 -and ($apiMd5.ToLower() -ne $attendu)) { $ecarts += $nom }
         }
     }
     if ($ecarts.Count -eq 0) {
