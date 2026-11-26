@@ -1,0 +1,59 @@
+ATELIER W29FAMILLE — LA SECONDE FAMILLE ET LE CANARI DE FIDÉLITÉ CONTINU :
+LE VOLET MATHÉMATIQUE VÉCU 128/128, LE CANARI SERVING-INFIDELE, LA
+CONFRONTATION AU GESTE COMPUTE (vague 29, prompt 6 — le plan gelé
+PLAN-W29FAMILLE.md, sha256 a6f140e9… consigné à EMPREINTES-PLANS-VAGUE29.txt,
+le commit AVANT toute mesure)
+
+1. LE VOLET MATHÉMATIQUE VÉCU AU BAC — **LES 128 CONSTANTES DU DOMAINE
+   RECALCULÉES DEPUIS LES DÉFINITIONS : ZÉRO ÉCART** : les MD5 T[64] (loupe/
+   layout.py — le domaine du bloc loupe-06-md5) reconduits par la DÉRIVATION
+   AUX DÉCIMALES (T[i] = plancher(2³² × |sin(i+1)|) — le sinus par la SÉRIE
+   ENTIÈRE maison à 60 chiffres, la réduction 2π aux décimales, jamais une
+   bibliothèque flottante) : 64/64 identiques ; les SHA-256 K[64] (tls13/
+   layout.py — la famille sha héritée) par la RACINE CUBIQUE du j-ième
+   nombre PREMIER (Newton maison à 60 chiffres, la partie fractionnaire ×
+   2³²) : 64/64 identiques. LE CRITÈRE PRÉ-ENREGISTRÉ tenu : zéro écart,
+   aucun nommé. LA SPEC ET LES DÉFINITIONS D'ACCORD — le volet vérifiable au
+   bac de la confrontation tripartite (la demande « la dérivation aux
+   décimales, la racine cubique entière exacte » satisfaite sur pièces).
+
+2. L'ÉCHANTILLON PRÉ-ENREGISTRÉ de notations (la graine 20261128 consignée
+   AVANT tirage, l'ordre canonique du plan) : loupe-06-md5, loupe-05-sha256,
+   tls13-16-aes128-bloc, b20004, c30010, g70003 — SIX blocs, les contrats de
+   contexte recoupés (les empreintes des notations consignées au registre).
+
+3. LE CANARI DE FIDÉLITÉ CONTINU, VÉCU SUR PIÈCES (canari_sonde.mjs — le
+   prompt 6 : « une violation ordonnée qui DOIT être refusée au décodage ; un
+   serving qui l'accepte en cours de session invalide la session (fail-closed,
+   refus nommé SERVING-INFIDELE) ») : la violation ordonnée (l'op hors enum
+   « SUBVERSION-HORS-ENUM », l'offset 999999) soumise au bord GLM (le seul
+   disponible au bac) — **LA VIOLATION PASSE INTÉGRALE : SERVING-INFIDELE —
+   LA SESSION DU BORD INVALIDÉE** (le verdict consigné TEL QUEL : le bord
+   n'applique pas la contrainte posée, le canari le DÉNONCE — le gate de
+   sélection DEVIENT le garde continu, câblé au harnais de la campagne
+   future : chaque appel de campagne portera le canari, toute session dont
+   le canari passe sera close).
+
+4. LA CONFRONTATION TRIPARTITE : le kit livré — le volet SECONDE FAMILLE
+   DEMEURE EN ATTENTE (FAMILY-ABSENT ne devient VERT que sur pièces) : le
+   modèle choisi Qwen2.5-Coder-7B-Instruct (≠ GLM — la seconde famille
+   nommée, les empreintes du tokenizer/config consignées à atelier-w29decco)
+   NE PEUT PAS tourner au bac (4 Gio de RAM / 2 vCPU / aucun GPU — la limite
+   STRUCTURELLE nommée au plan, le run au geste compute du poste réel) ;
+   LA LECTURE HONNÊTE : le volet spec ↔ définitions est FERME (128/128, le
+   présent atelier) ; le volet spec ↔ seconde famille attend le run — la
+   tripartite EN ATTENTE, jamais habillée.
+
+5. LA GARDE : le juge inchangé (expandeur_add.py 9fc325e2… INTACT — recoupé) ;
+   les splits scellés du corpus recoupés aux empreintes du manifeste (l'écart
+   des deux fichiers auxiliaires déjà consigné au registre des écarts, jamais
+   masqué — reconduit) ; le sceau-I 14/14 ; aucun chiffre fabriqué.
+
+LES PIÈCES : session_famille.py + famille-registre.json (les 128, le
+canari, l'attente), canari_sonde.mjs (le canari rejouable), le présent
+rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w29famille/session_famille.py    # la session
+  node atelier-w29famille/canari_sonde.mjs          # le canari seul
+  python3 v06/sceau_I.py verifier                   # la garde (14/14)

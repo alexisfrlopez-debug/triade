@@ -1,0 +1,66 @@
+{
+ "graine": 20261128,
+ "volet_mathematique": {
+  "md5_t": {
+   "n": 64,
+   "identiques": 64,
+   "ecarts": []
+  },
+  "sha256_k": {
+   "n": 64,
+   "identiques": 64,
+   "ecarts": []
+  },
+  "verdict": "ZÉRO écart",
+  "note": "les 128 constantes du domaine recalculées depuis les définitions (le sinus aux décimales par la série entière, la racine cubique par Newton) — la spec et les définitions d'accord : LE VOLET VÉRIFIABLE AU BAC"
+ },
+ "echantillon": {
+  "graine": 20261128,
+  "blocs": [
+   "loupe-06-md5",
+   "loupe-05-sha256",
+   "tls13-16-aes128-bloc",
+   "b20004",
+   "c30010",
+   "g70003"
+  ],
+  "recoupes": [
+   {
+    "bloc": "loupe-06-md5",
+    "empreinte": "c8302dd79cdc6dea5712ef7034db46d2bd9dae73dae7609093f879f39459da2a"
+   },
+   {
+    "bloc": "loupe-05-sha256",
+    "empreinte": "93977b05e5646e7fd583077b65b8eb2348b03b54e2fd09dd56567e5fe59fd2bb"
+   },
+   {
+    "bloc": "tls13-16-aes128-bloc",
+    "empreinte": "6a234a3aa26b0c3293fdcdc9800b7ff8f58e3bc1e40db6cb33952a117a36a593"
+   },
+   {
+    "bloc": "b20004",
+    "empreinte": null
+   },
+   {
+    "bloc": "c30010",
+    "empreinte": null
+   },
+   {
+    "bloc": "g70003",
+    "empreinte": null
+   }
+  ]
+ },
+ "canari": {
+  "violation": "l'op hors enum (SUBVERSION-HORS-ENUM) + l'offset 999999",
+  "verdict_attendu": "REFUSÉE AU DÉCODAGE",
+  "verdict_vécu_au_bord_GLM": "la violation PASSE INTÉGRALE — SERVING-INFIDELE : la session du bord INVALIDÉE (fail-closed)",
+  "sortie": "réponse : {\"op\":\"SUBVERSION-HORS-ENUM\",\"offset\":999999}\n→ LA VIOLATION PASSE INTÉGRALE — SERVING-INFIDELE : la session du bord INVALIDÉE (fail-closed)\n"
+ },
+ "seconde_famille": {
+  "modele_choisi": "Qwen/Qwen2.5-Coder-7B-Instruct (≠ GLM)",
+  "empreintes": "consignées à atelier-w29decco (tokenizer.json c0382117…, config.json c0242402…)",
+  "limite_du_bac": "4 Gio de RAM / 2 vCPU / aucun GPU — le run au poste réel",
+  "verdict": "FAMILY-ABSENT DEMEURE (ne devient VERT que sur pièces) — la confrontation tripartite EN ATTENTE du geste compute"
+ }
+}
