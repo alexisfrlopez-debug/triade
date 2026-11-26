@@ -1,0 +1,72 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.33.0 (la vague 28 de l'édition, 26 novembre 2026)
+====================================================================================
+COURANTS (cette édition)
+- TRIADE_manuscrit_v0.33.0.pdf (le cœur IMRAD : Introduction, Méthodes, Résultats RQ1–RQ4
+  + la décomposition quatre bras + la table des statuts, Discussion, Menaces, Travaux
+  connexes, Conclusion ; le journal OPT, les programmes étendus, les tables longues, les
+  notes post-édition et le changelog EN ANNEXES — le cœur mesuré à 16 pages au format
+  compact ; les travaux connexes aux références VÉRIFIÉES : JSONSchemaBench,
+  XGrammar, Outlines, guidance, AutoVecCoder, LLM4Decompile, SLaDe)
+- Protocole_TRIADE_v0.15.18_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.17.pdf
+- TRIADE_preuves_et_calculs_v0.33.0.pdf
+- TRIADE_presentation_v0330.pdf
+- empreintes_livrables_v0.33.0.txt · rapport_verification_v0.33.0.txt
+- TRIADE_soumission_v0.33.0.zip · TRIADE_presentation_v0330.zip · TRIADE_complet_v0.33.0.zip
+- TRIADE_participer_v1.2.0.zip (inchangé, publié) · TRIADE_kit_developpement_v1.3.0.zip (inchangé, publié)
+- les kits terrain Windows v0.15.0, siliciums de commodité, kits test ARM/COLLAB,
+  surveillants CPU v100-v102, preuves de la campagne ACTIONS et témoins ARM/Collab (inchangés)
+
+LES TROIS PACKS v0.33.0 ASSEMBLÉS (26/11, la vague 28 exécutée) :
+TRIADE_soumission_v0.33.0.zip, TRIADE_presentation_v0330.zip,
+TRIADE_complet_v0.33.0.zip — à depot-zenodo-v0330/ du dépôt et au présent /livrables,
+les empreintes bytes/sha256/md5 au MANIFESTE-PACKS-v0.33.0.json. STATUT : NON PUBLIÉES —
+la publication Zenodo attend la commande du maître (v0.32.0 NON PLUS N'EST PAS MINTÉE —
+la chaîne des deux éditions attend la commande). ÉCART NOMMÉ : la participation v1.2.0
+publiée porte encore les packs v0.31.0 — une v1.3.0 attend la commande du maître si le
+pack doit porter les courants.
+
+CE QUE PORTE CETTE ÉDITION — la vague 28, les objectifs poussés à leur maximum
+- W28VAES : le couloir VAES, seconde campagne — les quatre causes attaquées, le portage C
+  à 1 012 ns, le schedule de notation exécuté en assemblage à 1 082 ns — l'ÉCART
+  NOTATION-VS-C 1,07 × AU PROFIT DU C publié comme RÉSULTAT DISTINCT ; CIB-AES-105
+  MANQUÉE à 1,41 × par appel, la cible jamais re-tirée, la porte verte d'abord.
+- W28OPT16 : l'opération éditer par diff structuré — la cible ≤ 150 TENUE à 79,5 tokens
+  natifs médians (le ratio plancher 2,89 × le diff réel au lieu de 24,5 ×) ; les quatre
+  refus nommés fail-closed éprouvés ; la faisabilité 9/18 nommée.
+- W28HARNAIS : la carte mémoire dérivée MÉCANIQUEMENT de la carte C — 229/235 exécutés
+  (CIB-HARNAIS-200 TENUE, la cible jamais re-tirée), la console du jumeau
+  LIGNE-IDENTIQUE 81/81, aucune régression des 95 du contexte standard, les six tls-06
+  refusés DEPASSEMENT (l'écart vs P3 nommé : un arrêt au timeout n'est jamais un OK) ;
+  LE MOTEUR NATIF GÉNÉRALISÉ aux volumes complets : 12 000 cas, la cible de régime
+  ≤ 5 × C TENUE à 4,56 × C contre le pilote nu, la console différée ligne-identique,
+  l'audit 1-sur-10 au jumeau ZÉRO ÉCART, l'ordre de grandeur vs l'oracle vivant : 123 ×.
+- W28ATTR : la rejouabilité symétrique de la pièce T — les cinq sondes du contrat noyau
+  5/5 VERT ; FAMILY-ABSENT consigné (aucun chiffre fabriqué).
+- W28TERRAIN : la vague terrain groupée pré-enregistrée — UN plan (sha256 avant tout
+  run) pour les dix attentes, la randomisation stratifiée H7, l'investigation des pics
+  dudect pré-enregistrée.
+- W28RLVR : le plan d'entraînement sur les juges de conformité pré-enregistré (jamais
+  une similarité), le gate de sélection d'endpoint vécu sur pièces (SERVING-ABSENT
+  re-couré), l'écart nommé des deux fichiers auxiliaires du corpus.
+- W28IMRAD : le manuscrit cœur IMRAD, deux classes de linter nouvelles (C30 N-VALUE,
+  C31 CLAIM-SCOPE — le linter à 31 classes), le budget token par vague mesuré et
+  pré-enregistré (OPT-20 : la production de la vague à 19 269 tokens natifs, le budget
+  de la vague suivante).
+- La porte V1..V7 + L1..L31 ZÉRO ROUGE, vingt-deux mutations négatives refusées
+  nommément 22/22, l'ancre RFC 3161 v0.33.0 posée et vérifiée hors ligne, la provenance
+  recomposée.
+Aucune valeur mesurée modifiée ; aucune cible re-tirée ; aucun artefact scellé touché.
+
+DOI (les derniers mintés ; l'édition v0.33.0 NON mintée — la publication attend la commande)
+- protocole v0.31.0 : 10.5281/zenodo.24545339 (concept 10.5281/zenodo.24367343)
+- pack de participation v1.2.0 : 10.5281/zenodo.24545356 (concept 10.5281/zenodo.24497299)
+- kit développeur v1.3.0 : 10.5281/zenodo.24499840 (concept 10.5281/zenodo.24457514, inchangé)
+- corpus v2.1 : 10.5281/zenodo.24479882 (inchangé) · entraînement v1.0.0 : 10.5281/zenodo.24495492 (inchangé)
+
+SUPERSÉDÉS (conservés pour l'histoire ; l'édition courante est ci-dessus)
+- le set v0.32.0 complet (onze pièces, les trois packs assemblés compris) — à l'ARCHIVE
+  (lot livrables_supersedes_20261126b) ; la v0.32.0 N'A JAMAIS ÉTÉ mintée (les packs
+  assemblés à la commande, la publication Zenodo attend la commande du maître)
+- le set v0.31.0 — déjà à l'ARCHIVE (lot livrables_supersedes_20261126) ; la v0.31.0
+  publiée demeure sur Zenodo (record 24545339)
