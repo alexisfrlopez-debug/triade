@@ -30,6 +30,58 @@
 #   divergente (ou jamais commise) est RETIREE du brouillon puis redeposee a
 #   l identique ; une piece absente est deposee (le geste eprouve de 00:31).
 #   Le patron python porte le meme geste (televerse).
+# correctif e (26/11/2026, apres le retour 02:01) — le PUBLISH rendait 400 aux
+#   DEUX flux : {"field": "metadata.creators", "messages": ["Missing data
+#   for required field."]}. Le corps des metadonnees partait par ConvertTo-Json :
+#   sous Windows PowerShell 5.1 le serialiseur LAISSE TOMBER LE TABLEAU A UN
+#   SEUL ELEMENT (les crochets partent, l objet reste) — le bord tenait creators
+#   comme OBJET la ou son schema exige une LISTE. Le patron python, lui, envoie
+#   un vrai tableau (json.dumps). Trois gestes :
+#   1. le corps des metadonnees est compose EXPLICITEMENT en JSON (Json-Texte
+#      echappe les textes ; creators part en [{"name":"Lopez, Alexis"}] comme
+#      le patron) — plus aucun ConvertTo-Json sur ce corps, aucun caprice de
+#      serialiseur (5.1 ou 7) ;
+#   2. le corps de l init fichier : idem, [{"key": …}] explicite (l ancien
+#      tenait seulement par le hasard du -InputObject de premier niveau) ;
+#   3. la verification au bord : apres le PUT, le brouillon est RE_LU EN BRUT
+#      (Corps-Bord) et creators doit vivre en TABLEAU au bord — le refus arrive
+#      ici, avec les mots du bord, PAS au PUBLISH (les brouillons vivants
+#      24545339/24545356 portent encore creators en objet : la relance les
+#      corrige par le PUT neuf, puis le prouve avant d engager le PUBLISH).
+# correctif f (26/11/2026, apres le retour 02:25) — la porte de l edition e a
+#   refuse un bord PEUT-ETRE SAIN : le corps neuf (creators en tableau) fut pose
+#   (HTTP 200, le brouillon touche a 02:25:11) et la verification «creators au
+#   bord» a rendu ROUGE SANS TENTER LE PUBLISH — or nul n avait prouve que la vue
+#   brouillon ECHOIE creators (la vue du record PUBLIE l echoie, elle). Trois
+#   gestes :
+#   1. le corps retourne aux SEPT CHAMPS du dernier mint reussi (v0.26.0, 24/11)
+#      : publisher RETIRE (la valeur par defaut du bord — le v0.26.0 publie ne
+#      porte pas la clef et montre pourtant «Publisher: Zenodo») et le corps part
+#      en ASCII PUR (non-ASCII echappe en \uXXXX, exactement json.dumps cote
+#      patron python — la classe du corps qui a PASSE) ;
+#   2. la verification ne GATE PLUS : le brouillon est relu (version + creators,
+#      INFORMATIF), puis le PUBLISH est tente — ATOMIQUE : refuse, le brouillon
+#      vit, rien ne se perd ;
+#   3. au refus du PUBLISH : LE DIAGNOSTIC COMPLET — les mots exacts du bord,
+#      puis le brouillon relu en brut (metadonnees entieres) ET la vue deposits
+#      (l ancienne porte) — le journal dira ce que le bord tient vraiment.
+# correctif f (26/11/2026, apres le retour 02:25) — la porte de l edition e a
+#   refuse un bord PEUT-ETRE SAIN : le corps neuf (creators en tableau) fut pose
+#   (HTTP 200, le brouillon touche a 02:25:11) et la verification «creators au
+#   bord» a rendu ROUGE SANS TENTER LE PUBLISH — or nul n avait prouve que la vue
+#   brouillon ECHOIE creators (la vue du record PUBLIE l echoie, elle). Trois
+#   gestes :
+#   1. le corps retourne aux SEPT CHAMPS du dernier mint reussi (v0.26.0, 24/11)
+#      : publisher RETIRE (la valeur par defaut du bord — le v0.26.0 publie ne
+#      porte pas la clef et montre pourtant «Publisher: Zenodo») et le corps part
+#      en ASCII PUR (non-ASCII echappe en \uXXXX, exactement json.dumps cote
+#      patron python — la classe du corps qui a PASSE) ;
+#   2. la verification ne GATE PLUS : le brouillon est relu (version + creators,
+#      INFORMATIF), puis le PUBLISH est tente — ATOMIQUE : refuse, le brouillon
+#      vit, rien ne se perd ;
+#   3. au refus du PUBLISH : LE DIAGNOSTIC COMPLET — les mots exacts du bord,
+#      puis le brouillon relu en brut (metadonnees entieres) ET la vue deposits
+#      (l ancienne porte) — le journal dira ce que le bord tient vraiment.
 # usage : powershell -NoProfile -ExecutionPolicy Bypass -File moteur_zenodo.ps1 [-DryRun]
 #         [-BrouillonProtocole <id>] [-BrouillonParticipation <id>]
 
@@ -57,6 +109,26 @@ function Convertir-Corps { param($Objet)
     ConvertTo-Json -InputObject $Objet -Depth 8
 }
 
+# l echappement JSON deterministe (correctif f) : backslash, guillemet, les 32
+# controles ET le non-ASCII (echappe en \uXXXX minuscule, la forme meme de
+# json.dumps cote patron python) — le corps part en ASCII PUR : la classe du
+# corps qui a PASSE au dernier mint reussi (v0.26.0, 24/11). Aucun octet > 127
+# ne part : plus aucun caprice de codage ne demeure (le correctif b tenait les
+# octets UTF-8 ; l ASCII pur les rend inutiles).
+function Json-Texte { param([string]$Texte)
+    if ($null -eq $Texte) { $Texte = '' }
+    $sb = New-Object System.Text.StringBuilder
+    foreach ($ch in $Texte.ToCharArray()) {
+        $code = [int]$ch
+        if ($ch -eq '\') { [void]$sb.Append('\\') }
+        elseif ($ch -eq '"') { [void]$sb.Append('\"') }
+        elseif ($code -lt 32) { [void]$sb.Append(('\u{0:x4}' -f $code)) }
+        elseif ($code -gt 126) { [void]$sb.Append(('\u{0:x4}' -f $code)) }
+        else { [void]$sb.Append($ch) }
+    }
+    return '"' + $sb.ToString() + '"'
+}
+
 # les mots EXACTS du bord : sous 5.1 comme sous 7, Invoke-RestMethod pose le
 # corps JSON du refus dans ErrorDetails.Message (le flux brut est deja bu) —
 # on le lit D ABORD, sinon le flux, sinon le message .NET (le 400 du 26/11
@@ -77,6 +149,23 @@ function Corps-Erreur { param($Erreur)
     }
     if (-not $corps) { $corps = [string]$Erreur.Exception.Message }
     return $corps
+}
+
+# le CORPS BRUT du bord (correctif e) : Invoke-RestMethod deserialise et perd
+# la forme (un tableau d un element redevient l objet seul sous 5.1) — la
+# verification de forme se fait sur le BRUT, sans deserialisation.
+# -UseBasicParsing evite le moteur IE sous 5.1.
+function Corps-Bord { param([string]$Uri)
+    try {
+        $p = @{ Uri = $Uri; Method = 'Get'; TimeoutSec = 300; UseBasicParsing = $true
+                Headers = @{ Authorization = "Bearer $Jeton" } }
+        $r = Invoke-WebRequest @p
+        return @{ Code = [int]$r.StatusCode; Brut = [string]$r.Content }
+    } catch {
+        $code = $null
+        try { $code = [int]$_.Exception.Response.StatusCode } catch {}
+        return @{ Code = $code; Brut = (Corps-Erreur $_) }
+    }
 }
 
 # ------------------------------------------- l'appel au bord (reprises 5xx)
@@ -311,7 +400,9 @@ function Publier-Flux {
             if (-not $apibref) { $apibref = '—' }
             Ecrire ("  [fichier] {0} retiré du brouillon (divergent au bord : {1} o, md5 {2}) — redéposé" -f $nom, $tailleBord, $apibref)
         }
-        $r = Invoke-Zenodo -Methode Post -Uri $FilesUrl -CorpsJson (Convertir-Corps @(@{ key = $nom }))
+        # le corps EXPLICITE (correctif e) — le [{"key": nom}] du patron python ;
+        # ConvertTo-Json ne touche plus ce corps non plus.
+        $r = Invoke-Zenodo -Methode Post -Uri $FilesUrl -CorpsJson ('[{"key":' + (Json-Texte $nom) + '}]')
         $entree = $null
         if ($r.Code -in 200, 201) { $entree = Trouve-Entree $r.Donnees $nom }
         if (-not $entree) {
@@ -331,15 +422,28 @@ function Publier-Flux {
         Ecrire ("  [fichier] {0} déposé ({1} o)" -f $nom, $taille)
     }
 
-    # 3. les métadonnées (celles du script préparé et vérifié à l'Entrée 429)
-    $meta = @{
-        title = $Titre; version = $Version; description = $Description
-        creators = @(@{ name = 'Lopez, Alexis' })
-        license = @{ id = 'busl-1.1' }
-        resource_type = @{ id = 'publication-article' }
-        publication_date = $DatePub; publisher = 'Zenodo'
-    }
-    $r = Invoke-Zenodo -Methode Put -Uri $brouillon.links.self -CorpsJson (Convertir-Corps @{ metadata = $meta })
+    # 3. les métadonnées — SEPT CHAMPS, LA CLASSE DU DERNIER MINT RÉUSSI
+    #    (correctif f, le retour 02:25) : exactement le corps du v0.26.0 (24/11,
+    #    json.dumps côté patron) — title, version, description, creators (en
+    #    TABLEAU), license, resource_type, publication_date. Le champ publisher
+    #    est RETIRÉ : le bord le met par défaut (le v0.26.0 publié ne porte pas
+    #    la clef et montre pourtant «Publisher: Zenodo») — c'était le seul champ
+    #    que le dernier mint réussi n'avait PAS porté. Le non-ASCII est échappé
+    #    par Json-Texte (correctif f) : le corps part en ASCII pur. Aucun
+    #    ConvertTo-Json sur ce corps (correctif e) : creators part en
+    #    [{"name":"Lopez, Alexis"}] comme le patron.
+    $corpsMeta = [string]::Join('', @(
+        '{"metadata":{'
+        ('"title":' + (Json-Texte $Titre) + ',')
+        ('"version":' + (Json-Texte $Version) + ',')
+        ('"description":' + (Json-Texte $Description) + ',')
+        '"creators":[{"name":"Lopez, Alexis"}],'
+        '"license":{"id":"busl-1.1"},'
+        '"resource_type":{"id":"publication-article"},'
+        ('"publication_date":' + (Json-Texte $DatePub))
+        '}}'
+    ))
+    $r = Invoke-Zenodo -Methode Put -Uri $brouillon.links.self -CorpsJson $corpsMeta
     if ($r.Code -in 200, 201) { Ecrire '  [metadata] posées' }
     else {
         # le PUT 500-persistant (vu vague 19) : relire — la valeur peut vivre
@@ -352,6 +456,24 @@ function Publier-Flux {
         }
     }
 
+    # 3b. la relecture (correctif f) — INFORMATIVE, elle ne GATE PLUS : le retour
+    #     de 02:25 a montré que nul n'avait prouvé que la vue brouillon échoïe
+    #     creators (la vue du record PUBLIÉ l'échoïe, elle) — la porte de
+    #     l'édition e a refusé un bord peut-être sain SANS tenter le PUBLISH.
+    #     Désormais : le brouillon est relu (version, creators — s'il y vit), le
+    #     journal le nomme, et le PUBLISH tranche — ATOMIQUE : refusé, le
+    #     brouillon vit, rien ne se perd.
+    $rb = Corps-Bord -Uri "$Api/records/$($brouillon.id)/draft"
+    if ($rb.Code -eq 200) {
+        $noteCreators = 'en tableau dans la vue'
+        if ($rb.Brut -notmatch '"creators"\s*:\s*\[') { $noteCreators = 'ABSENT de la vue brouillon' }
+        $ver = '?'
+        try { if ($rb.Brut -match '"version"\s*:\s*"([^"]*)"') { $ver = $Matches[1] } } catch {}
+        Ecrire ("  [lecture] brouillon relu — version {0} ; creators : {1} — le PUBLISH suit (il tranche)" -f $ver, $noteCreators)
+    } else {
+        Ecrire ("  [lecture] brouillon relu : HTTP {0} — le PUBLISH suit (il tranche)" -f $rb.Code)
+    }
+
     # 4. PUBLISH — la garde UTC d abord : le bord vit la date UTC et refuse une
     #    publication_date encore «demain» (le 400 du 26/11 00:31, les deux flux).
     #    Aucun publish partiel : les fichiers sont deja verifies et engages.
@@ -359,6 +481,34 @@ function Publier-Flux {
     $r = Invoke-Zenodo -Methode Post -Uri $brouillon.links.publish
     if ($r.Code -notin 200, 201, 202) {
         Ecrire ('RESULTAT|{0}|ROUGE|PUBLISH-HTTP-{1}|—' -f $NomFlux, $r.Code)
+        # le diagnostic complet (correctif f) : les mots exacts du bord vivent
+        # dans le throw ; ici le brouillon relu EN BRUT (métadonnées entières)
+        # et la vue deposits (l'ancienne porte) — le journal dira ce que le
+        # bord tient vraiment, le prochain geste sera décidé sur des faits.
+        try {
+            $rd = Corps-Bord -Uri "$Api/records/$($brouillon.id)/draft"
+            if ($rd.Code -eq 200 -and $rd.Brut) {
+                $ext = $rd.Brut
+                $di = $ext.IndexOf('"metadata"')
+                if ($di -ge 0) { $ext = $ext.Substring($di) }
+                if ($ext.Length -gt 700) { $ext = $ext.Substring(0, 700) }
+                Ecrire "  [diagnostic] le brouillon relu (brut, depuis metadata) : $ext"
+            } else {
+                Ecrire ('  [diagnostic] le brouillon relu : HTTP {0}' -f $rd.Code)
+            }
+        } catch {}
+        try {
+            $rl = Corps-Bord -Uri "$Api/deposit/depositions/$($brouillon.id)"
+            if ($rl.Code -eq 200 -and $rl.Brut) {
+                $extl = $rl.Brut
+                $dj = $extl.IndexOf('"metadata"')
+                if ($dj -ge 0) { $extl = $extl.Substring($dj) }
+                if ($extl.Length -gt 700) { $extl = $extl.Substring(0, 700) }
+                Ecrire "  [diagnostic] la vue deposits (l'ancienne porte), depuis metadata : $extl"
+            } else {
+                Ecrire ('  [diagnostic] la vue deposits (l ancienne porte) : HTTP {0}' -f $rl.Code)
+            }
+        } catch {}
         throw "PUBLISH : HTTP $($r.Code) $($r.Corps)"
     }
     $rid = $r.Donnees.id

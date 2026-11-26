@@ -9,6 +9,11 @@ PUBLISH n'est appelé qu'après la re-vérification des empreintes déposées.
 le re-PUT sur une pièce DÉJÀ COMMISE rend 404 au commit et coupe la connexion ;
 un fichier conforme (md5) est sauté, un fichier divergent est retiré puis redéposé.
 
+(correctif f, 26/11 — le retour du poste 02:25, moteur édition e) : le corps des
+métadonnées revient aux SEPT CHAMPS du dernier mint réussi (v0.26.0) — publisher
+retiré (valeur par défaut du bord, champ jamais éprouvé au mint) ; json.dumps
+déjà en ASCII pur (ensure_ascii), creators en tableau — rien d'autre ne change.
+
 LE KIT DÉVELOPPEUR N'EST PAS RE-PUBLIÉ : la source kit-developpement-triade-v1.3.0/
 est INCHANGÉE depuis le commit de sa publication (b86e74b, Entrée 403 — diff git
 vide) ; le corpus v2.1 (24479882) et TRIADE-TRAIN v1.0.0 (24495492) demeurent aussi
@@ -264,7 +269,9 @@ def publier_flux(record, titre, version, description, fichiers, draft_id=None):
         "license": {"id": "busl-1.1"},
         "resource_type": {"id": "publication-article"},
         "publication_date": DATE_PUB,
-        "publisher": "Zenodo",
+        # (correctif f, 26/11) publisher RETIRÉ : la classe du corps du dernier
+        # mint réussi (v0.26.0) — le bord le met par défaut, le champ n'apportait
+        # rien et n'avait jamais été éprouvé au bord.
     }
     metadonnees(draft, meta)
     print("  [metadata] posées")
