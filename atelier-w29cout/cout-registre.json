@@ -1,0 +1,152 @@
+{
+ "graine": 20261128,
+ "B": 10000,
+ "niveau": 0.95,
+ "table_eres": [
+  {
+   "opération": "localiser",
+   "ère": "M1 (historique-datée)",
+   "médiane": 51,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "localiser",
+   "ère": "pointeur-seul",
+   "médiane": 1053,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "localiser",
+   "ère": "ADOPTÉE (hiérarchique D222)",
+   "médiane": 627,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "éditer",
+   "ère": "M1 (historique-datée)",
+   "médiane": 719,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "éditer",
+   "ère": "ADOPTÉE (TPL-EDIT-v1 OPT-14)",
+   "médiane": 674,
+   "faisabilité": "18/18",
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "éditer",
+   "ère": "OPT-16 (diff structuré)",
+   "médiane": 79.5,
+   "faisabilité": "9/18",
+   "coût_par_validé": 1895.67,
+   "provenance": "le journal vivant (recalculé)"
+  },
+  {
+   "opération": "ajouter",
+   "ère": "M1 (historique-datée)",
+   "médiane": 1088,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "ajouter",
+   "ère": "ADOPTÉE (squelette OPT-14)",
+   "médiane": 2200,
+   "faisabilité": "18/18",
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "ajouter",
+   "ère": "contenu-seul",
+   "médiane": 3510,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — la table des ères"
+  },
+  {
+   "opération": "ajouter",
+   "ère": "5ᵉ campagne",
+   "médiane": 4604,
+   "faisabilité": "5/18",
+   "coût_par_validé": null,
+   "provenance": "CIBLES.md — CIB-ADD-COUT-4500 (mesurée)"
+  },
+  {
+   "opération": "ajouter",
+   "ère": "voie structurée D264",
+   "médiane": null,
+   "faisabilité": null,
+   "coût_par_validé": null,
+   "provenance": "EN ATTENTE — le plan w29decco"
+  }
+ ],
+ "opt16": {
+  "mediane": 79.5,
+  "ic95": [
+   58.0,
+   117.0
+  ],
+  "faisabilite": "9/18",
+  "total_tokens": 17061,
+  "cout_amorti": 1895.67,
+  "ic95_amorti": [
+   1514.67,
+   2263.22
+  ],
+  "ratio_plancher": 2.89
+ },
+ "tests_exacts": {
+  "fisher_9sur18_vs_18sur18": 0.001033,
+  "fisher_5sur18_vs_15sur18": 0.002046
+ },
+ "cibles_nouvelles_pre-enregistrees": {
+  "CIB-EDIT-FAISAB": "≥ 15/18 — EN ATTENTE de la campagne contrainte (le plan w29decco)",
+  "CIB-EDIT-AMORTI": "≤ 150 tokens par changement validé — EN ATTENTE de la campagne contrainte"
+ },
+ "lecteur": {
+  "mediane_opt16": {
+   "operandes": "la médiane des 18 sommes de tours par tâche (le journal)",
+   "attendu": 79.5
+  },
+  "amorti": {
+   "operandes": "17061 ÷ 9",
+   "attendu": 1895.67
+  },
+  "ic_mediane": {
+   "operandes": "B=10000, graine 20261128, niveau 0.95",
+   "attendu": [
+    58.0,
+    117.0
+   ]
+  },
+  "p_fisher_9_18_vs_18_18": {
+   "operandes": "9/18 vs 18/18 (bilatéral)",
+   "attendu": 0.001
+  },
+  "p_fisher_5_18_vs_15_18": {
+   "operandes": "5/18 vs 15/18 (bilatéral)",
+   "attendu": 0.002
+  }
+ },
+ "provenance": {
+  "mediane_par_tentative_opt16": "atelier-w28opt16/journal-opt16.jsonl — le champ completion_tokens sommé par tâche, la médiane sur 18",
+  "faisabilite_opt16": "atelier-w28opt16/resultats-opt16.json — le champ vert",
+  "cout_amorti_opt16": "journal-opt16.jsonl — total_tokens (39 appels) ÷ les vertes",
+  "plancher": "CIBLES.md — CIB-DIFF-PLANCHER : 27,5 tokens (le diff réel, REPÈRE)",
+  "eres_publiees": "CIBLES.md — la table canonique des budgets (D222/D241/D251), AUCUNE valeur re-mesurée",
+  "ic_bootstrap": "le journal vivant, B=10000, graine 20261128",
+  "tests_exacts": "les effectifs publiés (CIBLES.md, resultats-opt16.json)"
+ }
+}

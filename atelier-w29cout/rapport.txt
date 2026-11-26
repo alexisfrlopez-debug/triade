@@ -1,0 +1,75 @@
+ATELIER W29COUT — LA LECTURE ÉCONOMIQUE UNIFIÉE : LA TABLE DES ÈRES, LES IC
+BOOTSTRAP 95 %, LES TESTS EXACTS, LES PLANCHERS PRÉ-ENREGISTRÉS (vague 29,
+prompt 5 — le plan gelé PLAN-W29COUT.md, sha256 2cb546b6… consigné à
+EMPREINTES-PLANS-VAGUE29.txt, le commit AVANT toute mesure)
+
+1. LA TABLE UNIFIÉE (cout-registre.json) : par opération (localiser / éditer /
+   ajouter) et par ère — la médiane par tentative, la FAISABILITÉ (vertes/n),
+   LE COÛT PAR CHANGEMENT VALIDÉ — côte à côte :
+   - localiser : M1 51 (HISTORIQUE-DATÉ) · pointeur-seul 1 053 · ADOPTÉE 627 ;
+   - éditer : M1 719 (HISTORIQUE-DATÉ) · ADOPTÉE 674 (18/18) · OPT-16
+     **79,5 (9/18, l'amorti 1 895,67 = 17 061 ÷ 9)** ;
+   - ajouter : M1 1 088 (HISTORIQUE-DATÉ) · ADOPTÉE 2 200 (18/18) ·
+     contenu-seul 3 510 · 5ᵉ campagne 4 604 (5/18) · la voie structurée
+     D264 EN ATTENTE (le plan w29decco).
+   Les valeurs des ères PUBLIÉES sont portées AVEC leur provenance (CIBLES.md,
+   la table canonique D222/D241/D251 — AUCUNE re-mesurée, AUCUNE réécrite) ;
+   la ligne OPT-16 est RECALCULÉE depuis le journal vivant.
+
+2. LE RECALCUL depuis les sources canoniques (la recomposition rejouable —
+   le registre de provenance consigne chaque grandeur → son fichier) :
+   journal-opt16.jsonl (39 appels) → la médiane par tâche des SOMMES de tours
+   = **79,5** (l'identique du publié — la recomposition le REPREUVE) ; le
+   total 17 061 ÷ les 9 vertes (resultats-opt16.json, le champ verts) =
+   **1 895,67** (l'amorti — l'identique de la décomposition W28CORRIGE
+   re-reuve). LE RATIO PLANCHER : 79,5 / 27,5 = 2,89 × (le repère re-reuvé).
+
+3. LES IC BOOTSTRAP 95 % (B = 10 000 rééchantillonnages, la graine 20261128
+   consignée AVANT le tirage, le rejeu bit-identique prouvé) :
+   - LA MÉDIANE OPT-16 : **[58,0 ; 117,0]** tokens natifs — la médiane
+     publiée 79,5 dedans, la dispersion des 18 tâches nommée pour la
+     première fois ;
+   - LE COÛT PAR CHANGEMENT VALIDÉ : **[1 514,67 ; 2 263,22]** — l'amorti
+     1 895,67 dedans, l'IC étroit (la borne haute 2 263 ~ l'ADOPTÉE 2 200 :
+     l'arbitrage médiane/faisabilité QUANTIFIÉ — au bout haut de son IC,
+     l'amorti de la voie OPT-16 atteint le coût de l'ère adoptée, la lecture
+     économique unifiée demanded par l'évaluation).
+
+4. LES TESTS EXACTS DE FISHER (bilatéraux, les effectifs publiés) :
+   - **9/18 (OPT-16) contre 18/18 (le gabarit adopté) : p = 0,001 033** —
+     la perte de faisabilité est SIGNIFICATIVE au seuil 0,01 : le gain token
+     (79,5 contre 674) est ACHETÉ par une baisse de faisabilité que l'IC
+     exact confirme — l'arbitrage CONSIGNÉ par le nombre (la politique
+     lexicographique appliquée, la demande A2 de l'évaluation satisfaite) ;
+   - **5/18 (ajouter 5ᵉ) contre 15/18 (la cible CIB-ADD-FAISAB) : p =
+     0,002 046** — l'écart à la cible significatif lui aussi (le verrou
+     central nommé de la même pièce).
+
+5. LES CIBLES NOUVELLES PRÉ-ENREGISTRÉES (jamais un re-tirage — les lignes
+   posées au registre CIBLES.md à la consignation de la vague) :
+   - **CIB-EDIT-FAISAB ≥ 15/18** pour l'éditer structuré ;
+   - **CIB-EDIT-AMORTI ≤ 150 tokens** par changement validé ;
+   les deux EN ATTENTE de la campagne contrainte (le plan w29decco — la
+   limite du bac nommée, AUCUN chiffre fabriqué au présent atelier : la
+   faisabilité courante 9/18 et l'amorti courant 1 895,67 restent LES
+   MESURES COURANTES publiées).
+
+6. LE TEST DU LECTEUR étendu d'un cas par nouvelle grandeur (l'IC, la
+   p-value, l'amorti) : chaque grandeur recomposable depuis ses opérandes
+   imprimés (le registre lecteur consigne les opérandes et l'attendu — le
+   recomposeur les vérifie). LE REJEU bit-identique du script de calcul
+   (deux passes, les sorties identiques).
+
+7. LA GARDE : aucune valeur historique réécrite (les ères datées demeurent,
+   les étiquettes HISTORIQUE-DATÉ portées) ; aucune cible re-tirée ; le
+   sceau-I 14/14 ; aucun chiffre fabriqué (chaque grandeur recomposée de sa
+   source canonique, la provenance consignée).
+
+LES PIÈCES : session_cout.py + cout-registre.json (la table, les IC, les
+p-values, le lecteur, la provenance) + le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w29cout/session_cout.py     # la session (l'affichage)
+  python3 atelier-w29cout/session_cout.py > a; python3 atelier-w29cout/session_cout.py > b; diff a b
+                                              # le rejeu bit-identique
+  python3 v06/sceau_I.py verifier              # la garde (14/14)
