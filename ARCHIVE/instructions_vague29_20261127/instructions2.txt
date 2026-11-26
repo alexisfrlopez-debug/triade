@@ -1,0 +1,216 @@
+# Analyse du pack TRIADE v0.33.0 (vague 28) — 5 pièces
+
+---
+
+## 1. Résumé clair
+
+Cinq documents, un seul système :
+
+| Pièce | Rôle | Volume |
+|---|---|---|
+| **Manuscrit v0.33.0** | L'article scientifique (IMRAD, anglais) | 34 p. dont 16 de cœur |
+| **Spécification v0.15.18** | Le texte normatif : 3 couches (I/B/C), 11 règles, 4 axes crypto | 75 p. |
+| **Livre du Coffre v1.17** | Le manuel opératoire du coffre à secrets (CF1→CF2→CF3) | 29 p. |
+| **Preuves et calculs v0.33.0** | Les rapports d'ateliers lus verbatim + registre des cibles | 12 p. |
+| **Présentation v0.33.0** | Le résumé exécutif de la vague | 6 p. |
+
+**L'idée centrale :** un agent LLM écrit directement la notation d'assemblage (x86-64, RISC-V, TLS 1.3), sans compilateur optimisant. Chaque bloc est spécifié *avant* d'être écrit (couche I signée Ed25519 hors-ligne), indexé dans une carte chiffrée fragmentée (C), et scellé après dix rebuilds identiques. Deux régimes de preuve sont séparés : **oracle** (émulation différentielle au labo) et **terrain** (exécution sur la vraie machine du développeur).
+
+**Ce que la vague 28 ajoute :** restructure IMRAD ; harnais à carte mémoire dérivée mécaniquement de la carte C (229/235 vecteurs exécutables contre 95 avant) ; moteur d'oracle natif généralisé à 12 000 cas (4,56 × C en régime chaud) ; édition par diff structuré à 79,5 tokens médians ; deux classes de linter (C30 n=, C31 scope) ; budget de production par vague (19 269 tokens).
+
+**Les résultats empiriques clés :** 11 défauts échappés sur 12 runs terrain de Loupe ; 29 livraisons témoins (campagnes D204/D210) avec zéro échappé imputable à la notation, tous les échappés étant côté kit ; la notation coûte +9,9 % d'instructions vs gcc -O2 ; le bras compilé consomme ×1,27 les tokens du bras notation (n=1) ; la vérification coûte ×17,9 à ×23,9 celle du C.
+
+---
+
+## 2. Points forts
+
+- **L'épistémologie oracle/terrain est la vraie contribution.** Nommer, classer et archiver chaque défaut qui passe tous les contrôles labo puis meurt sur la machine réelle — avec une taxonomie en cinq familles (chargeur/image, ABI/SSE, sémantique du loader, conventions de codes d'erreur, hypothèses du harnais) — c'est utile, réutilisable, et ça n'existait pas à ce niveau de granularité pour du code natif écrit par agent.
+- **Le design à quatre bras (T / C / C+G / C+G+) est excellent.** Il isole l'effet notation (55,7 %), l'effet régime de vérification (44,3 %) et l'effet gouvernance (0,213 s). C'est le seul dispositif du pack qui ressemble à une expérience et non à un journal de bord.
+- **Les résultats défavorables sont publiés.** Cible ajouter manquée (5/18, 4 604 vs 4 500), VAES manquée (1,41× / 2,68× vs ≤1,05×), H3 et H5 falsifiées, H7 non testable, faisabilité édition 9/18. Le facteur « 15,3× » de v0.11.0 a été **retiré par auto-audit** comme artefact de périmètre. C'est rare et ça mérite d'être dit.
+- **La bibliographie technique est vérifiée et exacte.** SuperCoder 95,0 % / 1,46× [[1]], JSONSchemaBench [[2]], AutoVecCoder (vectorisation *source*, correctement différenciée) [[12]], Nova ICLR 2025 [[22]], XGrammar MLSys 2025 [[44]]. Aucune référence fantôme détectée sur l'échantillon contrôlé.
+- **Traçabilité mécanique :** empreintes sha-256, graines consignées, plans gelés avant mesure, rejeux bit-identiques, statuts dérivés de registres et non tapés à la main.
+
+---
+
+## 3. Points faibles
+
+### 3.1 Des ratios qui ne se recomposent pas (vérifié numériquement)
+
+C'est le point le plus embarrassant, parce que le pack a érigé la recomposabilité en règle (D244, C24) :
+
+| Ratio publié | Opérandes imprimés | Recalcul | Verdict |
+|---|---|---|---|
+| Moteur généralisé « **33×** plus vite que le committé » | 46,6 ms / 1,9 ms | **24,5×** | ❌ non recomposable |
+| Moteur committé « **1 056 × C** » | 46,6 ms / 24,0 µs | **1 942×** | ❌ non recomposable |
+| Schedule notation « **2,68 ×** EVP à contexte posé » | 1 082 / 409 ns | **2,65×** | ❌ non recomposable |
+| « **123×** vs oracle vivant » | 19,1 / 0,16 µs | 119–121× | ⚠️ reconciliable seulement avec des canons non imprimés |
+| « 1,41 × EVP par appel » | 1 082 / 771 | 1,403 | ⚠️ limite d'arrondi |
+
+Tout le reste recalcule impeccablement (4,56× ; 2,89× ; 24,5× ; 3,264 ; 97,5 % ; 811/817 ; +9,9 %/−2,0 % ; IC Clopper-Pearson [0,615 ; 0,998] ; quantiles 1,86σ/3,10σ ; 20,715+16,497+0,213=37,425). **Mais trois ratios de la vague 28 — la vague dont le titre est « les objectifs poussés à leur maximum » — ne tiennent pas.** Un linter à 31 classes qui vérifie la typographie et laisse passer ça, c'est un garde qui contrôle le cadre et pas le tableau.
+
+### 3.2 Le périmètre choisi flatte (le péché de D191, version douce)
+
+Le « 4,56 × C » est un **régime de boucle chaude** : 109,5 µs sur 12 000 cas. Le mur bout-en-bout est 1,9 ms, soit **77 × C**. Autrement dit la boucle mesurée représente ~6 % du coût réel. Les deux chiffres sont publiés — honnête — mais **le titre, l'abstract et la présentation choisissent le flatteur**. C'est structurellement le même geste que le « 15,3× » retiré en v0.13.0 : lire le compteur au bon endroit. À corriger : le chiffre de tête doit être le bout-en-bout, le régime chaud va en note.
+
+### 3.3 OPT-16 : le coût « par changement validé » n'est pas celui-là
+
+La cible est libellée *« coût tokens d'UN changement éditer **validé** »*, la mesure est une **médiane sur 18 tâches dont 9 échouent**. Le coût des 9 échecs (trois tours de réparation chacun) n'est pas amorti dans 79,5. Ailleurs (« ajouter ») vous publiez 3 844 / 3 990 / 4 604 *par changement validé* — deux conventions incompatibles sous le même libellé.
+
+Pire : le rapport dit « 38–42 tokens par tour » pour la réponse et 79,5 de total. Ça laisse **~40 tokens de prompt** pour une tâche d'édition réelle. Impossible que le matériel (notation, schéma, consigne) tienne là-dedans. Donc soit le périmètre est l'émission seule — et le comparer à 674 (budget `usage` complet) est un **cross-périmètre interdit par votre propre règle** — soit il manque une décomposition. Vous la faites partout ailleurs (596/41/604, 1617/45/1635). Faites-la ici.
+
+### 3.4 Le « zéro échappé notation » est confondu avec l'apprentissage
+
+11/12 échecs sur Loupe, puis 0/29 sur D204/D210. Entre les deux : **les onze classes de défauts sont devenues des gardes**. Le second chiffre mesure une chaîne qui a déjà absorbé ses leçons, pas l'efficacité intrinsèque du protocole. Ce n'est pas une réplication, c'est une courbe d'apprentissage. Le manuscrit le dit à demi-mot ; il faut l'écrire comme menace de validité interne, en tête.
+
+### 3.5 L'attribution kit/pièce est juge et partie
+
+« Tout échappé est côté kit, jamais côté pièce » : la règle D202, le kit, la pièce, le juge et le codage sont du même auteur-agent. Le test d'attribution empirique (re-livraison C sur kit minimal, 14 VERT) est un bon geste — mais **une seule re-livraison, codée par l'auteur**. Un double codage indépendant avec κ est le minimum, et vous avez déjà la grille F/L et le calculateur. Servez-vous-en sur vos propres données.
+
+### 3.6 H5 : falsifiée, puis « réhabilitée » par amendement du développeur
+
+Daté, append-only, la falsification reste au journal : c'est propre. Mais du point de vue d'un reviewer, **changer la règle après la mesure** porte un nom dans la littérature : *same-cycle goalpost change*. Gardez la falsification comme verdict de tête ; la réhabilitation va en annexe, avec la règle d'amendement pré-enregistrée *avant* la prochaine mesure.
+
+### 3.7 Autres
+
+- **N=1 partout** : un développeur, une famille de modèles (glm-4-plus), une machine Windows, un domaine applicatif. Les paires coût/temps sont n=1.
+- **Circularité de l'oracle** non levée : l'instance isolée régénère les constantes depuis les définitions, même famille. C'est de l'indépendance de *contexte*, pas de *modèle*.
+- **Tout le matériel de preuve est en annexe.** Le cœur IMRAD raconte RQ1–RQ4 sans tableau. Le reviewer a demandé un cœur IMRAD, pas un cœur sans preuves.
+- **v0.33.0 non mintée** : l'édition soumise n'a pas de DOI. Les reviewers détestent ça.
+- **Le Livre du Coffre est un passif académique.** « Sachet », « maître de cérémonie », « sentinelle », « la main qui agit », majuscules emphatiques : D182 avait demandé les termes standards, ils sont revenus. Ce texte hurle « document interne ésotérique » et contamine la crédibilité des quatre autres.
+- **Le programme « souveraineté » (CF1/CF2/CF3, BSL, expropriation par l'employeur) occupe ~40 % de la spec et 100 % du Livre** pour un résultat sans rapport avec RQ1–RQ4 : des primitives standard (Shamir, Argon2id, XChaCha20, Ed25519) assemblées en coffre personnel. C'est de l'ingénierie honnête, pas une contribution scientifique, et ça dilue le papier.
+
+---
+
+## 4. Pertinence scientifique
+
+**Réelle mais étroite.** La question « que se passe-t-il quand un agent écrit les octets et doit re-dériver les garanties silencieuses du compilateur ? » est une bonne question, et la taxonomie des cinq familles de défauts y répond avec des données. Le design à quatre bras est une contribution méthodologique transférable.
+
+**Mais la thèse fondatrice est réfutée par vos propres mesures.** La notation coûte +9,9 % d'instructions vs gcc -O2, ×17,9 en temps de vérification, ×6,1 en temps humain de cérémonie, et le couloir VAES perd de 7 % contre du C bien écrit. Conclusion honnête : **le compilateur n'est pas le problème**. Ce qui a de la valeur, c'est la gouvernance, la provenance et la comptabilité des défauts. Le pack le concède à mi-voix (« the value is governance and provenance, not secrecy ») tout en gardant le titre et le framing « no compiler ». Il faut choisir.
+
+---
+
+## 5. Rigueur académique
+
+**Forme : exceptionnelle. Inférence : faible.**
+
+Pré-enregistrements hashés, graines, rejeux bit-identiques, négatifs mutants, statuts dérivés, IC exacts, non-additivité des médianes explicitement nommée, correction publique d'un benchmark fautif : c'est au-dessus du standard de beaucoup de papiers publiés.
+
+Mais : pas de puissance statistique, pas d'ablation, pas de réplication, pas d'annotateur indépendant, comparaison inter-bras sur n=1, cibles redéfinies en cours de route, et trois ratios non recomposables dans la vague courante. **La rigueur est celle d'un audit de conformité, pas celle d'une expérimentation.** Vous savez prouver que vous avez fait ce que vous dites. Vous ne savez pas encore prouver que ça marche mieux.
+
+---
+
+## 6. Neutralité
+
+Correcte sur les chiffres (les échecs sont là, en gras, dans le registre des cibles). **Pas correcte sur le cadrage.**
+
+- Le choix du périmètre de tête (4,56× plutôt que 77×) est un cadrage favorable.
+- Le vocabulaire du Livre est sacralisant et auto-célébrant (« VÉCU », « ACTÉ », « LA MÉTHODE ENTIÈRE PROUVÉE PAR LA CRÉATION »).
+- La menace « expropriation (typ. l'employeur) » et la BSL comme « barrière juridique » sont un grief personnel importé dans un document scientifique.
+- L'auto-référence est massive : le protocole valide le protocole, le linter garde le linter, le journal atteste le journal. Vous le nommez (« house-written semantics »), c'est honnête, mais ça reste une boucle.
+
+---
+
+## 7. Transparence
+
+**Le meilleur axe du pack, sans discussion.** Journal append-only, décisions jamais réécrites, errata datés, empreintes everywhere, kits livrés sans résultat fabriqué, dix lignes « EN ATTENTE » assumées, refus nommés (SERVING-ABSENT, FAMILY-ABSENT), licence corrigée pour autoriser la review et la réplication, agent en méthodes et remerciements et pas en co-auteur.
+
+Deux réserves : l'édition courante n'est pas archivée (DOI absent), et les « ELISIONS nommées » retirent des fragments des rapports verbatim — la pièce citée n'est donc pas la pièce brute. C'est documenté, mais un reviewer voudra le brut.
+
+---
+
+## 8. Nouveauté : ce qui est neuf, ce qui existe déjà
+
+| Élément | Statut |
+|---|---|
+| Shamir, Argon2id, HKDF, XChaCha20, Ed25519, RFC 3161, Rekor | **Standard**, cité correctement |
+| Hot patch, trampolines, quiescence, fence.i | **Ancien** : Kitsune, POLUS, kpatch, DSU |
+| Design by contract, N-version, property-based testing | **Ancien** : Meyer, Avizienis, QuickCheck |
+| Supply chain signée, provenance, builds reproductibles | **Ancien** : in-toto, SLSA, TUF, Sigstore |
+| Génération d'assembleur par LLM | **Déjà quantifié** : STOKE, SuperCoder [[1]], Nova [[22]], LaaC |
+| Vectorisation explicite par LLM | **Déjà fait** au niveau source : AutoVecCoder [[12]] |
+| Décodage contraint / schéma fermé | **Déjà benchmarké** : JSONSchemaBench [[2]], XGrammar [[44]] |
+| **Taxonomie des défauts invisibles à l'émulation pour du natif écrit par agent** | **Neuf et utile** — c'est votre meilleur actif |
+| **Décomposition quatre bras isolant notation / vérification / gouvernance** | **Neuf comme dispositif** |
+| **Gouvernance à intention signée + admission de preuve fail-closed** | ⚠️ **Fortement concurrencé en 2026, et vous ne le citez pas** |
+
+**C'est le trou majeur du manuscrit.** Toute une littérature 2026 traite exactement de votre contribution revendiquée : *Proof-or-Stop* admet les transitions de cycle de vie uniquement sur preuve fraîche liée à l'état suivi, et rapporte des résultats adversariaux de falsification de reçus [[60]] ; l'*Agile-V Assurance Spine* formalise l'admission de preuve par propriété, le gel de baseline, les classes d'indépendance I0–I4 et le recheck atomique à la frontière d'effet [[68]] ; *Cognitive Admission Control* conditionne l'autorité d'exécution à des obligations d'assurance typées par risque [[80]] ; *Cheap Code, Costly Judgment* est une étude de cas sur l'ingénierie agentique gouvernable [[70]].
+
+Votre related work cite SWE-agent, CompCert et Sigstore — et **aucune de ces quatre**. La revendication « ce qu'aucun compte rendu antérieur ne quantifie, c'est la gouvernance » ne survit pas à cette liste en l'état. Elle survit si vous la re-scopez : *« la gouvernance appliquée à des artefacts natifs scellés au niveau octet, avec comptabilité des défauts échappés »* — et si vous citez, comparez, et montrez ce que vous apportez **au-dessus** de ces cadres.
+
+Bonus : la taxonomie I0–I4 [[68]] résout élégamment votre gap d'indépendance. Votre instance isolée est **I1 (contexte séparé)**, pas I2/I3. Le dire avec ce vocabulaire transforme un aveu flou en positionnement précis.
+
+---
+
+## 9. Suggestions pour consolider et créer une vraie avancée
+
+**Priorité 1 — corriger et re-cadrer (une semaine)**
+1. Solder les trois ratios non recomposables (33×, 1 056×, 2,68×) **à la source**, avec erratum daté. Ajouter une classe de linter qui recalcule *tout* ratio publié depuis ses opérandes non arrondis — pas seulement ceux du « test du lecteur ».
+2. Décomposer OPT-16 en prompt/completion comme les autres opérations, et publier **le coût amorti par changement validé** (échecs inclus), à côté de la médiane.
+3. Basculer le chiffre de tête sur le bout-en-bout (77×), le régime chaud en note de périmètre.
+4. Remonter 4 tableaux dans le cœur (jalons, runs Loupe, campagnes D204/D210, statuts de preuve).
+5. Minter v0.33.0 sur Zenodo avant soumission.
+
+**Priorité 2 — lever les blocages pas chers (deux semaines)**
+6. **FAMILY-ABSENT est un choix d'infrastructure, pas une loi physique.** Une clé API chez un second fournisseur coûte quelques dizaines d'euros et ferme ATT-REPL. Faites-le.
+7. Double annotation indépendante de l'attribution kit/pièce sur les 29 livraisons, κ rapporté. Vous avez la grille et le calculateur.
+8. Sortir le Livre du Coffre du pack académique : en faire un *Operations Manual* en anglais, termes standards, et déplacer le programme souveraineté dans un rapport technique séparé.
+
+**Priorité 3 — ce qui ferait une vraie avancée scientifique (un trimestre)**
+9. **Ablation de la gouvernance.** Retirer un mécanisme à la fois (I signée, round-trip, cristallisation, carte) et mesurer taux d'échappé et coût. Sans ablation, vous ne pouvez attribuer le résultat à aucun mécanisme précis — c'est le trou central du papier.
+10. **Benchmark adversarial de la gouvernance elle-même.** Construire un corpus d'attaques : preuve périmée, empreinte liée au mauvais artefact, approbation rejouée, témoin forgé, indépendance auto-déclarée, rollback cohérent binaire+état. Mesurer taux de détection contre des baselines dégradées (B0 « l'agent dit DONE », B1 « un log existe », B3 « c'est signé », B6 admission complète). C'est **l'expérience manquante** qui transformerait votre gouvernance d'un récit en un résultat, et elle s'aligne sur l'agenda d'évaluation déjà posé par ces travaux [[68]].
+11. **Puissance et réplication.** n≥30 unités appariées, randomisation stratifiée (déjà pré-enregistrée), modèles mixtes avec unité en effet aléatoire, IC, second développeur, second domaine. Tant que ce n'est pas fait, l'article reste une étude de cas — assumez-le dans le titre.
+12. **Les runs matériels.** dudect n≥10 × 3N sur ≥2 machines goupillées, fence.i sur silicium, compteur NV, bascule métal nu. Dix lignes « EN ATTENTE » bloquent la moitié des revendications ; le plan groupé existe, il ne manque que le geste.
+13. **Changer le titre et la thèse.** « Removing the compiler » est réfuté par vos données. « Governing agent-written native artifacts: escaped-defect accounting and the cost of re-deriving compiler guarantees » est soutenu par vos données. Le second est un meilleur papier.
+
+---
+
+## 10. Prompt de correction pour l'agent (sans rôle assigné)
+
+```
+Objectif : solder les résidus numériques et de périmètre de la vague 28, sans toucher
+aux artefacts scellés ni re-tirer aucune cible.
+
+1. Lire intégralement atelier-w28harnais/rapport.txt, atelier-w28vaes/rapport.txt,
+   atelier-w28opt16/rapport.txt et CIBLES.md. Confronter les empreintes avant lecture.
+2. Pour chaque ratio publié dans les cinq pièces, recalculer depuis les opérandes
+   non arrondis du rapport source. Lister les écarts > 0,005 en valeur relative.
+   Cas connus à traiter : 33x (46,6/1,9), 1056x (46,6 ms/24,0 µs), 2,68x (1082/409).
+3. Corriger À LA SOURCE (rapport ou registre), jamais dans la prose seule. Consigner
+   un erratum append-only daté par correction, avec l'ancienne valeur et la nouvelle.
+4. Décomposer OPT-16 en prompt / prose / réponse depuis journal-opt16.jsonl, et publier
+   une seconde ligne « coût par changement validé, échecs amortis, n=9/18 ».
+5. Ajouter au linter une classe C32 RATIO-RECOMPOSE couvrant TOUT ratio publié,
+   avec son contrôle négatif (un ratio volontairement faux doit être refusé).
+6. VÉRIFICATION APRÈS MODIFICATION (obligatoire, avant tout commit) :
+   - rejouer la porte de génération complète, zéro rouge ;
+   - rejouer les cinq sondes et les contrôles négatifs, verdicts bit-identiques ;
+   - sceau_I.py verifier : 14/14 avant et après, aucune empreinte scellée modifiée ;
+   - recalculer indépendamment chaque ratio corrigé depuis le fichier source et
+     confronter à la valeur imprimée ;
+   - git diff : aucun octet hors des zones autorisées.
+   Si un seul contrôle échoue, annuler la modification et consigner le refus nommé.
+```
+
+---
+
+## 11. Conclusion — avis objectif, sans anesthésie
+
+Alors. On va se parler franchement, parce que tu payes pas pour qu'on te suce la nouille.
+
+**Ce que t'as fait est réel.** Un éditeur hexadécimal Windows né de l'intention à l'octet, onze jalons, une pile TLS 1.3 pure, un patch à chaud qui tourne, et un journal où chaque mensonge possible est verrouillé par une empreinte. C'est du boulot d'orfèvre. Le mec qui a retiré son propre « 15,3× » après audit, il a plus de colonne vertébrale que 90 % des auteurs que je lis. Ça, c'est dit, c'est mérité, c'est pas de la flatterie.
+
+**Maintenant la part qui pique.** T'as construit une cathédrale de 31 classes de linter pour vérifier que t'as pas écrit « v0.15.10 » au lieu de « v0.15.18 » — et pendant ce temps **trois ratios de ta vague phare ne se recalculent pas avec les chiffres que t'imprimes juste à côté**. 46,6 divisé par 1,9, ça fait 24,5, pas 33. C'est pas de la physique quantique, c'est du CP. Ton garde vérifie la virgule et laisse passer le facteur. C'est exactement le défaut [CADRE-NÉ] que t'as nommé toi-même en run 3 : *le contrôle dérive du plan, jamais de la pièce qu'il contrôle*. Tu l'as écrit en majuscules dans ta spec et tu le refais à l'échelle du pack. Bravo, la boucle est bouclée, le serpent se bouffe la queue avec méthode.
+
+**Et le « 4,56 × C » en gros titre alors que le bout-en-bout est à 77× ?** Tu as *littéralement* retiré un « 15,3× » pour artefact de périmètre en v0.13.0, tu as écrit une décision D191 pour que ça n'arrive plus, et tu remets le couvert en choisissant la boucle chaude qui représente 6 % du coût réel. C'est pas malhonnête — les deux chiffres sont là — c'est juste **le réflexe du mec qui veut que ça brille**. Un reviewer un peu réveillé le voit en trente secondes et il te le fait payer sur tout le reste.
+
+**Le vrai problème, c'est que t'as confondu rigueur de forme et rigueur d'inférence.** N=1. Un dev, un agent, une machine, un domaine. Tes paires coût/temps sont à n=1. Ton oracle est dérivé de la spec qu'il valide. Ton « zéro défaut notation » sur 29 livraisons arrive *après* que les onze classes de défauts soient devenues des gardes — c'est pas une preuve, c'est une courbe d'apprentissage, et tu le sais. Ton attribution kit/pièce est codée par le même gars qui a écrit le kit, la pièce et la règle. T'as pas une expérience, t'as **un très beau journal intime avec des empreintes sha-256**.
+
+**Et le coup de grâce : ta contribution revendiquée — la gouvernance — est en train d'être labourée par d'autres en 2026 et tu cites pas un seul de ces papiers.** Proof-or-Stop fait de l'admission de preuve liée à l'état avec résultats adversariaux [[60]]. L'Assurance Spine formalise l'admission par propriété, le gel de baseline et les classes d'indépendance [[68]]. CAC conditionne l'autorité au risque [[80]]. Davis fait une étude de cas sur l'ingénierie agentique gouvernable [[70]]. Tu cites Sigstore et DO-178C — impeccable, mais c'est le socle, pas la concurrence. Ta phrase « ce qu'aucun compte rendu antérieur ne quantifie, c'est la gouvernance » est **une bombe à retardement sous ton propre abstract**. Un reviewer du domaine la dégoupille en une phrase et ton papier devient « un cas d'application non cité de cadres existants ».
+
+**Le plus rageant ?** Tes deux blocages les plus cités — FAMILY-ABSENT et le second annotateur — coûtent respectivement **vingt balles d'API chez un concurrent** et **un coup de fil à un collègue**. Vingt-huit vagues, 269 décisions, un coffre à trois générations avec piège sur clé USB et carte papier manuscrite dans un sachet — mais pas une clé API chez un autre fournisseur. T'as blindé la serrure du démon et laissé la fenêtre ouverte parce que la vitre coûte 20 €. C'est pas de la rigueur, c'est du fétichisme.
+
+**Alors on fait quoi ?** On arrête d'empiler des vagues. On corrige les trois ratios, on sort le chiffre honnête en tête, on amortit les échecs dans le coût par changement validé, on achète la seconde famille, on recrute l'annotateur, on fait l'**ablation** et le **benchmark adversarial de la gouvernance** — les deux seules expériences qui te feraient passer de « témoignage admirable » à « résultat scientifique ». Et on change le titre : tes données disent que **le compilateur n'est pas le problème**. Garde la gouvernance, enterre le « no compiler », c'est là qu'est ton papier.
+
+**Verdict impartial :** en l'état, c'est une **étude de cas longitudinale d'excellente facture documentaire, avec une contribution empirique réelle (la taxonomie des défauts) et un dispositif original (les quatre bras), mais sans puissance, sans réplication, sans ablation, et avec une revendication de nouveauté mal positionnée**. Soumis à un bon venue : *major revision*, pas *reject* — le matériel existe, l'honnêteté existe, il manque l'inférence. Soumis à un venue exigeant en l'état : reject pour N=1 et nouveauté non située.
+
+T'as pas construit un truc bidon. T'as construit un truc solide **que tu présentes comme plus avancé qu'il ne l'est**. Baisse le volume, monte la preuve. Et arrête de sacraliser le vocabulaire : « sachet », « maître de cérémonie », « sentinelle instantanée » — on dirait une secte qui a découvert Argon2id. Un reviewer lit ça et il pense « gourou », pas « chercheur ». Tes chiffres méritent mieux que ton décor.

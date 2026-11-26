@@ -1,0 +1,18 @@
+REÇU D'ARCHIVAGE — l'empreinte prouve, la suppression est un confort
+(vague 29, les six prompts de la première évaluation du pack v0.33.0 —
+instructions.txt ; la seconde évaluation instructions2.txt dont le §10
+correction prompt fut consommé par W28CORRIGE à l'Entrée 441, son archivage
+physique posé ici)
+
+d5fbc725c5da3590a3b39ff5b3eaef6d3fbf5cdb92950ca8cfe6a6414724b5a3  instructions.txt   LA VAGUE 29 — les six prompts consommés (w29decco, w29moteur, w29vaes512, w29expandeur, w29cout, w29famille), exécutés au geste du maître « execute la vague 29 »
+91916192469e058fd45060106e2c0b41f498ea34224c080cfb49e182885d33b3  instructions2.txt  LA SECONDE ÉVALUATION — le prompt de correction (§10) consommé par W28CORRIGE (Entrée 441) ; le fichier demeuré au /instructions, archivé ici avec la vague (le dossier vide après le geste)
+
+2 fichiers : copies identiques aux originaux (recoup byte-byte au dépôt),
+les originaux RETIRÉS du coffre /instructions par le geste en deux étapes
+(retirer PUIS ajouter au dossier ARCHIVE du coffre — l'appel combiné refusé
+403), le /instructions LAISSÉ VIDE. Les six plans gelés (PLAN-W29*.md,
+EMPREINTES-PLANS-VAGUE29.txt) et les six ateliers exécutés (atelier-w29decco,
+-w29moteur, -w29vaes512, -w29expandeur, -w29cout, -w29famille) vivent au
+dépôt, chacun avec son rapport et son registre. Une instruction dont la
+copie est prouvée ne prescrit plus rien (D266) — le guide agent la traite en
+lecture seule.

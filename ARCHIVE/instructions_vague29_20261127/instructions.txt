@@ -1,0 +1,155 @@
+# Analyse — TRIADE v0.33.0 (vague 28, 26 novembre 2026)
+
+## 1. Résumé clair et concis
+
+Cette édition restructure le manuscrit en **cœur IMRAD** (16 pages, cible 12–15 : l'écart d'une page est nommé) et pousse les quatre axes du protocole avec sept ateliers pré-enregistrés. L'ensemble est gouverné par un linter de génération à **31 classes**, des statuts **dérivés des registres** (jamais tapés), un ancrage RFC 3161 déployé, et un registre de cibles **jamais re-tirées** — les cibles manquées sont publiées comme manquées.
+
+| Atelier | Résultat mesuré | Verdict |
+|---|---|---|
+| **W28HARNAIS** | Carte mémoire dérivée *mécaniquement* de la carte C (jamais la pièce lue) : **229/235** vecteurs exécutés, jumeau ligne-identique 81/81, 148 nouveaux, 0 régression ; 6 tls-06 refusés **DEPASSEMENT** (un timeout n'est jamais un OK) | CIB-HARNAIS-200 **TENUE** |
+| **W28HARNAIS (moteur)** | Moteur natif généralisé en *volume* (12 000 cas, un bloc) : régime chaud **4,56 × C** (pilote nu), bout-en-bout 77 ×, committé 1 056 ×, **123 ×** vs oracle vivant ; digeste lu par vecteur, audit 1/10 à zéro écart | CIB-VOL-REGIME **TENUE** (≤5 ×) |
+| **W28OPT16** | Éditer par **diff structuré** (schéma fermé, 4 clés) : médiane **79,5 tokens natifs** (n=18), ratio plancher **2,89 ×** le diff réel (vs 24,5 ×) ; faisabilité **9/18** | CIB-EDIT-OPT16 **TENUE** (≤150) |
+| **W28VAES** | Portage C ILP-friendly 1 012 ns ; assemblage schedulé 1 082 ns ; **écart notation-vs-C = 1,07 × au profit du C** (résultat distinct pré-enregistré) ; résidu structurel ymm vs zmm EVP nommé | CIB-AES-105 **MANQUÉE** (1,41 ×/2,68 ×), jamais re-tirée |
+| **W28ATTR** | Rejouabilité symétrique pièce T : **5/5 sondes** vertes ; différentiel complet renvoyé au kit terrain (cause structurelle nommée) ; **FAMILY-ABSENT** consigné | EN ATTENTE, aucun chiffre fabriqué |
+| **W28TERRAIN** | Plan groupé pré-enregistré pour **10 attentes** (ProVerif, Tamarin L1a/L2, dudect n≥10×3 tailles×2 machines, fence.i silicium, métal nu, NV TPM, SACL, FIDO2…) ; randomisation **stratifiée H7** (28 unités) ; 3 causes des pics dudect nommées *avant* données | EN ATTENTE du geste développeur |
+| **W28RLVR** | Gate d'endpoint **vécu** : **SERVING-ABSENT** (le bord accepte `response_format` et ne l'applique pas, dans les deux modes) ; plan DPO→RLVR sur juges de conformité (jamais similarité/runtime) | CIB-ADD-STRUC EN ATTENTE |
+| **W28IMRAD** | Cœur IMRAD, travaux connexes vérifiés (JSONSchemaBench, XGrammar, Outlines, guidance, AutoVecCoder, LLM4Decompile, SLaDe) ; classes **C30 N-VALUE / C31 CLAIM-SCOPE** ; **OPT-20** : production de vague mesurée à **19 269 tokens natifs**, budget vague 29 pré-enregistré | Livré |
+
+Les deux documents compagnons (spécification v0.15.18, Livre du Coffre v1.17) portent l'état vécu de la gouvernance : séquestre 5/3 (D223), dépôt public (D220), atomicité de publication bornée à 8 octets (D253), R10 borné à son ancre (D254), compteur NV (D263), ancrage de transparence déployé (D267).
+
+---
+
+## 2. Points forts
+
+- **Discipline de preuve exceptionnelle** : plans gelés (sha256 avant toute mesure), cibles jamais re-tirées, verdicts MANQUÉE publiés tels quels (AES deux fois, ajouter 5/18, ratio 3,264), ères datées des budgets, non-additivité des médianes explicitement traitée, opérandes non arrondis exigés, test du lecteur recomposable 9/9.
+- **Résultat négatif publié contre sa propre thèse** : le compilateur *tient* le schedule (C +7 % vs assemblage une fois le C écrit en forme ILP-friendly). C'est rare et scientifiquement précieux.
+- **Harnais à carte dérivée** : la carte mémoire dérive de la couche I/C, *jamais de la pièce* — cela casse la circularité du harnais qui se valide sur ce qu'il contrôle. Le gate du RIP (timeout ≠ OK) corrige rétroactivement un comptage P3 gonflé : la correction dérive du contrat, pas d'un re-tirage.
+- **Moteur natif généralisé** : 4,56 × C en régime chaud *avec* le digeste par vecteur et l'audit 1/10 conservés — la performance n'est pas achetée par un retrait de contrôle. Les trois conventions (chaud/bout-en-bout/committé) publiées pareil.
+- **Plancher token de l'édition** : 79,5 tokens, 2,89 × le diff réel — le plus grand levier token saisi à ce jour, schéma fermé + expandeur client + round-trip + 4 refus fail-closed éprouvés.
+- **Gate SERVING-ABSENT** : la fidélité de contrainte est *mesurée* comme propriété du serving, jamais présumée — positionnement exact contre JSONSchemaBench/XGrammar.
+- **Méta-optimisation OPT-20** : le protocole mesure et borne sa propre production autoriée.
+- **Contrôles négatifs vécus partout** : mutants refusés au premier vecteur, voisinage amputé, stub muté, global non déclaré, mémo content-addressed MISS à l'octet muté, rejeux bit-identiques.
+
+## 3. Points faibles
+
+- **Le compromis tokens/faisabilité de l'éditer structuré n'est pas arbitré** : 79,5 tokens par *tentative* mais **9/18 vertes** (50 %), contre 18/18 à 674 pour le gabarit adopté. La cible pré-enregistrée portait sur la médiane, pas sur la faisabilité : « TENUE » est honnête mais un lecteur pressé peut manquer que le gain token est acheté par une perte de fiabilité. Il manque un **plancher de faisabilité pré-enregistré** et un **coût par changement validé** (somme des tours/tentatives ÷ vertes) publié à côté de la médiane par tentative. Au regard de la politique lexicographique (Sécurité > … > Coût), cet arbitrage devrait être consigné, pas implicite.
+- **La généralisation du moteur est en volume, pas en blocs** : 4,56 × C est démontré sur *un* bloc critique (tls13-16) à 12 000 cas. Le titre « généralisé aux volumes complets » est exact, mais la généralisation aux 52 blocs et à l'ouverture de session (le hot path restant, ≈10 s/196 Kio) reste à mesurer.
+- **N=1 persistant** : un développeur, une famille d'agent (GLM), une machine principale. H7 (effet d'ordre) reste **non identifié** (le tirage libre n'a donné aucun contraste) ; la stratification est pré-enregistrée mais non courue. Seconde famille absente, réplication indépendante non exécutée, second annotateur non recruté.
+- **Beaucoup de preuves attendent le geste matériel** : dudect multi-machines, fence.i silicium, bascule concurrente au métal nu, compteur NV, sentinelle SACL, FIDO2, Tamarin L1a/L2 entiers, ProVerif. Tout est *préparé* et honnêtement marqué EN ATTENTE, mais les revendications les plus fortes (temps constant réel, atomicité concurrente, fraîcheur matérielle) ne sont pas encore mesurées.
+- **Cible AES structurellement inatteignable** : ≤1,05 × EVP contre un chemin zmm avec une notation gelée ymm. Le résidu est nommé, mais aucune **ère nouvelle zmm** n'est pré-enregistrée : la cible reste manquée à perpétuité sans chemin de sortie ouvert.
+- **L'opération ajouter reste le maillon faible** : 5/18–9/18 de faisabilité, 4 604 tokens (cible 4 500 manquée de 104), SERVING-ABSENT bloque la campagne structurée, RLVR non exécuté. C'est le verrou central de la promesse « nouvelle façon de développer ».
+- **TCB de l'expandeur client** : le chemin token-plancher repose sur un expandeur/juge maison, non vérifié formellement ni confronté à un second expandeur indépendant. La circularité du juge est déplacée, pas fermée.
+- **Détails** : cœur 16 pages vs 12–15 ; VM non goupillée pour VAES ; pas d'IC bootstrap sur les médianes token (n=18) ni de test exact sur les différences de faisabilité (9/18 vs 18/18).
+
+## 4. Pertinence scientifique
+
+**Élevée sur l'épistémologie et la gouvernance, conditionnelle sur la généralisation.** La contribution centrale — *la preuve d'oracle ne transfère pas au terrain ; chaque échappé devient une classe nommée et falsifiée* — est un résultat empirique réel, quantifié, avec une taxonomie (T/X, F/L) et une boucle d'évidence normée. Le résultat négatif sur le schedule (C gagne de 7 %) est une contribution honnête à la littérature superoptimisation. Le gate SERVING-ABSENT est une contribution méthodologique utile à l'écosystème décodage contraint. En revanche, la revendication « nouvelle façon de développer » ne deviendra un paradigme reproductible qu'avec : faisabilité ≥15/18 sur ajouter/éditer, régime de vérification généralisé à tous les blocs, et réplication (H7 stratifié + second annotateur + seconde famille). Aujourd'hui c'est une **étude de cas unique extraordinairement disciplinée**, pas encore une méthode validée externement.
+
+## 5. Rigueur académique
+
+**Très haute pour une étude N=1.** Pré-enregistrements hashés, cibles gelées, médianes avec n= (C30), périmètres nommés avant toute comparaison, opérandes non arrondis, IC Clopper-Pearson descriptif avec réserve de non-indépendance, ères datées, statuts systématiques (prouvé non borné / borné / en attente), linter numérique qui refuse tout écart, provenance recomposée 12/12 + 4 refus mutants. Limites : pas d'IC sur les médianes token, pas de test exact sur les faisabilités, H7 non identifiable, sémantique opérationnelle du modèle formel maison (indépendance au niveau du checker, pas de la modélisation — nommé). Le manuscrit ne contient aucune valeur tapée à la main : tout est généré des journaux.
+
+## 6. Neutralité
+
+**Excellente.** Les lectures défavorables sont consignées telles quelles : H3 falsifiée (le C compilé coûte ×1,27 les tokens de la notation), H5 falsifiée puis réhabilitée par amendement daté (les deux verdicts datés, jamais fondus), H8 falsifiée (la spirale corrective était le chemin *tôt*, pas intrinsèque), cible AES manquée deux fois, ajouter manqué, facteur 15,3 × retiré comme artefact de périmètre, écart notation-vs-C publié *contre* la thèse du protocole. La revendication « first quantified account » est scopée (C31). Le positionnement contre SuperCoder/AutoVecCoder/LLM4Decompile est différencié, pas promotionnel.
+
+## 7. Transparence
+
+**Maximale dans les documents.** Journaux append-only (13 651 + 14 092 lignes, D1–D269), empreintes sha256 à chaque scellage, ancrage RFC 3161 vérifié hors ligne, registre de cibles unique (CIBLES.md), registre de provenance, registre des écarts (les deux fichiers auxiliaires du corpus divergents sont consignés, jamais masqués), FAMILY-ABSENT / SERVING-ABSENT / INCOMPLETE nommés, aucun chiffre fabriqué, kit machine réelle à empreintes consignées. La seule réserve : la transparence est *documentaire* — les runs matériels qui fermeraient les attentes appartiennent au développeur et ne sont pas encore publics.
+
+## 8. Nouveauté vs état de l'art
+
+| Déjà fait ailleurs (cité et différencié) | Novateur ici (l'intégration) |
+|---|---|
+| Génération/superoptimisation d'assemblage : STOKE, SuperCoder (RL orienté runtime) | Gouvernance à **intention signée** liant contrats → plages d'octets via carte chiffrée fragmentée ; l'agent écrit la notation, round-trip WYSIWYG |
+| LLM-as-compiler : LaaC/CompilerEval ; Nova (assembly LM) | Épistémologie **oracle/terrain** avec comptabilité de défauts nommés, taxonomie X, boucle d'évidence normée |
+| Décodage contraint : JSONSchemaBench, XGrammar, Outlines, guidance | **Gate de sélection d'endpoint** (SERVING-ABSENT) : fidélité de contrainte mesurée, jamais présumée ; diff structuré à 2,89 × le plancher |
+| Vectorisation apprise : AutoVecCoder (source) | Couloirs SIMD en **notation scellée** mesurés contre bibliothèque ; écart notation-vs-C schedulé comme résultat distinct |
+| Décompilation : LLM4Decompile, SLaDe | Le pack *assume* l'érosion IP : la valeur est gouvernance/provenance, pas le secret |
+| Design by contract (Meyer), QuickCheck, N-version, DO-178C | Contrats liés aux octets ; indépendance étendue au terrain *et au rig* ; chaque critère mesuré, pas attesté |
+| Reproducible builds, in-toto, SLSA, TUF, Sigstore, DNSSEC, Shamir | Contrôles appliqués aux **fragments d'état de développement** (la carte), scellage = fait de carte, artefact figé ; séquestre 5/3 vécu |
+| Live patching : Kitsune, POLUS, kpatch ; CompCert | Patch chirurgical diffé/carte-suivi, cristallisation, anti-rollback, règles cross-ISA ; R10 borné à son ancre, restauration cohérente visible seulement par témoins hors machine |
+| SWE-agent/SWE-bench/RepoCoder, lost-in-the-middle, sim-to-real | Carte = repo-map signée pour code machine ; le *gap* lui-même est l'objet mesuré (RQ1/RQ3) |
+
+**Verdict** : aucune primitive n'est nouvelle ; l'intégration bout-en-bout (notation scellée + gouvernance signée + épistémologie oracle/terrain + campagne deux bras pré-enregistrée avec attribution empirique) est genuinely novel comme *protocole de développement*.
+
+---
+
+## 9. Suggestions pour consolider et créer une véritable avancée
+
+L'objectif est de faire passer TRIADE d'« étude de cas disciplinée » à **« méthode de développement agent-first reproductible, économique et vérifiée »**. Cinq verrous, cartographiés sur les quatre axes :
+
+### A. Coût en tokens — fermer le verrou de la fiabilité machine
+1. **Exécuter le décodage contraint côté client maintenant** (xgrammar/llguidance sur modèle ouvert 7–14B) pour éditer *et* ajouter : le schéma fermé, l'expandeur, le gate et le plan RLVR existent. C'est le levier unique qui convertit 9/18 et 5/18 en ≥15–17/18. Pré-enregistrer planchers de faisabilité et coûts par changement validé.
+2. **Publier le coût par changement validé** d'OPT-16 à côté de la médiane par tentative, et pré-enregistrer un plancher de faisabilité (≥15/18) : un gain token acheté par une perte de faisabilité est un arbitrage à consigner (politique lexicographique), pas une tenue silencieuse.
+3. **Schéma unifié locate/edit/add** : étendre le diff structuré (multi-hunk, squelette+dictionnaire pour ajouter) pour que toute opération tienne en ~40–150 tokens, l'expandeur client devenant le juge universel.
+4. **Étendre OPT-20 au coût total de vague** (production + chaînes d'exécution + tours de réparation), pas seulement la prose autoriée.
+
+### B. Performance — généraliser le régime et ouvrir l'ère zmm
+5. **Généraliser le moteur natif aux 52 blocs** et au corpus 235 vecteurs + volumes par bloc critique ; pré-enregistrer ≤5 × C par bloc et un temps total de suite (≤10 s). Attaquer le hot path restant : ouverture de session (md5+sha256, ≈10 s/196 Kio) par le même moteur (console ligne-identique, audit 1/10), cible ≤1 s.
+6. **Ouvrir une ère VAES512 (zmm)** : notation nouvelle, cérémonie d'ère, cible *nouvelle* ≤1,05 × EVP à contexte posé — CIB-AES-105 demeure manquée et datée, jamais re-tirée. Pré-enregistrer les deux bras (notation-zmm ILP-friendly vs C-zmm) pour étendre le résultat schedule-gap au 512-bit.
+7. **Audit déterministe par racine de Merkle** : engager le digeste de trace complet par vecteur dans un arbre de Merkle au scellage ; l'audit 1/10 devient vérifiable sélectivement à coût constant, et le scellage engage la trace entière. Sécurité *et* performance poussées ensemble.
+
+### C. Sécurité — mesurer ce qui est modélisé, durcir la TCB du chemin token
+8. **Courir la vague terrain P1–P10** (tout est préparé) : c'est le plus grand bloc de preuves disponibles — ProVerif/Tamarin entiers, dudect multi-machines avec investigation des pics, fence.i silicium, bascule métal nu 16/16, NV TPM, SACL, FIDO2.
+9. **Vérifier l'expandeur client** (TCB du chemin token-plancher) : second expandeur indépendant confronté octet pour octet + batterie de mutation de l'expandeur + lemme de substitution vérifié mécaniquement (offset borné, ligne exacte, aucune autre ligne changée).
+10. **Canari de fidélité de serving à chaque appel** : une violation ordonnée qui *doit* être refusée au décodage ; un serving qui l'accepte en cours de session invalide la session (SERVING-INFIDELE). Le gate de sélection devient un garde continu.
+11. **Fermer FAMILY-ABSENT** : confrontation tripartite sur un modèle ouvert capable (128 constantes + ≥6 notations, mêmes contrats, juge inchangé).
+
+### D. Rigueur / validité externe
+12. **Courir la campagne H7 stratifiée** (28 unités, deux ordres par construction) — le dernier confond non identifiable.
+13. **Recruter le second annotateur**, coder la grille F/L avec κ≥0,61 sur les classes nommées.
+14. **IC bootstrap 95 % sur les médianes token** (B≥10 000, graine consignée) et tests exacts sur les différences de faisabilité ; marges de non-infériorité pré-enregistrées.
+15. **Tableau de bord économique unifié** : tokens × faisabilité × tours × temps de vérification × temps humain par changement validé, par opération et par ère — le « coût de la gouvernance » comme objet falsifiable unique.
+
+---
+
+## 10. Prompts à soumettre à un agent IA
+
+Chaque prompt respecte la discipline du protocole (plan gelé avant mesure, cibles jamais re-tirées, aucun artefact scellé touché, aucun chiffre fabriqué) et se termine par une étape de vérification.
+
+### Prompt 1 — Décodage contraint client-side (éditer + ajouter) *(suggestions A1, A2, C11)*
+
+```
+Ouvre un atelier w29decco. Gèle d'abord PLAN-W29DECCO.md (sha256 consigné à EMPREINTES-PLANS-VAGUE29.txt AVANT toute mesure) qui pré-enregistre : le modèle ouvert choisi (identifiant ET empreinte consignés au choix), le décodeur contraint côté client (xgrammar/llguidance, version + empreinte), le schéma fermé D264/OPT-16 étendu à l'opération ajouter (squelette + dictionnaire de domaine existants), les cibles NOUVELLES sans re-tirage des existantes : éditer ≥17/18 vertes à ≤150 tokens natifs médians par changement validé, ajouter ≥15/18 à ≤3000 tokens (CIB-ADD-STRUC inchangée), graine 20261117 reconduite, ordre des 18 tâches jamais re-tiré, boucle ≤3 tours, juge expandeur_add.py sha256 9fc325e2 INTACT. Exécute la sonde de gate SERVING-ABSENT sur le nouvel endpoint AVANT toute campagne : la violation ordonnée (op hors enum, offset hors bornes) doit être REFUSÉE au décodage, pas seulement au validateur ; un endpoint qui accepte sans appliquer est refusé nommément. Mesure les deux opérations au budget usage natif (le compte est le LOG, jamais une estimation) ; publie côte à côte la médiane par tentative, la faisabilité (vertes/n) et le coût par changement validé (somme des tours et tentatives ÷ vertes), les refus par classe. Contrôles négatifs : octet muté du diff refusé, offset hors plage refusé, clé hors schéma refusée. Rejeu bit-identique de la session.
+VÉRIFICATION après modifications : recoupe le juge à son empreinte avant/après ; sceau_I verifier 14/14 avant/après ; re-tokenisation indépendante à écart 0 sur les tâches à un tour ; rejeu de la console ligne-identique ; porte de génération 31 classes zéro rouge ; consigne les verdicts TENUE/MANQUÉE tels quels dans CIBLES.md sans re-tirer aucune cible ; tout écart est nommé, aucun chiffre fabriqué.
+```
+
+### Prompt 2 — Moteur natif généralisé aux 52 blocs + ouverture de session *(suggestions B5, B7)*
+
+```
+Ouvre un atelier w29moteur. Plan gelé sha256 AVANT toute donnée. Généralise le moteur natif de atelier-w28harnais (lot unique, compte en registres bruts, rax ET digeste lus par vecteur, console différée en une passe) aux 52 blocs du manifeste et au corpus complet des 235 vecteurs, puis au chemin critique d'ouverture de session (md5+sha256 du fichier témoin 196 Kio). Pré-enregistre : régime chaud ≤5× C par bloc contre le pilote nu (même code de bloc appelé directement, gcc -O2, horloges internes symétriques, n≥9 médianes), ouverture de session ≤1 s, audit 1-sur-10 conservé et étendu (chaque vecteur audité confronté au jumeau champ par champ), AUCUN contrôle retiré, graine consignée AVANT le tirage. La console du moteur généralisé doit être LIGNE-IDENTIQUE au moteur committé pour chaque bloc ; un timeout n'est jamais un OK (gate du RIP reconduit). Engage le digeste de trace complet par vecteur dans un arbre de Merkle au scellage (racine consignée), l'audit 1/10 devenant vérifiable sélectivement à coût constant. Contrôles négatifs : shim muté attrapé au premier vecteur, octet de carte muté → MISS du mémo content-addressed, voisinage amputé → FAULT nommé, racine de Merkle divergente → refus nommé.
+VÉRIFICATION après modifications : rejeu bit-identique de la session complète (console jsonl byte-byte) ; audit 1-sur-10 à zéro écart ; racine de Merkle recomposée depuis les traces et recoupée ; sceau_I 14/14 avant/après ; aucune empreinte de pièce scellée modifiée ; porte 31 classes zéro rouge ; verdicts publiés tels quels au registre CIBLES.md (nouvelle ligne CIB-VOL-SESSION, jamais de re-tirage de CIB-VOL-REGIME).
+```
+
+### Prompt 3 — Ère VAES512 (zmm), deux bras schedule-gap *(suggestion B6)*
+
+```
+Ouvre un atelier w29vaes512. Plan gelé sha256 AVANT toute mesure. La cible CIB-AES-105 (≤1,05× EVP) demeure MANQUÉE et datée — jamais re-tirée ; le résidu structurel est nommé (EVP = VAES512 zmm, notation gelée = ymm). Ouvre une ÈRE NOUVELLE : une notation zmm/VAES512 distincte (nouveau fichier, nouvelle empreinte) ; nomme la dette de cérémonie à la naissance et prépare le kit de remise pour la clé hors-ligne du développeur — le laboratoire ne signe jamais. Pré-enregistre une cible NOUVELLE CIB-AES-512 ≤1,05× EVP à contexte posé au même volume (4 Kio, cœur épinglé, n=20), avec deux bras : notation-zmm écrite en forme ILP-friendly (locals/restrict, domaine réfléchi, frontière d'appel supprimée — les leçons de w28vaes) et portage C-zmm compilé gcc -O3 ; l'écart notation-vs-C publié comme résultat distinct (le 1,07× au profit du C à ymm est la référence datée). Porte AVANT mesure : parité 20/20 vecteurs NIST CAVP contre EVP octet pour octet (tag compris) pour CHAQUE pièce, variante mutée refusée au premier vecteur, round-trip inter-implémentations, convention session recoupée, rejeu bit-identique. Caveat VM nommé (fréquence non goupillée) ; kit machine réelle goupillée livré à empreintes consignées.
+VÉRIFICATION après modifications : notation gelée ymm 7911d03f INTACTE (aucun octet changé) ; sceau_I 14/14 avant/après (la nouvelle ère signée par le développeur, jamais par le laboratoire) ; rejeu bit-identique deux passes ; porte 31 classes ; verdicts TENUE/MANQUÉE publiés tels quels ; aucune cible existante re-tirée ; aucun chiffre fabriqué.
+```
+
+### Prompt 4 — Durcissement de la TCB expandeur *(suggestion C9)*
+
+```
+Ouvre un atelier w29expandeur. Plan gelé sha256 AVANT toute mesure. Le validateur client d'OPT-16 (expansion de la substitution à l'offset, confrontation du diff exact, round-trip keystone→capstone→keystone) est la TCB du chemin token-plancher : durcis-la SANS toucher au juge D264 (expandeur_add.py sha256 9fc325e2 INTACT). Pré-enregistre : (a) un second expandeur INDÉPENDANT (implémentation distincte, même schéma fermé) confronté octet pour octet au premier sur chaque diff de campagne et sur une batterie générative (graine consignée AVANT tirage, ≥10000 diffs valides et invalides, chaque classe de refus couverte) ; (b) une batterie de mutation de l'expandeur lui-même (≥64 mutants d'un octet, chacun tué par la confrontation croisée ou le round-trip — un survivant est nommé avec sa cause) ; (c) le lemme de substitution vérifié mécaniquement (offset borné à la plage du bloc, exactement la ligne attendue remplacée, AUCUNE autre ligne changée — énumération bornée ou SMT, contrôle négatif attrapé).
+VÉRIFICATION après modifications : rejeu bit-identique de la batterie ; zéro divergence entre les deux expandeurs sur les diffs honnêtes ; chaque mutant tué ou nommé ; sceau_I 14/14 avant/après ; juge D264 recoupé INTACT ; porte 31 classes zéro rouge ; refus nommés consignés par classe ; aucun chiffre fabriqué, un survivant demeure un survivant.
+```
+
+### Prompt 5 — Lecture économique unifiée + plancher de faisabilité *(suggestions A2, D14, D15)*
+
+```
+Ouvre un atelier w29cout. Plan gelé sha256 AVANT toute mesure. Aucune valeur mesurée existante n'est modifiée ; aucune cible re-tirée. Complète CIBLES.md et le journal OPT d'une lecture économique unifiée : pour chaque opération (localiser/éditer/ajouter) et chaque ère (adoptée, OPT-16, structurée), publie côte à côte la médiane par tentative, la faisabilité (vertes/n), le coût par changement validé (somme des tokens de tous les tours et tentatives ÷ vertes, lu des logs usage — jamais une estimation), le temps de vérification et le temps humain quand il existe. Pré-enregistre un PLANCHER de faisabilité pour l'éditer structuré (≥15/18) et une cible de coût par changement validé (≤150 tokens) — cibles NOUVELLES, jamais un re-tirage de CIB-EDIT-OPT16 ; la politique lexicographique (Sécurité>Performance>Optimisation>Coût) est appliquée : un gain token acheté par une perte de faisabilité est un arbitrage à consigner, pas une tenue silencieuse. Recalcule chaque ratio depuis les opérandes non arrondis (le linter numérique refuse tout écart), ajoute les n= à la portée de chaque médiane (C30), et les IC bootstrap 95% sur les médianes (graine consignée, B≥10000) ; tests exacts sur les différences de faisabilité (9/18 vs 18/18).
+VÉRIFICATION après modifications : recomposition de chaque grandeur depuis sa source canonique (registre de provenance étendu, contrôles mutants refusés) ; rejeu bit-identique du script de calcul ; porte 31 classes zéro rouge ; sceau_I 14/14 ; aucune valeur historique réécrite (les ères datées demeurent) ; test du lecteur étendu d'un cas par nouvelle grandeur ; aucun chiffre fabriqué.
+```
+
+### Prompt 6 — Seconde famille + canari de fidélité continu *(suggestions C10, C11)*
+
+```
+Ouvre un atelier w29famille. Plan gelé sha256 AVANT toute mesure. L'écart FAMILY-ABSENT est nommé (seule API : famille GLM ; voie locale 1.5B à 0/64). Choisis un modèle ouvert capable (classe 7–14B coder, identifiant ET empreinte consignés au choix), exécute la confrontation tripartite spec↔seconde famille↔définitions mathématiques sur les 128 constantes MD5 T[64]/SHA-256 K[64] (dérivation aux décimales, racine cubique entière exacte en confirmation) et sur un échantillon pré-enregistré de notations (≥6 blocs, mêmes contrats, juge inchangé). Pré-enregistre le critère de divergence (zéro attendu ; tout écart nommé avec sa pièce) et la graine AVANT tirage. Ajoute un canari de fidélité de serving À CHAQUE appel de campagne : une violation ordonnée (op hors enum, offset hors bornes) qui DOIT être refusée au décodage ; un serving qui l'accepte en cours de session invalide la session (fail-closed, refus nommé SERVING-INFIDELE) — le gate de sélection devient un garde continu.
+VÉRIFICATION après modifications : rejeu bit-identique des confrontations ; recoupe des empreintes du juge et du corpus (splits scellés INTACTS ; les deux fichiers auxiliaires divergents re-consignés au registre des écarts, jamais masqués) ; canari vérifié à chaque évaluation ; sceau_I 14/14 ; porte 31 classes ; verdicts publiés tels quels — FAMILY-ABSENT ne devient VERT que sur pièces, aucun chiffre fabriqué.
+```
+
+---
+
+**Synthèse stratégique.** La vague 28 a saisi les deux plus grands leviers mesurables (plancher token de l'édition, régime de vérification à 4,56 × C) et publié un résultat négatif contre sa propre thèse — c'est la marque d'un programme scientifique mûr. Le passage à une **véritable avancée paradigmique** tient à cinq gestes : (1) rendre l'écriture machine *fiable* (décodage contraint + RLVR → ≥15/18), (2) généraliser le régime de vérification à tous les blocs et fermer le hot path d'ouverture de session, (3) courir la vague terrain préparée (la plus grande réserve de preuves disponible), (4) durcir la TCB du chemin token (expandeur vérifié, canari continu), (5) lever le N=1 (H7 stratifié, second annotateur, seconde famille). Si ces cinq gestes atterrissent, TRIADE cesse d'être une étude de cas pour devenir une **méthode de développement agent-first reproductible, économique et vérifiée** — l'objectif exact du protocole.
