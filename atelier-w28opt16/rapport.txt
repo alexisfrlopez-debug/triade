@@ -1,0 +1,52 @@
+ATELIER W28OPT16 — ÉDITER PAR DIFF STRUCTURÉ AU PLANCHER TOKEN (OPT-16)
+(vague 28, prompt 2 — le plan gelé PLAN-W28OPT16.md, sha256 consigné AVANT toute mesure
+à EMPREINTES-PLANS-VAGUE28.txt)
+
+LA CIBLE PRÉ-ENREGISTRÉE : médiane ≤ 150 tokens natifs sur les 18 tâches d'édition (le
+ratio plancher ~5,5× attendu contre le diff réel 27,5 tokens). La graine 20261117
+reconduite, l'ordre des 18 tâches JAMAIS re-tiré (l'ordre canonique de taches-edition.json,
+celui des campagnes précédentes). Le budget `usage` natif lu à chaque appel, le cl100k
+compté en parallèle (un compte distinct, jamais le juge).
+
+1. LE RÉSULTAT : MÉDIANE 79,5 TOKENS NATIFS SUR 18 — CIBLE ≤ 150 TENUE. La médiane sur
+   les vertes (9/18) : 79. LE RATIO PLANCHER : 2,89 × LE DIFF RÉEL (27,5) — au lieu de
+   24,5 × (l'éditer adopté à 674). Le plus grand levier token restant : SAISI.
+2. LE SCHÉMA FERMÉ (l'extension de D264 à l'édition) : {"op": "substituer", "dst",
+   "offset", "src"} — additionalProperties false (exactement les quatre clés), l'enum
+   fermée (substituer), l'offset contraint à la plage de lignes du bloc, la src du
+   domaine de notation. L'AGENT NE REND QUE LE DIFF STRUCTURÉ (38-42 tokens par tour) ;
+   LE CLIENT expande (la substitution à l'offset), confronte (le diff exact : la ligne
+   unique révisée == la ligne attendue, AUCUNE autre ligne changée), le round-trip
+   (keystone → capstone → keystone — tout écart un refus).
+3. LES QUATRE REFUS NOMMÉS fail-closed, ÉPROUVÉS sur copies avant la campagne :
+   POINTEUR-INCONNU (dst inconnu), EMPREINTE-DIVERGENTE (la notation diverge de
+   l'empreinte soumise), SCHÉMA-VIOLÉ (les clés, l'enum, la plage, la ligne), HORS-FORMAT
+   (la réponse n'est pas l'objet JSON — les fences tolérées puis validées). L'agrégateur
+   fail-closed ; la boucle de réparation bornée à TROIS tours réinjectant le refus exact
+   et le contre-exemple. Les refus vécus : 7 SCHÉMA-VIOLÉ (l'offset erroné de la première
+   passe le plus fréquent — corrigé au tour 2 dans la plupart des cas).
+4. LA RE-TOKENISATION INDÉPENDANTE : écart 0 (les trois tâches à un tour re-notées à
+   l'identique — 38/38, 38/38, 39/39 ; les tâches à tours multiples portent la SOMME des
+   tours, la convention nommée au journal). Le juge D264 recoupé INTACT
+   (scripts/vague19/expandeur_add.py, sha256 9fc325e2… — JUGE-MODIFIÉ serait le refus) ;
+   l'extension OPT-16 vit au validateur client du présent atelier.
+5. LA LECTURE HONNÊTE : la faisabilité demeure 9/18 verts (les 9 rouges échouèrent la
+   ligne exacte en trois tours — la variance d'écriture machine nommée depuis la vague
+   9, pas guérie par le schéma fermé ; le décodage contraint au bord D264 reste le
+   levier). La session vécut en deux séances (le bord 429 dose l'appel — la reprise par
+   point de contrôle, AUCUN chiffre re-tiré : les 12 premières tâches mesurées, la
+   reprise n'a re-mesuré que les 6 restantes).
+6. LES CONSIGNATIONS : CIBLES.md (la ligne CIB-EDIT-OPT16 : TENUE à 79,5 ; la table des
+   ères : l'éditer par diff structuré 79,5, une convention à part — la boucle ≤ 3 tours
+   comprise) ; JOURNAL_OPTIMISATION.md (OPT-16) ; les statuts C25/C26 recomposés à la
+   génération de l'édition (la vague 28 porte la pièce au cœur IMRAD — W28IMRAD).
+
+LES PIÈCES : campagne_opt16.py (la campagne + le validateur + l'expandeur),
+client_gabarits_rt.py (le round-trip exact), journal-opt16.jsonl (le journal des
+appels — le compte est le LOG, jamais une estimation), resultats-opt16.json (les
+verdicts), resultats-partiels.json (le point de contrôle de la reprise), le présent
+rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  python3 atelier-w28opt16/campagne_opt16.py            # la campagne (n=18)
+  python3 v06/sceau_I.py verifier                        # la garde (14/14 avant et après)

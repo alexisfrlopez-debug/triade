@@ -1,0 +1,74 @@
+[
+ {
+  "bloc": "loupe-07-cumul",
+  "vert": true,
+  "tours": 1,
+  "completion_tokens": 38
+ },
+ {
+  "bloc": "loupe-11-defilement",
+  "vert": true,
+  "tours": 1,
+  "completion_tokens": 38
+ },
+ {
+  "bloc": "loupe-02-lire",
+  "vert": false,
+  "tours": 3,
+  "completion_tokens": 117
+ },
+ {
+  "bloc": "loupe-12-aller",
+  "vert": true,
+  "tours": 2,
+  "completion_tokens": 78
+ },
+ {
+  "bloc": "loupe-03-fermer",
+  "vert": true,
+  "tours": 1,
+  "completion_tokens": 39
+ },
+ {
+  "bloc": "loupe-10-peinture",
+  "vert": true,
+  "tours": 2,
+  "completion_tokens": 79
+ },
+ {
+  "bloc": "loupe-09-ecran",
+  "vert": true,
+  "tours": 2,
+  "completion_tokens": 80
+ },
+ {
+  "bloc": "loupe-17-sauver",
+  "vert": true,
+  "tours": 3,
+  "completion_tokens": 117
+ },
+ {
+  "bloc": "loupe-16-saisie",
+  "vert": false,
+  "tours": 3,
+  "completion_tokens": 129
+ },
+ {
+  "bloc": "loupe-13-recherche",
+  "vert": false,
+  "tours": 3,
+  "completion_tokens": 113
+ },
+ {
+  "bloc": "loupe-14-suivant",
+  "vert": true,
+  "tours": 2,
+  "completion_tokens": 79
+ },
+ {
+  "bloc": "loupe-18-quitter",
+  "vert": true,
+  "tours": 3,
+  "completion_tokens": 112
+ }
+]

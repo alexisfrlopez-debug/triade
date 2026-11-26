@@ -16,7 +16,8 @@ classe C25 refuse tout écart.
 | CIB-HARNAIS-200 | vecteurs d'oracle exécutables | 235 exécutables sur 320 produits | ≥ 200/235 | 95/235 | MANQUÉE | D273 | harnais générique (delta nul) |
 | CIB-AES-105 | AES-GCM, couloir VAES/VPCLMULQDQ | 4 Kio, cœur épinglé, n=20, ratio contre OpenSSL EVP au même volume | ≤ 1,05 × EVP | 5,66 × EVP (vague 27) ; 1,41 × par appel / 2,68 × à contexte posé (vague 28, atelier-w28vaes : le portage C à 1 012 ns, le schedule de notation à 1 082 ns, l'écart notation-vs-C 1,07 × AU PROFIT DU C — le résidu structurel nommé : le chemin EVP est VAES512 zmm, la notation gelée est ymm) | MANQUÉE (deux campagnes, la cible jamais re-tirée ; la porte verte d'abord aux deux) | D273 | couloir VAES |
 | CIB-AES-ENTRELACE | AES-GCM, couloir CTR×GHASH ENTRELACÉ (AVX2/AES-NI) — **hors sujet de CIB-AES-105** | 4 Kio, cœur épinglé, n=20 | (aucune cible propre) | 0,7271 c/B ; 2 978,2 cycles ; 1,26 × EVP | HORS SUJET (mesuré, sans cible relative) | D273 | couloir entrelacé |
-| CIB-DIFF-PLANCHER | plancher irréductible d'UN diff réel | diff réel 27,5 tokens | (plancher, pas une cible) | 24,5 × le diff | REPÈRE | D275 | campagne tokens |
+| CIB-DIFF-PLANCHER | plancher irréductible d'UN diff réel | diff réel 27,5 tokens | (plancher, pas une cible) | 24,5 × le diff ; 2,89 × le diff après OPT-16 (la médiane 79,5) | REPÈRE | D275/OPT-16 | campagne tokens |
+| CIB-EDIT-OPT16 | coût tokens d'UN changement « éditer » par DIFF STRUCTURÉ (le schéma fermé D264 étendu) | budget `usage` natif, n=18, graine 20261117, ordre jamais re-tiré, boucle ≤ 3 tours | ≤ 150 tokens (médiane sur 18) | 79,5 (médiane sur 18 ; 79 sur les vertes 9/18) | TENUE (vague 28, atelier-w28opt16 : le ratio plancher 2,89× au lieu de 24,5×) | OPT-16/D264 | OPT-16 |
 
 ## Les ères des budgets — la colonne périmètre rendue visible (vague 27)
 
@@ -26,7 +27,7 @@ Les ères, côte à côte (D222/D241/D251 — les canons de la table canonique d
 | opération | ère M1 (historique, datée) | pointeur-seul | contenu seul | ADOPTÉ (périmètre courant) |
 |-----------|-----------------------------|---------------|--------------|-----------------------------|
 | localiser | 51 | 1 053 | 580 | 627 (hiérarchique, D222) |
-| éditer | 719 | — | 2 143 | 674 (TPL-EDIT-v1, OPT-14) |
+| éditer | 719 | — | 2 143 | 674 (TPL-EDIT-v1, OPT-14) ; 79,5 par diff structuré (OPT-16, la médiane sur 18 — une convention À PART : la boucle de réparation ≤ 3 tours comprise, 9/18 verts) |
 | ajouter | 1 088 | — | 3 510 | 2 200 (squelette, OPT-14) |
 
 La cible de CIB-LOC-BUDGET (≤ 64) fut posée à l'ère M1 : sa mesure TENUE (51) est celle de

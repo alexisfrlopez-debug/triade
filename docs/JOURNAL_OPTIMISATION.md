@@ -386,3 +386,31 @@ la cible pré-enregistrée D273 JAMAIS re-tirée ; le verdict MANQUÉE publié t
 aucun artefact scellé touché (le sceau-I 14/14 avant et après) ; l'environnement consigné
 (VM, cœur épinglé, fréquence non goupillée — le caveat nommé ; le kit machine réelle :
 source, notation, porte, commandes — au rapport de l'atelier).
+
+## OPT-16 — ÉDITER PAR DIFF STRUCTURÉ AU PLANCHER TOKEN : LA CIBLE ≤ 150 TENUE À 79,5
+(W28OPT16, la vague 28 ; le plan gelé sha256 7e18806a… AVANT toute mesure, EMPREINTES-
+PLANS-VAGUE28.txt)
+
+L'AVANT : l'opération éditer adoptée coûtait 674 tokens natifs médians (TPL-EDIT-v1,
+OPT-14) ; le plancher du diff réel : 27,5 tokens — le ratio 24,5×. LE SCHÉMA FERMÉ D264
+étendu à l'édition : {op: "substituer", dst, offset, src} — l'agent ne rend QUE le diff
+structuré ; LE CLIENT expande (la substitution à l'offset), confronte (le diff exact : la
+ligne unique révisée, AUCUNE autre changée), le round-trip (keystone→capstone→keystone),
+et REFUSE nommément : POINTEUR-INCONNU, EMPREINTE-DIVERGENTE, SCHÉMA-VIOLÉ, HORS-FORMAT
+— la boucle de réparation bornée à trois tours réinjectant le refus exact.
+
+LA MESURE (n=18, la graine 20261117, l'ordre canonique jamais re-tiré, le budget usage
+lu à chaque appel) : MÉDIANE 79,5 TOKENS NATIFS SUR 18 — **CIBLE ≤ 150 TENUE** ; la
+médiane sur les vertes (9/18) : 79 ; le ratio plancher : 2,89× LE DIFF RÉEL (au lieu de
+24,5×) ; les refus par classe : 7 SCHÉMA-VIOLÉ (les tours de réparation — l'offset erroné
+de la première passe le plus fréquent, corrigé au tour 2) ; la re-tokenisation
+indépendante : écart 0 (les trois tâches à un tour re-notées à l'identique — 38/38,
+38/38, 39/39) ; le juge D264 recoupé INTACT (9fc325e2…, expandeur_add.py —
+JUGE-MODIFIÉ serait le refus).
+
+LA LECTURE HONNÊTE : le diff structuré saisi le plancher (2,89× — de 24,5×) SANS lever
+la faisabilité au-delà des 9/18 verts (les 9 rouges échouèrent la ligne exacte en trois
+tours — la variance d'écriture machine demeure, nommée ; le décodage contraint au bord
+reste le levier fermé D264). Les 6 premières tâches furent mesurées en deux séances (le
+bord 429 dose l'appel — la reprise par point de contrôle, AUCUN chiffre re-tiré) ; la
+convention des médianes : SUR 18 ET SUR VERTES, les deux nommées.
