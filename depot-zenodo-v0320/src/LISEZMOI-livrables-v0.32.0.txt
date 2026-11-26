@@ -1,0 +1,59 @@
+LIVRABLES POUR ÉVALUATION — TRIADE v0.32.0 (la vague 25 de l'édition, vague 27 du travail, 26 novembre 2026)
+====================================================================================
+COURANTS (cette édition)
+- TRIADE_manuscrit_v0.32.0.pdf
+- Protocole_TRIADE_v0.15.17_Specification.pdf
+- Livre_du_Coffre_TRIADE_CF1-CF3_v1.16.pdf
+- TRIADE_preuves_et_calculs_v0.32.0.pdf
+- TRIADE_presentation_v0320.pdf
+- empreintes_livrables_v0.32.0.txt · rapport_verification_v0.32.0.txt
+- TRIADE_soumission_v0.32.0.zip · TRIADE_presentation_v0320.zip · TRIADE_complet_v0.32.0.zip
+- TRIADE_participer_v1.2.0.zip (inchangé, publié) · TRIADE_kit_developpement_v1.3.0.zip (inchangé, publié)
+- les kits terrain Windows v0.15.0, siliciums de commodité, kits test ARM/COLLAB,
+  surveillants CPU v100-v102, preuves de la campagne ACTIONS et témoins ARM/Collab (inchangés)
+
+LES TROIS PACKS v0.32.0 ASSEMBLÉS (26/11, la commande du maître « assemble les packs
+v0.32.0 ») : TRIADE_soumission_v0.32.0.zip, TRIADE_presentation_v0320.zip,
+TRIADE_complet_v0.32.0.zip — à depot-zenodo-v0320/ du dépôt et au présent /livrables,
+les empreintes bytes/sha256/md5 au MANIFESTE-PACKS-v0.32.0.json. STATUT : NON PUBLIÉES —
+la publication Zenodo attend la commande du maître (le patron v0320 prêt, l'ancre le
+record 24545339). ÉCART NOMMÉ : la participation v1.2.0 publiée porte encore les packs
+v0.31.0 — une v1.3.0 attend la commande du maître si le pack doit porter les courants.
+
+CE QUE PORTE CETTE ÉDITION — la vague 27, les six instructions de l'évaluation v0.31.0 exécutées
+- W27RECON : la divergence D267 soldée — le Livre v1.16 au statut dérivé du journal
+  d'ancrage, la classe C26 STATUS-INTERPIECES aux cinq statuts partagés, six contrôles
+  négatifs 6/6.
+- W27RESID : les quatre résidus éditoriaux soldés à la source (Table 12 quatorze arbres
+  D177, titres §1.23/§1.24 distingués, fragments français du manuscrit à l'anglais,
+  chronologie du Livre réordonnée ; classes C27 COUNT-TABLECELL, C28 TITLE-UNIQUE,
+  C29 LANG-BODY).
+- W27CIBLES : le registre au périmètre explicite (la table des ères, CIB-LOC-BUDGET aux
+  deux ères côte à côte HISTORIQUE-DATÉ, C25 étendue ; onze lignes recomposées, aucune
+  cible re-tirée).
+- W27DECCO : la campagne D264 prête (schéma fermé 11 opcodes, juge importé à empreinte
+  consignée, agrégateur fail-closed) — le refus nommé SERVING-ABSENT consigné, aucun
+  chiffre fabriqué.
+- W27PREUV : la décomposition vécue au bac (L1c verified 52 pas, L2a verified 7 pas, le
+  rejeu L3 bit-identique 1 122 pas, le mur 4 Gio nommé pour L1a/L2, le kit machine réelle
+  à empreintes consignées ; INCOMPLETE demeure INCOMPLETE).
+- W27VAES : le couloir VAES/VPCLMULQDQ à la porte verte (20/20 CAVP == EVP octet-octet,
+  le mutant refusé au premier vecteur) — CIB-AES-105 MANQUÉE à 5,66 x EVP consignée telle
+  quelle, la cible jamais re-tirée ; la session native du moteur d'oracle 235/235 ==
+  jumeau — CIB-ORACLE-T TENUE à 0,266 s médiane.
+- La porte V1..V7 + L1..L29 ZÉRO ROUGE (le linter à 29 classes), vingt mutations négatives
+  refusées nommément 20/20, l'ancre RFC 3161 v0.32.0 posée et vérifiée, la provenance
+  recomposée.
+Aucune valeur mesurée modifiée ; aucune cible re-tirée ; aucun artefact scellé touché.
+
+DOI (les derniers mintés ; l'édition v0.32.0 NON mintée — la publication attend la commande)
+- protocole v0.31.0 : 10.5281/zenodo.24545339 (concept 10.5281/zenodo.24367343)
+- pack de participation v1.2.0 : 10.5281/zenodo.24545356 (concept 10.5281/zenodo.24497299)
+- kit développeur v1.3.0 : 10.5281/zenodo.24499840 (concept 10.5281/zenodo.24457514, inchangé)
+- corpus v2.1 : 10.5281/zenodo.24479882 (inchangé) · entraînement v1.0.0 : 10.5281/zenodo.24495492 (inchangé)
+
+SUPERSÉDÉS (conservés pour l'histoire ; l'édition courante est ci-dessus)
+- le set v0.31.0 complet (onze pièces, les trois packs publiés compris) — à l'ARCHIVE
+  (lot livrables_supersedes_20261126) ; la v0.31.0 publiée demeure sur Zenodo (record 24545339)
+- les sets v0.30.0 et antérieurs — déjà à l'ARCHIVE (lot livrables_supersedes_20261125) ;
+  la v0.26.0 publiée demeure sur Zenodo (record 24499428)

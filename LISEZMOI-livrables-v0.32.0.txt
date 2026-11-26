@@ -7,14 +7,18 @@ COURANTS (cette édition)
 - TRIADE_preuves_et_calculs_v0.32.0.pdf
 - TRIADE_presentation_v0320.pdf
 - empreintes_livrables_v0.32.0.txt · rapport_verification_v0.32.0.txt
+- TRIADE_soumission_v0.32.0.zip · TRIADE_presentation_v0320.zip · TRIADE_complet_v0.32.0.zip
 - TRIADE_participer_v1.2.0.zip (inchangé, publié) · TRIADE_kit_developpement_v1.3.0.zip (inchangé, publié)
 - les kits terrain Windows v0.15.0, siliciums de commodité, kits test ARM/COLLAB,
   surveillants CPU v100-v102, preuves de la campagne ACTIONS et témoins ARM/Collab (inchangés)
 
-ÉCART NOMMÉ — LES TROIS PACKS v0.32.0 (soumission / présentation / complet) NE SONT PAS
-ENCORE ASSEMBLÉS : leur assemblage appartient à la chaîne de publication Zenodo qui attend
-la commande du maître (le patron v0310 est prêt, remplacer le lot). Les packs v0.31.0
-publiés demeurent sur Zenodo (record 24545339) et au sein de TRIADE_participer_v1.2.0.zip.
+LES TROIS PACKS v0.32.0 ASSEMBLÉS (26/11, la commande du maître « assemble les packs
+v0.32.0 ») : TRIADE_soumission_v0.32.0.zip, TRIADE_presentation_v0320.zip,
+TRIADE_complet_v0.32.0.zip — à depot-zenodo-v0320/ du dépôt et au présent /livrables,
+les empreintes bytes/sha256/md5 au MANIFESTE-PACKS-v0.32.0.json. STATUT : NON PUBLIÉES —
+la publication Zenodo attend la commande du maître (le patron v0320 prêt, l'ancre le
+record 24545339). ÉCART NOMMÉ : la participation v1.2.0 publiée porte encore les packs
+v0.31.0 — une v1.3.0 attend la commande du maître si le pack doit porter les courants.
 
 CE QUE PORTE CETTE ÉDITION — la vague 27, les six instructions de l'évaluation v0.31.0 exécutées
 - W27RECON : la divergence D267 soldée — le Livre v1.16 au statut dérivé du journal
