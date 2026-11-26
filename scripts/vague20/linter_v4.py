@@ -578,9 +578,11 @@ ANCRAGES_CIBLES = (
 )
 
 
-def controles_w26(t, racine):
+def controles_w26(t, racine, cibles_texte=None):
     refus = []
-    lignes = [l for l in (racine / "CIBLES.md").read_text(encoding="utf-8").splitlines()
+    texte_cibles = cibles_texte if cibles_texte is not None else \
+        (racine / "CIBLES.md").read_text(encoding="utf-8")
+    lignes = [l for l in texte_cibles.splitlines()
               if l.startswith("| CIB-")]
     reg = {}
     for l in lignes:
@@ -610,6 +612,44 @@ def controles_w26(t, racine):
     # le couloir entrelacé n'est jamais dit « manqué » contre 1,05 ×
     if re.search(r"1,26[^.]{0,80}(manqu|missed)", preuves):
         refus.append(("C25", "preuves", "le couloir entrelacé est dit « manqué » contre 1,05 × — il est hors sujet"))
+
+    # --- la vague 27 : la colonne périmètre est VISIBLE sur chaque ligne publiée ------------
+    for cid, c in reg.items():
+        perimetre = c[2]
+        if perimetre in ("—", "-"):
+            continue
+        deb = preuves.index(cid) if cid in preuves else -1
+        ln = preuves[deb:deb + 480] if deb >= 0 else ""   # la ligne publiée, entière
+        if re.sub(r"\s+", " ", perimetre) not in re.sub(r"\s+", " ", ln):
+            refus.append(("C25", "preuves", f"{cid} : le périmètre n'est pas publié sur sa ligne"))
+
+    # --- la vague 27 : un verdict TENUE cite la mesure du périmètre COURANT ou l'étiquette --
+    ERES_BUDGETS = {"CIB-LOC-BUDGET": "localiser", "CIB-EDIT-BUDGET": "éditer"}
+    adoptes = {}
+    for l in texte_cibles.splitlines():
+        if l.startswith("| localiser |") or l.startswith("| éditer |") or l.startswith("| ajouter |"):
+            c = [x.strip() for x in l.strip("|").split("|")]
+            m = re.search(r"(\d[\d ]*)\s*\(", c[4])      # la colonne ADOPTÉ : « 627 (hiérarchique…) »
+            if m:
+                adoptes[c[0]] = int(m.group(1).replace(" ", ""))
+    for cid, op in ERES_BUDGETS.items():
+        if cid not in reg or op not in adoptes:
+            continue
+        c = reg[cid]
+        mes, verdict = c[4], c[5]
+        m = re.match(r"(\d[\d ]*)", mes)
+        if not m or not verdict.startswith("TENUE"):
+            continue
+        mesure = int(m.group(1).replace(" ", ""))
+        if mesure != adoptes[op] and "HISTORIQUE-DATÉ" not in mes and "HISTORIQUE-DATÉ" not in verdict:
+            refus.append(("C25", "cibles",
+                          f"{cid} : verdict TENUE sur la mesure {mesure} d'une autre ère sans étiquette HISTORIQUE-DATÉ"))
+        if mesure != adoptes[op]:
+            deb = preuves.index(cid) if cid in preuves else -1
+            ln = preuves[deb:deb + 320] if deb >= 0 else ""
+            if "HISTORIQUE-DATÉ" not in ln:
+                refus.append(("C25", "preuves",
+                              f"{cid} : la ligne publiée porte un verdict TENUE sur une mesure d'une autre ère sans étiquette"))
     return refus
 
 

@@ -1,0 +1,33 @@
+ATELIER W27CIBLES — LE REGISTRE DES CIBLES AU PÉRIMÈTRE EXPLICITE, LA RÈGLE DES ÈRES (26/11/2026, prompt 3)
+====================================================================================================
+Évaluation du pack, prompt 3 — neutralité documentaire. AUCUNE cible re-tirée ; les verdicts
+demeurent PORTÉS TELS QUELS ; aucun chiffre ajusté.
+
+1. LES DEUX ÈRES CÔTE À CÔTE. CIBLES.md porte désormais la table des ères des budgets
+   (D222/D241/D251, les canons de la table canonique) : ère M1 (localiser 51, éditer 719,
+   ajouter 1 088 — historique, datée), pointeur-seul (localiser 1 053), contenu seul (580 /
+   2 143 / 3 510), ADOPTÉ le périmètre courant (localiser 627 hiérarchique D222, éditer 674
+   TPL-EDIT-v1 OPT-14, ajouter 2 200 squelette OPT-14).
+2. LES LIGNES CONCERNÉES. CIB-LOC-BUDGET (cible ≤ 64, posée à l'ère M1) : la mesure publiée
+   devient « 51 M1 (HISTORIQUE-DATÉ) vs 627 adopté / 1 053 pointeur-seul », le verdict « TENUE
+   (HISTORIQUE-DATÉ) » — la mesure tenue est celle de l'ère M1, étiquetée telle. CIB-EDIT-BUDGET
+   : la mesure 674 est celle du périmètre ADOPTÉ, dite telle (« 674 (adopté, TPL-EDIT-v1
+   OPT-14) ») — le verdict TENUE cite le courant, aucune étiquette ne s'impose.
+3. LA RÈGLE, GÉNÉRALE ET ÉCRITE : un verdict TENUE cite la mesure du périmètre courant ou
+   porte l'étiquette HISTORIQUE-DATÉ.
+4. LA COLONNE PÉRIMÈTRE VISIBLE SUR CHAQUE LIGNE PUBLIÉE : la publication (preuves §4 bis)
+   publie désormais le périmètre de mesure sur chacune des onze lignes, tel quel — la classe
+   C25 étendue le REFUSE autrement. Sur les preuves v0.31.0 (non régénérées), l'écart est
+   nommé : onze lignes sans périmètre publié.
+5. LA CLASSE C25 ÉTENDUE : (a) le périmètre de chaque cible doit paraître sur sa ligne
+   publiée ; (b) un verdict TENUE appuyé sur la mesure d'une autre ère sans étiquette est
+   refusé — au REGISTRE et à la PUBLICATION pareil ; les valeurs ADOPTÉES se lisent de la
+   table des ères du registre même (jamais codées dans le linter).
+6. LES CONTRÔLES NÉGATIFS, TROIS VÉCUS (atelier-w27cibles/controles_negatifs.py, sur copies
+   du registre) : l'étiquette retirée de CIB-LOC-BUDGET → refus nommé ; la mesure M1 719
+   substituée à CIB-EDIT-BUDGET sans étiquette → refus nommé ; le registre réel → zéro refus
+   côté cibles. 3/3. La recomposition : 11/11 lignes, verdicts portés tels quels, aucune
+   cible re-tirée.
+7. SUITE. La publication au périmètre visible vit à la génération de l'édition v0.32.0 (le
+   générateur des preuves porte la colonne) ; jusqu'alors l'écart des preuves v0.31.0 est
+   l'état intermédiaire nommé. Le sceau-I est 14/14 avant et après l'atelier.

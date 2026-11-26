@@ -10,13 +10,29 @@ classe C25 refuse tout écart.
 | CIB-ADD-FAISAB | faisabilité d'un « ajouter » épinglé | mêmes 18 tâches, juge inchangé | ≥ 15/18 verts | 5/18 | MANQUÉE | D248 | 5ᵉ campagne add |
 | CIB-ADD-STRUC | faisabilité d'un « ajouter » épinglé, décodage contraint | schema JSON fermé, boucle de réparation ≤ 3 tours | ≥ 15/18 | — | EN ATTENTE (aucun serving à structured output) | D264 | D264 |
 | CIB-ADD-RATIO | ratio ajouter/éditer | 2 200 / 674 tokens médians | ≤ 3,0 | 3,264 | MANQUÉE (de 0,264) | D31/D34 | campagne ratio |
-| CIB-EDIT-BUDGET | coût tokens d'UN changement « éditer » validé | budget `usage` natif | ≤ 3 000 | 674 | TENUE | D31/D34 | campagne ratio |
-| CIB-LOC-BUDGET | coût tokens d'UNE localisation | budget `usage` natif | ≤ 64 | 51 | TENUE | D31/D34 | M1 |
+| CIB-EDIT-BUDGET | coût tokens d'UN changement « éditer » validé | budget `usage` natif | ≤ 3 000 | 674 (adopté, TPL-EDIT-v1 OPT-14) | TENUE | D31/D34 | campagne ratio |
+| CIB-LOC-BUDGET | coût tokens d'UNE localisation | budget `usage` natif | ≤ 64 | 51 M1 (HISTORIQUE-DATÉ) vs 627 adopté / 1 053 pointeur-seul | TENUE (HISTORIQUE-DATÉ) | D31/D34 | M1 |
 | CIB-ORACLE-T | temps du moteur d'oracle natif | T < 10 s, n ≥ 5, graine, chronomètre monotone | T < 10 s | — | EN ATTENTE (mmap 0xC000 refusé : `vm.mmap_min_addr`) | D264 | ATT-ORACLE |
 | CIB-HARNAIS-200 | vecteurs d'oracle exécutables | 235 exécutables sur 320 produits | ≥ 200/235 | 95/235 | MANQUÉE | D273 | harnais générique (delta nul) |
 | CIB-AES-105 | AES-GCM, couloir VAES/VPCLMULQDQ | 4 Kio, cœur épinglé, n=20, ratio contre OpenSSL EVP au même volume | ≤ 1,05 × EVP | — | EN ATTENTE (aucun code VAES écrit) | D273 | couloir VAES |
 | CIB-AES-ENTRELACE | AES-GCM, couloir CTR×GHASH ENTRELACÉ (AVX2/AES-NI) — **hors sujet de CIB-AES-105** | 4 Kio, cœur épinglé, n=20 | (aucune cible propre) | 0,7271 c/B ; 2 978,2 cycles ; 1,26 × EVP | HORS SUJET (mesuré, sans cible relative) | D273 | couloir entrelacé |
 | CIB-DIFF-PLANCHER | plancher irréductible d'UN diff réel | diff réel 27,5 tokens | (plancher, pas une cible) | 24,5 × le diff | REPÈRE | D275 | campagne tokens |
+
+## Les ères des budgets — la colonne périmètre rendue visible (vague 27)
+
+Un verdict TENUE cite la mesure du périmètre courant ou porte l'étiquette HISTORIQUE-DATÉ.
+Les ères, côte à côte (D222/D241/D251 — les canons de la table canonique des budgets) :
+
+| opération | ère M1 (historique, datée) | pointeur-seul | contenu seul | ADOPTÉ (périmètre courant) |
+|-----------|-----------------------------|---------------|--------------|-----------------------------|
+| localiser | 51 | 1 053 | 580 | 627 (hiérarchique, D222) |
+| éditer | 719 | — | 2 143 | 674 (TPL-EDIT-v1, OPT-14) |
+| ajouter | 1 088 | — | 3 510 | 2 200 (squelette, OPT-14) |
+
+La cible de CIB-LOC-BUDGET (≤ 64) fut posée à l'ère M1 : sa mesure TENUE (51) est celle de
+cette ère, étiquetée HISTORIQUE-DATÉ ; le périmètre courant mesure 627 (le pointeur-seul
+valut 1 053 avant le localiser-hiérarchique). CIB-EDIT-BUDGET tient sur la mesure ADOPTÉE
+(674) : aucune étiquette ne s'impose.
 
 ## Décisions de lecture
 
