@@ -1,0 +1,449 @@
+{
+ "verdict": {
+  "cible": "≥ 15/18 à ≤ 3000 tokens (pré-enregistrée, jamais re-tirée)",
+  "verts": "18/18",
+  "mediane_18": 120.0,
+  "mediane_vertes": 120.0,
+  "retokenisation_ecart_max": 0,
+  "graine": 20261124,
+  "juge": {
+   "fichier": "scripts/vague19/expandeur_add.py",
+   "sha256": "9fc325e2b8eb40e7cc5c77b92ddfa92e23e6a036bd4ec68f0ec78619903389bd"
+  },
+  "tenu": true,
+  "resultats": [
+   {
+    "tache": 1,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "mov eax, CST-001",
+    "usage": 120
+   },
+   {
+    "tache": 2,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "add eax, 0x2a",
+    "usage": 120
+   },
+   {
+    "tache": 3,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "sub ebx, eax",
+    "usage": 120
+   },
+   {
+    "tache": 4,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "xor ecx, CST-002",
+    "usage": 120
+   },
+   {
+    "tache": 5,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "and edx, 0xff",
+    "usage": 120
+   },
+   {
+    "tache": 6,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "or esi, CST-003",
+    "usage": 120
+   },
+   {
+    "tache": 7,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "cmp edi, 0x7",
+    "usage": 120
+   },
+   {
+    "tache": 8,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "test eax, eax",
+    "usage": 120
+   },
+   {
+    "tache": 9,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "jcc LBL-001",
+    "usage": 120
+   },
+   {
+    "tache": 10,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "call CST-004",
+    "usage": 120
+   },
+   {
+    "tache": 11,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "mov [esp+4], eax",
+    "usage": 120
+   },
+   {
+    "tache": 12,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "mov r8, CST-005",
+    "usage": 120
+   },
+   {
+    "tache": 13,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "add r9, 0x1",
+    "usage": 120
+   },
+   {
+    "tache": 14,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "sub r10, r9",
+    "usage": 120
+   },
+   {
+    "tache": 15,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "xor eax, CST-006",
+    "usage": 120
+   },
+   {
+    "tache": 16,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "mov ebx, CST-007",
+    "usage": 120
+   },
+   {
+    "tache": 17,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "jcc LBL-002",
+    "usage": 120
+   },
+   {
+    "tache": 18,
+    "verdict": "VERT",
+    "tours": 1,
+    "texte": "ret",
+    "usage": 120
+   }
+  ]
+ },
+ "journal": [
+  {
+   "tache": 1,
+   "tour": 1,
+   "pointeur": {
+    "op": "mov",
+    "dst": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-001"
+    },
+    "offset": 256
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 2,
+   "tour": 1,
+   "pointeur": {
+    "op": "add",
+    "dst": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "src": {
+     "type": "imm",
+     "valeur": 42
+    },
+    "offset": 260
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 3,
+   "tour": 1,
+   "pointeur": {
+    "op": "sub",
+    "dst": {
+     "type": "reg",
+     "valeur": "ebx"
+    },
+    "src": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "offset": 264
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 4,
+   "tour": 1,
+   "pointeur": {
+    "op": "xor",
+    "dst": {
+     "type": "reg",
+     "valeur": "ecx"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-002"
+    },
+    "offset": 268
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 5,
+   "tour": 1,
+   "pointeur": {
+    "op": "and",
+    "dst": {
+     "type": "reg",
+     "valeur": "edx"
+    },
+    "src": {
+     "type": "imm",
+     "valeur": 255
+    },
+    "offset": 272
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 6,
+   "tour": 1,
+   "pointeur": {
+    "op": "or",
+    "dst": {
+     "type": "reg",
+     "valeur": "esi"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-003"
+    },
+    "offset": 276
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 7,
+   "tour": 1,
+   "pointeur": {
+    "op": "cmp",
+    "dst": {
+     "type": "reg",
+     "valeur": "edi"
+    },
+    "src": {
+     "type": "imm",
+     "valeur": 7
+    },
+    "offset": 280
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 8,
+   "tour": 1,
+   "pointeur": {
+    "op": "test",
+    "dst": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "src": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "offset": 284
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 9,
+   "tour": 1,
+   "pointeur": {
+    "op": "jcc",
+    "dst": {
+     "type": "lbl",
+     "valeur": "LBL-001"
+    },
+    "offset": 288
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 10,
+   "tour": 1,
+   "pointeur": {
+    "op": "call",
+    "src": {
+     "type": "cst",
+     "valeur": "CST-004"
+    },
+    "offset": 292
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 11,
+   "tour": 1,
+   "pointeur": {
+    "op": "mov",
+    "dst": {
+     "type": "mem",
+     "valeur": "[esp+4]"
+    },
+    "src": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "offset": 296
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 12,
+   "tour": 1,
+   "pointeur": {
+    "op": "mov",
+    "dst": {
+     "type": "reg",
+     "valeur": "r8"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-005"
+    },
+    "offset": 300
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 13,
+   "tour": 1,
+   "pointeur": {
+    "op": "add",
+    "dst": {
+     "type": "reg",
+     "valeur": "r9"
+    },
+    "src": {
+     "type": "imm",
+     "valeur": 1
+    },
+    "offset": 304
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 14,
+   "tour": 1,
+   "pointeur": {
+    "op": "sub",
+    "dst": {
+     "type": "reg",
+     "valeur": "r10"
+    },
+    "src": {
+     "type": "reg",
+     "valeur": "r9"
+    },
+    "offset": 308
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 15,
+   "tour": 1,
+   "pointeur": {
+    "op": "xor",
+    "dst": {
+     "type": "reg",
+     "valeur": "eax"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-006"
+    },
+    "offset": 312
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 16,
+   "tour": 1,
+   "pointeur": {
+    "op": "mov",
+    "dst": {
+     "type": "reg",
+     "valeur": "ebx"
+    },
+    "src": {
+     "type": "cst",
+     "valeur": "CST-007"
+    },
+    "offset": 316
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 17,
+   "tour": 1,
+   "pointeur": {
+    "op": "jcc",
+    "dst": {
+     "type": "lbl",
+     "valeur": "LBL-002"
+    },
+    "offset": 320
+   },
+   "verdict": "VERT",
+   "usage": 120
+  },
+  {
+   "tache": 18,
+   "tour": 1,
+   "pointeur": {
+    "op": "ret",
+    "offset": 324
+   },
+   "verdict": "VERT",
+   "usage": 120
+  }
+ ]
+}

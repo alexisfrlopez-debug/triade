@@ -8,7 +8,7 @@ classe C25 refuse tout écart.
 |----|-------------|---------------------|-------|--------|---------|----------|----------|
 | CIB-ADD-COUT-4500 | coût tokens d'UN changement « ajouter » validé | budget `usage` natif, n=18, graine 20261117, ordre jamais re-tiré | ≤ 4 500 tokens | 4 604 (médiane) | MANQUÉE (de 104) | D248/D264 | 5ᵉ campagne add |
 | CIB-ADD-FAISAB | faisabilité d'un « ajouter » épinglé | mêmes 18 tâches, juge inchangé | ≥ 15/18 verts | 5/18 | MANQUÉE | D248 | 5ᵉ campagne add |
-| CIB-ADD-STRUC | faisabilité d'un « ajouter » épinglé, décodage contraint | schema JSON fermé, boucle de réparation ≤ 3 tours | ≥ 15/18 | — | EN ATTENTE (aucun serving à structured output) | D264 | D264 |
+| CIB-ADD-STRUC | faisabilité d'un « ajouter » épinglé, décodage contraint | schema JSON fermé, boucle de réparation ≤ 3 tours | ≥ 15/18 | — | EN ATTENTE (SERVING-ABSENT — la sonde du 26/11 : le bord accepte response_format et n'applique pas le schéma ; le harnais est prêt, atelier-w27decco) | D264 | D264 |
 | CIB-ADD-RATIO | ratio ajouter/éditer | 2 200 / 674 tokens médians | ≤ 3,0 | 3,264 | MANQUÉE (de 0,264) | D31/D34 | campagne ratio |
 | CIB-EDIT-BUDGET | coût tokens d'UN changement « éditer » validé | budget `usage` natif | ≤ 3 000 | 674 (adopté, TPL-EDIT-v1 OPT-14) | TENUE | D31/D34 | campagne ratio |
 | CIB-LOC-BUDGET | coût tokens d'UNE localisation | budget `usage` natif | ≤ 64 | 51 M1 (HISTORIQUE-DATÉ) vs 627 adopté / 1 053 pointeur-seul | TENUE (HISTORIQUE-DATÉ) | D31/D34 | M1 |

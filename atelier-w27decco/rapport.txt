@@ -1,0 +1,33 @@
+ATELIER W27DECCO — LA CAMPAGNE ADD À DÉCODAGE CONTRAINT : LE HARNAIS PRÊT, LE REFUS NOMMÉ
+SERVING-ABSENT (26/11/2026, prompt 4)
+====================================================================================================
+Évaluation du pack, prompt 4 — le levier pré-enregistré D264. Aucun chiffre fabriqué ; la cible
+CIB-ADD-STRUC (≥ 15/18 à ≤ 3 000 tokens) est PRÉ-ENREGISTRÉE et JAMAIS re-tirée.
+
+1. LA SONDE DU BORD, VÉCUE SUR PIÈCES (atelier-w27decco/sonde_serving.mjs). Le bord du bac
+   accepte le champ response_format — json_schema strict ET json_object — mais NE L'APPLIQUE
+   PAS : la violation ordonnée (op hors enum, offset hors bornes) passe INTÉGRALE. Le schéma
+   n'est pas une contrainte au décodage : c'est une suggestion ignorée. VERDICT : SERVING-ABSENT
+   — la campagne n'est PAS courue (jamais une mesure habillée en contrainte), aucun chiffre
+   fabriqué. La ligne CIB-ADD-STRUC du registre porte le refus nommé, la cible demeure EN
+   ATTENTE telle quelle.
+2. LE HARNAIS, PRÊT (atelier-w27decco/campagne_d264.py) : le schéma fermé {op, dst, src,
+   offset}, 11 opcodes, additionalProperties false (celui du pré-enregistrement de la vague 20,
+   reconduit) ; l'expandeur importé À EMPREINTE sha256 CONSIGNÉE (9fc325e2b8eb40e7…, le juge
+   intact — JUGE-MODIFIÉ est le refus) ; la boucle de réparation bornée à TROIS tours
+   réinjectant le refus exact et le contre-exemple ; la graine 20261124 consignée, l'ordre des
+   18 tâches jamais re-tiré ; les médianes calculées sur les 18 ET sur les seules vertes (les
+   deux conventions nommées) ; la re-tokenisation indépendante à écart ≤ 1 (les deux compteurs
+   du juge) ; l'agrégateur FAIL-CLOSED — un appel manquant refuse le verdict (APPEL-MANQUANT) ;
+   la contre-vérification CLIENT du schéma (le bord n'est pas cru sur parole — SCHÉMA-VIOLÉ).
+3. LES FIXTURES : 18/18 vertes ; la re-tokenisation à écart max 0 (≤ 1 exigé) ; le rejeu
+   BIT-IDENTIQUE (deux passes, la même graine).
+4. LES QUATRE REFUS NOMMÉS, ÉPROUVÉS : SERVING-ABSENT (la sonde vécue) ; APPEL-MANQUANT (la
+   18e tâche sans réponse → l'agrégateur refuse) ; SCHÉMA-VIOLÉ (la violation ordonnée refusée
+   côté client) ; JUGE-MODIFIÉ (l'empreinte divergente refusée). 4/4 — plus LE CHEMIN VERT :
+   un serving maquetté parfait rend 18/18 verts, médianes sur 18 et sur vertes, écart 0, rejeu
+   bit-identique (rejeu-parfait.json == rejeu-parfait-2.json).
+5. LA CONSIGNATION : le refus nommé SERVING-ABSENT au registre CIBLES (CIB-ADD-STRUC) et au
+   présent rapport ; AUCUN verdict de cible n'est porté (la campagne n'a pas couru) ; dès qu'un
+   serving à structured output sera disponible, `campagne_d264.py --courir` l'exécute entière
+   et le verdict — tenu ou manqué — sera consigné tel quel.
