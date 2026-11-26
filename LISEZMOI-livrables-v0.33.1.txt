@@ -48,9 +48,13 @@ la chaîne des trois éditions attend la commande du maître)
 - corpus v2.1 : 10.5281/zenodo.24479882 (inchangé) · entraînement v1.0.0 : 10.5281/zenodo.24495492 (inchangé)
 
 SUPERSÉDÉS (conservés pour l'histoire ; l'édition courante est ci-dessus)
-- le set v0.33.0 complet (onze pièces, les trois packs assemblés compris) — supersédé au
-  lot livrables_supersedes_20261126c de l'ARCHIVE ; la v0.33.0 N'A JAMAIS ÉTÉ mintée
-  (elle portait les trois résidus corrigés par la présente)
+- le set v0.33.0 — supersédé au lot livrables_supersedes_20261126c de l'ARCHIVE : les
+  SEPT pièces propres à v0.33.0 (la preuves v0.33.0, empreintes, rapport, LISEZMOI et
+  les trois packs) DÉPLACÉES au lot, md5 recoupés inchangés ; les QUATRE pièces
+  COMMUNES (le manuscrit v0.33.0, la spécification, le Livre, la présentation —
+  RECONDUITES byte-byte) demeurent au /livrables comme pièces propres de la v0.33.1 ;
+  la v0.33.0 N'A JAMAIS ÉTÉ mintée (elle portait les trois résidus corrigés par la
+  présente)
 - le set v0.32.0 — déjà supersédé (lot livrables_supersedes_20261126b) ; la v0.32.0
   N'A JAMAIS ÉTÉ mintée
 - le set v0.31.0 — lot livrables_supersedes_20261126 ; la v0.31.0 publiée demeure sur
