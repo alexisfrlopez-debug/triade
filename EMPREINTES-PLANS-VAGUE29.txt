@@ -1,0 +1,19 @@
+EMPREINTES-PLANS-VAGUE29.txt — la table des plans gelés de la vague 29 (sha256 AVANT toute donnée, le commit d'abord — la règle reconduite des vagues 8–28).
+Chaque empreinte calculée sur le fichier du dépôt à la racine, la vague 29 consommée
+le 27/11/2026 (instructions.txt au /instructions : les six prompts de la première
+évaluation du pack v0.33.0).
+
+4adf5d73…  PLAN-W29DECCO.md     (w29decco — le décodage contraint client-side, le gate d'abord)
+3ecf95d7…  PLAN-W29MOTEUR.md    (w29moteur — le moteur généralisé aux 52 blocs, l'ouverture de session, Merkle)
+83af57f9…  PLAN-W29VAES512.md   (w29vaes512 — l'ère VAES512 zmm, les deux bras)
+c6654833…  PLAN-W29EXPANDEUR.md (w29expandeur — la TCB de l'expandeur durcie)
+2cb546b6…  PLAN-W29COUT.md      (w29cout — la lecture économique unifiée, IC bootstrap, tests exacts)
+a6f140e9…  PLAN-W29FAMILLE.md   (w29famille — la seconde famille + le canari continu)
+
+sha256 complets (recalculés des octets mêmes) :
+4adf5d73318226217f432290fecbbac61547318abee8c4c30860f4c6509006c7  PLAN-W29DECCO.md
+3ecf95d7624e860596dd60fe63c74d881dd9f95b62049fc7713b4f04a9514192  PLAN-W29MOTEUR.md
+83af57f9e736c4780c89357a13bc5170375b1a5f8f245cb819c5208afb75b748  PLAN-W29VAES512.md
+c6654833c364c55c12af3139756558bd8e8c7bc9b7f8e0f80e25e46b7352007f  PLAN-W29EXPANDEUR.md
+2cb546b6c565a8f938969f2679bbb5c08983f943f12c1edb92059cf985411930  PLAN-W29COUT.md
+a6f140e95ad4f607b18d7abc60c49b9ed0936322f4508b03733aa75d38203c38  PLAN-W29FAMILLE.md
