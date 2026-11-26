@@ -1,0 +1,11 @@
+REÇU D'ARCHIVAGE — l'empreinte prouve, la suppression est un confort
+(vague 27, les six instructions du 26/11/2026 — RECON, RESID, CIBLES, DECCO, PREUV, VAES)
+
+486ea96f566f8c8369b86cdb6603206ea101277d7cea5007c4097e7a223a099e  Qwen__20261126_instructions.txt  SUPPRIMEE du coffre /instructions
+
+1 fichier : copie identique à l'original (cmp byte-byte), l'original retiré du
+coffre /instructions par le geste en deux étapes (retrait PUIS archivage au
+dossier ARCHIVE du coffre — l'appel combiné est refusé 403). Le /instructions
+est LAISSÉ VIDE. Les six plans gelés (PLAN-W27*.md, EMPREINTES-PLANS-VAGUE27.txt)
+et les six ateliers exécutés (atelier-w27recon, -resid, -cibles, -decco, -preuv,
+-vaes) vivent au dépôt, chacun avec son rapport.
