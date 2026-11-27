@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 447 — LE TERRAIN.7 DU KIT COLAB CORRIGÉ : le garde ZIP-ABSENT de la cellule 8 fut pris pour une panne et « la web app » fut cherchée au localhost de la session depuis l'ordi du maître — DEUX quiproquos, aucune panne : le zip de preuves ne vit qu'au BOUTON 5 de la GUI, et il n'y a AUCUNE web app [LA GUI vit DANS le notebook, les widgets de la cellule 6 ; l'URL 127.0.0.1 vit AU RUNTIME Colab] ; TRIADE_kit_campagne_colab_v103.zip livré au /livrables et au dépôt [le garde et l'ordre nommés aux markdown, la GUI-dans-le-notebook nommée à la cellule 6, LA CELLULE 9 — LE PONT DU POSTE (l'URL du runtime vue de ton ordi au proxy Colab), LE REPLI CLI nommé au LISEZMOI § 6] ; les CINQ épreuves TOUT VERT au bac [le code 1-8 INTACT byte-byte au v102, la cellule 6 au titre près], trois coquilles du harnais du bac démasquées au passage, les trois GGUF re-vérifiés vivants au dépôt exact du kit ; le kit poste v100 INTACT byte-byte ; le run v102 déjà monté ne redemande rien : les cellules de secours 3 [le verdict de l'ordre + le pont du poste] et 4 [le repli CLI] portées à la réponse, puis les CINQ boutons, puis la cellule 8 re-courue ; l'atelier atelier-campagne-colab-v103/ au dépôt ; le worklog Entrée 447 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 448 — LA QUESTION DU « COLAB CLI » PORTÉE AU FAIT : AUCUNE voie d'exécution à distance ne lance un run Colab [la sonde au compte de service : l'API Colab Enterprise du projet : 404 aux deux lieux — le service n'est pas activé ; le Colab gratuit ne porte AUCUNE API de run ; le bac ne porte pas le modèle — 4 Gio / 2 vCPU / aucun GPU, la limite structurelle des plans gelés] — le geste compute ne part QUE du poste réel) ; LA CELLULE DE SECOURS 5 — LE RUN EN UNE SEULE CELLULE portée à la réponse et au dépôt [les CINQ étapes du plan gelé en commandes du moteur PUIS le retour au coffre reconduit — le zip au /test recoupé byte-byte ; le garde COFFRE-ABSENT fail-fast AVANT la campagne ; un ROUGE arrête la marche] ; l'épreuve TOUT VERT au bac [structure + gardes fail-fast + la chaîne complète close en 11,3 s contre la maquette 8641 — le kit pristine du coffre, le gate GATE-VERT, le canari GATE-VERT ×4, le registre REJOUÉ TEL QUEL : l'instrument, jamais la mesure] ; l'atelier atelier-campagne-colab-v103/ enrichi (la cellule + les deux preuves-labo) ; le worklog Entrée 448 au coffre et au dépôt ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -730,6 +730,41 @@ ne s'ouvre pas du navigateur du maître.
   (le verdict de l'ordre + le pont du poste) et LA CELLULE DE SECOURS 4 (le repli CLI, si les
   widgets ne paraissent pas) portées à la réponse au maître ; PUIS les CINQ boutons de la GUI,
   PUIS la cellule 8 re-courue — le zip de preuves au /test du coffre.
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
+  maître ; la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du
+  maître ; la vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 448 (27/11/2026) — LA QUESTION DU « COLAB CLI » : AUCUNE VOIE À DISTANCE, LA CELLULE DE SECOURS 5 — LE RUN EN UNE SEULE CELLULE
+
+La demande du maître « tu pourrais lancer le run toi même avec Colab CLI ? » portée AU FAIT MESURÉ,
+jamais à la croyance.
+
+- **LA SONDE** (atelier-campagne-colab-v103/preuves-labo/sonde-colab-entreprise.txt) : il
+  n'existe AUCUN « Colab CLI » — le Colab gratuit ne porte AUCUNE voie d'exécution à distance
+  d'un notebook (aucune API de run, aucun déclencheur externe) ; la SEULE API possible — Colab
+  Enterprise (Vertex AI, facturée) — sondée au compte de service du labo : HTTP 404 aux deux
+  lieux (us-central1, europe-west1 — le service n'est pas activé au projet) ; le bac ne porte
+  pas le modèle (4 Gio / 2 vCPU / aucun GPU, la limite structurelle nommée aux plans gelés).
+  LE GESTE COMPUTE NE PEUT PARTIR QUE DU POSTE RÉEL.
+- **LA VOIE LA PLUS PROCHE PORTÉE** : LA CELLULE DE SECOURS 5 — LE RUN EN UNE SEULE CELLULE
+  (atelier-campagne-colab-v103/cellule-secours-5.py, portée aussi à la réponse au maître) :
+  les CINQ étapes du plan gelé en commandes du moteur (1 le manifeste · 2 le gate · 3 le
+  canari · 4 LA CAMPAGNE · 5 le zip) PUIS le retour au coffre reconduit (le geste de la
+  cellule 8 : le zip au /test, recoupé byte-byte) ; le garde COFFRE-ABSENT fail-fast AVANT la
+  campagne (le refus vient AVANT, jamais deux heures après) ; le journal vivant EN DIRECT ; un
+  ROUGE arrête la marche (fail-closed).
+- **L'ÉPREUVE TOUT VERT AU BAC** (atelier-campagne-colab-v103/preuves-labo/
+  secours5-rejoue-au-bac.txt — la chaîne close en 11,3 s) : (1) la structure (compile + l'ordre
+  du plan gelé) ; (2) les gardes fail-fast (CLI-ABSENT, COFFRE-ABSENT AVANT la marche — aucun
+  gate-verdict, aucun journal, aucun zip né) ; (3) LA CHAÎNE COMPLÈTE contre la maquette 8641 —
+  le kit pristine du coffre (sha256 épinglé recoupé), manifeste VERT (25 pièces + le juge),
+  gate GATE-VERT, canari GATE-VERT ×4, le registre REJOUÉ TEL QUEL (l'instrument, jamais la
+  mesure — le zip rejoué du bac ne sort JAMAIS du bac), le zip bâti et DÉPOSÉ au faux coffre,
+  sha256 recoupé byte-byte.
+- **L'USAGE AU POSTE** (deux gestes, plus aucun clic de bouton) : clic droit sur la cellule 5 →
+  « Exécuter l'objet avant l'exécution » (les cellules 1 → 5 d'un seul geste, la cellule 7 ne
+  court PAS), puis coller la secours 5 en nouvelle cellule et l'exécuter — NE TOUCHER À RIEN :
+  la campagne court, au terme le zip de preuves vit au /test du coffre.
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
   maître ; la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du
   maître ; la vague 30 au /instructions quand le maître la déposera.
