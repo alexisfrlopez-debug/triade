@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 442 — LA VAGUE 29 : LES SIX ATELIERS EXÉCUTÉS [le dépôt, chaque atelier à son dossier et son rapport] : atelier-w29decco [le gate GATE-VERT du décodeur contraint client llguidance sur le vocabulaire Qwen2.5-Coder-7B — la violation refusée au masque de tokens, la campagne au geste compute, le harnais livré], atelier-w29moteur [235/235 vecteurs identiques aux deux moteurs, la racine de Merkle 8f717b1a… consignée, l'ouveture de session TENUE à 1 263,7 µs contre 9,836 s au jumeau — la cible CIB-VOL-SESSION], atelier-w29vaes512 [l'ère VAES512 zmm aux deux bras à la porte CAVP 20/20 chacun, la cible CIB-AES-512 MANQUÉE à 3,66×/5,30× — le chemin EVP zmm au plafond de l'ère, l'écart notation-vs-C 1,45× au profit du C], atelier-w29expandeur [le second expandeur indépendant — la batterie de 10 500 diffs confrontée ZÉRO divergence, les 64 mutants : 34 tués/30 survivants nommés, le lemme vérifié], atelier-w29cout [la lecture économique unifiée — les IC bootstrap 95% médiane [58;117] et amorti [1 514,67 ; 2 263,22], les tests exacts de Fisher : 9/18 vs 18/18 p=0,001 — la perte de faisabilité significative quantifiée], atelier-w29famille [les 128 constantes du domaine recalculées des définitions ZÉRO écart, le canari SERVING-INFIDELE vécu au bord GLM, la seconde famille au geste compute] ; CIBLES.md complété des lignes nouvelles CIB-VOL-SESSION/CIB-AES-512/CIB-EDIT-FAISAB/CIB-EDIT-AMORTI ; les instructions de la vague archivées au dépôt ET au coffre [instructions_vague29_20261127, le /instructions LAISSÉ VIDE] ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître ; les campagnes au geste compute du poste réel — les harnais livrés)*
+*Mise à jour : 27/11/2026 (Entrée 443 — LES DEUX KITS 1-CLIC DU POSTE RÉEL ET DE LA CÉRÉMONIE D'ÈRE LIVRÉS AU /livrables ET AU DÉPÔT : TRIADE_kit_campagne_poste_v100.zip [la campagne au geste compute — W29DECCO + W29FAMILLE : le masque llguidance côté client aux modes A transformers/B llama.cpp, les canari continus, l'éditer OPT-16 + l'ajouter D264 verbatims, la seconde famille aux deux sondes de récitation, le harnais aux 25 pièces gelées recoupées, l'autotest maquette TOUT VERT] + TRIADE_kit_ceremonie_ere_v100.zip [la cérémonie d'ère de couloir-vaes512.asm à la clé hors-ligne du maître — la dette nommée : la charge trois champs signée à l'outil du maître telle quelle, la continuité D163 à la clé publique I, le signeur autoporteur RFC 8032, l'autotest à la clé de test TOUT VERT — le labo ne signe jamais] ; les plans gelés PLAN-CAMPAGNE-POSTE.md + PLAN-CEREMONIE-ERE.md à EMPREINTES-PLANS-POSTE-V100.txt ; les ateliers atelier-campagne-poste-v100/ + atelier-ceremonie-ere-v100/ au dépôt ; les zips vérifiés au dézippage ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -530,3 +530,38 @@ Entrées 251-304) et au worklog (`worklog.md`, Tasks 158-211).*
 - **C32 RATIO-RECOMPOSE** (le linter à 32 classes) : tout ratio canonique publié se recompose de ses opérandes non arrondis lus aux registres — 13/13 VERT à l'audit indépendant ; C30/C31 reconstruits (le code perdu avec le bac mort, calibré sur les mutations de la porte).
 - **L'ÉDITION v0.33.1** : au /livrables du coffre ET à `depot-zenodo-v0331/` du dépôt [soumission 297 692 o, présentation 2 233 765 o, complet 43 951 257 o, MANIFESTE-PACKS-v0.33.1.json, src/ au patron v0310] ; la porte zéro rouge, 23/23 mutations, les cinq sondes rejouées bit-identiques, le sceau-I 14/14 ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c (les sept pièces propres déplacées, rien jeté D143).
 - **SUITE** : la publication Zenodo des trois éditions (v0.32.0, v0.33.0, v0.33.1) à la commande du maître ; la participation v1.3.0 à la commande ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître ; worklog Entrée 441.
+
+## Mise à jour 443 (27/11/2026) — LES DEUX KITS 1-CLIC : LA CAMPAGNE AU POSTE RÉEL ET LA CÉRÉMONIE D'ÈRE
+
+La SUITE de l'Entrée 442 (les campagnes au geste compute + la cérémonie d'ère), la commande du maître « va enchainer
+sur la campagne au poste réel puis cérémonie, comme d'habitude avec GUI 1 clic ». Les plans gelés AVANT toute pièce
+(commit d'abord) : PLAN-CAMPAGNE-POSTE.md + PLAN-CEREMONIE-ERE.md à EMPREINTES-PLANS-POSTE-V100.txt.
+
+- **LE KIT CAMPAGNE — AU COFFRE** : `TRIADE_kit_campagne_poste_v100.zip` au `/livrables` (2 045 172 o, sha256
+  a8d9b96c…, recropé byte-byte au téléversement). LA CAMPAGNE au geste compute du poste réel : le clic
+  `COMMENCER-ICI.bat` → la GUI (5 boutons, le journal en direct) → le moteur ; le modèle choisi Qwen2.5-Coder-7B-Instruct
+  servi en local (MODE-B llama.cpp le bord natif /completion, ou MODE-A transformers le masque aux logits entiers) ;
+  le décodage contraint CÔTÉ CLIENT (llguidance, le masque de bits à chaque pas) ; les canari continus devant chaque
+  phase ; ÉDITER (OPT-16 verbatim) + AJOUTER (D264 verbatim) + LA SECONDE FAMILLE (les deux sondes de récitation, la
+  tripartite spec↔modèle↔définitions) ; le harnais aux 25 pièces gelées recoupées au chargement (le juge D264 INTACT
+  9fc325e2…, les cibles pré-inscrites, le tokenizer du modèle) ; le zip de preuves retourne au coffre /test.
+- **LE KIT CAMPAGNE — AU DÉPÔT** : `atelier-campagne-poste-v100/` — le kit/ (les sources à 26 fichiers), les
+  preuves-labo/ (l'autotest final, le journal des pas — la preuve du canari pas à pas, l'épreuve d'orchestration), le
+  rapport.txt (les TROIS LEÇONS DE PASSE nommées : l'union vraie dst chaîne|objet du schéma, l'ordre des clés exigé
+  par la grammaire, le canari aux états de la violation) ; worklog Entrée 443.
+- **LE KIT CÉRÉMONIE — AU COFFRE** : `TRIADE_kit_ceremonie_ere_v100.zip` au `/livrables` (34 862 o, sha256
+  8619be1b…, recropé byte-byte). LA CÉRÉMONIE D'ÈRE de couloir-vaes512.asm à la clé hors-ligne du maître (la dette
+  nommée à la naissance, PLAN-W29VAES512) : le clic `CEREMONIE-ICI.bat` → la GUI (4 boutons) ; la charge à la forme du
+  sceau (trois champs, signée TELLE QUELLE par l'outil du maître v06/ceremonie_hors_ligne.py à SA clé — la continuité
+  D163) ; le signeur hors-ligne autoporteur (l'Ed25519 RFC 8032 de la référence, l'autotest fail-closed) ; le sceau +
+  le zip retournent au coffre /test.
+- **LE KIT CÉRÉMONIE — AU DÉPÔT** : `atelier-ceremonie-ere-v100/` — le kit/ (les sources : la GUI, le moteur, le
+  signeur, le harnais aux 6 pièces au MANIFESTE-ere), les preuves-labo/ (l'autotest à la clé de test TOUT VERT, les
+  résidus rangés), le rapport.txt ; worklog Entrée 443.
+- **LA VÉRIFICATION DES ZIPS** : chaque zip testé AU DÉZIPPAGE — les moteurs vivants depuis l'extraction (le
+  manifeste 25/25 VERT, le GATE-VERT, les DEUX autotests TOUT VERT) ; les empreintes des zips au bac :
+  campagne a8d9b96c17ccdc4d… · cérémonie 8619be1b53982699… ; le LISEZMOI-livrables du coffre mis à jour des deux
+  sections (recoupé à la relecture).
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1 (ET v0.33.0/v0.32.0) À LA COMMANDE du maître (le pousseur
+  1-clic au lot v0.32.0 prêt au poste, le moteur v0330 : étendre publier_zenodo_v0320.py) ; la participation v1.3.0 à
+  la commande ; la vague 30 au /instructions quand le maître la déposera.
