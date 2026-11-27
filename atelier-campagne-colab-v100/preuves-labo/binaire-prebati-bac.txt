@@ -1,0 +1,5 @@
+version: 1.1.0-dev (build 12810, commit ca123ba76)
+built with GNU 11.4.0 for Linux x86_64
+
+=== le lancement 10 s + la porte /health ===
+{"status":"ok"} ← /health

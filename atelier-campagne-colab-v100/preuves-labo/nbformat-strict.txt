@@ -1,0 +1,1 @@
+nbformat validate STRICT : VERT — 17 cellules (8 code + 9 markdown), ids complets

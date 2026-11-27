@@ -1,0 +1,127 @@
+ATELIER CAMPAGNE-COLAB-V100 — LE KIT DE CAMPAGNE AU POSTE RÉEL, VOIE
+GOOGLE COLAB (le geste compute porté par le runtime), LE NOTEBOOK ÉPROUVÉ
+TOUT VERT AU BAC, LA LIMITE STRUCTURELLE RECONDUITE
+(27/11/2026, la SUITE de l'Entrée 443 : LE KIT POSTE v100 livré au clic
+unique, la commande du maître « pour le kit campagne poste, tu pourrais me le
+faire pour Google Collab ? » — le même kit, la même loi, une autre voie)
+
+1. LE PRINCIPE : LE KIT COLAB NE PORTE AUCUN MOTEUR. Le poste réel devient
+   le RUNTIME COLAB — il porte le geste compute (le GPU que le bac ne porte
+   pas : 3,9 Gio / 2 vCPU / aucun GPU mesurés à l'instant de l'atelier — la
+   limite structurelle des plans gelés RECONDUITE sur pièces, cf. § 5). Le
+   notebook tire TRIADE_kit_campagne_poste_v100.zip du coffre /livrables
+   (l'ID Drive 1TT1zLRf1movZ69_cTzGhMLEcAV1Hi7CD et le sha256
+   a8d9b96c17ccd… ÉPINGLÉS à la cellule 2 — KIT-DIVERGENT est le refus
+   nommé, fail-closed ; le kit recoupé IDENTIQUE au bord du Drive au moment
+   de l'atelier), l'extrait TEL QUEL, et court SON MOTEUR byte-byte : les
+   25 pièces gelées recoupées AU CHARGEMENT (PIÈCE-DIVERGENTE le refus), le
+   juge D264 INTACT (9fc325e2…), les cibles pré-inscrites JAMAIS re-tirées.
+   AUCUNE pièce du kit poste n'est dupliquée au kit Colab : la source unique
+   demeure le coffre.
+
+2. LE NOTEBOOK — Campagne-Colab-v100.ipynb (17 cellules : 8 code + 9
+   markdown, nbformat 4.5 STRICT — les ids complets, la syntaxe de chaque
+   cellule compilée) :
+   (1) LE POSTE COLAB — le verdict de l'environnement : le GPU/VRAM/RAM/
+       disque imprimés TEL QUELS ; le MODE-A exige ~31 Gio de VRAM (le
+       chargement fp32 du moteur — le dtype n'est pas négocié, l'exactitude
+       intégrale est le mot à mot du plan) : les runtimes A100 seuls le
+       portent ; le MODE-B tient dès la T4 ;
+   (2) LE KIT AU COFFRE — le Drive monté ; la voie directe Triade/livrables,
+       le repli à la marche bornée (profondeur ≤ 6 — la garde anti-marche
+       infinie, épreuvée : la copie au niveau 7 est REFUSÉE), le repli
+       final à l'API Drive à l'ID épinglé ; la porte sha256 ÉPINGLÉE ;
+       l'extraction à /content/kit ;
+   (3) LES DÉPENDANCES — le pip du COMMENCER-ICI.bat reconduit (llguidance
+       + tokenizers + keystone-engine + capstone) ;
+   (4) LE KIT VIVANT — le manifeste + le gate + l'autotest maquette, TOUT
+       VERT exigé avant toute campagne (la maquette est l'INSTRUMENT, jamais
+       la mesure) ;
+   (5) LE SERVING MODE-B — llama-server au runtime : la release PRÉBATTUE
+       des tags b d'abord (les tags v n'en portent AUCUNE — vérifié au bac :
+       38 assets au b12810, 1 seul au v1.1.0 ; le GPU prend le cudart
+       CUDA-12 — le runtime embarqué, tolérant au driver ; le CPU prend
+       l'ubuntu-x64 nu), le repli NOMMÉ à la source compilée si l'API
+       manque, si l'archive manque, OU si le prébâti meurt au poste (glibc,
+       driver) — le journal imprimé TEL QUEL avant le repli ; le GGUF du
+       modèle choisi au minter bartowski (QUANT à la cellule : Q4_K_M
+       4,68 Go · Q6_K 6,25 Go · Q8_0 8,10 Go — les trois URLs vérifiées
+       HTTP 200 au bac) ; la commande consignée au LISEZMOI-POSTE § 1
+       reconduite (--port 8080 -c 8192, -ngl 99 au GPU) ; la porte /health
+       (240 × 5 s) ;
+   (6) LA GUI 1 CLIC — LE PATRON DE gui_campagne.py AUX WIDGETS COLAB :
+       l'entête des plans gelés, le panneau de réglage (Mode B/A, endpoint,
+       top-n, le chemin du modèle), LES CINQ BOUTONS dans l'ordre du plan
+       (Vérifier le kit · Le gate · Le canari · LA CAMPAGNE · Le zip de
+       preuves), le journal du moteur EN DIRECT sous les boutons (le fil de
+       lecture en arrière-plan, append_stdout), la grille verrouillée
+       pendant qu'une étape court, l'état VERT/ROUGE par code de sortie —
+       LE MOTEUR PORTE TOUT LE POIDS DU GESTE (la fenêtre ne fait que le
+       lancer et le suivre — la leçon des pousseur/cockpit reconduite) ;
+   (7) LE MODE-A — snapshot_download du modèle choisi (~15 Gio bf16), le
+       chemin porté à la GUI — le masque aux LOGITS ENTIERS ;
+   (8) LE RETOUR AU COFFRE — le zip de preuves (du bouton 5) déposé au
+       Triade/test du coffre monté, RECOPÉ byte-byte par relecture.
+
+3. LES ÉPREUVES AU BAC, TOUT VERT (epreuves_kit_colab.py — la logique du
+   notebook extraite et confrontée, la maquette l'INSTRUMENT jamais la
+   mesure) :
+   (1) LA MARCHE BORNÉE + LA PORTE SHA256 (la cellule 2 au faux arbre
+       Drive : la voie directe trouve le zip, la porte sha256 PASSE
+       (a8d9b96c… == l'épingle), 31 pièces extraites, la copie au niveau 7
+       REFUSÉE par la borne) ;
+   (2) LE SÉLECTEUR DE RELEASE (la cellule 5 au JSON RÉEL du jour de
+       l'API GitHub : CPU → llama-b12810-bin-ubuntu-x64.tar.gz · GPU →
+       cudart-llama-b12810-bin-ubuntu-cuda-12.8-x64.tar.gz — le cudart
+       CUDA-12 préféré au 13, plus tolérant au driver) ;
+   (3) LA GUI HEADLESS (la cellule 6 exécutée au bac : les CINQ boutons
+       bâtis, les arguments des étapes confrontés aux formes attendues du
+       moteur — --canari/--campagne/--mode B/A/--url/--nprobs/--modele —
+       la grille affichée). En sus : le binaire PRÉBATTI b12810 épreuvé au
+       bac même (version 1.1.0-dev build 12810, /health {"status":"ok"}
+       VERT au lancement court — preuve que l'asset du jour vit au bord).
+
+4. LA LIMITE STRUCTURELLE RECONDUITE SUR PIÈCES : le bac porte 3,9 Gio de
+   RAM / 2 vCPU / aucun GPU (mesuré à l'instant de l'atelier) — le GGUF
+   Q4_K_M (4,68 Go) NE PEUT PAS s'y charger : le modèle ne court PAS au
+   bac, LA MESURE APPARTIENT AU POSTE (la doctrine MODÈLE-ABSENT des plans
+   gelés, W29DECCO — reconduite telle quelle). Le téléchargement d'essai
+   du GGUF au bac fut ARRÊTÉ à 342 Mo et sauté — l'épreuve au modèle réel
+   appartient au runtime Colab (le geste du maître), le notebook est la
+   voie qui y mène. AUCUN chiffre de campagne ne sort du bac.
+
+5. LES ÉCARTS AU KIT POSTE, NOMMÉS AU LISEZMOI (§ 5 du kit Colab) : le
+   clique-bouton tkinter → LES WIDGETS COLAB (aucun bureau au runtime) ;
+   le venv du .bat → L'ENVIRONNEMENT COLAB (les mêmes quatre paquets) ;
+   le serving manuel → LA CELLULE 5 (le prébâti du jour + le GGUF, le
+   repli source nommé). LE MOTEUR, LA GUI-CLI ET LE HARNAIS : AUCUN ÉCART
+   — le zip est tiré du coffre, recoupé à l'épingle, extrait TEL QUEL.
+
+6. LA GARDE : aucune cible re-tirée (les cibles pré-inscrites PORTÉES au
+   harnais du kit poste, recoupées à son manifeste) ; aucune graine
+   re-tirée (20261117/20261124 — les graines des plans gelés) ; aucun
+   chiffre de campagne fabriqué au bac (l'autotest maquette TOUT VERT
+   reconduit, la mesure au poste) ; aucun secret dans le kit ni committé
+   (l'ID Drive et le sha256 du zip sont PUBLICS par nature — aucune clé,
+   aucun jeton au notebook) ; le juge D264 INTACT (recoupé à chaque
+   --verifier-kit, trois fois à l'atelier) ; les trois GGUF vérifiés VIVANTS
+   au bord HF.
+
+7. LA LIVRAISON : TRIADE_kit_campagne_colab_v100.zip (le notebook + le
+   LISEZMOI-CAMPAGNE-COLAB.txt) au /livrables du coffre au JETON RELAIS
+   (la voie d'écriture éprouvée D263), RECROPÉ byte-byte par
+   re-téléchargement ; le LISEZMOI-livrables mis à jour de la section du
+   kit Colab ; l'Entrée 444 au worklog (coffre + dépôt) ; au dépôt git :
+   atelier-campagne-colab-v100/ (kit + preuves-labo + le présent rapport),
+   le OU-TROUVER-LES-LIVRABLES mis à jour, REPRISE_PROJET à l'état
+   présent, SOURCES-PRESCRIPTIVES à l'empreinte.
+
+8. SUITE : AU MAÎTRE, AU RUNTIME COLAB — ouvrir le notebook au T4 GPU
+   (Exécution → Tout exécuter ; le Drive monté au compte du coffre), les
+   cellules 1-4 TOUT VERT attendues, le serving de la cellule 5, LA GUI
+   (boutons 1-4), le zip de preuves (bouton 5) déposé au /test par la
+   cellule 8 ; AU LABO ENSUITE : la lecture des preuves, les verdicts
+   portés aux registres TELS QUELS (CIBLES.md — tenue ou manquée, jamais
+   habillée), la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA
+   COMMANDE du maître ; la vague 30 au /instructions quand le maître la
+   déposera.

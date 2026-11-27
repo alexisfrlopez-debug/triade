@@ -1,0 +1,149 @@
+================================================================================
+TRIADE — LE KIT DE CAMPAGNE AU POSTE RÉEL — VOIE GOOGLE COLAB (v100) — LE PAS-À-PAS
+================================================================================
+
+La SUITE de l'Entrée 443, la commande du maître « pour le kit campagne poste,
+tu pourrais me le faire pour Google Colab ? » : LE MÊME KIT, LA MÊME LOI, UNE
+AUTRE VOIE. Le poste réel devient LE RUNTIME COLAB — il porte le geste compute
+(le GPU que le bac ne porte pas : 4 Gio / 2 vCPU / aucun GPU, la limite
+structurelle nommée aux plans gelés). Les plans gelés PLAN-W29DECCO.md +
+PLAN-W29FAMILLE.md demeurent LA LOI : aucune cible re-tirée, aucune graine
+re-tirée, aucun chiffre fabriqué — un échec mesuré est une pièce aussi
+précieuse qu'un vert.
+
+LE PRINCIPE DU KIT COLAB : il ne porte AUCUN moteur. Il tire
+TRIADE_kit_campagne_poste_v100.zip du coffre Drive (l'ID Drive et le sha256
+ÉPINGLÉS à la cellule 2 — KIT-DIVERGENT est le refus nommé, fail-closed),
+l'extrait TEL QUEL, et court SON MOTEUR byte-byte : moteur_campagne.py,
+gui → CLI, le harnais aux 25 pièces gelées recoupées AU CHARGEMENT. Le
+modèle choisi demeure Qwen/Qwen2.5-Coder-7B-Instruct (tokenizer.json +
+config.json portés byte-byte au harnais du kit, les empreintes du plan).
+
+--------------------------------------------------------------------------------
+§ 1 — OUVRIR LE NOTEBOOK AU POSTE COLAB (AVANT LE CLIC)
+--------------------------------------------------------------------------------
+
+  1. Téléverse Campagne-Colab-v100.ipynb (ce kit) à Colab :
+     https://colab.research.google.com → Fichier → Importer un notebook
+     (ou dépose-le au Drive du coffre et ouvre-le depuis Colab —
+     Fichier → Ouvrir un notebook → Google Drive) ;
+  2. Choisis le runtime : Exécution → Modifier le type d'exécution →
+     T4 GPU (le MODE-B y tient — conseillé) ; A100 GPU pour le MODE-A
+     (le chargement fp32 du moteur exige ~31 Gio de VRAM — l'exactitude
+     intégrale est le mot à mot du plan, le dtype n'est pas négocié) ;
+  3. LE CLIC UNIQUE : Exécution → Tout exécuter — les cellules dans
+     l'ordre 1 → 8 ; ou suis les cellules une à une.
+  4. La cellule 2 demande le montage du Drive : OUVRE LA SESSION au
+     compte qui porte le coffre (le dossier « Triade ») — le kit est
+     tiré du /livrables, le zip de preuves retournera au /test.
+
+--------------------------------------------------------------------------------
+§ 2 — LES HUIT CELLULES (l'ordre du kit poste reconduit)
+--------------------------------------------------------------------------------
+
+  1 · LE POSTE COLAB — le verdict de l'environnement (le GPU, la RAM, le
+      disque, la VRAM — la mesure imprimée TELLE QUELLE, le mode porté nommé) ;
+  2 · LE KIT AU COFFRE — le Drive monté, le kit poste v100 tiré du
+      /livrables (la voie directe Triade/livrables, le repli à la marche
+      bornée du MyDrive, le repli final à l'API Drive à l'ID épinglé),
+      le sha256 recoupé ÉPINGLÉ, l'extraction à /content/kit ;
+  3 · LES DÉPENDANCES — llguidance + tokenizers + keystone-engine +
+      capstone (le pip du COMMENCER-ICI.bat reconduit ; torch/transformers
+      déjà portés par Colab) ;
+  4 · LE KIT VIVANT — le manifeste (les 25 pièces gelées recoupées
+      byte-byte AU CHARGEMENT), le gate (GATE-VERT requis), l'autotest
+      maquette (l'INSTRUMENT, jamais la mesure — AUCUN modèle requis,
+      ~30 secondes) ;
+  5 · LE SERVING MODE-B — llama-server au runtime (la release prébattue
+      d'abord, la source compilée en repli nommé) + le GGUF du modèle
+      choisi (QUANT à la cellule : Q4_K_M 4,68 Go · Q6_K 6,25 Go ·
+      Q8_0 8,10 Go — la qualité au choix du poste, le minter bartowski
+      au Hugging Face), le serving lancé à --port 8080 -c 8192 [-ngl 99],
+      la santé /health attendue VERT ;
+  6 · LA GUI 1 CLIC — LES CINQ BOUTONS du plan gelé (le patron de
+      gui_campagne.py aux widgets Colab) :
+        1 · Vérifier le kit — le manifeste recoupé byte-byte ;
+        2 · Le gate — la sonde du décodeur client (GATE-VERT requis) ;
+        3 · Le canari — la violation ordonnée refusée au décodage ;
+        4 · LA CAMPAGNE — les trois phases (ÉDITER 18 · AJOUTER 18 ·
+            LA SECONDE FAMILLE aux deux sondes de récitation), le canari
+            re-vécu avant CHAQUE phase (le garde continu) ;
+        5 · Le zip de preuves — preuves-campagne-<horodatage>.zip bâti
+            au kit.
+      Le journal du moteur vit EN DIRECT sous les boutons — le moteur
+      porte tout le poids du geste (la leçon des pousseur/cockpit vécus) ;
+  7 · LE MODE-A (optionnel — les grands runtimes A100) : le modèle
+      téléchargé du Hugging Face (~15 Gio bf16 au cache HF), le chemin
+      porté à la GUI — le masque aux LOGITS ENTIERS (le mot à mot du
+      plan) ;
+  8 · LE RETOUR AU COFFRE — le zip de preuves (du bouton 5) déposé au
+      /test du coffre monté, RECOPÉ byte-byte par relecture.
+
+  LES VERDICTS aux CIBLES PRÉ-INSCRITES (jamais re-tirées) :
+    éditer ≥ 17/18 à ≤ 150 tokens médians par changement validé ;
+    CIB-EDIT-FAISAB ≥ 15/18 ; CIB-EDIT-AMORTI ≤ 150 ;
+    ajouter CIB-ADD-STRUC ≥ 15/18 à ≤ 3 000 tokens ;
+    la famille : X/128 identiques (la mesure, jamais maquillée).
+
+--------------------------------------------------------------------------------
+§ 3 — LES DEUX MODES AU POSTE COLAB (ceux du kit poste, tels quels)
+--------------------------------------------------------------------------------
+
+  MODE-B (conseillé — le bord natif llama.cpp) : la cellule 5 bâtit le
+    serving ; le masque est appliqué au TOP-64 du bord (nprobs 64 à la
+    GUI) : la meilleure PERMISE au top-64 ; AUCUNE permise = le pas
+    REFUSÉ fail-closed (AUCUNE-PERMISE, nommé — l'écart nommé au registre).
+  MODE-A (l'exactitude intégrale — les grands runtimes) : la cellule 7
+    télécharge le modèle ; le masque est appliqué aux LOGITS ENTIERS du
+    modèle (le mot à mot du plan).
+
+  Les DEUX modes sont des mesures honnêtes : le registre porte le mode.
+
+--------------------------------------------------------------------------------
+§ 4 — LE RETOUR AU COFFRE
+--------------------------------------------------------------------------------
+
+  Le zip de preuves (bouton 5) → la cellule 8 le dépose au dossier
+  Triade/test du coffre (recoupé byte-byte par relecture). Le registre
+  porte le mode, les paramètres, les refus nommés — le labo y lira les
+  verdicts TELS QUELS (tenue ou manquée, jamais habillée) et portera les
+  lignes aux registres du dépôt (CIBLES.md, le worklog).
+
+  En cas de ROUGE (un refus nommé, une pièce divergente, un bord
+  injoignable) : le journal revient TEL QUEL — un échec nommé vaut plus
+  qu'un vert muet.
+
+--------------------------------------------------------------------------------
+§ 5 — LES ÉCARTS AU KIT POSTE, NOMMÉS (la voix du labo : l'écart se consigne)
+--------------------------------------------------------------------------------
+
+  1. LE CLIQUE-BOUTON : la fenêtre tkinter du kit poste devient LES
+     WIDGETS COLAB (l'écart structurel du poste : aucun bureau au
+     runtime — le même patron, l'outil du poste) ;
+  2. LE VENV : Colab porte SON environnement — le pip de la cellule 3
+     remplace le venv du .bat (les mêmes quatre paquets) ;
+  3. LE MODÈLE : la cellule 5 (MODE-B) choisit le GGUF du minter
+     bartowski (Q6_K par défaut — la qualité au choix du poste) et la
+     release prébattue llama.cpp du jour (le repli : la source compilée,
+     le repli nommé au journal de la cellule) ;
+  4. LE MOTEUR ET LE HARNAIS : AUCUN écart — le zip est tiré du coffre,
+     recoupé sha256 ÉPINGLÉ, extrait TEL QUEL ; les 25 pièces gelées
+     recoupées AU CHARGEMENT byte-byte (PIÈCE-DIVERGENTE le refus).
+
+--------------------------------------------------------------------------------
+LES PIÈCES DU KIT COLAB
+--------------------------------------------------------------------------------
+  Campagne-Colab-v100.ipynb   le notebook (les 8 cellules — la GUI 1 clic
+                              aux widgets, la cellule 6)
+  LISEZMOI-CAMPAGNE-COLAB.txt   le présent pas-à-pas
+  (le moteur, la GUI tkinter, le harnais : tirés du kit poste v100 au
+   coffre par la cellule 2 — AUCUNE pièce dupliquée ici, la source
+   unique demeure le coffre)
+
+  L'ESTIMATION DU TEMPS AU POSTE COLAB (une estimation, jamais une
+  mesure) : les cellules 1-4 ~2 minutes ; la cellule 5 ~5-15 minutes
+  (le GGUF 6,25 Go au téléchargement du poste) ; LA CAMPAGNE (bouton 4)
+  de quelques dizaines de minutes à ~2 heures au MODE-B sur T4 selon la
+  charge du runtime — le journal vit en direct, la session Colab
+  demeure ouverte tant que la cellule court.
+================================================================================
