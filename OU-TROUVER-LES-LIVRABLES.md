@@ -1,5 +1,7 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
+*Mise à jour : 27/11/2026 (Entrée 452 — LE NOTEBOOK v105 DE LA REPRISE + LE KIT POSTE v101 : la commande du maître « fais le notebook 105 afin de pouvoir repasser les tests ratés avec le 104 et rajoute des tests si tu as des idées pertinentes — la campagne gpu est en cours » portée à la conséquence de l'Entrée 451 [la cause nommée : le prompt nu hors de l'enveloppe de chat du modèle instruct] : L'ENVELOPPE DE CHAT AU TRANSPORT [les payloads VERBATIM, les 26 pièces du harnais INTACTES byte-byte, 9 jetons comptés au journal], LA PORTE DE PAROLE au serving [BORD-MUET le refus nommé : en secondes, pas en 27 minutes], LA SONDE DES DEUX ENVELOPPES au poste même [le nu contre l'enrobé, la parole-matcher, le greedy-replay], LES QUATRE ÉPREUVES NOUVELLES pré-inscrites additives ; les QUATORZE épreuves du bac TOUT VERT [dont le rouge de la sonde qui ARRÊTE la marche contre le bord muet simulé] ; au /livrables : TRIADE_kit_campagne_poste_v101.zip + TRIADE_kit_campagne_colab_v105.zip + la copie nue Campagne-Colab-v105.ipynb, chaque pièce recoupée byte-byte ; la campagne GPU du v104 en cours touchée par AUCUN geste ; la publication Zenodo de v0.33.x attend TOUJOURS la commande du maître ; la vague 30 au /instructions quand le maître la déposera)*
+
 *Mise à jour : 27/11/2026 (Entrée 451 — LA LECTURE DES PREUVES DE LA PREMIÈRE CAMPAGNE RÉELLEMENT COURUE AU POSTE [le v104 0 clic vécu par le maître au bord CPU : « Tout exécuter », rien d'autre] : LA BATTERIE MÉCANIQUEMENT VERTE ET LE RETOUR AU COFFRE TENU [le zip preuves-campagne-20261127T163327Z.zip + le rapport du poste montés SEULS au /test, sha256 recoupé byte-byte] ; LA MESURE TELLE QUELLE, JAMAIS HABILLÉE : 0/18 éditer · 0/18 ajouter · 0/128 famille — les 41 requêtes au vrai serveur TOUTES « BORD-FINI-SANS-ACCEPTATION » [le modèle finit son tour avant d'écrire UN jeton] ; LA CAUSE NOMMÉE SUR PIÈCES : le prompt NU sans l'enveloppe de chat du modèle instruct à l'endpoint /completion [llama-server n'applique AUCUN gabarit à /completion ; Qwen2.5-Coder-7B-Instruct hors de son enveloppe <|im_start|>…<|im_end|> finit son tour au premier jeton à température 0] ; LA VOIE PROPOSÉE à la commande du maître : la sonde d'une requête, ou le kit poste v101 [l'enveloppe de chat au moteur, le payload VERBATIM] + la porte de parole au serving [BORD-MUET le refus nommé] ; la publication Zenodo de v0.33.x attend TOUJOURS la commande du maître ; la vague 30 au /instructions quand le maître la déposera)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
@@ -869,6 +871,38 @@ rien au runtime.
   du maître ; la participation v1.3.0 à la commande ; LA CAMPAGNE AU GESTE UNIQUE du
   maître au runtime Colab (le v104) ; la vague 30 au /instructions quand le maître la
   déposera.
+
+## Mise à jour 452 (27/11/2026) — LE NOTEBOOK v105 DE LA REPRISE + LE KIT POSTE v101 : L'ENVELOPPE DE CHAT AU TRANSPORT, LA PORTE DE PAROLE, LA SONDE DES DEUX ENVELOPPES
+
+- **LA COMMANDE DU MAÎTRE DU 27/11 AU SOIR** : « fais le notebook 105 afin de
+  pouvoir repasser les tests ratés avec le 104 et rajoute des tests si tu as
+  des idées pertinentes. la campagne gpu est en cours » — la cause de l'Entrée
+  451 (le prompt NU hors de l'enveloppe de chat du modèle instruct) soignée
+  AU TRANSPORT ; la campagne GPU du v104 court (touchée par aucun geste).
+- **LE KIT POSTE v101** au /livrables (TRIADE_kit_campagne_poste_v101.zip,
+  2 048 915 o, sha256 3b78b544…, id 1pa_FCF6GP5jkbCVEWg6BOtgAB2dW3T-Z) :
+  l'enveloppe de chat (9 jetons comptés au journal) dans appel_contraint —
+  les QUATRE constructeurs VERBATIM, le harnais aux 26 pièces INTACT
+  byte-byte ; LA SONDE DES DEUX ENVELOPPES (--sonde-bords : le nu contre
+  l'enrobé, la parole-matcher, le greedy-replay — sonde-verdict.json au zip
+  et au registre) ; LA MAQUETTE PAROLE (le script parole, a_vu_enveloppe, le
+  format muet aux prompts inconnus — le vrai llama-server ne 404 jamais
+  /completion).
+- **LE NOTEBOOK v105 0 CLIC** au /livrables (TRIADE_kit_campagne_colab_v105.zip
+  + LA COPIE NUE Campagne-Colab-v105.ipynb, id 1JiVxhzP8Op9aDLFPxoDHruAp3jd2aLCa) :
+  LA PORTE DE PAROLE à la cellule 5 (BORD-MUET : en secondes, pas en
+  27 minutes), LES SIX ÉTAPES à la cellule 6 (la sonde AVANT le canari), le
+  restant reconduit byte-byte.
+- **LES TESTS RAJOUTÉS** : QUATRE épreuves NOUVELLES pré-inscrites additives
+  (PORTE-BORD-MUET, SONDE-CAUSE, PAROLE-MATCHER, GREEDY-REPLAY) — aucune
+  cible gelée touchée ; le canari y gagne SA VÉRITÉ (le modèle parlera, le
+  masque devra refuser au vrai bord).
+- **LES QUATORZE ÉPREUVES TOUT VERT AU BAC** (atelier-campagne-colab-v105/
+  preuves-labo/) — dont LE ROUGE DE LA SONDE ARRÊTE LA MARCHE (le bord muet
+  simulé : code 3, BORD-MUET nommé, les étapes suivantes ne courent pas) et
+  LE RETOUR RÉEL au /test éprouvé (sonde recoupée byte-byte puis corbeillée).
+- **LA SUITE** : quand la campagne GPU du v104 rendra ses preuves au /test,
+  re-courir le v105 au geste unique ; le labo lira les verdicts TELS QUELS.
 
 ## Mise à jour 451 (27/11/2026) — LA LECTURE DES PREUVES : LA PREMIÈRE CAMPAGNE RÉELLEMENT COURUE, LA MESURE 0/0/0 NOMMÉE, LA CAUSE SUR PIÈCES
 
