@@ -1,0 +1,31 @@
+=== LA SONDE COLAB ENTERPRISE AU BAC (27/11/2026 — la question du maître
+« tu pourrais lancer le run toi même avec Colab CLI ? » portée AU FAIT
+MESURÉ, jamais à la croyance) ===
+
+LE FAIT À SONDER : il n'existe AUCUN « Colab CLI » — le Colab gratuit
+(colab.research.google.com) ne porte AUCUNE voie d'exécution à distance
+d'un notebook (aucune API de run, aucun déclencheur externe). La SEULE API
+d'exécution à distance d'un notebook chez Google est COLAB ENTERPRISE
+(colabenterprises.googleapis.com — Vertex AI, facturée).
+
+LA SONDE (le compte de service du labo au projet physichong, le jeton
+JWT RS256 échangé au token_uri — aucun secret ne s'écrit ici) :
+
+  [serviceusage] HTTP 403 PERMISSION_DENIED — le moindre privilège : le
+    compte de service ne liste pas les services du projet (aucun fait n'est
+    tiré du refus, il est nommé seulement)
+  [colabenterprise us-central1] HTTP 404 — la page d'erreur Google même :
+    le service N'EST PAS ACTIVÉ au projet
+  [colabentreprise europe-west1] HTTP 404 — de même au second lieu
+
+>>> LE VERDICT DE LA SONDE : AUCUNE voie programmatique ne lance le run
+Colab à distance depuis le labo (le service 404 ; et Colab Enterprise
+exigerait la facturation d'un projet GCP — ce n'est pas la voie du coffre).
+Le bac ne porte pas le modèle (4 Gio / 2 vCPU / aucun GPU — la limite
+structurelle nommée aux plans gelés, LA RAISON de la voie Colab même) :
+LE GESTE COMPUTE NE PEUT PARTIR QUE DU POSTE RÉEL.
+
+>>> LA VOIE LA PLUS PROCHE, PORTÉE À LA RÉPONSE : LA CELLULE DE SECOURS 5
+— LE RUN EN UNE SEULE CELLULE (les CINQ étapes du plan gelé en commandes
+du moteur + LE RETOUR AU COFFRE reconduit ; épreuvée TOUT VERT au bac au
+fichier secours5-rejoue-au-bac.txt).

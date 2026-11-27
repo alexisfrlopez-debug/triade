@@ -1,0 +1,33 @@
+[    0.0s] === LA CELLULE DE SECOURS 5 — LE RUN EN UNE CELLULE, REJOUÉ AU BAC ===
+[    0.0s] la cellule : cellule-secours-5.py
+[    0.0s] — (1) LA STRUCTURE
+[    0.0s]   VERT — la cellule compile
+[    0.0s]   VERT — l'ordre du plan gelé : --verifier-kit · --gate · --canari · --campagne · --zip
+[    0.0s]   (le dépôt du zip y vit AUSSI — le geste de la cellule 8 reconduit)
+[    0.0s] — le bac monté : kit pristine tiré du coffre (sha256 épinglé recoupé),
+[    0.0s]   l'endpoint écrit (http://127.0.0.1:8641), le FAUX coffre /test ouvert
+[    0.0s] — (2) LES GARDES FAIL-FAST
+[    0.0s]   VERT — CLI-ABSENT (l'endpoint absent) : nommé, AVANT toute étape
+[    0.0s]   VERT — COFFRE-ABSENT (le coffre non monté) : nommé AVANT la marche
+[    0.0s]     (aucun gate-verdict, aucun journal, aucun zip n'est né : le refus
+[    0.0s]      vient AVANT la campagne — jamais deux heures après)
+[    0.0s] — (3) LA CHAÎNE COMPLÈTE contre la maquette 8641 (l'instrument,
+[    0.0s]   JAMAIS la mesure — le registre rejoué porte la maquette, le poste
+[    0.0s]   réel seul produit les nombres de campagne)
+[   11.3s]   VERT — les CINQ étapes courues jusqu'au bout (le journal TEL QUEL
+[   11.3s]   vit au log de l'épreuve)
+[   11.3s]   VERT — le dépôt : preuves-campagne-20261127T132823Z.zip (31236 o)
+[   11.3s]     au FAUX coffre, sha256 4e2449503b54bff2…552f1844 recoupé
+[   11.3s]     byte-byte par relecture
+[   11.3s]   le kit rejoué porte : journal-campagne.jsonl (17221 o) · gate-verdict.json (1489 o)
+[   11.3s]     - garde-brut.jsonl (18200 o)
+[   11.3s]     - journal-campagne.jsonl (17221 o)
+[   11.3s]     - journal-pas.jsonl (745575 o)
+[   11.3s]     - gate-verdict.json (1489 o)
+[   11.3s]     - registre-campagne.json (10655 o)
+[   11.3s] 
+=== LE VERDICT DE L'ÉPREUVE (le bac, l'instrument — jamais la mesure) ===
+[   11.3s] STRUCTURE VERT · GARDES FAIL-FAST VERTES · CHAÎNE COMPLÈTE VERT ·
+[   11.3s] DÉPÔT RECOP VERT — LA CELLULE DE SECOURS 5 EST SAINNE AU BAC ; le poste
+[   11.3s] réel seul produira les nombres de campagne (le zip rejoué du bac n'est
+[   11.3s] qu'une pièce de labo, il ne sort JAMAIS du bac).
