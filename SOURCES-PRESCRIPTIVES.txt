@@ -1,7 +1,7 @@
 # SOURCES-PRESCRIPTIVES — les SEULS fichiers autorisés à prescrire un geste
 # (chemin relatif racine puis deux espaces puis sha256 ; régénéré par un acte délibéré)
 
-REPRISE_PROJET.md  0ec9c957a06f33f95f00f645ae91af109fe4c7aaa1dcc5b12e5b3bf30254d381
+REPRISE_PROJET.md  c2bee8521b2468cbd180c954743f122d913efaf8b807d22d56d5dd156162ad11
 PLAN-0G3400VQL.md  caab6f481ab3799f13d53d04ee36392151b2489f31fffffaeb9681165e77aa0c
 PLAN-0I4PKZBYR.md  aaf84f1f52ec232e707c187fe5e90895f7661a77886b951a12738bc668121875
 PLAN-0J7YWZA2H.md  04aa6f973320c5ff8abceaa31b7f56b6f781db246acee1da114298b4a1dcd850

@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 445 — LE TERRAIN.5 DU KIT COLAB CORRIGÉ : le port 8080 occupé au runtime Colab fut mal trié par le kit v100 [« couldn't bind » = le port, PAS le binaire — une compilation muette vaine lancée en repli] ; TRIADE_kit_campagne_colab_v101.zip livré au /livrables et au dépôt [l'hygiène du port : les orphelins du même runtime tués, le port libre choisi à la sonde au socket parmi 8080/8081/8090/18080/18081 ; le triage juste : le prébâti réessayé au port suivant, la source ne compile PAS pour un port pris ; le repli qui parle : la compilation ligne à ligne, la cible llama-server seule ; l'endpoint porté à la GUI par /content/endpoint_serving.txt] ; le prébâti b12810 disculpé sur pièces au bac même [le journal du terrain rejoué mot pour mot, le même binaire VERT au port libre], le vert muet de l'épreuve démasqué [le retour-chaîne truthy — l'échec lève désormais, jamais ne retourne], les QUATRE épreuves TOUT VERT, les trois GGUF re-vérifiés vivants ; le kit poste v100 INTACT byte-byte ; le run v100 bloqué se débloque à la cellule de secours ; l'atelier atelier-campagne-colab-v101/ au dépôt ; le worklog Entrée 445 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 446 — LE TERRAIN.6 DU KIT COLAB CORRIGÉ : la cellule 2 se taisait aux DEUX seuils interactifs [la fenêtre d'autorisation du montage Drive, celle du repli API] et à la marche muette du MyDrive — le maître crut au blocage [« ça bloque à la cellule 2 »] ; TRIADE_kit_campagne_colab_v102.zip livré au /livrables et au dépôt [la cellule 2 qui PARLE : chaque seuil annoncé AVANT qu'il ne survienne, le montage déjà fait sauté à l'ismount, la marche BORNÉE à une bourse de 45 s au compte à voix haute, le repli API qui parle par morceaux] ; les CINQ épreuves TOUT VERT au bac, une coquille du harnais démasquée au passage [l'indentation du bloc else suivie, l'échec lève puis corrigé], les trois GGUF re-vérifiés vivants ; le kit poste v100 INTACT byte-byte ; le run bloqué à la cellule 2 se débloque à la cellule de secours 2 ; l'atelier atelier-campagne-colab-v102/ au dépôt ; le worklog Entrée 446 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -652,6 +652,43 @@ SAIN. La compilation était doublement vaine : le serveur compilé fût mort au 
 - **LE DÉBLOCAGE DU RUN v100** : LA CELLULE DE SECOURS (le ménage des orphelins + le port libre +
   le prébâti relancé TEL QUEL — le GGUF déjà en cache, aucun re-téléchargement), puis la GUI
   (l'endpoint au champ si le port bougea).
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du maître ;
+  la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du maître ; la
+  vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 446 (27/11/2026) — LE TERRAIN.6 CORRIGÉ : LA CELLULE 2 QUI PARLE, LE KIT COLAB v102
+
+Le terrain rapporté par le maître au runtime Colab (« ça bloque à la cellule 2 ») : la cellule 2
+(LE KIT AU COFFRE) sembla bloquée, AUCUNE sortie. LE DIAGNOSTIC NOMMÉ AU SOURCE : trois silences,
+aucun n'un blocage réel — (a) RIEN n'était imprimé avant drive.mount() : la FENÊTRE
+D'AUTORISATION « Se connecter à Google Drive » vit sous la cellule même, manquée ou cachée par
+le bloqueur de pop-ups → la cellule attend le geste du maître qu'aucune parole ne nomme ;
+(b) la MARCHE du MyDrive muette (des minutes au Drive touffu si la voie directe manque) ;
+(c) le repli API muette encore (une seconde autorisation interactive). Le kit ne mentait pas —
+il se taisait.
+
+- **LE CORRECTIF v102** (la même loi, la parole seule corrigée — aucun seuil interactif
+  contourné, les fenêtres d'autorisation demeurent le geste du maître, elles sont NOMMÉES) :
+  le seuil annoncé AVANT (la fenêtre, le bloqueur de pop-ups, les ~15-30 s nommés) ; le montage
+  DÉJÀ FAIT sauté (os.path.ismount — le re-run ne redemande rien) ; la marche BORNÉE à une
+  BOURSE de 45,0 s AU COMPTE À VOIX HAUTE (dossiers vus, secondes, un mot tous les 100 pas — la
+  bourse épuisée rend None, le repli API prend le relais à l'ID épinglé) ; le repli API qui
+  PARLE PAR MORCEAUX (le pourcentage imprimé, le VERT nommé au terme).
+- **LES CINQ ÉPREUVES TOUT VERT AU BAC** (atelier-campagne-colab-v102/preuves-labo/
+  epreuves-notebook-v102.txt) : la marche bornée + la porte sha256 (31 pièces) ; le sélecteur de
+  release au JSON du jour (b12810 demeure la tête) ; LA GUI headless (le titre porté à v102) ;
+  LE TRIAGE DU PORT (le terrain.5 reconduit au squatteur tenu) ; LA CELLULE 2 QUI PARLE (le saut
+  ismount éprouvé aux DEUX états au faux os.path, la bourse tenue — la marche rend None au
+  premier pas). Une coquille du harnais démasquée au passage : la neutralisation du montage au
+  bac devait suivre l'indentation du bloc else (l'échec LÈVE, l'écart nommé puis corrigé).
+- **LA LIVRAISON** : TRIADE_kit_campagne_colab_v102.zip (17 864 o) au /livrables (recoupé
+  byte-byte), le LISEZMOI-livrables mis à jour de la section v102, l'Entrée 446 au worklog du
+  coffre et du dépôt ; au dépôt : atelier-campagne-colab-v102/ (kit + preuves-labo v102 +
+  rapport v102).
+- **LE DÉBLOCAGE DU RUN** : LA CELLULE DE SECOURS 2 (portée à la réponse au maître : elle nomme
+  le verdict du silence — la fenêtre d'autorisation — puis achève la cellule 2 : le kit tiré,
+  recoupé, extrait), puis les cellules 3 → 8 telles quelles (la cellule 5 v101 porte déjà
+  l'hygiène du port du terrain.5).
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du maître ;
   la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du maître ; la
   vague 30 au /instructions quand le maître la déposera.
