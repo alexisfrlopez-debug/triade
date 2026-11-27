@@ -1,0 +1,116 @@
+ATELIER CAMPAGNE-COLAB-V104 — LE KIT 0 CLIC : LA COMMANDE DU MAÎTRE DU 27/11
+PORTÉE À LA CONSÉQUENCE DU TERRAIN.8 — LA GUI RETIRÉE, LA BATTERIE COURT
+SEULE, LE RETOUR AU COFFRE EST AUTOMATIQUE, LES DEUX ENVIRONNEMENTS CPU ET
+GPU (27/11/2026, la commande du maître : « fais-moi directement un notebook
+colab 0 clic avec la batterie de test la plus complète possible, et envoi
+automatique des livrables sur le drive ; fais pour environnement cpu et
+environnement gpu »)
+
+1. LA COMMANDE ET SA LOI (la parole du maître, TELLE QUELLE) : le terrain.8
+   (l'Entrée 449) avait nommé la loi du runtime — « Tout exécuter » court
+   les cellules d'un trait et NE S'ARRÊTE JAMAIS À LA GUI ; la campagne ne
+   courut jamais (aucun preuves-campagne-*.zip au /test, la mesure du
+   coffre). LA CONSÉQUENCE PORTÉE : LA GUI EST RETIRÉE — ce que le runtime
+   ne peut pas attendre, le kit ne le lui demande plus. LE GESTE UNIQUE :
+   « Exécution → Tout exécuter » — le kit se tire LUI-MÊME au coffre, la
+   batterie court SEULE, le zip de preuves + LE RAPPORT DU POSTE retournent
+   SEULS au /test du coffre. Aucune fenêtre, aucun bouton, aucun montage
+   du Drive, aucun collage.
+
+2. LES HUIT CELLULES DU KIT v104 : (1) LE POSTE — le verdict
+   d'environnement + LE PLAN DU RUN (le bord décidé par le poste : GPU →
+   Q6_K ; CPU → Q4_K_M, le plus petit du kit, le seul conseillé au bord CPU
+   dès le v103) + les gardes honnêtes (DISQUE-INSUFFISANT, RAM-INSUFFISANTE
+   au bord CPU : le refus AVANT la marche) + LE RAPPORT DU POSTE (la pièce
+   nouvelle : le verdict + l'horloge de la batterie) ; (2) LES DÉPENDANCES
+   — la cellule du v103 au titre près ; (3) LE KIT AU COFFRE, 0 CLIC — LE
+   RELAIS EMBARQUÉ (le jeton du labo, la voie éprouvée D263) frappe son
+   access token AUCUNE fenêtre, tire le kit poste v100 du /livrables à
+   l'ID épinglé, recoupe le sha256 ÉPINGLÉ (KIT-DIVERGENT le refus),
+   l'extrait ; (4) LE KIT VIVANT — la cellule du v103 TELLE QUELLE
+   byte-byte (manifeste + gate + autotest maquette) ; (5) LE SERVING SELON
+   L'ENVIRONNEMENT — les helpers + la marche du v103 reconduits byte-byte,
+   la QUANT seule décidée par le poste (GPU : cudart prébâti + Q6_K +
+   -ngl 99 ; CPU : ubuntu-x64 nu + Q4_K_M + AUCUN -ngl) ; (6) LA BATTERIE
+   0 CLIC — les CINQ étapes du plan gelé courent d'un trait (le bloc ETAPES
+   BYTE-BYTE la cellule de secours 5, l'Entrée 448), le journal EN DIRECT,
+   l'horloge tient chaque étape (l'étape fautive y vit aussi — la durée
+   d'un refus est une pièce honnête), un ROUGE ARRÊTE la marche ; (7) LE
+   RETOUR AU COFFRE, 0 CLIC — le zip téléversé au /test par le relais
+   embarqué, RE-TÉLÉCHARGÉ du coffre, RECOPÉ byte-byte (RECOP-ROUGE le
+   refus), LE RAPPORT DU POSTE y va avec, les liens imprimés ; (8) LE
+   BILAN — le tableau de l'horloge, le serving tué, le run clos.
+
+3. LA VOIE SANS FENÊTRE, SONDÉE AU BAC AVANT D'ÊTRE PORTÉE : le service
+   account du projet (z-ai-811@physichong) fut sondé par le labo — il LIT
+   le coffre (le kit tire VERT à son ID épinglé ; il voit les dossiers du
+   coffre) mais il NE PEUT PAS ÉCRIRE au Drive personnel (403 : « Service
+   Accounts do not have storage quota », la règle de Google — les shared
+   drives exceptés, le coffre n'en est pas un) ; le relais seul porte le
+   tir ET le retour (l'écriture relais au /test : VERT au bac, la pièce de
+   sonde recoupée puis mise à la corbeille). LA COPIE AVEUGLE : le dépôt
+   git est PUBLIC (visibility public, mesuré au bac) — sa copie porte les
+   TROIS chaînes VIDES (IDENTIFIANTS-ABSENTS le refus nommé, fail-closed,
+   AVANT tout geste réseau) ; la copie vivante vit au /livrables du
+   coffre ; l'invariant est ASSERTÉ au bâtisseur (la SEULE divergence
+   vivante/aveugle = les TROIS constantes) et repris aux épreuves.
+
+4. LES DOUZE ÉPREUVES TOUT VERT AU BAC (preuves-labo/epreuves-notebook-
+   v104.txt) : (1) LA STRUCTURE — 17 cellules (8 code + 9 markdown), chaque
+   code compile (vivante + aveugle), nbformat strict VALIDE, le JSON relu ;
+   (2) LA LOI 0 CLIC — AUCUN widget/montage/autorisation/input/tkinter/
+   eval_js aux HUIT cellules ; (3) LA CELLULE 1 au bac — le plan du run
+   imprimé selon le bord, le rapport né, ET la garde honnête du bac a
+   refusé (DISQUE-INSUFFISANT à 7,7 Gio réels — fail-closed prouvé par le
+   bac lui-même) ; (4) LA CELLULE 3 AVEUGLE — IDENTIFIANTS-ABSENTS avant
+   tout réseau ; (5) LA CELLULE 3 VIVANTE, RÉELLE — le jeton frappé pour
+   de vrai, le kit TIRÉ du /livrables (2 045 172 o) à l'ID épinglé, le
+   sha256 recoupé VERT, extrait : le moteur + 27 pièces du harnais ;
+   (6) LA CELLULE 4, RÉELLE — le manifeste + le gate + l'autotest
+   maquette courent POUR DE VRAI au bac contre le kit extrait (TOUT
+   VERT) ; (7) LA CELLULE 6 au bac — les CINQ étapes d'un trait contre
+   un moteur stub (l'horloge porte les cinq, le dernier appel est --zip),
+   le ROUGE au canari ARRÊTE la marche (les étapes 4 et 5 ne courent
+   pas), le bloc ETAPES BYTE-BYTE la secours 5 ; (8) LA CELLULE 7 au bac
+   — les gardes ZIP-ABSENT + ORDRE-ROMPU, puis LE RETOUR RÉEL : la sonde
+   zip + le rapport téléversés au /test du coffre par la voie du notebook
+   même, RE-TÉLÉCHARGÉS, RECOPÉS byte-byte VERT, les liens imprimés —
+   puis les pièces de sonde mises à la corbeille par le labo ; (9) LA
+   CELLULE 8 au bac — le tableau, le run clos ; (10) LE CODE INTACT — le
+   kit vivant TEL QUEL au v103, le pip au titre près, la mesure du poste
+   byte-byte, le serving reconduit byte-byte (7 064 + 3 378 o) ; (11) LES
+   GGUF VIVANTS — Q6_K et Q4_K_M au dépôt exact bartowski ; (12) LES
+   NOTES PARLÉES — le geste unique, le terrain.8, les deux environnements,
+   l'aveugle, le recoup byte-byte nommés aux markdown.
+
+5. LA GARDE : aucune cible re-tirée ; aucune graine re-tirée ; le kit
+   poste v100 INTACT byte-byte (l'ID 1TT1zLRf1movZ69_cTzGhMLEcAV1Hi7CD et
+   le sha256 a8d9b96c…53642b ÉPINGLÉS inchangés — le kit Colab n'est que
+   la voie) ; le MODE-B demeure LA batterie automatique (le MODE-A, les
+   A100 seuls, demeure la voie manuelle : kit v103 au coffre ou --mode A
+   — l'écart est nommé au LISEZMOI § 5, pas caché) ; aucun identifiant
+   committé au dépôt public (l'aveugle, l'invariant asserté) ; AUCUN
+   chiffre de campagne fabriqué au bac (le GGUF du poste ne courut pas au
+   bac ; le moteur stub n'est pas une mesure).
+
+6. LA LIVRAISON : TRIADE_kit_campagne_colab_v104.zip (le notebook vivant
+   Campagne-Colab-v104.ipynb + le LISEZMOI-CAMPAGNE-COLAB.txt v104) au
+   /livrables du coffre au JETON RELAIS, RECOPÉ byte-byte par
+   re-téléchargement ; LA COPIE NUE du notebook vivant au /livrables
+   (l'usage direct : double-clic au Drive → Colab) ; le LISEZMOI-
+   livrables mis à jour de la section v104 (recoupée à la relecture) ;
+   l'Entrée 450 au worklog (coffre + dépôt) ; au dépôt git :
+   atelier-campagne-colab-v104/ (le kit AVEUGLE + les preuves-labo v104 +
+   le présent rapport — AUCUN identifiant au dépôt public), OU-TROUVER +
+   REPRISE + SOURCES-PRESCRIPTIVES mis à jour, le tout vérifié à la
+   relecture du bord.
+
+7. SUITE : AU MAÎTRE, AU RUNTIME COLAB — LE GESTE UNIQUE : ouvrir le
+   notebook du /livrables du coffre (ou l'importer), choisir le runtime
+   (T4 GPU conseillé ; CPU marche — l'estimation honnête : PLUSIEURS
+   HEURES), « Exécution → Tout exécuter » — C'EST TOUT : au terme le zip
+   de preuves + le rapport du poste vivent au /test du coffre, le labo y
+   lira les verdicts TELS QUELS (tenue ou manquée, jamais habillée). AU
+   LABO ENSUITE : la lecture des preuves du /test ; la publication Zenodo
+   de v0.33.x À LA COMMANDE du maître ; la vague 30 au /instructions
+   quand le maître la déposera.

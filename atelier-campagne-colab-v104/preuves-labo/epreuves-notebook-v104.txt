@@ -1,0 +1,31 @@
+==============================================================================
+TRIADE — LES ÉPREUVES DU NOTEBOOK COLAB v104 (0 CLIC) AU BAC — 27/11/2026
+la commande du maître : « notebook colab 0 clic, batterie complète, envoi
+automatique des livrables sur le drive, environnement cpu et gpu »
+==============================================================================
+[épreuve] VERT — (1) LA STRUCTURE — 17 cellules, nbformat strict
+           17 cellules (8 code + 9 markdown), chaque code compile (vivante + aveugle), nbformat strict VALIDE, le JSON relu recoupé — 53162 o
+[épreuve] VERT — (2) LA LOI 0 CLIC — aucun widget, aucun montage, aucun clic
+           AUCUN widget, AUCUN montage du Drive, AUCUNE autorisation, AUCUN input(), AUCUN tkinter/eval_js aux HUIT cellules (vivante + aveugle) — la cellule 6 court la batterie au moteur (subprocess.call), la GUI est retirée
+[épreuve] VERT — (3) LA CELLULE 1 au bac — le plan du run + le rapport du poste
+           la garde honnête du bac a refusé (DISQUE-INSUFFISANT) — fail-closed prouvé, le plan du run imprimé selon le bord du bac, l'estimation honnête portée, le rapport du poste né (rapport-poste.txt) — le journal parle
+[épreuve] VERT — (4) LA CELLULE 3 AVEUGLE — IDENTIFIANTS-ABSENTS avant tout réseau
+           les TROIS chaînes VIDES → le refus IDENTIFIANTS-ABSENTS nommé, la voie du recollage (/livrables du coffre, /Tokens) nommée, AUCUN geste réseau avant
+[épreuve] VERT — (5) LA CELLULE 3 VIVANTE, RÉELLE — le kit tiré du coffre (aucune fenêtre)
+           le jeton relais frappé pour de vrai (AUCUNE fenêtre), le kit TIRÉ du /livrables à l'ID épinglé (2 045 172 o), le sha256 recoupé VERT, extrait : moteur_campagne.py + 27 pièces du harnais au /tmp/bac104/kit
+[épreuve] VERT — (6) LA CELLULE 4, RÉELLE — manifeste + gate + autotest au bac
+           le manifeste (25 pièces gelées recoupées), le gate (GATE-VERT) et l'autotest maquette courent POUR DE VRAI au bac contre le kit extrait de l'épreuve 5 — TOUT VERT
+[épreuve] VERT — (7) LA CELLULE 6 au bac — la batterie d'un trait + le rouge fail-closed + les cinq commandes byte-byte
+           les CINQ étapes d'un trait contre le moteur stub (l'horloge porte les cinq, cinq VERT imprimés, le dernier appel du moteur est --zip) ; le ROUGE au canari ARRÊTE la marche (fail-closed : l'horloge porte l'étape fautive, les étapes 4 et 5 ne courent PAS) ; le bloc ETAPES BYTE-BYTE la cellule de secours 5 (l'Entrée 448)
+[épreuve] VERT — (8) LA CELLULE 7 au bac — les gardes puis LE RETOUR RÉEL au /test (sonde recoupée, puis corbeille)
+           la garde ZIP-ABSENT reconduite (aucun zip → le refus nommé) ; la garde ORDRE-ROMPU (les identifiants absents) ; LE RETOUR RÉEL : la sonde zip + le rapport du poste téléversés au /test du coffre par la voie du notebook même, RE-TÉLÉCHARGÉS, RECOPÉS byte-byte VERT, les liens imprimés — puis les deux pièces de sonde mises à la corbeille par le labo
+[épreuve] VERT — (9) LA CELLULE 8 au bac — le tableau, le run clos
+           le tableau de l'horloge imprimé (l'étape et la durée), la pièce rendue nommée, le run clos — le serving tué (au bac : aucun, l'absent nommé)
+[épreuve] VERT — (10) LE CODE INTACT — les reconductions byte-byte au v103
+           le kit vivant (cellule 4) TEL QUEL au v103 byte-byte ; le pip (cellule 2) au titre près ; la mesure du poste byte-byte ; le serving : les helpers (7 064 o) + la marche (3 378 o) du v103 reconduits byte-byte — la QUANT seule décidée par le poste (GPU → Q6_K · CPU → Q4_K_M), le print final adapté à la batterie
+[épreuve] VERT — (11) LES GGUF VIVANTS — Q6_K et Q4_K_M au dépôt exact
+           les DEUX quants automatiques vivants au dépôt exact (bartowski/Qwen2.5-Coder-7B-Instruct-GGUF) : Q6_K (le GPU) et Q4_K_M (le CPU)
+[épreuve] VERT — (12) LES NOTES PARLÉES — les markdown nomment la loi
+           MD_0 porte le geste unique, le terrain.8 (la GUI retirée), les deux environnements (l'estimation honnête du CPU), l'aveugle du dépôt public, le recoup byte-byte ; MD_6 porte la batterie 0 clic (un rouge arrête tout) ; MD_7 porte le retour 0 clic + le rapport du poste ; MD_8 porte le bilan
+
+[verdict] TOUT VERT — le notebook Colab v104 (0 clic) est vivant au bac

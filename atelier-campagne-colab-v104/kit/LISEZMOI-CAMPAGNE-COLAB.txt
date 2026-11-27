@@ -1,0 +1,212 @@
+================================================================================
+TRIADE — LE KIT DE CAMPAGNE AU POSTE RÉEL — VOIE GOOGLE COLAB, 0 CLIC (v104)
+================================================================================
+
+La commande du maître du 27/11 : « fais-moi directement un notebook colab
+0 clic avec la batterie de test la plus complète possible, et envoi
+automatique des livrables sur le drive ; fais pour environnement cpu et
+environnement gpu ». LA CONSÉQUENCE DU TERRAIN.8 (l'Entrée 449) : « Tout
+exécuter » court les cellules d'un trait et ne s'arrête JAMAIS à la GUI —
+la campagne n'attendait pas un clic qui ne venait pas (aucun
+preuves-campagne-*.zip au /test, la mesure du coffre). LE KIT v104 RETIRE
+LA GUI : ce que le runtime ne peut pas attendre, le kit ne le lui demande
+plus. AUCUNE fenêtre, AUCUN bouton, AUCUN montage du Drive, AUCUN
+collage : LE GESTE UNIQUE — « Exécution → Tout exécuter » — court les
+HUIT cellules, la batterie toute entière, et dépose SEUL les livrables au
+/test du coffre.
+
+LE PRINCIPE DU KIT COLAB EST INCHANGÉ : il ne porte AUCUN moteur. Il tire
+TRIADE_kit_campagne_poste_v100.zip du coffre Drive (l'ID Drive et le
+sha256 ÉPINGLÉS à la cellule 3 — KIT-DIVERGENT est le refus nommé,
+fail-closed), l'extrait TEL QUEL, et court SON MOTEUR byte-byte :
+moteur_campagne.py, le harnais aux 25 pièces gelées recoupées AU
+CHARGEMENT. Le modèle choisi demeure Qwen/Qwen2.5-Coder-7B-Instruct. Les
+plans gelés PLAN-W29DECCO.md + PLAN-W29FAMILLE.md demeurent LA LOI :
+aucune cible re-tirée, aucune graine re-tirée, aucun chiffre fabriqué —
+un échec mesuré est une pièce aussi précieuse qu'un vert.
+
+--------------------------------------------------------------------------------
+§ 1 — OUVRIR LE NOTEBOOK AU POSTE COLAB (LE GESTE UNIQUE)
+--------------------------------------------------------------------------------
+
+  1. Ouvre le notebook du coffre : Drive → dossier Triade/livrables →
+     double-clic sur Campagne-Colab-v104.ipynb → il s'ouvre à Colab
+     (ou Colab → Fichier → Importer un notebook, ou Fichier → Ouvrir
+     un notebook → Google Drive) ;
+  2. Choisis le runtime : Exécution → Modifier le type d'exécution —
+     T4 GPU (conseillé : la campagne y prend de quelques dizaines de
+     minutes à ~2 heures) ou CPU (le kit y court AUSSI — le GGUF
+     Q4_K_M, le bord natif ; L'ESTIMATION HONNÊTE : PLUSIEURS HEURES —
+     la voie GPU est la voie conseillée) ;
+  3. LE GESTE UNIQUE : Exécution → Tout exécuter — C'EST TOUT.
+     Aucune fenêtre d'autorisation (aucun montage du Drive : le relais
+     embarqué tire le kit et dépose le zip), aucun bouton (la GUI est
+     retirée), aucun collage. La cellule 6 court LA BATTERIE toute
+     seule (le journal vit en direct) ; au terme le zip de preuves + LE
+     RAPPORT DU POSTE vivent au /test du coffre — les liens y sont
+     imprimés.
+
+  NOTE LA LOI DU RUNTIME : « Tout exécuter » S'ARRÊTE à la première
+  cellule ROUGE (fail-closed) — les cellules suivantes ne courent pas ;
+  le journal de la cellule fautive nomme l'écart TEL QUEL. Un échec
+  nommé vaut plus qu'un vert muet : corrige le geste nommé, puis
+  re-cours « Tout exécuter ».
+
+--------------------------------------------------------------------------------
+§ 2 — LES HUIT CELLULES (l'ordre nommé — chaque cellule parle)
+--------------------------------------------------------------------------------
+
+  1 · LE POSTE COLAB — le verdict de l'environnement (le GPU, la RAM, le
+      disque, le Python — la mesure imprimée TELLE QUELLE) + LE PLAN DU
+      RUN (le bord décidé par le poste : GPU → Q6_K ; CPU → Q4_K_M) +
+      les gardes honnêtes (DISQUE-INSUFFISANT, RAM-INSUFFISANTE au bord
+      CPU : le refus AVANT la marche, jamais deux heures après) + LE
+      RAPPORT DU POSTE (la pièce nouvelle : le verdict + l'horloge de la
+      batterie) ;
+  2 · LES DÉPENDANCES — llguidance + tokenizers + keystone-engine +
+      capstone (le pip du COMMENCER-ICI.bat reconduit — la cellule du
+      v103 au titre près) ;
+  3 · LE KIT AU COFFRE, 0 CLIC — le relais embarqué (le jeton du labo,
+      la voie éprouvée D263) frappe son access token AUCUNE fenêtre,
+      tire le kit poste v100 du /livrables à l'ID épinglé, recoupe le
+      sha256 ÉPINGLÉ (KIT-DIVERGENT le refus), l'extrait à /content/kit ;
+  4 · LE KIT VIVANT — le manifeste (les 25 pièces gelées recoupées
+      byte-byte AU CHARGEMENT), le gate (GATE-VERT requis), l'autotest
+      maquette (l'INSTRUMENT, jamais la mesure — AUCUN modèle requis,
+      ~30 secondes) — la cellule du v103 TELLE QUELLE, byte-byte ;
+  5 · LE SERVING SELON L'ENVIRONNEMENT — GPU : la release cudart
+      prébattie + le GGUF Q6_K (6,25 Go) + -ngl 99 ; CPU : la release
+      ubuntu-x64 NUE + le GGUF Q4_K_M (4,68 Go — le plus petit du kit) +
+      AUCUN -ngl ; l'hygiène du port reconduite (le terrain.5 : les
+      orphelins tués, le port LIBRE choisi parmi 8080/8081/8090/18080/
+      18081 ; « couldn't bind » = le port, PAS le binaire), la santé
+      /health attendue VERT, l'endpoint porté à la cellule 6 ;
+  6 · LA BATTERIE 0 CLIC — les CINQ étapes du plan gelé courent d'un
+      trait (le patron de la cellule de secours 5, l'Entrée 448, porté
+      à cellule du kit) : 1 le manifeste · 2 le gate · 3 le canari ·
+      4 LA CAMPAGNE (éditer 18 + ajouter 18 + la seconde famille aux
+      deux sondes de récitation) · 5 le zip de preuves — le journal vit
+      EN DIRECT, l'horloge tient chaque étape, un ROUGE ARRÊTE la marche
+      (fail-closed) ;
+  7 · LE RETOUR AU COFFRE, 0 CLIC — le zip de preuves téléversé au /test
+      du coffre par le relais embarqué, RECOPÉ byte-byte PAR RELECTURE
+      (re-téléchargé du coffre, l'empreinte comparée) ; LE RAPPORT DU
+      POSTE y va avec (rapport-poste-v104-<horodatage>.txt) ; les
+      liens des DEUX pièces imprimés ;
+  8 · LE BILAN DU RUN — le tableau de l'horloge, le serving tué (le
+      port rendu au poste), le run clos.
+
+  LES VERDICTS aux CIBLES PRÉ-INSCRITES (jamais re-tirées) :
+    éditer ≥ 17/18 à ≤ 150 tokens médians par changement validé ;
+    CIB-EDIT-FAISAB ≥ 15/18 ; CIB-EDIT-AMORTI ≤ 150 ;
+    ajouter CIB-ADD-STRUC ≥ 15/18 à ≤ 3 000 tokens ;
+    la famille : X/128 identiques (la mesure, jamais maquillée).
+
+--------------------------------------------------------------------------------
+§ 3 — LES DEUX ENVIRONNEMENTS (le poste décide seul — la même loi, la même batterie)
+--------------------------------------------------------------------------------
+
+  GPU (T4 et plus — conseillé) : le GGUF Q6_K (6,25 Go), la release
+    cudart prébattie, -ngl 99 ; le masque est appliqué au TOP-64 du bord
+    (nprobs 64 à la batterie) : la meilleure PERMISE au top-64 ; AUCUNE
+    permise = le pas REFUSÉ fail-closed (AUCUNE-PERMISE, nommé — l'écart
+    nommé au registre). L'estimation du kit : de quelques dizaines de
+    minutes à ~2 heures au MODE-B sur T4 selon la charge.
+  CPU : le GGUF Q4_K_M (4,68 Go — le plus petit du kit, le seul conseillé
+    au bord CPU dès le verdict du v103), la release ubuntu-x64 NUE,
+    AUCUN -ngl — le bord natif du CPU. L'ESTIMATION HONNÊTE : la
+    campagne y prend PLUSIEURS HEURES (la mesure seule dira — la voie
+    GPU est la voie conseillée). La garde RAM-INSUFFISANTE refuse AVANT
+    la marche si la RAM disponible ne porte pas le GGUF.
+  Le MODE-B (llama.cpp, le bord natif) est LA BATTERIE AUTOMATIQUE des
+  DEUX bords ; le registre porte le mode, le rapport du poste porte le
+  bord. Le MODE-A (l'exactitude intégrale — les LOGITS ENTIERS, ~31 Gio
+  de VRAM, les runtimes A100 seuls le portent) demeure LA VOIE
+  MANUELLE : le kit v103 au coffre (la GUI 1 clic) ou la CLI --mode A
+  du moteur.
+
+--------------------------------------------------------------------------------
+§ 4 — LE RETOUR AU COFFRE (automatique — la demande du maître)
+--------------------------------------------------------------------------------
+
+  La cellule 7 téléverse le zip de preuves + LE RAPPORT DU POSTE au
+  dossier /test du coffre (le relais embarqué — AUCUNE fenêtre, AUCUN
+  clic), puis RELIT la pièce déposée du coffre et recoupe l'empreinte
+  byte-byte (RECOP-ROUGE le refus nommé). Le registre porte le mode, les
+  paramètres, les refus nommés — le labo y lira les verdicts TELS QUELS
+  (tenue ou manquée, jamais habillée) et portera les lignes aux
+  registres du dépôt (CIBLES.md, le worklog).
+
+  En cas de ROUGE (un refus nommé, une pièce divergente, un bord
+  injoignable) : « Tout exécuter » s'arrête à la cellule fautive — le
+  journal revient TEL QUEL ; un échec nommé vaut plus qu'un vert muet.
+
+--------------------------------------------------------------------------------
+§ 5 — LES ÉCARTS AU KIT, NOMMÉS (la voix du labo : l'écart se consigne)
+--------------------------------------------------------------------------------
+
+  1. LA GUI RETIRÉE (la conséquence du terrain.8) : la fenêtre tkinter
+     du kit poste et les widgets Colab du v103 cèdent la place aux CINQ
+     COMMANDES courues d'un trait (la cellule 6) — le MÊME ordre, le
+     MÊME moteur, la même loi ; la cellule de secours 5 (l'Entrée 448)
+     en était l'esquisse ;
+  2. LE RELAIS EMBARQUÉ (la voie sans fenêtre) : le jeton relais du
+     labo (celui du /Tokens du coffre, la voie éprouvée D263) vit aux
+     TROIS constantes de la cellule 3 — le kit se tire lui-même du
+     coffre et le zip s'y redépose seul. LE SERVICE ACCOUNT DU PROJET
+     FUT SONDÉ au bac : il LIT le coffre (le kit tire VERT à son ID)
+     mais il NE PEUT PAS ÉCRIRE au Drive personnel (403 — aucun quota
+     propre, la règle de Google, les shared drives exceptés) : le
+     relais seul porte le tir ET le retour ;
+  3. LA COPIE AVEUGLE DU DÉPÔT : le dépôt git est PUBLIC — sa copie du
+     notebook porte les TROIS constantes VIDES (IDENTIFIANTS-ABSENTS le
+     refus nommé, fail-closed) ; la copie vivante vit au /livrables du
+     coffre. La posture du coffre (les dossiers lisibles au lien — le
+     maître l'a choisie : les identifiants y vivent déjà au /Tokens)
+     demeure ; le dépôt public n'en portera JAMAIS ;
+  4. LE GGUF DÉCIDÉ PAR LE POSTE : le v103 laissait la QUANT à la main
+     — le v104 la décide au poste (GPU → Q6_K ; CPU → Q4_K_M, le seul
+     conseillé au bord CPU dès le verdict du v103) ;
+  5. LE MODE-A REPORTÉ : la batterie automatique est MODE-B (le mode
+     conseillé au T4) ; le MODE-A demeure la voie manuelle (le kit v103
+     au coffre, ou --mode A) — l'écart est nommé, pas caché ;
+  6. LE RAPPORT DU POSTE : la pièce nouvelle du v104 — le verdict
+     d'environnement + l'horloge de la batterie + l'empreinte du zip,
+     déposé au /test avec lui.
+
+--------------------------------------------------------------------------------
+§ 6 — LE REPLI (si un ROUGE paraît)
+--------------------------------------------------------------------------------
+
+  Le journal de la cellule fautive revient TEL QUEL — l'écart y est
+  nommé. Les replis éprouvés demeurent : le pip peut manquer
+  (PIP-ROUGE : la cellule 2), le jeton peut manquer (JETON-ROUGE : la
+  cellule 3 — la copie aveugle du dépôt public refuse IDENTIFIANTS-
+  ABSENTS : prends la copie vivante du coffre), le kit peut diverger
+  (KIT-DIVERGENT : la cellule 3), le port peut être pris (l'hygiène du
+  terrain.5 : la cellule 5 — « couldn't bind » = le port, PAS le
+  binaire), la source compile en repli QUI PARLE, la campagne peut
+  refuser (un échec nommé vaut plus qu'un vert muet). La reprise :
+  re-courir « Tout exécuter » — le kit se retire et se re-tire ; la
+  cellule de secours 5 (l'Entrée 448) et le kit v103 (la GUI 1 clic)
+  demeurent au coffre et au dépôt.
+
+--------------------------------------------------------------------------------
+LES PIÈCES DU KIT COLAB v104
+--------------------------------------------------------------------------------
+  Campagne-Colab-v104.ipynb   le notebook 0 clic (les HUIT cellules — la
+                              batterie court seule, le retour au coffre
+                              est automatique)
+  LISEZMOI-CAMPAGNE-COLAB.txt   le présent pas-à-pas
+  (le moteur, le harnais : tirés du kit poste v100 au coffre par la
+   cellule 3 — AUCUNE pièce dupliquée ici, la source unique demeure le
+   coffre)
+
+  L'ESTIMATION DU TEMPS AU POSTE COLAB (une estimation, jamais une
+  mesure) : les cellules 1-4 ~1-2 minutes ; la cellule 5 ~5-15 minutes
+  (le GGUF au téléchargement du poste) ; LA BATTERIE (la cellule 6) de
+  quelques dizaines de minutes à ~2 heures au MODE-B sur T4 selon la
+  charge — PLUSIEURS HEURES au bord CPU (la mesure seule dira) ; la
+  cellule 7 ~1 minute ; le journal vit en direct, la session Colab
+  demeure ouverte tant que la cellule court.
+================================================================================
