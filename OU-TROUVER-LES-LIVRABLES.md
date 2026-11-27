@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 450 — LE KIT COLAB v104, 0 CLIC, LIVRÉ : la commande du maître « un notebook colab 0 clic avec la batterie de test la plus complète possible, envoi automatique des livrables sur le drive, pour environnement cpu et environnement gpu » portée à la CONSÉQUENCE DU TERRAIN.8 : LA GUI EST RETIRÉE [« Tout exécuter » ne s'arrête jamais à la GUI — ce que le runtime ne peut pas attendre, le kit ne le lui demande plus] ; LE GESTE UNIQUE « Exécution → Tout exécuter » court TOUT SEUL : le RELAIS EMBARQUÉ tire le kit au coffre à l'ID épinglé SANS AUCUNE FENÊTRE [le service account du projet fut sondé : il LIT le coffre mais NE PEUT PAS ÉCRIRE au Drive personnel — 403, aucun quota propre, la règle de Google ; le relais seul porte le tir ET le retour], la CELLULE 6 court les CINQ étapes du plan gelé d'un trait [le bloc ETAPES byte-byte la cellule de secours 5 ; le journal en direct, l'horloge tient chaque étape, un rouge arrête la marche], la CELLULE 7 téléverse le zip de preuves + LE RAPPORT DU POSTE au /test du coffre et les RECOPÉ byte-byte PAR RELECTURE, la CELLULE 8 clôt [le tableau de l'horloge, le serving tué, le run clos] ; LES DEUX BORDS portés [le poste décide seul : GPU → cudart prébâti + Q6_K + -ngl 99 ; CPU → ubuntu-x64 nu + Q4_K_M, le plus petit du kit, AUCUN -ngl — l'estimation honnête : PLUSIEURS HEURES au bord CPU, la voie GPU conseillée ; les gardes DISQUE-INSUFFISANT/RAM-INSUFFISANTE refusent AVANT la marche] ; LA COPIE AVEUGLE au dépôt public porte les TROIS chaînes VIDES [IDENTIFIANTS-ABSENTS le refus nommé — les identifiants n'y vivent JAMAIS ; la copie vivante vit au /livrables du coffre, avec LA COPIE NUE pour l'usage direct] ; les DOUZE épreuves TOUT VERT au bac [la cellule 3 VIVANTE a TIRÉ le kit du coffre pour de vrai, la cellule 7 a TÉLÉVERSÉ la sonde au /test et recoupé pour de vrai puis corbeillé, la garde DISQUE-INSUFFISANT a refusé au bac lui-même, le kit poste v100 INTACT byte-byte] ; le MODE-A demeure la voie manuelle ; la publication Zenodo de v0.33.x attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 451 — LA LECTURE DES PREUVES DE LA PREMIÈRE CAMPAGNE RÉELLEMENT COURUE AU POSTE [le v104 0 clic vécu par le maître au bord CPU : « Tout exécuter », rien d'autre] : LA BATTERIE MÉCANIQUEMENT VERTE ET LE RETOUR AU COFFRE TENU [le zip preuves-campagne-20261127T163327Z.zip + le rapport du poste montés SEULS au /test, sha256 recoupé byte-byte] ; LA MESURE TELLE QUELLE, JAMAIS HABILLÉE : 0/18 éditer · 0/18 ajouter · 0/128 famille — les 41 requêtes au vrai serveur TOUTES « BORD-FINI-SANS-ACCEPTATION » [le modèle finit son tour avant d'écrire UN jeton] ; LA CAUSE NOMMÉE SUR PIÈCES : le prompt NU sans l'enveloppe de chat du modèle instruct à l'endpoint /completion [llama-server n'applique AUCUN gabarit à /completion ; Qwen2.5-Coder-7B-Instruct hors de son enveloppe <|im_start|>…<|im_end|> finit son tour au premier jeton à température 0] ; LA VOIE PROPOSÉE à la commande du maître : la sonde d'une requête, ou le kit poste v101 [l'enveloppe de chat au moteur, le payload VERBATIM] + la porte de parole au serving [BORD-MUET le refus nommé] ; la publication Zenodo de v0.33.x attend TOUJOURS la commande du maître ; la vague 30 au /instructions quand le maître la déposera)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -869,3 +869,39 @@ rien au runtime.
   du maître ; la participation v1.3.0 à la commande ; LA CAMPAGNE AU GESTE UNIQUE du
   maître au runtime Colab (le v104) ; la vague 30 au /instructions quand le maître la
   déposera.
+
+## Mise à jour 451 (27/11/2026) — LA LECTURE DES PREUVES : LA PREMIÈRE CAMPAGNE RÉELLEMENT COURUE, LA MESURE 0/0/0 NOMMÉE, LA CAUSE SUR PIÈCES
+
+Le maître courut le notebook v104 au bord CPU — « Tout exécuter », rien d'autre. Le /test porte
+les preuves au 27/11 16:33 UTC : le zip de preuves + le rapport du poste, montés par la cellule 7
+elle-même. C'est la PREMIÈRE campagne de l'histoire du kit dont les preuves montent au coffre par
+la main du notebook même.
+
+- **L'INSTRUMENT, MÉCANIQUEMENT VERT** : manifeste 25/25 recoupé au chargement (le juge D264
+  INTACT) ; autotest maquette 4/4 (le canari maquette refusé au masque, l'éditer 358 natifs,
+  l'ajouter 650, la récitation MD5_T 814 — les 822 lignes du journal des pas toutes à ces
+  phases-là) ; gate GATE-VERT (llguidance 1.9.1, les trois probes refusées au décodage) ; le
+  sha256 du zip déclaré au rapport == mesuré au labo au re-téléchargement (5cb2da11…) : recoup
+  byte-byte VERT. L'horloge : la campagne 27,1 min au bord CPU (l'estimation « plusieurs heures »
+  battue par la mesure).
+- **LA MESURE, TELLE QUELLE** : éditer 0/18 (BORD-FINI-SANS-ACCEPTATION au tour 1 partout ;
+  CIB-EDIT-FAISAB, CIB-EDIT-AMORTI et la faisabilité ≥ 17/18 MANQUÉES) ; ajouter 0/18 (CIB-ADD-
+  STRUC MANQUÉE) ; famille 0/128 au volet modèle (le volet spec ↔ définitions lui 128/128
+  identiques — la dérivation du poste INTACTE) ; les trois canaris « VERT » au refus — mais le
+  refus fut le même BORD-FINI, pas le refus au masque.
+- **LA CAUSE SUR PIÈCES** : zéro pas journalisé aux phases de campagne — chaque première requête
+  au vrai serveur rendit une complétion SANS completion_probabilities (l'échelle du moteur pour
+  « le bord a rendu sa fin ») : le modèle finit son tour au premier jeton tiré, sans écrire un
+  seul jeton, aux 41 requêtes ; 27,1 min ÷ 41 ≈ 40 s = le prefill seul. Le contrat serveur recoupé
+  au web (correctifs llama.cpp #4714 + #7203 : /completion rend toujours les probs à température
+  0) : des probs absentes ne peuvent être que la fin au premier jeton. Le MODE-B envoie le prompt
+  NU à /completion (aucun gabarit — l'endpoint ne l'applique jamais) : le modèle INSTRUCT hors de
+  son enveloppe de chat finit son tour. AUCUNE panne du kit : la maquette marche, le gate refuse,
+  le masque masque — c'est la mesure du format.
+- **LA VOIE PROPOSÉE (à la commande)** : (a) la sonde d'une requête au poste ; (b) le kit poste
+  v101 — l'enveloppe de chat au moteur, le payload VERBATIM (les plans gelés intacts : le plan
+  gèle le modèle, le décodeur, la grammaire, les cibles, les graines, l'ordre, PAS l'enveloppe de
+  transport) + le notebook v105 0-clic ; (c) la porte de parole au serving (BORD-MUET le refus
+  nommé). Puis la mesure reconduite aux DEUX bords (le GPU — Q6_K, T4 — attend son tour).
+- **L'ARCHIVE AU DÉPÔT** : atelier-campagne-colab-v104/preuves-campagne/ — le zip de preuves, le
+  rapport du poste, la lecture du labo (aucun identifiant : la pièce publique).
