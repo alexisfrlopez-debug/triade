@@ -1,0 +1,78 @@
+LE PILOTE DE CAMPAGNE v105 — LE LISEZMOI DU LABO
+(le patron google-colab/google-colab-cli porté à la campagne : la sandbox
+provisionne le runtime Colab, porte le notebook VIVANTE au bord, exécute
+ses HUIT cellules d'un trait, rapatrie les preuves, désassigne le poste ;
+le maître n'a plus LE GESTE UNIQUE du navigateur — il n'a que LE GESTE
+DU CONSENTEMENT, une fois pour toutes)
+
+1. POURQUOI — la commande du maître (28/11/2026) : « inspire toi de ce
+   projet pour faire tourner toi les campagnes 105 à partir de ta sandbox :
+   https://github.com/googlecolab/google-colab-cli ». Le projet fut LU À
+   LA SOURCE (paquet 0.8.0, installé au labo) : l'assignation du runtime
+   (GET puis POST colab.research.google.com/tun/m/assign, nbh/variant/
+   accelerator), l'exécution par le canal kernel Jupyter (/api/kernels +
+   websocket /channels + le jeton du proxy), les fichiers par l'API
+   Contents (PUT base64, GET content) — les classes du CLI (client.Client,
+   runtime.ColabRuntime) sont importées TELLES QUELLES par le pilote.
+
+2. CE QUE LE PILOTE FAIT (scripts/pilote_campagne_v105.py, quatre verbes) :
+   · consentement — imprime l'URL du geste unique du maître (le client
+     OAuth PUBLIC du cloud-SDK, livré avec google-colab-cli ; scopes
+     openid/userinfo/cloud-platform/colaboratory/drive.file ; le flux
+     copy-paste distant de gcloud — page d'atterrissage Google, code à
+     coller). Le vérificateur PKCE vit au disque du labo entre les deux
+     moitiés du geste ;
+   · jeton <code> — le code collé devient work/jeton_colab.json (le
+     refresh_token, AUCUN secret imprimé ; il n'expire pas — la voie est
+     ouverte pour toujours) ;
+   · run [--cpu] [--muets-min N] — LA CAMPAGNE 105 : l'assignation T4
+     (variant GPU, accelerator T4), le notebook VIVANTE porté au /content
+     (PUT base64, sha256 au journal), les HUIT cellules de code exécutées
+     d'un trait au kernel (les sorties diffusées au journal TELLES
+     QUELLES, cellule par cellule), le zip de preuves + le rapport du
+     poste RAPATRIÉS au labo (relus DEUX fois, recoupés au sha256), le
+     kernel tué, le runtime désassigné — MÊME SI LE RUN A REFUSÉ ;
+   · bac — le bac local : la MÊME mécanique contre un serveur Jupyter
+     local (le faux bord) — AUCUN Colab touché, AUCUN /test touché.
+
+3. LES GARDES DU PILOTE (fail-closed, refus nommés) :
+   · JETON-COLAB-ABSENT — aucun jeton : le geste unique d'abord ;
+   · REFUS-412 — le backend refuse l'assignation (sessions actives ou
+     quota temporaire) : attends, ferme, reprends ;
+   · CELLULE-i-ROUGE — le notebook a refusé à la cellule i (le refus
+     nommé du notebook VIVANT arrive INTACT : BORD-MUET, KIT-DIVERGENT,
+     DISQUE-INSUFFISANT… le journal porte la trace) — éprouvé au bac :
+     SystemExit rend ename SystemExit + evalue LE MESSAGE, le kernel
+     DEMEURE vivant ;
+   · PILOTE-MUET — le bord silencieux plus de <muets-min> minutes
+     (défaut 30) : la symétrie du BORD-MUET du kit — le pilote ne laisse
+     JAMAIS un run orphelin (défaut calibré sur le pire de la cellule 5 :
+     la bouche santé 240 × 5 s = 20 min muettes au pire) ;
+   · ZIP-ABSENT / KIT-ILLISIBLE / RECOP-ROUGE — la pièce manquante ou
+     divergente est NOMMÉE, jamais maquillée.
+
+4. LE JETON DE PROXY EXPIRE — pour un run long, le pilote RÉ-ASSIGNE au
+   même nbh après 30 minutes (la voie du CLI : GET assign réconciliateur —
+   le MÊME runtime, un jeton NEUF) avant de rapatrier.
+
+5. LA CHAÎNE DES PREUVES DU RUN : le journal-pilote.jsonl (chaque geste à
+   l'horloge : assignation, cellule-début/fin, chaque sortie diffusée,
+   pièces rapatriées, désassignation) ; les pièces au work/v105-run/
+   (preuves-campagne-*.zip + rapport-poste-v105-*.txt, recoupés) ; la
+   cellule 7 du notebook VIVANTE monte SEULE le zip + le rapport au /test
+   du coffre (le relais embarqué — la voie éprouvée D263) : le labo lit
+   ensuite le /test comme il vient de lire le 104.
+
+6. LE GESTE UNIQUE RESTANT (au maître, une fois pour toutes) : ouvrir
+   l'URL du consentement (le pilote l'imprime : « consentement »), dans le
+   COMPTE QUI PORTE LE COFFRE Drive, approuver, coller le code affiché au
+   labo. Ensuite : « run » et rien d'autre — les campagnes courent depuis
+   la sandbox. (Le compte doit porter l'accès GPU Colab — celui-là même
+   qui courut le v104 GPU.)
+
+7. LA GARDE : le /test du Drive touché par AUCUN geste du bac (les
+   preuves du bac vivent au labo seul) ; aucune cible gelée touchée (le
+   pilote porte le notebook VIVANT TEL QUEL — les plans PLAN-W29DECCO/
+   W29FAMILLE demeurent LA LOI) ; la copie du dépôt git public porte
+   AUCUN identifiant (le pilote lit ses jetons au runtime du labo, jamais
+   embarqués) ; AUCUN chiffre de campagne fabriqué au bac.

@@ -1,0 +1,118 @@
+ATELIER PILOTE-CAMPAGNE-V105 — LE RAPPORT DU LABO : LA CAMPAGNE GPU 104 LUE
+AU /test TELLE QUELLE, LE PILOTE google-colab-cli BÂTI ET PROUVÉ AU BAC, LE
+GESTE UNIQUE DU MAÎTRE NOMMÉ (28/11/2026 — la commande : « campagne gpu 104
+dans /test. inspire toi de ce projet pour faire tourner toi les campagnes
+105 à partir de ta sandbox : github.com/googlecolab/google-colab-cli »)
+
+1. LA CAMPAGNE GPU 104, LUE AU /test TELLE QUELLE (le devoir du labo annoncé
+   à l'Entrée 452 : « la lecture des preuves TELLES QUELLES (tenue ou
+   manquée, jamais habillée) ») — les pièces tirées du /test du coffre
+   (preuves-campagne-20261127T192238Z.zip, 11 689 o, sha256 acdf4c1c…295e +
+   rapport-poste-v104-20261127T192244Z.txt, 788 o) :
+   · LE POSTE : Tesla T4 (14,6 Gio VRAM) · 12,7 Gio RAM · 112,5 Gio libres
+     · Python 3.13.16 · le bord du run : GPU · le GGUF : Q6_K ;
+   · LE GATE : GATE-VERT (le décodeur client llguidance 1.9.1 refuse la
+     violation AU DÉCODAGE — op-hors-enum, offset-hors-bornes, cle-hors-
+     schema, tous trois refusee_au_decodage: true ; les contrôles positifs
+     éditer ET ajouter acceptants) ;
+   · LA CAMPAGNE : 0/18 éditer · 0/18 ajouter · 0/128 famille — CHAQUE
+     refus de la classe BORD-FINI-SANS-ACCEPTATION (le bord rend sa fin
+     avant l'acceptation du matcher — l'objet complet exigé, fail-closed) ;
+     CIB-EDIT-FAISAB MANQUÉE · CIB-EDIT-AMORTI MANQUÉE · CIB-ADD-STRUC
+     MANQUÉE · le verdict famille : 0/128 identiques au volet modèle
+     (MD5 T 0/64 · SHA-256 K 0/64), LA MESURE SUR PIÈCES ;
+   · LE CANARI : REFUSÉE AU DÉCODAGE — le canari VERT (la violation
+     ordonnée refusée au masque AVANT tout : six jetons de violation tous
+     permis au masque PUIS refusés — le masque du MODE-B laisse passer la
+     violation au top-64, le pas est refusé fail-closed) ;
+   · L'HORLOGE : la batterie entière en 0,2 min — la MORT INSTANTANÉE du
+     bord muet (au bord CPU du v104 : 27,1 minutes pour les 41 requêtes
+     muettes ; au T4 : la même cause, douze secondes) ;
+   · LA CAUSE CONFIRMÉE AU BORD GPU (l'Entrée 451 portée à sa mesure) : le
+     MODE-B envoie le PROMPT NU à /completion — Qwen2.5-Coder-7B-Instruct
+     hors de son enveloppe <|im_start|>…<|im_end|> rend sa fin au premier
+     jeton à température 0. LA PREUVE VIVANTE dans le journal même du run :
+     les TROIS autotests du kit PARLENT (autotest-editer loupe-07-cumul :
+     43 jetons de complétion ; autotest-ajouter pointeur-01 : 53 ;
+     autotest-famille MD5_T : 683 en 0,9 s — compteur-natif-du-modele) —
+     le modèle SAIT parler au même serving ; SEULS les appels de campagne
+     (le prompt nu) rendent 0 jeton. Le format n'est pas le compute : le
+     GPU ne répare pas l'enveloppe. LE v105 EST LA RÉPONSE (l'enveloppe au
+     transport, la porte de parole, la sonde des deux enveloppes) — il
+     n'attend plus que DE COURIR.
+
+2. LA SONDE DES POUVOIRS DE LA SANDBOX (le devoir de l'ingénieur avant la
+   promesse) : le backend Colab (colab.research.google.com/tun/m) EXIGE le
+   scope colaboratory — le service account du projet : 401 ; le jeton
+   relais du coffre (scope drive seul) : 401 ; ONZE jetons du coffre passés
+   en revue : TOUS au scope drive (la relance D263 n'a jamais eu à demander
+   plus). AUCUNE machine ne peut consentir à la place du maître — la règle
+   de Google, pas un caprice du labo. LA CONSÉQUENCE HONNÊTE : le pilote
+   peut TOUT faire (provisionner, porter, exécuter, rapatrier, fermer)
+   SAUF le premier consentement — LE GESTE UNIQUE DU MAÎTRE, une fois pour
+   toutes (le même geste que la première exécution de google-colab-cli : le
+   CLI imprime une URL, l'utilisateur approuve, colle le code).
+
+3. LE PILOTE (scripts/pilote_campagne_v105.py — le patron google-colab-cli
+   porté à la campagne, ses classes importées TELLES QUELLES) :
+   (i) L'ASSIGNATION — Client.assign(nbh, variant=GPU, accelerator=T4) :
+     GET puis POST /tun/m/assign, le XSRF au header, REFUS-412 nommé ;
+   (ii) LE TRANSPORT DU NOTEBOOK — l'API Contents au proxy du runtime
+     (PUT base64, le notebook VIVANTE porté au /content, sha256 au
+     journal) ;
+   (iii) L'EXÉCUTION — runtime.ColabRuntime : le kernel Jupyter vivant au
+     canal websocket, les HUIT cellules de code du VIVANTE d'un trait, les
+     sorties DIFFUSÉES au journal-pilote.jsonl TELLES QUELLES (cellule par
+     cellule, heure à la ligne) ;
+   (iv) LE RETOUR — le zip de preuves + le rapport du poste rapatriés au
+     labo, RELUS DEUX fois, recoupés au sha256 (la voie du relais) ; le
+     jeton de proxy vieillissant : le RÉ-ASSIGNEMENT au même nbh après
+     30 min (le même runtime, un jeton neuf) ;
+   (v) LA FERMETURE — le kernel tué, le runtime désassigné, MÊME SI LE RUN
+     A REFUSÉ (l'hygiène d'abord) ; la garde PILOTE-MUET : 30 min de
+     silence au bord → le refus nommé, JAMAIS un run orphelin (la symétrie
+     du BORD-MUET du kit).
+
+4. LE BAC (trois épreuves, toutes au journal) : (1) LA MÉCANIQUE HEUREUSE —
+   un serveur Jupyter local (le faux bord, Bearer accepté), le mini-
+   notebook PORTÉ par le PUT Contents, le kernel vivant, les TROIS cellules
+   exécutées, les sorties diffusées, les pièces rapatriées et recoupées
+   DEUX fois, le serveur fermé — VERT ; (2) LE REFUS NOMMÉ D'ERREUR — la
+   cellule fautive (bytes non-ASCII, la faute du labo) reçue ename/
+   evalue, CELLULE-1-ROUGE nommé, le kernel tu, le serveur fermé — VERT
+   (le refus, pas la cellule) ; (3) LE REFUS NOMMÉ SYSTEMEXIT — le cas
+   RÉEL du BORD-MUET de la cellule 5 : ename SystemExit, evalue « BORD-
+   MUET : le refus nommé du test », le kernel DEMEURE VIVANT après le
+   refus — VERT. La régression repassée après chaque retouche du pilote :
+   VERT.
+
+5. LE GESTE UNIQUE DU MAÎTRE (ce qui reste, et rien d'autre) : l'URL du
+   consentement vit au work/v105-run/url-consentement.txt (le pilote
+   l'imprime à « consentement ») — l'ouvrir au navigateur du COMPTE QUI
+   PORTE LE COFFRE, approuver, coller le code affiché au labo. Alors :
+   « run » — l'assignation T4, le VIVANTE porté, les HUIT cellules, la
+   porte de parole, la sonde, la batterie REPASSANT LES TESTS RATÉS DU 104
+   (l'enveloppe au transport, les plans gelés intacts), le zip + le
+   rapport montant SEULS au /test (le relais embarqué de la cellule 7),
+   les pièces rapatriées au labo pour la lecture TELLE QUELLE. Le jeton de
+   rafraîchissement n'expire pas : les campagnes 106, 107… courront au
+   même geste zéro.
+
+6. LA GARDE : le /test du coffre touché par AUCUN geste du présent (les
+   preuves du GPU 104 FURENT LUES, jamais réécrites ; les preuves du bac
+   vivent au labo seul) ; aucune cible gelée touchée, aucune graine
+   re-tirée (le pilote porte le notebook VIVANT TEL QUEL) ; la copie du
+   dépôt git public (atelier-pilote-campagne-v105/) porte AUCUN
+   identifiant — le pilote lit work/jeton_colab.json au runtime, AUCUN
+   secret n'y vit embarqué ; AUCUN chiffre de campagne fabriqué au bac.
+
+7. LA LIVRAISON : au labo — scripts/pilote_campagne_v105.py + work/
+   LISEZMOI-PILOTE-CAMPAGNE.txt + le présent rapport ; au download/ — les
+   TROIS pièces recopiées ; au dépôt git — atelier-pilote-campagne-v105/
+   (la copie aveugle : le pilote + le LISEZMOI + le rapport) ; au coffre —
+   l'Entrée 453 au worklog.
+
+8. SUITE : AU MAÎTRE — le geste unique (l'URL ci-dessus, le code collé au
+   chat) ; AU LABO ALORS — « run », la surveillance au journal, la lecture
+   des preuves du /test TELLES QUELLES, le verdict de la reprise des tests
+   ratés (0/18 · 0/18 · 0/128 → la mesure nouvelle, jamais habillée).
