@@ -1,0 +1,4 @@
+=== LES TROIS GGUF AU BORD HUGGING FACE (le minter bartowski — les trois URLs re-vérifiées VIVANTES au jour v102) ===
+  HTTP 200 — Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf
+  HTTP 200 — Qwen2.5-Coder-7B-Instruct-Q6_K.gguf
+  HTTP 200 — Qwen2.5-Coder-7B-Instruct-Q8_0.gguf

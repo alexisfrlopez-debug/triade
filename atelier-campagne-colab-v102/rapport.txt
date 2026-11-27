@@ -1,0 +1,88 @@
+ATELIER CAMPAGNE-COLAB-V102 — LE TERRAIN.6 DU 27/11 CORRIGÉ : LA CELLULE 2
+MUETTE AUX DEUX SEUILS INTERACTIFS (la fenêtre d'autorisation du montage
+Drive, celle du repli API) ET À LA MARCHE DU MYDRIVE — LE MAÎTRE CRUT AU
+BLOCAGE (27/11/2026, le terrain rapporté par le maître au runtime Colab :
+« ça bloque à la cellule 2 »)
+
+1. LE TERRAIN RAPPORTÉ (la parole du maître, TELLE QUELLE) : la cellule 2
+   (LE KIT AU COFFRE — monter le Drive, tirer le kit poste v100, recouper
+   sha256, extraire) sembla bloquée — AUCUNE sortie ne paraissait. LE
+   DIAGNOSTIC NOMMÉ AU SOURCE (trois silences, aucun n'un blocage réel) :
+   (a) le v101 n'imprimait RIEN avant drive.mount() — la FENÊTRE
+   D'AUTORISATION « Se connecter à Google Drive » vit sous la cellule même :
+       manquée, ou cachée par le bloqueur de pop-ups du navigateur → la
+       cellule attend LE GESTE du maître qu'AUCUNE PAROLE ne nomme (le
+       silence éternel) ;
+   (b) si la voie directe Triade/livrables manque au compte monté, LA MARCHE
+       du MyDrive court MUETTE (des minutes au Drive touffu — la borne de
+       profondeur seule, nulle bourse de temps, nul mot du chemin parcouru) ;
+   (c) le repli API muette encore : une SECONDE autorisation interactive
+       (auth.authenticate_user()), puis le téléchargement sans un mot.
+   Le kit v100/v101 NE MENTAIT PAS — il se taisait ; le maître ne peut le
+   savoir : la cellule ne parle pas.
+
+2. LE CORRECTIF v102 (la même loi, LA PAROLE seule corrigée — aucun seuil
+   interactif n'est contourné : les fenêtres d'autorisation demeurent LE
+   geste du maître, elles sont NOMMÉES) :
+   (a) LE SEUIL ANNONCÉ AVANT : l'annonce imprimée AVANT drive.mount() (la
+       fenêtre nommée, le bloqueur de pop-ups nommé, les ~15-30 s du
+       montage nommées, le geste — clique AUTORISER — nommé) et AVANT
+       auth.authenticate_user() (la seconde autorisation nommée, la
+       reprise de la cellule nommée) ;
+   (b) LE MONTAGE DÉJÀ FAIT SAUTÉ : os.path.ismount(MONTURE) — le re-run
+       d'un runtime déjà monté ne redemande RIEN (« le Drive est DÉJÀ
+       MONTÉ — l'autorisation n'est PAS redemandée ») ;
+   (c) LA MARCHE BORNÉE À LA BOURSE : BOURSE_MARCHE = 45.0 s — le compte À
+       VOIX HAUTE (les dossiers vus, les secondes de bourse, un mot tous
+       les 100 pas, le mot du zip trouvé) ; la bourse épuisée rend None
+       SANS arrêt brutal — le repli API prend le relais à l'ID épinglé ;
+   (d) LE REPLI API QUI PARLE PAR MORCEAUX : le pourcentage imprimé à
+       chaque morceau (progres.progress()), le VERT nommé au terme.
+
+3. LES CINQ ÉPREUVES TOUT VERT AU BAC (preuves-labo/epreuves-notebook-
+   v102.txt) : (1) la marche bornée + la porte sha256 (31 pièces, la borne
+   de profondeur tenue) ; (2) le sélecteur de release au JSON réel du jour
+   (b12810 demeure la tête : le nu au CPU, le cudart CUDA-12 au GPU) ;
+   (3) LA GUI headless (les CINQ boutons, le titre porté à v102) ; (4) LE
+   TRIAGE DU PORT (le terrain.5 reconduit : la sonde au socket contre le
+   squatteur tenu au bac — le port tenu REFUSÉ, le suivant CHOISI, le
+   libéré REPRIS) ; (5) LA CELLULE 2 QUI PARLE (l'épreuve nouvelle du
+   terrain.6 : la structure au source — l'annonce AVANT chacun des deux
+   seuils, ismount AVANT le montage demandé ; LE SAUT DU MONTAGE éprouvé
+   aux DEUX états au faux os.path — le montage déjà fait N'EST PAS
+   redemandé, le montage absent l'est après l'annonce ; LA BOURSE tenue —
+   la marche rend None au premier pas à la bourse dépassée).
+
+4. UNE COQUILLE DU HARNAIS démasquée au passage (elle fut une pièce) : la
+   neutralisation du montage au bac devait suivre l'INDENTATION du bloc
+   else (4 espaces — le montage v102 vit DANS le else) ; l'épreuve (1) en
+   ROUGE la nomma (ModuleNotFoundError : google), corrigée, les cinq VERT.
+   LES TROIS GGUF re-vérifiés VIVANTS au bord HF (gguf-urls-v102.txt :
+   Q4_K_M/Q6_K/Q8_0 HTTP 200).
+
+5. LA GARDE : aucune cible re-tirée ; aucune graine re-tirée (20261117/
+   20261124 — les graines des plans gelés) ; le kit poste v100 INTACT
+   byte-byte (l'ID 1TT1zLRf1movZ69_cTzGhMLEcAV1Hi7CD et le sha256
+   a8d9b96c…53642b ÉPINGLÉS inchangés — le kit Colab n'est que la voie) ;
+   le juge D264 INTACT ; aucun secret dans le kit ni committé ; AUCUN
+   chiffre de campagne fabriqué au bac ; le GGUF du poste ne courut PAS au
+   bac.
+
+6. LA LIVRAISON : TRIADE_kit_campagne_colab_v102.zip (17 864 o — le
+   notebook Campagne-Colab-v102.ipynb + le LISEZMOI-CAMPAGNE-COLAB.txt
+   v102) au /livrables du coffre au JETON RELAIS, RECROPÉ byte-byte par
+   re-téléchargement ; le LISEZMOI-livrables mis à jour de la section
+   v102 ; l'Entrée 446 au worklog (coffre + dépôt) ; au dépôt git :
+   atelier-campagne-colab-v102/ (kit + preuves-labo v102 + le présent
+   rapport), OU-TROUVER + REPRISE + SOURCES-PRESCRIPTIVES mis à jour.
+
+7. SUITE : AU MAÎTRE, AU RUNTIME COLAB — le run bloqué à la cellule 2 se
+   débloque à LA CELLULE DE SECOURS 2 (portée à la réponse : elle nomme le
+   verdict du silence — la fenêtre d'autorisation — puis achève la cellule
+   2 : le kit tiré, recoupé, extrait), PUIS les cellules 3 → 8 telles
+   quelles (la cellule 5 v101 porte déjà l'hygiène du port du terrain.5) ;
+   le notebook v102 (re-téléchargé du coffre) parle dès le premier pas ;
+   le T4 GPU porte le MODE-B ; AU LABO ENSUITE : la lecture des preuves,
+   les verdicts portés TELS QUELS ; la publication Zenodo de
+   v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du maître ; la vague 30 au
+   /instructions quand le maître la déposera.
