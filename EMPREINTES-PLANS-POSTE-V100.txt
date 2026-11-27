@@ -1,0 +1,10 @@
+EMPREINTES DES PLANS GELÉS — LE POSTE RÉEL ET LA CÉRÉMONIE D'ÈRE (v100, 27/11/2026)
+La SUITE de l'Entrée 442 : la commande du maître « va enchainer sur la
+campagne au poste réel puis cérémonie, comme d'habitude avec GUI 1 clic ».
+Les plans sont gelés AVANT toute pièce de kit (le commit d'abord).
+
+57d9a276023beaaebf6fff6e040a5d85389b6b674a5fc2e95b2a782fb7cdfb4b  atelier-campagne-poste-v100/PLAN-CAMPAGNE-POSTE.md
+a17f9e46d5ac755fdc6f462174318143ab1ca255e9a3eb7639679b217736bb2f  atelier-ceremonie-ere-v100/PLAN-CEREMONIE-ERE.md
+
+Les plans gelés DES CAMPAGNES demeurent LA LOI (jamais re-tirés) :
+PLAN-W29DECCO.md et PLAN-W29FAMILLE.md à EMPREINTES-PLANS-VAGUE29.txt.
