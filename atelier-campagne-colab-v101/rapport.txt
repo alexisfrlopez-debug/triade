@@ -1,0 +1,100 @@
+ATELIER CAMPAGNE-COLAB-V101 — LE TERRAIN.5 DU 27/11 CORRIGÉ : LE PORT
+OCCUPÉ MAL TRIÉ (« couldn't bind » = le port, PAS le binaire), LE PRÉBÂTI
+DISCULPÉ SUR PIÈCES AU BAC MÊME, LE VERT MUET DE L'ÉPREUVE DÉMASQUÉ
+(27/11/2026, le terrain rapporté par le maître au runtime Colab : le journal
+de la cellule 5 — couldn't bind HTTP server socket, hostname: 127.0.0.1,
+port: 8080 — puis « ça n'avance pas depuis quelques minutes »)
+
+1. LE TERRAIN RAPPORTÉ (le journal du maître, TEL QUEL) : la cellule 5 du kit
+   v100 téléchargea la release prébattue b12810 (22 Mio), le GGUF Q6_K
+   (5,82 Gio), puis llama-server MOURUT À LA NAISANCE — « E srv start:
+   couldn't bind HTTP server socket, hostname: 127.0.0.1, port: 8080 » — et
+   le kit v100 TIRA LA FAUSSE CONCLUSION : « le prébâti n'est pas sain au
+   poste » → LA SOURCE PRIIT LE RELAIS : une compilation muette (capturée,
+   -j2, l'arbre complet) — « ça n'avance pas depuis quelques minutes ». LE
+   DIAGNOSTIC NOMMÉ : le port 8080 était OCCUPÉ au runtime (un squatteur —
+   l'ancien llama-server d'un run précédent du même runtime, ou un tiers du
+   poste ; le journal ne dit QUE ça, il n'est pas habillé). La compilation
+   était DOUBLEMENT Vaine : 10-20 min muettes aux 2 vCPU, PUIS le serveur
+   compilé serait mort AU MÊME PORT (la cause n'y était jamais). Le prébâti
+   était SAIN : il s'initialisa puis mourut à la seule ligne du bind.
+
+2. LE CORRECTIF v101 (la même loi, le triage corrigé — aucune cible touchée,
+   aucun plan touché) :
+   (a) L'HYGIÈNE DU PORT, AVANT TOUT LANCEMENT : les llama-server orphelins
+       d'un run précédent du MÊME runtime sont tués (eux seuls — jamais un
+       tiers du poste), puis LE PORT LIBRE EST CHOISI à la sonde au socket
+       même (SO_REUSEADDR porté : la même tolérance que llama-server au bind)
+       parmi les candidats 8080/8081/8090/18080/18081 — AUCUN port n'est
+       imposé au poste ;
+   (b) LE TRIAGE JUSTE : « couldn't bind » lu au journal = LE PORT, PAS LE
+       BINAIRE — le PRÉBÂTI RÉESSAYÉ au port suivant (l'hygiène repasse),
+       la source NE COMPILE PAS pour un port pris ; la source ne prend le
+       relais QUE si le binaire meurt d'une faute qui est sienne (glibc,
+       driver — le journal imprimé TEL QUEL avant le repli, comme au v100) ;
+   (c) LE REPLI QUI PARLE : la compilation, si elle vit vraiment, coule
+       LIGNE À LIGNE au journal du poste (Popen bufsize=1), la cible
+       llama-server seule bâtie (--target llama-server, le chantier
+       raccourci), -j$(nproc) — les minutes ne sont plus muettes ;
+   (d) L'ENDPOINT PORTÉ À LA GUI : le port retenu vit au fichier
+       /content/endpoint_serving.txt — la cellule 6 (LA GUI) le lit au champ
+       « L'endpoint » (le réglage manuel demeure au panneau) ;
+   (e) LE FILTRE TAR : t.extractall(filter="data") (la DeprecationWarning
+       Python 3.14 du terrain tue ; le repli TypeError porte les Pythons
+       d'avant 3.12).
+
+3. LE TERRAIN REJOUÉ AU BAC, SUR PIÈCES (preuves-labo/terrain-8080-rejoue-
+   au-bac.txt — LA PIÈCE MAÎTRESSE) : le VRAI binaire prébâti b12810
+   ubuntu-x64 (l'asset du jour, le tag du jour — b12810 demeure la tête),
+   le port 8080 TENU par un squatteur au bac même → llama-server MOURUT À
+   LA NAISANCE : « E srv start: couldn't bind HTTP server socket, hostname:
+   127.0.0.1, port: 8080 » — LE JOURNAL DU TERRAIN, MOT POUR MOT ; PUIS le
+   triage v101 : la sonde (8080 REFUSÉ, 8081 LIBRE), LE MÊME PRÉBÂTI
+   relancé au port libre → /health {"status":"ok"} VERT. LE PRÉBÂTI EST
+   DISCULPÉ : c'est le port qui était pris. L'épreuve vit au modèle
+   minuscule stories260K (1,1 Mo — la maquette instrument, le GGUF du poste
+   ne court PAS au bac, la doctrine reconduite).
+
+4. LE VERT MUET DÉMASQUÉ (la coquille de l'atelier v100, nommée à la
+   source) : le harnais d'épreuves tenait le RETOUR-CHAÎNE pour un vert —
+   la marche bornée rendait « le kit extrait porte 31 pièces (33 attendues) »
+   (33 = les ENTRÉES du zip : 31 fichiers + 2 dossiers ; rglob ne compte
+   que les fichiers) et l'épreuve l'imprimait SOUS UN VERT (le retour-chaîne
+   truthy). LE HARNAIS v101 : L'ÉCHEC LÈVE, JAMAIS NE RETOURNE ; le compte
+   corrigé à 31 FICHIERS ; la branche de la borne bornée lève aussi (le
+   retour-chaîne y vivait encore). Les QUATRE épreuves v101 TOUT VERT au
+   fichier preuves-labo/epreuves-notebook-v101.txt : (1) la marche bornée +
+   la porte sha256 (31 pièces, la borne tenue) ; (2) le sélecteur de release
+   au JSON réel du jour (b12810 : le nu au CPU, le cudart CUDA-12 au GPU) ;
+   (3) LA GUI headless (les CINQ boutons, les arguments conformes, le champ
+   « L'endpoint » au défaut porté) ; (4) LE TRIAGE DU PORT — la sonde au
+   socket contre un vrai squatteur tenu au bac (le port tenu REFUSÉ, le
+   suivant CHOISI, le libéré REPRIS), la structure du triage au source (le
+   triage AVANT la compilation, l'hygiène AVANT le lancement, le repli qui
+   parle, l'endpoint porté à la GUI).
+
+5. LA GARDE : aucune cible re-tirée ; aucune graine re-tirée (20261117/
+   20261124 — les graines des plans gelés) ; le kit poste v100 INTACT
+   byte-byte (l'ID et le sha256 ÉPINGLÉS inchangés — le kit Colab n'est que
+   LA VOIE) ; le juge D264 INTACT ; aucun secret dans le kit ni committé ;
+   AUCUN chiffre de campagne fabriqué au bac (l'épreuve du port vit au
+   modèle minuscule, la mesure demeure au poste) ; le GGUF du poste ne
+   courut PAS au bac.
+
+6. LA LIVRAISON : TRIADE_kit_campagne_colab_v101.zip (le notebook
+   Campagne-Colab-v101.ipynb + le LISEZMOI-CAMPAGNE-COLAB.txt v101) au
+   /livrables du coffre au JETON RELAIS, RECROPÉ byte-byte par
+   re-téléchargement ; le LISEZMOI-livrables mis à jour de la section v101 ;
+   l'Entrée 445 au worklog (coffre + dépôt) ; au dépôt git :
+   atelier-campagne-colab-v101/ (kit + preuves-labo v101 + le présent
+   rapport), OU-TROUVER + REPRISE + SOURCES-PRESCRIPTIVES mis à jour.
+
+7. SUITE : AU MAÎTRE, AU RUNTIME COLAB — le run v100 interrompu se débloque
+   à LA CELLULE DE SECOURS (le ménage des orphelins + le port libre + le
+   PRÉBÂTI relancé TEL QUEL — le GGUF déjà en cache, AUCUN re-téléchargement),
+   PUIS la GUI (cellule 6 : l'endpoint au champ si le port bougea) ; le
+   notebook v101 (re-téléchargé du coffre) s'auto-soigne désormais à la
+   cellule 5. AU LABO ENSUITE : la lecture des preuves, les verdicts portés
+   aux registres TELS QUELS ; la publication Zenodo de v0.33.1/v0.33.0/
+   v0.32.0 À LA COMMANDE du maître ; la vague 30 au /instructions quand le
+   maître la déposera.

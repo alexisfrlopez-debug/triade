@@ -1,0 +1,22 @@
+=== LE TERRAIN.5 REJOUÉ AU BAC (sur pièces) ===
+l'asset du jour : llama-b12810-bin-ubuntu-x64.tar.gz (22 Mio, le tag b12810)
+l'URL : https://github.com/ggml-org/llama.cpp/releases/download/b12810/llama-b12810-bin-ubuntu-x64.tar.gz
+le prébâti extrait : /tmp/terrain-llama/llama-b12810/llama-server
+=== la version ===
+version: 1.1.0-dev (build 12810, commit ca123ba76)
+built with GNU 11.4.0 for Linux x86_64
+le modèle minuscule : /tmp/stories260K.gguf (1185376 o — stories260K, la maquette instrument : le GGUF du poste ne court PAS au bac)
+=== L'INCIDENT REJOUÉ : le squatteur tient 127.0.0.1:8080 au bac ===
+le prébâti au 8080 tenu : MORT (code 1) — le journal TEL QUEL :
+  0.00.003.551 I srv  llama_server: initializing ...
+  0.00.011.808 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+  0.00.013.954 W srv  server_setup: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+  0.00.014.018 E srv         start: couldn't bind HTTP server socket, hostname: 127.0.0.1, port: 8080
+  0.00.014.022 I srv    operator(): operator(): cleaning up before exit...
+  0.00.014.106 E srv  server_run_i: exiting due to HTTP server error
+>>> la refus « couldn't bind » : VÉCUE AU BAC MÊME — l'incident du poste, TEL QUEL.
+=== LE TRIAGE v101 : « couldn't bind » = le port, PAS le binaire ===
+la sonde : le 8080 REFUSÉ (le squatteur le tient), le 8081 LIBRE — le port choisi : 8081
+>>> LE MÊME PRÉBÂTI, au port libre 8081 : /health → {"status":"ok"} — VERT.
+>>> le prébâti était SAIN : c'est le port qui était pris — le triage v101 en fait foi.
+>>> le squatteur parti, le 8080 repris par la sonde : 8080 — l'hygiène close.

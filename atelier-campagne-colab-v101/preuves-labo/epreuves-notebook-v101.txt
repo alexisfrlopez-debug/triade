@@ -1,0 +1,16 @@
+[coffre] le kit trouvé : /tmp/faux_drive/MyDrive/Triade/livrables/TRIADE_kit_campagne_poste_v100.zip
+[coffre] sha256 : a8d9b96c17ccdc4d1ca72fa1964705fe09520096de8ef17ae3eb88366f53642b
+[coffre] l'empreinte recoupée VERT — le kit poste v100 TEL QUEL, byte-byte.
+[coffre] le kit extrait à /tmp/faux_drive/kit : 31 pièces
+[coffre] le dossier /test du coffre (le retour de la cellule 8) : ABSENT — le déposer à la main avant le retour
+[épreuve] VERT — la marche bornée du Drive + la porte sha256 (la cellule 2)
+           la porte sha256 VERTe passée ; la borne de profondeur tenue ; 31 pièces extraites
+[épreuve] VERT — le sélecteur de release llama.cpp au JSON réel du jour (la cellule 5)
+           CPU → b12810 : llama-b12810-bin-ubuntu-x64.tar.gz ; GPU → b12810 : cudart-llama-b12810-bin-ubuntu-cuda-12.8-x64.tar.gz — le cudart (runtime embarqué) au GPU, le nu au CPU
+VBox(children=(HTML(value='<b>TRIADE — LA CAMPAGNE AU POSTE RÉEL · VOIE COLAB (kit v101)</b><br>les plans gelés PLAN-W29DECCO + PLAN-W29FAMILLE : aucune cible re-tirée, aucune graine re-tirée, aucun chiffre fabriqué<br>le modèle choisi : Qwen2.5-Coder-7B-Instruct — le décodage contraint CÔTÉ CLIENT (llguidance)'), HBox(children=(VBox(children=(RadioButtons(description='Mode', options=('B', 'A'), value='B'),)), VBox(children=(Text(value='http://127.0.0.1:8080', description="L'endpoint"), Text(value='64', description='top-n'), Text(value='', description='Modèle (A)', placeholder='le chemin du dossier du modèle (MODE-A seul)'))))), HBox(children=(Button(description='1 · Vérifier le kit (le manifeste)', layout=Layout(width='auto'), style=ButtonStyle()), Button(description='2 · Le gate (la sonde du décodeur)', layout=Layout(width='auto'), style=ButtonStyle()), Button(description='3 · Le canari (la violation refusée)', layout=Layout(width='auto'), style=ButtonStyle()), Button(description='4 · LA CAMPAGNE (éditer + ajouter + la famille)', layout=Layout(width='auto'), style=ButtonStyle()), Button(description='5 · Le zip de preuves', layout=Layout(width='auto'), style=ButtonStyle()))), Output(layout=Layout(border_bottom='1px solid #777', border_left='1px solid #777', border_right='1px solid #777', border_top='1px solid #777', height='380px', overflow='auto')), HTML(value="<b>PRÊT — l'étape 1 d'abord (le manifeste)</b>")))
+[épreuve] VERT — LA GUI 1 CLIC headless (la cellule 6)
+           les CINQ boutons bâtis, les arguments B/A conformes au moteur (--canari/--campagne/--mode/--url/--nprobs/--modele), la grille affichée
+[épreuve] VERT — LE TRIAGE DU PORT — le terrain.5 corrigé (la cellule 5 v101)
+           la sonde au socket : le port tenu REFUSÉ, le suivant CHOISI, le libéré REPRIS (l'essai 34249→58337→59573) ; le triage « couldn't bind » AVANT la compilation, l'hygiène AVANT le lancement, le repli qui parle, l'endpoint porté à la GUI
+
+[verdict] TOUT VERT — le notebook Colab est vivant au bac
