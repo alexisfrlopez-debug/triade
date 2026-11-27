@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 449 — LE TERRAIN.8 DU KIT COLAB : LA LOI DU RUNTIME NOMMÉE — « Tout exécuter » ne s'arrête JAMAIS à la GUI [il court les cellules 1 → 9 d'un trait ; la campagne ne court qu'AU CLIC des boutons, jamais seule] ET LA GUI N'EXPIRE JAMAIS [les widgets sous la cellule 6 demeurent vivants tant que le runtime vit — remonter cliquer 1 → 2 → 3 → 4 → 5 marche APRÈS le passage, puis re-exécuter la cellule 8] ; le recoup au coffre : AUCUN preuves-campagne-*.zip au /test — LA CAMPAGNE N'A JAMAIS COURU, aucune panne, le kit v103 INTACT ; le garde ZIP-ABSENT de la cellule 8 = l'ordre nommé reconduit du terrain.7 ; le coût nommé du « Tout exécuter » : la cellule 7 (MODE-A, ~15 Gio au cache HF) court aussi ; LA SECOURS 5 demeure la voie sans aucun clic ; l'écart des copies racine soldé [worklog 441 → 449, OU-TROUVER et REPRISE 444 → 449, recoupés byte-byte] ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 450 — LE KIT COLAB v104, 0 CLIC, LIVRÉ : la commande du maître « un notebook colab 0 clic avec la batterie de test la plus complète possible, envoi automatique des livrables sur le drive, pour environnement cpu et environnement gpu » portée à la CONSÉQUENCE DU TERRAIN.8 : LA GUI EST RETIRÉE [« Tout exécuter » ne s'arrête jamais à la GUI — ce que le runtime ne peut pas attendre, le kit ne le lui demande plus] ; LE GESTE UNIQUE « Exécution → Tout exécuter » court TOUT SEUL : le RELAIS EMBARQUÉ tire le kit au coffre à l'ID épinglé SANS AUCUNE FENÊTRE [le service account du projet fut sondé : il LIT le coffre mais NE PEUT PAS ÉCRIRE au Drive personnel — 403, aucun quota propre, la règle de Google ; le relais seul porte le tir ET le retour], la CELLULE 6 court les CINQ étapes du plan gelé d'un trait [le bloc ETAPES byte-byte la cellule de secours 5 ; le journal en direct, l'horloge tient chaque étape, un rouge arrête la marche], la CELLULE 7 téléverse le zip de preuves + LE RAPPORT DU POSTE au /test du coffre et les RECOPÉ byte-byte PAR RELECTURE, la CELLULE 8 clôt [le tableau de l'horloge, le serving tué, le run clos] ; LES DEUX BORDS portés [le poste décide seul : GPU → cudart prébâti + Q6_K + -ngl 99 ; CPU → ubuntu-x64 nu + Q4_K_M, le plus petit du kit, AUCUN -ngl — l'estimation honnête : PLUSIEURS HEURES au bord CPU, la voie GPU conseillée ; les gardes DISQUE-INSUFFISANT/RAM-INSUFFISANTE refusent AVANT la marche] ; LA COPIE AVEUGLE au dépôt public porte les TROIS chaînes VIDES [IDENTIFIANTS-ABSENTS le refus nommé — les identifiants n'y vivent JAMAIS ; la copie vivante vit au /livrables du coffre, avec LA COPIE NUE pour l'usage direct] ; les DOUZE épreuves TOUT VERT au bac [la cellule 3 VIVANTE a TIRÉ le kit du coffre pour de vrai, la cellule 7 a TÉLÉVERSÉ la sonde au /test et recoupé pour de vrai puis corbeillé, la garde DISQUE-INSUFFISANT a refusé au bac lui-même, le kit poste v100 INTACT byte-byte] ; le MODE-A demeure la voie manuelle ; la publication Zenodo de v0.33.x attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -804,3 +804,68 @@ aux deux signaux, nommée à la présente.
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
   maître ; la participation v1.3.0 à la commande ; la campagne au geste du maître au runtime ;
   la vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 450 (27/11/2026) — LE KIT COLAB v104 : 0 CLIC, LA GUI RETIRÉE, LE RETOUR AU COFFRE AUTOMATIQUE, LES DEUX BORDS CPU ET GPU
+
+La commande du maître (la parole, telle quelle) : « fais moi directement un notebook
+colab 0 clic avec la batterie de test la plus complète possible, et envoi automatique des
+livrables sur le drive. fais pour environnement cpu et environnement gpu ». La loi du
+terrain.8 (l'Entrée 449) en était le préalable : « Tout exécuter » court les cellules
+d'un trait et ne s'arrête JAMAIS à la GUI — la campagne du v103 n'attendait qu'un clic
+qui ne venait pas. LA CONSÉQUENCE : LA GUI EST RETIRÉE — le kit v104 ne demande PLUS
+rien au runtime.
+
+- **LE GESTE UNIQUE** : `Exécution → Tout exécuter` — C'EST TOUT. Aucune fenêtre, aucun
+  bouton, aucun montage du Drive, aucun collage : (1) LE POSTE décide seul le bord
+  (GPU → Q6_K ; CPU → Q4_K_M — le plus petit du kit, le seul conseillé au bord CPU dès
+  le v103) et porte les gardes honnêtes (DISQUE-INSUFFISANT, RAM-INSUFFISANTE au bord
+  CPU : le refus AVANT la marche) ; (2) les dépendances ; (3) LE KIT AU COFFRE 0 CLIC —
+  LE RELAIS EMBARQUÉ (le jeton du labo, la voie éprouvée D263) tire le kit poste v100 à
+  l'ID épinglé, recoupe le sha256 ÉPINGLÉ, extrait ; (4) LE KIT VIVANT — la cellule du
+  v103 TELLE QUELLE byte-byte (manifeste + gate + autotest maquette) ; (5) LE SERVING
+  SELON L'ENVIRONNEMENT — les helpers + la marche du v103 reconduits byte-byte, la QUANT
+  seule décidée par le poste (GPU : cudart prébâti + Q6_K + -ngl 99 ; CPU : ubuntu-x64
+  nu + Q4_K_M + AUCUN -ngl) ; (6) **LA BATTERIE 0 CLIC** — les CINQ étapes du plan gelé
+  courent d'un trait (le bloc ETAPES byte-byte la cellule de secours 5 de l'Entrée 448),
+  le journal EN DIRECT, l'horloge tient chaque étape (l'étape fautive y vit aussi), un
+  ROUGE ARRÊTE la marche ; (7) **LE RETOUR AU COFFRE 0 CLIC** — le zip téléversé au
+  /test par le relais embarqué, RE-TÉLÉCHARGÉ, RECOPÉ byte-byte, **LE RAPPORT DU POSTE**
+  (la pièce nouvelle : le verdict d'environnement + l'horloge de la batterie) y va avec,
+  les liens imprimés ; (8) LE BILAN — le tableau, le serving tué, le run clos.
+- **LA BATTERIE LA PLUS COMPLÈTE QUE LA LOI PERMETTE** : les SIX verbes du moteur y
+  courent (manifeste · gate · autotest · canari · campagne [éditer 18 + ajouter 18 + la
+  seconde famille] · zip) ; aucune cible re-tirée, aucune graine re-tirée, aucun chiffre
+  fabriqué. Le MODE-A (exactitude intégrale, ~31 Gio de VRAM, les A100 seuls) demeure
+  LA VOIE MANUELLE (kit v103 au coffre ou --mode A) — l'écart nommé au LISEZMOI § 5.
+- **LA VOIE SANS FENÊTRE, SONDÉE AU BAC** : le service account du projet LIT le coffre
+  mais NE PEUT PAS ÉCRIRE au Drive personnel (403 : aucun quota propre, la règle de
+  Google) — le relais seul porte le tir ET le retour. **LA COPIE AVEUGLE** : le dépôt
+  est PUBLIC — sa copie porte les TROIS chaînes VIDES (IDENTIFIANTS-ABSENTS, fail-closed
+  avant tout réseau) ; la copie vivante vit au /livrables du coffre (le zip + LA COPIE
+  NUE pour l'usage direct : double-clic au Drive → Colab) ; l'invariant (la seule
+  divergence = les TROIS constantes) est asserté au bâtisseur et repris aux épreuves.
+- **LES DOUZE ÉPREUVES TOUT VERT AU BAC**
+  (atelier-campagne-colab-v104/preuves-labo/epreuves-notebook-v104.txt) : la structure
+  (17 cellules : 8 code + 9 markdown, nbformat strict VALIDE) ; la loi 0 clic (aucun
+  widget/montage/autorisation/input) ; la cellule 1 au bac (le plan imprimé, le rapport
+  né, ET la garde DISQUE-INSUFFISANT a refusé à 7,7 Gio réels — fail-closed prouvé par
+  le bac lui-même) ; la cellule 3 AVEUGLE (IDENTIFIANTS-ABSENTS avant tout réseau) ; la
+  cellule 3 VIVANTE RÉELLE (le kit TIRÉ du /livrables à l'ID épinglé, sha256 recoupé
+  VERT) ; la cellule 4 RÉELLE (manifeste + gate + autotest POUR DE VRAI au bac) ; la
+  cellule 6 au bac (les cinq étapes d'un trait contre un moteur stub ; le ROUGE au
+  canari ARRÊTE la marche ; le bloc ETAPES byte-byte la secours 5) ; la cellule 7 au bac
+  (les gardes ZIP-ABSENT + ORDRE-ROMPU, puis LE RETOUR RÉEL : la sonde + le rapport
+  téléversés au /test, RE-TÉLÉCHARGÉS, RECOPÉS VERT — puis corbeillés par le labo) ; la
+  cellule 8 au bac ; le code intact au v103 (le kit vivant TEL QUEL, le pip au titre
+  près, la mesure du poste byte-byte, le serving reconduit byte-byte [7 064 + 3 378
+  o]) ; les GGUF Q6_K + Q4_K_M vivants au dépôt exact bartowski ; les notes parlées.
+- **LA LIVRAISON** : TRIADE_kit_campagne_colab_v104.zip (le notebook vivant + le
+  LISEZMOI v104) + LA COPIE NUE Campagne-Colab-v104.ipynb au /livrables (recoupés
+  byte-byte au jeton relais), la section v104 au LISEZMOI-livrables, l'Entrée 450 au
+  worklog du coffre et du dépôt ; au dépôt : atelier-campagne-colab-v104/ (le kit
+  AVEUGLE + les preuves-labo v104 + le rapport v104 — AUCUN identifiant au dépôt
+  public).
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE
+  du maître ; la participation v1.3.0 à la commande ; LA CAMPAGNE AU GESTE UNIQUE du
+  maître au runtime Colab (le v104) ; la vague 30 au /instructions quand le maître la
+  déposera.
