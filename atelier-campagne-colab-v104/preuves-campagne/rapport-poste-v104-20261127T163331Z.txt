@@ -1,0 +1,17 @@
+TRIADE — LE RAPPORT DU POSTE — kit Colab v104 (0 clic) — 2026-11-27T16:04:27.244110+00:00
+[poste] le GPU : AUCUN — le bord CPU
+[poste] la RAM : 12.7 Gio
+[poste] le disque : 107.6 Gio libres
+[poste] le Python : 3.13.18 · torch 2.14.1+cpu
+[plan] le bord du run : CPU · le GGUF : Q4_K_M
+[poste] la RAM disponible : 11.4 Gio
+
+L'HORLOGE DE LA BATTERIE (les cinq étapes du plan gelé) :
+  1 · Vérifier le kit (le manifeste) — 0.0 min
+  2 · Le gate (la sonde du décodeur client) — 0.0 min
+  3 · Le canari (la violation ordonnée refusée) — 0.1 min
+  4 · LA CAMPAGNE (éditer 18 + ajouter 18 + la seconde famille) — 27.1 min
+  5 · Le zip de preuves — 0.0 min
+
+LE ZIP DE PREUVES : preuves-campagne-20261127T163327Z.zip (11729 o)
+sha256 : 5cb2da11990a36989586b9d36b1c3bda23d84172bd98cc15da0f6da7b32551f1

@@ -1,0 +1,93 @@
+================================================================================
+TRIADE — LA LECTURE DES PREUVES DE LA CAMPAGNE DU 27/11 (le labo, Entrée 451)
+================================================================================
+Les pièces : preuves-campagne-20261127T163327Z.zip (11 729 o, sha256
+5cb2da11990a36989586b9d36b1c3bda23d84172bd98cc15da0f6da7b32551f1) et
+rapport-poste-v104-20261127T163331Z.txt (823 o), montés au /test du coffre par
+la cellule 7 du notebook v104 (0 clic) elle-même — le sha256 DÉCLARÉ au
+rapport == MESURÉ au re-téléchargement : recoup byte-byte VERT.
+
+LE POSTE (le rapport, tel quel) : le bord CPU (AUCUN GPU), 12,7 Gio de RAM,
+107,6 Gio de disque, Python 3.13.18, torch 2.14.1+cpu ; le GGUF Q4_K_M.
+L'HORLOGE : manifeste 0,0 min · gate 0,0 · canari 0,1 · LA CAMPAGNE 27,1 min ·
+zip 0,0 — l'estimation « plusieurs heures » du v104 au bord CPU battue par la
+mesure : 27,1 minutes réelles.
+
+L'INSTRUMENT, MÉCANIQUEMENT VERT (jamais la mesure) :
+  - le manifeste 25/25 recoupé AU CHARGEMENT (le juge D264 expandeur_add.py
+    INTACT à 9fc325e2…) ;
+  - l'autotest maquette 4/4 VERT (le canari maquette refusé AU MASQUE — 43
+    pas, le pas masqué unique ; l'éditer honnête 358 natifs ; l'ajouter 650 ;
+    la récitation contrainte MD5_T 814 ; les 822 lignes du journal des pas
+    TOUTES à ces phases-là) ;
+  - le gate GATE-VERT (llguidance 1.9.1 : les trois probes refusées AU
+    DÉCODAGE, les contrôles positifs acceptants, l'éditer inclus).
+
+LA MESURE, TELLE QUELLE — JAMAIS HABILLÉE (les cibles pré-inscrites, gelées) :
+  - ÉDITER   : 0/18 vertes — les 18 refusées « BORD-FINI-SANS-ACCEPTATION » au
+               tour 1, usage 0 partout ; faisabilité du plan (≥ 17/18)
+               MANQUÉE ; CIB-EDIT-FAISAB (≥ 15/18) MANQUÉE ; CIB-EDIT-AMORTI
+               (≤ 150) MANQUÉE — la médiane sur 18 = 0,0 jeton : la cible
+               « TENUE » sur le vide (la médiane sur les vertes est null,
+               l'amorti null : le registre le porte tel quel) ;
+  - AJOUTER  : 0/18 vertes — 18 requêtes refusées au tour 1 (le « tours: 3 »
+               du registre est le PLAFOND de la boucle reconduit au verdict
+               REFUS, pas des tours courus) ; CIB-ADD-STRUC (≥ 15/18 à
+               ≤ 3 000 tokens) MANQUÉE ;
+  - FAMILLE  : 0/128 au volet modèle — les DEUX sondes (MD5_T, SHA256_K)
+               refusées au tour 1 ; le volet spec ↔ définitions lui 128/128
+               identiques (la dérivation recalculée au poste INTACTE) ;
+  - LES TROIS CANARIS avant chaque phase : « VERT » au refus (la violation ne
+               passa pas, fail-closed tenu) — MAIS le refus fut le MÊME
+               BORD-FINI, pas le refus au masque : au vrai bord le garde ne
+               fut jamais mis à l'épreuve (avant tout au masque :
+               refusee_au_masque_avant_tout vrai, les 6 jetons masqués).
+
+LA CAUSE, NOMMÉE SUR PIÈCES (la lecture du labo, appuyée de mesures) :
+ZÉRO pas journalisé aux phases de campagne — chaque PREMIÈRE requête au vrai
+serveur rendit une complétion SANS completion_probabilities, l'échelle même du
+moteur pour « le bord a rendu sa fin » : LE MODÈLE FINIT SON TOUR AU PREMIER
+JETON TIRÉ, SANS ÉCRIRE UN SEUL JETON, aux 41 requêtes (3 canaris + 18 éditer
++ 18 ajouter + 2 sondes). Le temps corrobore : 27,1 min ÷ 41 requêtes ≈ 40 s
+la requête = LE PREFILL SEUL (le prompt est calculé à chaque requête, la fin
+est instantanée). LE CONTRAT SERVEUR RECOPÉ AU WEB : depuis les correctifs
+llama.cpp #4714 et #7203 (2024, bien antérieurs au prébâti b12810 de nov.
+2026), l'endpoint /completion rend TOUJOURS completion_probabilities à
+température 0 (le jeton tiré à prob 1,0) — des probs ABSENTES ne peuvent être
+que la fin au premier jeton (l'EOS). LE DIAGNOSTIC : le MODE-B envoie le
+PROMPT NU (texte brut, « Réponds STRICTEMENT en JSON… LA RÉPONSE : ») à
+/completion ; le serving (llama-server -m <gguf> --host 127.0.0.1 --port N
+-c 8192) n'applique AUCUN gabarit — l'endpoint /completion ne l'applique
+JAMAIS (le gabarit du modèle ne vit qu'aux endpoints chat) ;
+Qwen2.5-Coder-7B-Instruct est un modèle INSTRUCT : hors de son enveloppe
+<|im_start|>…<|im_end|>, à température 0 (greedy), il finit son tour au
+premier jeton — pour CHAQUE prompt, la même cause. L'INSTRUMENT EST SAIN : la
+maquette joue des jetons valides et TOUT le chemin marche ; le gate refuse la
+violation ; le masque masque. AUCUNE campagne MODE-B n'avait JAMAIS couru
+contre un vrai serveur avant celle-ci (le bac : 4 Gio, la maquette seule ;
+les terrains.1 → 8 : jamais courue) — le contrat prompt nu ↔ modèle instruct
+ne fut éprouvé QU'AU GESTE DU MAÎTRE. CE N'EST PAS UNE PANNE DU KIT : c'est
+LA MESURE DU FORMAT — elle est consignée telle quelle.
+
+LA VOIE PROPOSÉE (à la commande du maître) :
+  (a) LA SONDE D'UNE REQUÊTE au poste : le prompt nu à /completion finira
+      sans parole ; le même enrobé de l'enveloppe chat parlera — dix secondes
+      tranchent le diagnostic sur le terrain même ;
+  (b) LE KIT POSTE v101 : L'ENVELOPPE DE CHAT AU MOTEUR — les quatre
+      constructeurs de prompt (tâche, ajouter, récitation, canari) enrobés des
+      marqueurs du modèle choisi (<|im_start|>user\n{le payload
+      VERBATIM}<|im_end|>\n<|im_start|>assistant\n) : LE PAYLOAD INTACT (le
+      protocole OPT-16 verbatim, les plans gelés INTACTS — le plan gèle le
+      modèle, le décodeur, la grammaire, les cibles, les graines, l'ordre,
+      PAS l'enveloppe de transport ; la constante EOS 151645 vit déjà au
+      moteur, l. 94 : il connaît l'enveloppe, il ne l'applique pas au bord) ;
+      le kit v101 au /livrables + le notebook v105 0-clic au même geste
+      unique ;
+  (c) LA PORTE DE PAROLE au serving (la garde nouvelle, nommée) : après
+      /health, UNE requête d'essai — le modèle doit DIRE un mot avant que la
+      batterie ne coure (BORD-MUET le refus nommé : le poste saurait en 30
+      secondes, pas en 27 minutes).
+La mesure reconduite alors aux DEUX bords (la demande de l'Entrée 450
+demeure : le bord GPU — Q6_K, T4 — attend son tour ; la même cause l'y
+attendrait : le format n'est pas le compute).
+================================================================================
