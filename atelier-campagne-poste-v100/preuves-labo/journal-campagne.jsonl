@@ -1,0 +1,3 @@
+{"horodatage": "2026-11-27T05:19:03Z", "phase": "autotest-editer", "tache": "loupe-07-cumul", "tour": 1, "prompt_tokens_natifs": 315, "completion_tokens_natifs": 43, "total_tokens_natifs": 358, "duree_s": 0.0, "source": "compteur-natif-du-modele"}
+{"horodatage": "2026-11-27T05:19:03Z", "phase": "autotest-ajouter", "tache": "pointeur-01", "tour": 1, "prompt_tokens_natifs": 597, "completion_tokens_natifs": 53, "total_tokens_natifs": 650, "duree_s": 0.0, "source": "compteur-natif-du-modele"}
+{"horodatage": "2026-11-27T05:19:04Z", "phase": "autotest-famille", "tache": "MD5_T", "tour": 1, "prompt_tokens_natifs": 131, "completion_tokens_natifs": 683, "total_tokens_natifs": 814, "duree_s": 0.8, "source": "compteur-natif-du-modele"}

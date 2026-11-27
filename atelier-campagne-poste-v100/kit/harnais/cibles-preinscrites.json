@@ -1,0 +1,20 @@
+{
+ "objet": "LES CIBLES PRÉ-INSCRITES de la campagne au poste réel — JAMAIS re-tirées (le registre CIBLES.md, les plans gelés PLAN-W29DECCO.md et PLAN-W29FAMILLE.md, la table EMPREINTES-PLANS-VAGUE29.txt)",
+ "note": "toute pièce qui énonce un verdict de cible le prend d'ici ; un verdict est TENU ou MANQUÉ tel quel, jamais habillé",
+ "editer": {
+  "faisabilite_plan_w29decco": {"cible": "≥ 17/18 vertes", "source": "PLAN-W29DECCO point 4"},
+  "mediane_par_changement_valide": {"cible": "≤ 150 tokens natifs", "source": "PLAN-W29DECCO point 4"},
+  "CIB-EDIT-FAISAB": {"cible": "≥ 15/18 vertes", "source": "CIBLES.md / PLAN-W29COUT point 5 (EN ATTENTE de la campagne contrainte)"},
+  "CIB-EDIT-AMORTI": {"cible": "≤ 150 tokens natifs par changement validé (la somme des tours et tentatives ÷ les vertes)", "source": "CIBLES.md / PLAN-W29COUT point 5 (EN ATTENTE de la campagne contrainte)"}
+ },
+ "ajouter": {
+  "CIB-ADD-STRUC": {"cible": "≥ 15/18 vertes à ≤ 3 000 tokens (la médiane sur les seules vertes, la convention du harnais D264)", "source": "CIBLES.md / atelier-w27decco (pré-enregistrée, jamais re-tirée)"}
+ },
+ "seconde_famille": {
+  "objet": "la confrontation tripartite spec ↔ seconde famille ↔ définitions sur les 128 constantes",
+  "critere": "tout écart NOMMÉ avec son index, la valeur du modèle et celle de la spec ; FAMILY-ABSENT devient la MESURE sur pièces",
+  "source": "PLAN-W29FAMILLE point 2"
+ },
+ "graines": {"editer": 20261117, "ajouter": 20261124, "note": "l'ordre des tâches JAMAIS re-tiré (les fichiers gelés taches-edition.json et les fixtures du juge D264)"},
+ "boucle": {"max_tours": 3, "note": "la boucle de réparation ≤ 3 tours, le refus exact réinjecté"}
+}

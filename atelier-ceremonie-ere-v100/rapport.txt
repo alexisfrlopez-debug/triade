@@ -1,0 +1,75 @@
+ATELIER CEREMONIE-ERE-V100 — LE KIT 1-CLIC DE LA CÉRÉMONIE D'ÈRE DE
+couloir-vaes512.asm À LA CLÉ HORS-LIGNE DU MAÎTRE, L'AUTOTEST À LA CLÉ DE
+TEST TOUT VERT (27/11/2026, la SUITE de l'Entrée 442 : « la cérémonie d'ère
+de la notation couloir-vaes512.asm à la clé hors-ligne du maître (la dette
+nommée) », la commande du maître « va enchainer sur la campagne au poste
+réel puis cérémonie, comme d'habitude avec GUI 1 clic » ; le plan gelé
+PLAN-CEREMONIE-ERE.md, sha256 a17f9e46… consigné à EMPREINTES-PLANS-POSTE-
+V100.txt, le commit AVANT toute pièce de kit)
+
+1. LE KIT (un dossier auto-suffisant, LE CLIC UNIQUE) : CEREMONIE-ICI.bat
+   (il trouve Python 3.8+, ouvre la GUI — tkinter seul, AUCUNE dépendance)
+   → gui_ceremonie.py (QUATRE boutons : Préparer la charge · Guider la
+   signature · Vérifier la signature revenue · Installer le sceau d'ère)
+   → moteur_ceremonie.py (LE MOTEUR : préparer · vérifier · installer ·
+   autotest) + signeur_hors_ligne.py (LE SIGNEUR AUTOPORTEUR — le cœur
+   Ed25519 RFC 8032 de la RÉFÉRENCE v06/ceremonie_hors_ligne.py reconduit
+   octet pour octet dans sa logique : les coordonnées homogènes étendues,
+   la signature § 5.1.6, la vérification § 5.1.7, l'AUTOTEST des vecteurs
+   § 7.1 TEST 1-3 + la mutation attrapée — fail-closed : un autotest qui
+   échoue REFUSE de signer).
+
+2. LA CHARGE (la forme de a-signer du sceau — TROIS CHAMPS « nom balise
+   empreinte » : l'OUTIL DU MAÎTRE v06/ceremonie_hors_ligne.py la signe
+   TELLE QUELLE, sans adaptation ; la compatibilité est le point) :
+     ere-notation   couloir-vaes512.asm        a2c3a393… (recalculée)
+     ere-schedule   couloir_sched512.S         084a5854…
+     ere-portage    couloir_vaes512.c          4f457197…
+     ere-vecteurs   vecteurs-dores-nist.json   195d34dc…
+   Les empreintes RECALCULÉES des octets mêmes des pièces portées (jamais
+   recopiées du texte) ; la notation recoupée a2c3a393… == l'empreinte
+   consignée AVANT l'exécutable au plan W29VAES512 ; a-emporter/ assemblé
+   (la charge + la notation + le signeur + la clé publique + le pas-à-pas
+   hors-ligne : le maître RE-VÉRIFIE la notation à sa machine avant de
+   signer — le sceau honnête).
+
+3. LA CONTINUITÉ DE CLÉ (D163) : la clé publique I PORTÉE au harnais
+   byte-byte (38d8db57…, la clé des 14 arbres du sceau) — l'ère se signe
+   À LA MÊME CLÉ que le sceau de l'Intention ; une signature qui ne tient
+   pas à cette clé est refusée nommément SIGNATURE-INVALIDE (l'autre clé
+   n'est pas une option silencieuse : la continuité est le point).
+
+4. L'AUTOTEST À LA CLÉ DE TEST, TOUT VERT AU BAC (la graine PUBLIQUE
+   CONSTANTE — l'état « test » visible : sa non-sécurité EST la preuve
+   qu'aucune clé réelle ne vit au bac) : le manifeste + la charge +
+   a-emporter ✓ ; la signature à la clé de test ✓ ; la vérification à la
+   clé publique de test (toutes les signatures vertes) ✓ ; LA SIGNATURE
+   MUÉE REFUSÉE ✓ ; LA CHARGE MUÉE REFUSÉE (puis la charge honnête
+   réécrite) ✓ ; l'installation du sceau (en zone éphémère, jamais au
+   kit) + le zip ✓ ; le rejeu idempotent ✓ ; les vecteurs RFC 8032
+   TEST 1-3 VERT + la mutation ATTRAPÉE ✓. LES RÉSIDUS des passes
+   antérieures (les signatures de TEST écrites au répertoire courant par
+   le signeur avant le chdir) RANGÉS aux preuves-labo, JAMAIS au kit.
+
+5. LA GARDE (D87/D183) : LE LABORATOIRE NE SIGNE JAMAIS — le sceau réel ne
+   vit que des mains du maître (hors-ligne, à sa clé) ; la clé privée
+   réelle n'entre jamais au bac ; aucun secret committé ; la notation
+   couloir-vaes512.asm INTACHE byte-byte ; AUCUNE pièce scellée touchée
+   (la notation ymm 7911d03f… intacte ; le sceau-I 14/14 avant et après) ;
+   le sceau de test étiqueté TEST vivant en zone éphémère.
+
+LES PIÈCES : kit/ (CEREMONIE-ICI.bat, gui_ceremonie.py, moteur_ceremonie.py
+[387 lignes], signeur_hors_ligne.py [367 lignes], harnais/ [6 fichiers au
+MANIFESTE-ere.txt], LISEZMOI-CEREMONIE-ERE.txt), preuves-labo/
+(autotest-final.txt, signatures-TEST-residuelles.txt), le présent rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  cd atelier-ceremonie-ere-v100/kit
+  python3 moteur_ceremonie.py --autotest    # TOUT VERT (la clé de test)
+  python3 signeur_hors_ligne.py autotest     # les vecteurs RFC 8032
+  python3 ../../v06/sceau_I.py verifier      # la garde (14/14)
+
+AU MAÎTRE (le LISEZMOI du kit porte le pas-à-pas complet) :
+  CEREMONIE-ICI.bat → 1 Préparer → a-emporter/ à la machine hors-ligne →
+  python3 signeur_hors_ligne.py signer ere-vaes512-a-signer.txt cle-I-privee.txt
+  → signatures-I.txt rapporté → 3 Vérifier → 4 Installer → le zip au coffre /test.

@@ -1,0 +1,70 @@
+[manifeste] VERT — les pièces de l'ère recoupées byte-byte
+  [VERT] couloir-vaes512.asm a2c3a39323f15649… == consigné
+  [VERT] couloir_sched512.S 084a58542051bd48… == consigné
+  [VERT] couloir_vaes512.c 4f457197c8a3ebe0… == consigné
+  [VERT] vecteurs-dores-nist.json 195d34dc095552ec… == consigné
+  [VERT] cle-publique-I.txt 38d8db577fca5135… == consigné
+  [charge] ere-notation   couloir-vaes512.asm        a2c3a39323f15649cd5e4898ad40f008…
+  [charge] ere-schedule   couloir_sched512.S         084a58542051bd48e3f06ae20b031d9e…
+  [charge] ere-portage    couloir_vaes512.c          4f457197c8a3ebe0ab493626822d479f…
+  [charge] ere-vecteurs   vecteurs-dores-nist.json   195d34dc095552ec901b479ee08ba4b0…
+[charge] ere-vaes512-a-signer.txt écrite (4 lignes)
+[a-emporter] assemblé : 5 pièces (la charge, la notation, le signeur, la clé publique, le pas-à-pas)
+[autotest] VERT — le manifeste + la charge + a-emporter (les empreintes recalculées)
+  RFC 8032 TEST 1 : VERT (message 0 octet(s))
+  RFC 8032 TEST 2 : VERT (message 1 octet(s))
+  RFC 8032 TEST 3 : VERT (message 2 octet(s))
+  mutation un octet : ATTRAPÉE (la vérification doit rejeter)
+
+[signeur] signer : 4 signatures -> signatures-I.txt
+  Chaque signature a été VÉRIFIÉe avec la clé publique avant écriture.
+  Remettez signatures-I.txt au kit (le bouton « Vérifier la signature »).
+[autotest] VERT — la signature à la CLÉ DE TEST (la graine publique, l'état test visible)
+  [VERT] ere-notation couloir-vaes512.asm
+  [VERT] ere-schedule couloir_sched512.S
+  [VERT] ere-portage couloir_vaes512.c
+  [VERT] ere-vecteurs vecteurs-dores-nist.json
+[autotest] VERT — la vérification à la clé publique I (la continuité)
+  [ROUGE] ere-notation couloir-vaes512.asm
+  [VERT] ere-schedule couloir_sched512.S
+  [VERT] ere-portage couloir_vaes512.c
+  [VERT] ere-vecteurs vecteurs-dores-nist.json
+[autotest] VERT — la signature muée REFUSÉE
+  [ROUGE] ere-notation couloir-vaes512.asm
+  [ROUGE] ere-schedule couloir_sched512.S
+  [ROUGE] ere-portage couloir_vaes512.c
+  [ROUGE] ere-vecteurs vecteurs-dores-nist.json
+[manifeste] VERT — les pièces de l'ère recoupées byte-byte
+  [VERT] couloir-vaes512.asm a2c3a39323f15649… == consigné
+  [VERT] couloir_sched512.S 084a58542051bd48… == consigné
+  [VERT] couloir_vaes512.c 4f457197c8a3ebe0… == consigné
+  [VERT] vecteurs-dores-nist.json 195d34dc095552ec… == consigné
+  [VERT] cle-publique-I.txt 38d8db577fca5135… == consigné
+  [charge] ere-notation   couloir-vaes512.asm        a2c3a39323f15649cd5e4898ad40f008…
+  [charge] ere-schedule   couloir_sched512.S         084a58542051bd48e3f06ae20b031d9e…
+  [charge] ere-portage    couloir_vaes512.c          4f457197c8a3ebe0ab493626822d479f…
+  [charge] ere-vecteurs   vecteurs-dores-nist.json   195d34dc095552ec901b479ee08ba4b0…
+[charge] ere-vaes512-a-signer.txt écrite (4 lignes)
+[a-emporter] assemblé : 5 pièces (la charge, la notation, le signeur, la clé publique, le pas-à-pas)
+[autotest] VERT — la charge muée REFUSÉE (puis la charge honnête réécrite)
+  [VERT] ere-notation couloir-vaes512.asm
+  [VERT] ere-schedule couloir_sched512.S
+  [VERT] ere-portage couloir_vaes512.c
+  [VERT] ere-vecteurs vecteurs-dores-nist.json
+[installer] ere-vaes512-sceau.txt écrit (2255 octets)
+[installer] preuves-ceremonie-20261127T052542Z.zip (3047 o) — à déposer au coffre /test
+[autotest] VERT — l'installation du sceau + le zip
+  [VERT] ere-notation couloir-vaes512.asm
+  [VERT] ere-schedule couloir_sched512.S
+  [VERT] ere-portage couloir_vaes512.c
+  [VERT] ere-vecteurs vecteurs-dores-nist.json
+[installer] ere-vaes512-sceau.txt écrit (2255 octets)
+[installer] preuves-ceremonie-20261127T052542Z.zip (3047 o) — à déposer au coffre /test
+[autotest] VERT — le rejeu idempotent de l'installation
+[signeur] l'autotest des vecteurs RFC 8032 :
+  RFC 8032 TEST 1 : VERT (message 0 octet(s))
+  RFC 8032 TEST 2 : VERT (message 1 octet(s))
+  RFC 8032 TEST 3 : VERT (message 2 octet(s))
+  mutation un octet : ATTRAPÉE (la vérification doit rejeter)
+
+[autotest] TOUT VERT — la cérémonie attend la clé du maître

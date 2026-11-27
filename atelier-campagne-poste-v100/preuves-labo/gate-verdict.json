@@ -1,0 +1,63 @@
+{
+ "horodatage": "2026-11-27T05:19:03Z",
+ "modele": "Qwen/Qwen2.5-Coder-7B-Instruct",
+ "empreinte_tokenizer_json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+ "empreinte_config_json": "c0242402ad6a13b331ea320feea8c7e3776ffb7a4eff0757b9cd667e116d9a28",
+ "decodeur": "llguidance 1.9.1",
+ "schema": "D264/OPT-16 étendu à ajouter (union éditer/ajouter)",
+ "probes": [
+  {
+   "nom": "op-hors-enum",
+   "la_violation": "SUBVERSION-HORS-ENUM",
+   "au_masque": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "refusee_au_decodage": true,
+   "les_honnetes_au_masque": {
+    "substituer": [
+     true,
+     false,
+     false
+    ],
+    "mov": [
+     true
+    ]
+   },
+   "honnets_autorises": false
+  },
+  {
+   "nom": "offset-hors-bornes",
+   "la_violation": "999999 (> 65535, la borne du juge)",
+   "apres_65535_chiffre_au_masque": [
+    false
+   ],
+   "apres_9999_suite_9_au_masque": [
+    false
+   ],
+   "refusee_au_decodage": true
+  },
+  {
+   "nom": "cle-hors-schema",
+   "la_violation": "subversion (clé inconnue)",
+   "au_masque": [
+    false,
+    false
+   ],
+   "refusee_au_decodage": true
+  }
+ ],
+ "controle_positif": {
+  "is_accepting": true,
+  "is_error": false
+ },
+ "controle_positif_editer": {
+  "is_accepting": true,
+  "is_error": false
+ },
+ "VERDICT": "GATE-VERT — LE DÉCODEUR CLIENT REFUSE LA VIOLATION AU DÉCODAGE (au masque de bits, pas seulement au validateur) ; les objets honnêtes consommés jusqu'à l'acceptation."
+}

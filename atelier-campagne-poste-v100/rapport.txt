@@ -1,0 +1,119 @@
+ATELIER CAMPAGNE-POSTE-V100 — LE KIT 1-CLIC DE LA CAMPAGNE AU POSTE RÉEL
+(W29DECCO + W29FAMILLE au geste compute), L'AUTOTEST MAQUETTE TOUT VERT
+(27/11/2026, la SUITE de l'Entrée 442 : « les campagnes au geste compute du
+poste réel (la campagne contrainte du plan w29decco, la seconde famille du
+plan w29famille — les harnais livrés) », la commande du maître « va enchainer
+sur la campagne au poste réel puis cérémonie, comme d'habitude avec GUI 1
+clic » ; le plan gelé PLAN-CAMPAGNE-POSTE.md, sha256 57d9a276… consigné à
+EMPREINTES-PLANS-POSTE-V100.txt, le commit AVANT toute pièce de kit)
+
+1. LE KIT (un dossier auto-suffisant, LE CLIC UNIQUE — les patrons vécus des
+   pousseur/cockpit/kit terrain) : COMMENCER-ICI.bat (il trouve Python
+   3.10+, bât le venv, installe llguidance + tokenizers + keystone-engine +
+   capstone, ouvre la GUI) → gui_campagne.py (tkinter, stdlib seule, zéro
+   pip — le patron ceremonie_gui.py : CINQ boutons, le journal du moteur en
+   direct) → moteur_campagne.py (LE MOTEUR : toute la logique, CLI vivable —
+   la GUI ne fait que l'appeler, le moteur porte tout le poids du geste) ;
+   harnais/ aux 25 PIÈCES GELÉES au MANIFESTE sha256 recoupé AU CHARGEMENT
+   byte-byte (PIÈCE-DIVERGENTE est le refus) : le juge D264 expandeur_add.py
+   INTACT (9fc325e2…), le round-trip client_gabarits_rt.py, les 18 tâches
+   taches-edition.json + les 18 notations .asm aux empreintes recoupées
+   (loupe-06-md5 c8302dd7… et loupe-05-sha256 93977b05… == les empreintes
+   consignées au registre W29FAMILLE — le recoup croisé), le tokenizer.json
+   (c0382117…) + le config.json (c0242402…) du modèle choisi, les cibles
+   pré-inscrites, les 128 constantes du volet spec ; maquette_endpoint.py
+   (le bord scripté de l'autotest) ; LISEZMOI-CAMPAGNE-POSTE.txt (le
+   pas-à-pas : servir le modèle, le clic, le retour du zip au coffre /test).
+
+2. LE DÉCODAGE CONTRAINT CÔTÉ CLIENT (la lettre du plan W29DECCO) : la
+   grammaire du schéma D264/OPT-16 étendu compilée par llguidance 1.9.1 sur
+   le vocabulaire du modèle choisi ; LE MASQUE DE BITS appliqué à CHAQUE
+   PAS : MODE-A transformers (in-process — le masque aux LOGITS ENTIERS,
+   le mot à mot du plan) et MODE-B llama.cpp (le bord natif /completion,
+   n_predict=1, n_probs=64, cache_prompt — le masque au TOP-64 : la
+   meilleure PERMISE au top-64, AUCUNE-PERMISE = le pas REFUSÉ fail-closed,
+   nommé — l'écart nommé au registre). LE BUDGET usage natif JOURNALISÉ
+   (le compte est le LOG : le tokenizer NATIF du modèle compte le prompt et
+   la réponse de chaque tour ; la garde brute en sus).
+
+3. LES PHASES (chaque phase PRÉCÉDÉE du canari — le garde continu) :
+   ÉDITER au protocole OPT-16 RECONDUIT VERBATIM (le prompt, la validation
+   client aux refus nommés HORS-FORMAT/SCHÉMA-VIOLÉ/POINTEUR-INCONNU/
+   EMPREINTE-DIVERGENTE + ROUND-TRIP-DIVERGENT, l'expansion, le round-trip
+   keystone↔capstone, la boucle ≤ 3 tours réinjectant le refus exact) ;
+   AJOUTER au harnais D264 RECONDUIT VERBATIM (les fixtures du juge,
+   valider_schema_client, la boucle du juge, l'agrégateur fail-closed
+   APPEL-MANQUANT, les deux conventions de médiane, la re-tokenisation
+   indépendante à écart ≤ 1) ; LA SECONDE FAMILLE aux deux sondes de
+   récitation (MD5 T[64], SHA-256 K[64] — le schéma de récitation gelé au
+   plan : l'objet {"table", "valeurs"} aux 64 chaînes « 0x » à 8 hex, le
+   masque force la forme) + la confrontation tripartite spec ↔ le modèle ↔
+   les définitions (recalculées au poste par la dérivation aux décimales +
+   la racine cubique par Newton — le code du W29FAMILLE reconduit).
+
+4. L'AUTOTEST À LA MAQUETTE, TOUT VERT AU BAC (le chemin vert de W27DECCO
+   reconduit — la maquette est l'INSTRUMENT, jamais la mesure : AUCUN
+   chiffre de campagne ne sort d'elle) : le manifeste recoupé ✓ ; le juge
+   intact ✓ ; le gate GATE-VERT (la violation refusée AU MASQUE, les objets
+   honnêtes consommés jusqu'à l'acceptation) ✓ ; LE CANARI : la violation
+   tentée AU TOP-1 du bord maqué au point de rupture de l'op — le masque
+   REFUSE, l'honnête au rang 2 choisi, le journal documente le refus nommé
+   par pas (preuves-labo/autotest-final.txt + journal-pas.jsonl) ✓ ; l'éditer
+   honnête BOUT EN BOUT (la tâche 1 canonique : le masque, la boucle, la
+   validation, l'expansion, le round-trip, le journal) ✓ ; l'ajouter honnête
+   BOUT EN BOUT (le pointeur 1 du juge) ✓ ; la récitation contrainte ✓ ;
+   les quatre négatifs du client refusés nommément ✓. L'ORCHESTRATION éprouvée
+   à part (la campagne() entière sur mini-phases réelles : le canari avant
+   chaque phase, le registre, le verdict global, VERT).
+
+5. LES TROIS LEÇONS DE PASSE NOMMÉES AU SOURCE (chacune trouvée par
+   l'épreuve de la maquette, la discipline reconduite) :
+   (1) L'UNION VRAIE DU SCHÉMA : le schéma CODÉ du harnais livré
+       (atelier-w29decco/campagne_w29.py) typait dst en CHAÎNE SEULE —
+       l'objet pointeur du juge D264 (dst {type, valeur}) y était
+       IRREPRÉSENTABLE ; la LETTRE du plan (« dst/src du dictionnaire
+       typé ») exige l'union vraie : dst chaîne (l'éditer) OU objet
+       (l'ajouter) — le kit porte l'union vraie, les sondes du gate
+       reconduites VERBATIM (leurs formes demeurent permises) ;
+   (2) L'ORDRE DES CLÉS : la grammaire compilée EXIGE l'ordre du schéma
+       gelé [op, dst, offset, src] — le script de la maquette et l'exemple
+       du prompt ajouter alignés dessus ;
+   (3) LE CANARI AUX ÉTATS DE LA VIOLATION : la tentative de violation ne
+       vit qu'AUX ÉTATS où elle est une violation (l'op hors enum, l'offset
+       hors bornes) — au-dedans d'une valeur de chaîne TOUT est permis par
+       la grammaire (le contenu libre est laissé à la validation sémantique
+       : le round-trip, l'attendu) ; la maquette ne tente la violation que
+       pendant que la sortie EST exactement un préfixe de celle-ci : le
+       refus documenté au journal, la tentative morte ensuite.
+   L'ALIGNEMENT de la maquette : le SUFFIXE du prompt lu au PRÉFIXE du
+   script à chaque pas (jamais un compteur fragile — la position vécue).
+
+6. LA GARDE : aucun secret dans le kit ; aucune cible re-tirée (les cibles
+   pré-inscrites PORTÉES au harnais, recoupées au manifeste) ; aucune graine
+   re-tirée (20261117 l'éditer, 20261124 l'ajouter — les graines des plans
+   gelés) ; le juge D264 INTACT à l'empreinte consignée (recoupé avant et
+   après) ; AUCUN chiffre de campagne fabriqué au bac (l'autotest maquette
+   éprouve la MÉCANIQUE, la mesure appartient au poste réel) ; le sceau-I
+   14/14 avant et après ; la FENÊTRE GUI ne peut être vécue au bac (aucun
+   display — l'écart nommé au pousseur de l'Entrée 430 reconduit : le
+   moteur porte tout le poids du geste, la GUI suit les patrons vécus).
+
+LES PIÈCES : kit/ (COMMENCER-ICI.bat, gui_campagne.py, moteur_campagne.py
+[1299 lignes], maquette_endpoint.py [255 lignes], harnais/ [26 fichiers au
+MANIFESTE], LISEZMOI-CAMPAGNE-POSTE.txt), preuves-labo/ (autotest-final.txt,
+journal-pas.jsonl [la preuve du canari pas à pas], journal-campagne.jsonl,
+garde-brut.jsonl, gate-verdict.json, registre-campagne.json [l'épreuve
+d'orchestration], preuves-campagne-20261127T051750Z.zip), le présent
+rapport.
+
+COMMANDES EXACTES (au bac, dépôt à la racine) :
+  cd atelier-campagne-poste-v100/kit
+  python3 moteur_campagne.py --verifier-kit     # le manifeste 25/25
+  python3 moteur_campagne.py --gate              # GATE-VERT
+  python3 moteur_campagne.py --autotest          # TOUT VERT (la maquette)
+  python3 ../v06/sceau_I.py verifier             # la garde (14/14)
+
+AU POSTE RÉEL (le LISEZMOI du kit porte le pas-à-pas complet) :
+  servir Qwen2.5-Coder-7B-Instruct (llama-server -m <gguf> --port 8080 -c
+  8192, ou le MODE-A transformers au chemin local) ; COMMENCER-ICI.bat ;
+  les cinq boutons dans l'ordre ; le zip de preuves au coffre /test.

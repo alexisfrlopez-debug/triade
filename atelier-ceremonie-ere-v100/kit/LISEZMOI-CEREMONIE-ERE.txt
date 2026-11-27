@@ -1,0 +1,99 @@
+================================================================================
+TRIADE — LE KIT DE LA CÉRÉMONIE D'ÈRE DE couloir-vaes512.asm (v100) — LE PAS-À-PAS
+================================================================================
+
+LA DETTE NOMMÉE À LA NAISSANCE (PLAN-W29VAES512, la vague 29) : « l'ère n'est
+scellée que par la clé hors-ligne du développeur — le laboratoire ne signe
+jamais (D87/D183) ». La notation couloir-vaes512.asm (sha256 a2c3a393…) vit
+SUR COPIE LABORATOIRE, exécutable et éprouvée (la porte CAVP 20/20 contre
+EVP octet pour octet aux deux bras) ; le sceau d'ère ne vit QUE des mains du
+maître. LA CONTINUITÉ DE CLÉ (D163) : l'ère se signe À LA MÊME CLÉ que le
+sceau de l'Intention — la clé qui signe les 14 arbres (m0-m8, tls13, loupe,
+demo, terrain, v06) signe l'ère.
+
+--------------------------------------------------------------------------------
+§ 1 — LE CLIC UNIQUE ET LES QUATRE BOUTONS
+--------------------------------------------------------------------------------
+
+  LE CLIC : CEREMONIE-ICI.bat (il trouve Python 3.8+, ouvre la GUI — tkinter
+  seul, AUCUNE dépendance à installer).
+
+  1 · PRÉPARER LA CHARGE — le manifeste recoupé byte-byte (les pièces de
+      l'ère : la notation a2c3a393…, le schedule .S, le portage C, les 20
+      vecteurs CAVP, la clé publique I), LA CHARGE écrite (les empreintes
+      RECALCULÉES des octets mêmes) :
+        ere-notation   couloir-vaes512.asm        <sha256>
+        ere-schedule   couloir_sched512.S         <sha256>
+        ere-portage    couloir_vaes512.c          <sha256>
+        ere-vecteurs   vecteurs-dores-nist.json   <sha256>
+      et A-EMPORTER/ assemblé : la charge + la notation + le signeur
+      autoporteur + la clé publique + le pas-à-pas hors-ligne.
+  2 · GUIDER LA SIGNATURE — le guide affiché (le flux ci-dessous § 2) ;
+  3 · VÉRIFIER LA SIGNATURE — chaque signature contre la charge + LA CLÉ
+      PUBLIQUE I (la continuité : une signature d'une autre clé est
+      refusée nommément SIGNATURE-INVALIDE) ;
+  4 · INSTALLER LE SCEAU D'ÈRE — ere-vaes512-sceau.txt (la charge + les
+      signatures + la vérification + l'horodatage) + le zip
+      preuves-ceremonie-<horodatage>.zip À DÉPOSER AU COFFRE /test.
+
+--------------------------------------------------------------------------------
+§ 2 — LA SIGNATURE HORS-LIGNE (le geste du maître, jamais du laboratoire)
+--------------------------------------------------------------------------------
+
+  1. Copiez le DOSSIER a-emporter/ vers la machine hors ligne (clef USB,
+     papier) — la clé privée n'entre JAMAIS au bac à sable de l'assistant ;
+  2. À la machine hors ligne, RE-VÉRIFIEZ la notation (le sceau honnête) :
+     l'empreinte sha256 de couloir-vaes512.asm doit être a2c3a393… :
+       python3 signeur_hors_ligne.py autotest
+       certutil -hashfile couloir-vaes512.asm SHA256     (Windows)
+  3. SIGNEZ la charge À VOTRE CLÉ du sceau (la continuité D163) :
+       python3 signeur_hors_ligne.py signer ere-vaes512-a-signer.txt cle-I-privee.txt
+     — ou l'OUTIL DU DÉPÔT (v06/ceremonie_hors_ligne.py, la référence) : la
+     charge « nom balise empreinte » est SA FORME même, il la signe TELLE
+     QUELLE, sans adaptation ;
+     -> signatures-I.txt (chaque signature auto-vérifiée avant écriture ;
+        l'autotest RFC 8032 § 7.1 doit passer avant tout geste — fail-closed) ;
+  4. Rapportez signatures-I.txt au kit : le bouton 3 puis le bouton 4.
+
+  LA GARDE (D87/D183) : le LABORATOIRE NE SIGNE JAMAIS — l'autotest du kit
+  s'éprouve à la CLÉ DE TEST (la graine publique constante : sa non-sécurité
+  EST la preuve de l'état laboratoire) ; le sceau de test vit en zone
+  éphémère, jamais confondu avec le sceau réel ; la clé privée réelle
+  n'entre jamais au bac ; aucun secret n'est committé.
+
+--------------------------------------------------------------------------------
+§ 3 — LES COMMANDES EXACTES (le moteur en CLI, la GUI ne fait que l'appeler)
+--------------------------------------------------------------------------------
+
+  python3 moteur_ceremonie.py --preparer
+  python3 moteur_ceremonie.py --verifier [signatures-I.txt]
+  python3 moteur_ceremonie.py --installer [signatures-I.txt]
+  python3 moteur_ceremonie.py --autotest        # la clé de test, ~15 secondes
+  python3 signeur_hors_ligne.py autotest        # les vecteurs RFC 8032
+
+  Hors ligne (dans a-emporter/) :
+  python3 signeur_hors_ligne.py signer ere-vaes512-a-signer.txt cle-I-privee.txt
+
+--------------------------------------------------------------------------------
+§ 4 — LE RETOUR AU COFFRE
+--------------------------------------------------------------------------------
+
+  Le zip preuves-ceremonie-<horodatage>.zip (le sceau + la charge + les
+  signatures + le manifeste) → le coffre Drive, dossier /test. Le labo y
+  lira le sceau, le committera au dépôt (atelier-w29vaes512/ere-vaes512-sceau.txt)
+  et consignera l'Entrée — l'ère VAES512 zmm sera scellée.
+
+--------------------------------------------------------------------------------
+LES PIÈCES DU KIT
+--------------------------------------------------------------------------------
+  CEREMONIE-ICI.bat        le clic unique (Python + GUI)
+  gui_ceremonie.py         la GUI (tkinter, zéro pip — 4 boutons, le journal)
+  moteur_ceremonie.py      LE MOTEUR (préparer · vérifier · installer · autotest)
+  signeur_hors_ligne.py    le signeur AUTOPORTEUR hors-ligne (l'Ed25519
+                           RFC 8032 de la référence v06, l'autotest fail-closed)
+  harnais/                 les pièces de l'ère au MANIFESTE sha256 :
+                           couloir-vaes512.asm (a2c3a393…), couloir_sched512.S,
+                           couloir_vaes512.c, vecteurs-dores-nist.json,
+                           cle-publique-I.txt (LA CLÉ DU SCEAU, la continuité)
+  LISEZMOI-CEREMONIE-ERE.txt   le présent pas-à-pas
+================================================================================

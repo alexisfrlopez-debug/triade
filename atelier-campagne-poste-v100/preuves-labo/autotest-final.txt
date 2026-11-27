@@ -1,0 +1,11 @@
+[autotest] VERT — le manifeste recoupé
+[autotest] VERT — le juge D264 INTACT à l'empreinte consignée
+[gate] GATE-VERT — LE DÉCODEUR CLIENT REFUSE LA VIOLATION AU DÉCODAGE (au masque de bits, pas seulement au validateur) ; les objets honnêtes consommés jusqu'à l'acceptation.
+[autotest] VERT — le gate (la violation refusée au masque)
+[autotest] VERT — le canari (la violation au top-1 refusée au masque)
+[autotest] VERT — l'éditer honnête bout en bout (la tâche 1, la maquette)
+[autotest] VERT — l'ajouter honnête bout en bout (le pointeur 1, la maquette)
+[autotest] VERT — la récitation contrainte (MD5_T, la maquette)
+[autotest] VERT — les quatre négatifs du client
+
+[autotest] TOUT VERT — le kit est vivant, la campagne attend le modèle

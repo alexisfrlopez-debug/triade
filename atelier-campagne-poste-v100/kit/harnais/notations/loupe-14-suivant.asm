@@ -1,0 +1,279 @@
+; loupe-14-suivant · bloc le suivant : le recouvrement de frontière, la FIN nommée · spec loupe-14:R1 · bloc carte i110014
+; Profil : x86-64-win11-pe · ABI msx64 · slot RVA 0x5800, taille 1024 octets
+; Domaine : loupe (M10, le TGN « Loupe ») · Dépendances : IAT kernel32 : SetFilePointerEx, ReadFile, GetLastError (E3 relayé) ; IAT user32 : InvalidateRect ; loupe-13 (le pur, fenêtre par fenêtre) ; loupe-02 (la fenêtre relue à l'occurrence) ; la zone MOTIF du plan (F3 reprend le dernier motif) ; LE RECOUVREMENT de frontière (Q3 : la fenêtre suivante commence à bord + 64 Kio − (longueur − 1) — l'occurrence à cheval JAMAIS manquée) ; TAMPON_CUMUL partagé (I1 : l'exclusion de famille)
+; Notation explicite générée par outils/auteur.py depuis brouillons/loupe-14-suivant.asm
+; (outil d'arithmétique d'adresses de l'auteur — keystone assemble, rien d'autre)
+; Code : 983 o · padding : 41 o (NOP, 0x90)
+; Étiquettes résolues : .touche=0x5832, .suivant_session=0x585c, .suivant_motif=0x5882, .caract=0x5891, .ouvrir=0x58a2, .ouvrir_session=0x58c2, .commit=0x58e6, .commit_session=0x5906, .commit_scan=0x5914, .commit_suite=0x5937, .commit_scan_fin=0x593f, .commit_pose=0x5967, .commit_pose_fin=0x5995, .commit_mal=0x59b0, .recherche=0x59c6, .fenetre=0x59de, .fenetre_len=0x59fb, .fenetre_depart=0x5a76, .trouve=0x5a8f, .fenetre_suivante=0x5a94, .rencontre=0x5ab5, .rencontre_recadre=0x5ada, .rencontre_pos=0x5ae8, .rencontre_vmax0=0x5b05, .rencontre_vmaxfin=0x5b07, .rencontre_clamp=0x5b0f, .rencontre_visible=0x5b2e, .fin_nomme=0x5b50, .refus_systeme=0x5b63, .refus_lecture=0x5b7d, .rien=0x5b92, .sortie=0x5b94, .hexval=0x5ba4, .hexval_chiffre=0x5bab, .message=0x5bae, .message_copie=0x5bb9, .message_fin=0x5bc9
+; Déplacements RIP (cible = adresse + taille + disp) :
+;   0x5812 + 0x7 + 0x87e7 = 0xe000
+;   0x5846 + 0x7 - 0x34b2 = 0x239b
+;   0x585c + 0x7 + 0x8bfd = 0xe460
+;   0x586c + 0x7 - 0x34b1 = 0x23c2
+;   0x58ac + 0x7 - 0x3518 = 0x239b
+;   0x58c2 + 0x7 + 0x8b37 = 0xe400
+;   0x58f0 + 0x7 - 0x355c = 0x239b
+;   0x5906 + 0x7 + 0x8af3 = 0xe400
+;   0x5953 + 0x7 + 0x8aa6 = 0xe400
+;   0x595e + 0x7 + 0x8afb = 0xe460
+;   0x5995 + 0x7 + 0x8ac4 = 0xe460
+;   0x59b0 + 0x7 - 0x35f5 = 0x23c2
+;   0x5a10 + 0x6 - 0x28ee = 0x3128
+;   0x5a37 + 0x7 + 0xa5c2 = 0x10000
+;   0x5a48 + 0x6 - 0x291e = 0x3130
+;   0x5a56 + 0x7 + 0xa5a3 = 0x10000
+;   0x5a62 + 0x7 + 0x89f7 = 0xe460
+;   0x5b2e + 0x7 + 0x88cb = 0xe400
+;   0x5b46 + 0x6 - 0x29ac = 0x31a0
+;   0x5b50 + 0x7 - 0x37a7 = 0x23b0
+;   0x5b63 + 0x6 - 0x2a21 = 0x3148
+;   0x5b69 + 0x7 + 0x8890 = 0xe400
+;   0x5b80 + 0x7 + 0x8879 = 0xe400
+;   0x5bae + 0x7 + 0x884b = 0xe400
+;   0x5bc9 + 0x7 + 0x8830 = 0xe400
+; Appels directs (l'adresse du plan — I1) : call 0x5bae, call 0x5bae, call 0x5bae, call 0x5bae, call 0x5ba4, call 0x5ba4, call 0x5bae, call qword ptr [rip - 0x28ee], call qword ptr [rip - 0x291e], call 0x5740, call 0x4240, call qword ptr [rip - 0x29ac], call 0x5bae, call qword ptr [rip - 0x2a21]
+push rbx
+push rdi
+push rsi
+push r12
+push r13
+push r14
+push r15
+sub rsp, 0x40
+mov r12, rcx
+lea rbx, [rip + 0x87e7]
+cmp rdx, 0x100
+je 0x5832
+cmp rdx, 0x102
+je 0x5891
+xor eax, eax
+jmp 0x5b94
+cmp r8d, 0x72
+jne 0x5b92
+cmp qword ptr [rbx + 528], -1
+jne 0x585c
+lea rsi, [rip - 0x34b2]
+call 0x5bae
+mov eax, -4
+jmp 0x5b94
+lea rax, [rip + 0x8bfd]
+mov r14d, dword ptr [rax + 32]
+test r14d, r14d
+jnz 0x5882
+lea rsi, [rip - 0x34b1]
+call 0x5bae
+mov eax, -5
+jmp 0x5b94
+mov r15, qword ptr [rbx + 544]
+inc r15
+jmp 0x59c6
+cmp r8d, 0x06
+je 0x58a2
+cmp r8d, 0x0d
+je 0x58e6
+jmp 0x5b92
+cmp qword ptr [rbx + 528], -1
+jne 0x58c2
+lea rsi, [rip - 0x3518]
+call 0x5bae
+mov eax, -4
+jmp 0x5b94
+lea rax, [rip + 0x8b37]
+mov dword ptr [rax], 2
+mov dword ptr [rax + 4], 0
+mov dword ptr [rax + 8], 0
+mov byte ptr [rax + 12], 0
+jmp 0x5b92
+cmp qword ptr [rbx + 528], -1
+jne 0x5906
+lea rsi, [rip - 0x355c]
+call 0x5bae
+mov eax, -4
+jmp 0x5b94
+lea rsi, [rip + 0x8af3]
+add rsi, 12
+xor r13d, r13d
+movzx eax, byte ptr [rsi]
+test eax, eax
+jz 0x593f
+cmp eax, 0x30
+jb 0x59b0
+cmp eax, 0x39
+jbe 0x5937
+cmp eax, 0x41
+jb 0x59b0
+cmp eax, 0x46
+ja 0x59b0
+inc r13d
+inc rsi
+jmp 0x5914
+test r13d, r13d
+jz 0x59b0
+test r13d, 1
+jnz 0x59b0
+cmp r13d, 64
+ja 0x59b0
+lea rsi, [rip + 0x8aa6]
+add rsi, 12
+lea rdi, [rip + 0x8afb]
+xor ecx, ecx
+cmp ecx, r13d
+jae 0x5995
+movzx eax, byte ptr [rsi]
+call 0x5ba4
+mov r10b, al
+movzx eax, byte ptr [rsi + 1]
+call 0x5ba4
+shl r10b, 4
+or al, r10b
+mov byte ptr [rdi], al
+add rsi, 2
+inc rdi
+add ecx, 2
+jmp 0x5967
+lea rax, [rip + 0x8ac4]
+mov edx, r13d
+shr edx, 1
+mov dword ptr [rax + 32], edx
+mov r14d, edx
+mov r15, qword ptr [rbx + 544]
+jmp 0x59c6
+lea rsi, [rip - 0x35f5]
+call 0x5bae
+mov eax, -5
+jmp 0x5b94
+cmp r15, qword ptr [rbx + 520]
+jae 0x5b50
+mov r13, r15
+shr r13, 16
+shl r13, 16
+mov rax, qword ptr [rbx + 520]
+sub rax, r13
+jbe 0x5b50
+cmp rax, 65536
+jbe 0x59fb
+mov eax, 65536
+mov qword ptr [rsp + 0x28], rax
+mov rcx, qword ptr [rbx + 528]
+mov rdx, r13
+xor r8d, r8d
+xor r9d, r9d
+call qword ptr [rip - 0x28ee]
+test eax, eax
+jz 0x5b63
+mov qword ptr [rsp + 0x20], 0
+mov qword ptr [rsp + 0x30], 0
+mov rcx, qword ptr [rbx + 528]
+lea rdx, [rip + 0xa5c2]
+mov r8, qword ptr [rsp + 0x28]
+lea r9, [rsp + 0x30]
+call qword ptr [rip - 0x291e]
+test eax, eax
+jz 0x5b63
+lea rcx, [rip + 0xa5a3]
+mov rdx, qword ptr [rsp + 0x30]
+lea r8, [rip + 0x89f7]
+mov r9d, r14d
+mov rax, r15
+sub rax, r13
+jns 0x5a76
+xor eax, eax
+mov qword ptr [rsp + 0x20], rax
+call 0x5740
+cmp eax, 0
+jge 0x5a8f
+cmp eax, -1
+je 0x5a94
+jmp 0x5b94
+add rax, r13
+jmp 0x5ab5
+mov rax, 65536
+sub rax, r14
+inc rax
+add r13, rax
+cmp r15, r13
+jae 0x59de
+mov r15, r13
+jmp 0x59de
+mov qword ptr [rbx + 544], rax
+mov rcx, qword ptr [rbx + 536]
+mov rdx, rcx
+mov r8d, dword ptr [rbx + 552]
+add rdx, r8
+cmp rax, rcx
+jb 0x5ada
+cmp rax, rdx
+jb 0x5b2e
+mov rcx, rax
+sub rcx, 176
+jns 0x5ae8
+xor ecx, ecx
+and rcx, -16
+mov rax, qword ptr [rbx + 520]
+sub rax, 384
+jbe 0x5b05
+add rax, 15
+and rax, -16
+jmp 0x5b07
+xor eax, eax
+cmp rcx, rax
+jbe 0x5b0f
+mov rcx, rax
+cmp rcx, qword ptr [rbx + 536]
+je 0x5b2e
+mov r15, rcx
+mov rcx, r15
+call 0x4240
+test eax, eax
+jnz 0x5b7d
+mov qword ptr [rbx + 536], r15
+lea rax, [rip + 0x88cb]
+mov dword ptr [rax], 0
+mov rcx, r12
+xor edx, edx
+mov r8d, 1
+call qword ptr [rip - 0x29ac]
+xor eax, eax
+jmp 0x5b94
+lea rsi, [rip - 0x37a7]
+call 0x5bae
+mov eax, -1
+jmp 0x5b94
+call qword ptr [rip - 0x2a21]
+lea rax, [rip + 0x8890]
+mov dword ptr [rax], 0
+mov eax, -6
+jmp 0x5b94
+mov r10d, eax
+lea rax, [rip + 0x8879]
+mov dword ptr [rax], 0
+mov eax, r10d
+jmp 0x5b94
+xor eax, eax
+add rsp, 0x40
+pop r15
+pop r14
+pop r13
+pop r12
+pop rsi
+pop rdi
+pop rbx
+ret
+cmp al, 0x39
+jbe 0x5bab
+sub al, 0x37
+ret
+sub al, 0x30
+ret
+lea rdi, [rip + 0x884b]
+add rdi, 12
+mov al, byte ptr [rsi]
+mov byte ptr [rdi], al
+test al, al
+jz 0x5bc9
+inc rsi
+inc rdi
+jmp 0x5bb9
+lea rax, [rip + 0x8830]
+mov dword ptr [rax], 3
+ret

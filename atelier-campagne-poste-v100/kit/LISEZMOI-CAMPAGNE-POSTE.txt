@@ -1,0 +1,131 @@
+================================================================================
+TRIADE — LE KIT DE CAMPAGNE AU POSTE RÉEL (v100) — LE PAS-À-PAS
+================================================================================
+
+La SUITE de l'Entrée 442 : les campagnes au geste compute du poste réel (la
+campagne contrainte du plan W29DECCO, la seconde famille du plan W29FAMILLE).
+Le bac ne peut PAS courir le modèle (4 Gio / 2 vCPU / aucun GPU — la limite
+structurelle nommée aux plans gelés) : CE POSTE porte le geste. Les plans
+gelés sont LA LOI : aucune cible re-tirée, aucune graine re-tirée, aucun
+chiffre fabriqué — un échec mesuré est une pièce aussi précieuse qu'un vert.
+
+LE MODÈLE CHOISI (consigné au plan, les empreintes au manifeste) :
+  Qwen/Qwen2.5-Coder-7B-Instruct (Hugging Face)
+  tokenizer.json + config.json portés byte-byte au harnais du kit.
+
+--------------------------------------------------------------------------------
+§ 1 — SERVIR LE MODÈLE EN LOCAL (AVANT LE CLIC)
+--------------------------------------------------------------------------------
+
+MODE-B (recommandé — le bord natif llama.cpp) :
+  1. Télécharge llama.cpp (llama-server) : https://github.com/ggml-org/llama.cpp
+     (les releases Windows : llama-<version>-bin-win-cpu-x64.zip, ou
+      -bin-win-cuda-cu12.x-x64.zip si le poste porte un GPU NVIDIA) ;
+  2. Télécharge le GGUF du modèle choisi, par exemple :
+     Qwen2.5-Coder-7B-Instruct-GGUF (une quantification Q4_K_M ~4,7 Go,
+     ou Q6_K ~6,4 Go — la qualité au choix du poste) ;
+  3. Lance le serving :
+       llama-server.exe -m Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf ^
+         --port 8080 -c 8192 -ngl 99
+     (-ngl 99 : les couches au GPU ; sans GPU, retire l'option)
+  4. Vérifie : http://127.0.0.1:8080/health doit répondre.
+  → Dans la GUI : Mode « B », l'endpoint http://127.0.0.1:8080, top-n 64.
+
+MODE-A (l'exactitude intégrale — le masque aux LOGITS ENTIERS du modèle) :
+  1. Installe torch + transformers dans le venv du kit (§ 3 ci-dessous) ;
+  2. Télécharge le modèle du Hugging Face (le dossier complet : les safetensors,
+     le tokenizer, le config — ~15 Go en bf16) vers un dossier local ;
+  → Dans la GUI : Mode « A », le chemin du dossier du modèle.
+  NOTE : le MODE-A est le mot à mot du plan (« le harnais applique la grammaire
+  au masque de logits du modèle ») ; le MODE-B applique le masque au top-64 du
+  bord (la meilleure permise au top-64 ; AUCUNE permise = le pas REFUSÉ
+  fail-closed, nommé AUCUNE-PERMISE — l'écart est nommé au registre).
+  Les DEUX modes sont des mesures honnêtes : le registre porte le mode.
+
+--------------------------------------------------------------------------------
+§ 2 — LE CLIC UNIQUE ET LES CINQ BOUTONS
+--------------------------------------------------------------------------------
+
+  LE CLIC : COMMENCER-ICI.bat
+  (il trouve Python 3.10+, bât le venv .venv, installe llguidance + tokenizers
+   + keystone-engine + capstone, ouvre la GUI — tkinter, rien d'autre).
+
+  1 · Vérifier le kit — le manifeste recoupé byte-byte AU CHARGEMENT :
+      les 25 pièces gelées (le juge D264 expandeur_add.py INTACT à
+      9fc325e2…, le round-trip, les 18 tâches, les 18 notations, le
+      tokenizer du modèle, les cibles pré-inscrites, les 128 constantes).
+      PIÈCE-DIVERGENTE est le refus : une pièce divergente ne court pas.
+  2 · Le gate — la sonde du décodeur client : la violation ordonnée
+      (l'op hors enum, l'offset hors bornes, la clé hors schéma) REFUSÉE
+      AU MASQUE DE BITS, pas seulement au validateur ; les objets honnêtes
+      consommés jusqu'à l'acceptation. GATE-VERT requis.
+  3 · Le canari — la violation ordonnée soumise à LA PIPELINE ENTIÈRE :
+      si elle passe au texte final : PIPELINE-INFIDELE, la session est
+      invalidée fail-closed, AUCUNE campagne courue.
+  4 · LA CAMPAGNE — les trois phases, le canari re-vécu avant CHAQUE
+      phase (le garde continu) :
+        ÉDITER : les 18 tâches au protocole OPT-16 (la boucle de réparation
+          ≤ 3 tours, le round-trip keystone↔capstone, le budget usage natif
+          journalisé — le compte est le LOG) ;
+        AJOUTER : les 18 pointeurs au harnais D264 (l'agrégateur
+          fail-closed, les deux conventions de médiane) ;
+        LA SECONDE FAMILLE : les deux sondes de récitation (MD5 T[64],
+          SHA-256 K[64]) + la confrontation tripartite spec ↔ le modèle ↔
+          les définitions (recalculées au poste par le moteur).
+      Les verdicts aux CIBLES PRÉ-INSCRITES (jamais re-tirées) :
+        éditer ≥ 17/18 à ≤ 150 tokens médians par changement validé ;
+        CIB-EDIT-FAISAB ≥ 15/18 ; CIB-EDIT-AMORTI ≤ 150 ;
+        ajouter CIB-ADD-STRUC ≥ 15/18 à ≤ 3 000 tokens ;
+        la famille : X/128 identiques (la mesure, jamais maquillée).
+  5 · Le zip de preuves — preuves-campagne-<horodatage>.zip (le journal des
+      appels, le journal des pas, la garde brute, le registre, le verdict du
+      gate, les cibles) : À DÉPOSER AU COFFRE /test du Drive.
+
+  AVANT LA CAMPAGNE, l'autotest maquette est VIVABLE SANS MODÈLE (recommandé
+  au poste aussi : il éprouve la mécanique — le masque, la boucle, le juge,
+  le journal — sur un bord scripté, en ~30 secondes) :
+      .venv\Scripts\python.exe moteur_campagne.py --autotest
+
+--------------------------------------------------------------------------------
+§ 3 — LES COMMANDES EXACTES (le moteur en CLI, la GUI ne fait que l'appeler)
+--------------------------------------------------------------------------------
+
+  .venv\Scripts\python.exe moteur_campagne.py --verifier-kit
+  .venv\Scripts\python.exe moteur_campagne.py --gate
+  .venv\Scripts\python.exe moteur_campagne.py --autotest
+  .venv\Scripts\python.exe moteur_campagne.py --canari  --mode B --url http://127.0.0.1:8080
+  .venv\Scripts\python.exe moteur_campagne.py --campagne --mode B --url http://127.0.0.1:8080
+  .venv\Scripts\python.exe moteur_campagne.py --campagne --mode A --modele C:\chemin\vers\Qwen2.5-Coder-7B-Instruct
+  .venv\Scripts\python.exe moteur_campagne.py --zip
+
+  Le MODE-A en sus (torch + transformers) :
+      .venv\Scripts\pip.exe install torch transformers
+  (au CPU : la version CPU de torch suffit ; au GPU NVIDIA : la roue CUDA —
+   la commande vit à pytorch.org/get-started/locally/)
+
+--------------------------------------------------------------------------------
+§ 4 — LE RETOUR AU COFFRE
+--------------------------------------------------------------------------------
+
+  Le zip de preuves (bouton 5) → le coffre Drive, dossier /test.
+  Le registre porte le mode, les paramètres, les refus nommés — le labo y
+  lira les verdicts TELS QUELS (tenue ou manquée, jamais habillée) et
+  portera les lignes aux registres du dépôt (CIBLES.md, le worklog).
+
+  En cas de ROUGE (un refus nommé, une pièce divergente, un bord injoignable)
+  : le journal revient TEL QUEL — un échec nommé vaut plus qu'un vert muet.
+
+--------------------------------------------------------------------------------
+LES PIÈCES DU KIT
+--------------------------------------------------------------------------------
+  COMMENCER-ICI.bat        le clic unique (Python + venv + deps + GUI)
+  gui_campagne.py          la GUI (tkinter, zéro pip — 5 boutons, le journal)
+  moteur_campagne.py       LE MOTEUR (toute la logique — CLI vivable)
+  maquette_endpoint.py     le bord scripté de l'autotest (sans modèle)
+  harnais/                 les 25 pièces gelées au MANIFESTE sha256 :
+                          expandeur_add.py (le juge D264 INTACT), le
+                          round-trip, les 18 tâches + 18 notations, le
+                          tokenizer + le config du modèle choisi, les cibles
+                          pré-inscrites, les 128 constantes (le volet spec)
+  LISEZMOI-CAMPAGNE-POSTE.txt   le présent pas-à-pas
+================================================================================

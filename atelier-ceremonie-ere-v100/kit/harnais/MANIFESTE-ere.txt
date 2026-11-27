@@ -1,0 +1,9 @@
+# MANIFESTE-ERE — les pièces de la cérémonie d'ère de couloir-vaes512.asm (v100)
+# Le labo consigne ; le moteur recoupe AU CHARGEMENT byte-byte (PIÈCE-DIVERGENTE est le refus).
+# La notation couloir-vaes512.asm : a2c3a393… (consignée AVANT l'exécutable au plan W29VAES512).
+# cle-publique-I.txt : LA CLÉ DU SCEAU (la continuité D163 — la clé des 14 arbres signe l'ère).
+a2c3a39323f15649cd5e4898ad40f008bea755b63432670166ebfd8f3e0e2d94  couloir-vaes512.asm
+084a58542051bd48e3f06ae20b031d9e9b84b0e2e0a01c4a58c9b1f04320b849  couloir_sched512.S
+4f457197c8a3ebe0ab493626822d479f93e67bc3ebc414a163b06a37372f2e7b  couloir_vaes512.c
+195d34dc095552ec901b479ee08ba4b06c213d05e7e238478bc36798a873ae76  vecteurs-dores-nist.json
+38d8db577fca5135356e7280c66b29a1302319b2bf08903faae1249fbf0ee1d0  cle-publique-I.txt

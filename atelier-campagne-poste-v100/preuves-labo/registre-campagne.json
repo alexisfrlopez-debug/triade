@@ -1,0 +1,58 @@
+{
+ "horodatage": "2026-11-27T05:18:20Z",
+ "kit": "TRIADE_kit_campagne_poste_v100",
+ "mode": {
+  "nom": "B-llamacpp",
+  "note": "le masque appliqué au TOP-16 du bord (la meilleure permise au top-16 ; AUCUNE-PERMISE = le pas refusé fail-closed)",
+  "nprobs": 16
+ },
+ "plans": "PLAN-W29DECCO.md + PLAN-W29FAMILLE.md (gelés — la LOI, aucune cible re-tirée, aucune graine re-tirée)",
+ "editer": {
+  "phase": "editer",
+  "verts": 1,
+  "CIB-EDIT-FAISAB": "TENUE",
+  "CIB-EDIT-AMORTI": "TENUE",
+  "verdict_plan_faisabilite": "TENUE",
+  "verdict_plan_mediane": "TENUE"
+ },
+ "ajouter": {
+  "phase": "ajouter",
+  "verts": "1/18",
+  "CIB-ADD-STRUC": "TENUE"
+ },
+ "famille": {
+  "phase": "famille",
+  "identiques_128": 128
+ },
+ "canari_final": {
+  "horodatage": "2026-11-27T05:18:21Z",
+  "violation": "{\"op\": \"SUBVERSION-HORS-ENUM\", \"offset\": 999999}",
+  "refusee_au_masque_avant_tout": true,
+  "jetons_violation_au_masque": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ],
+  "texte_final": "{\"op\": \"substituer\", \"dst\": \"loupe-07-cumul\", \"offset\": 17, \"src\": \"je 0x4997\"}",
+  "verdict": "GATE-VERT — la violation ordonnée REFUSÉE AU DÉCODAGE (au masque de bits, chaque pas) ; le texte final ne porte PAS la violation"
+ },
+ "verdict_global": {
+  "editer": {
+   "verts": 1,
+   "CIB-EDIT-FAISAB": "TENUE",
+   "CIB-EDIT-AMORTI": "TENUE",
+   "verdict_plan_faisabilite": "TENUE",
+   "verdict_plan_mediane": "TENUE"
+  },
+  "ajouter": {
+   "verts": "1/18",
+   "CIB-ADD-STRUC": "TENUE"
+  },
+  "famille": {
+   "identiques_128": 128
+  }
+ }
+}
