@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 448 — LA QUESTION DU « COLAB CLI » PORTÉE AU FAIT : AUCUNE voie d'exécution à distance ne lance un run Colab [la sonde au compte de service : l'API Colab Enterprise du projet : 404 aux deux lieux — le service n'est pas activé ; le Colab gratuit ne porte AUCUNE API de run ; le bac ne porte pas le modèle — 4 Gio / 2 vCPU / aucun GPU, la limite structurelle des plans gelés] — le geste compute ne part QUE du poste réel) ; LA CELLULE DE SECOURS 5 — LE RUN EN UNE SEULE CELLULE portée à la réponse et au dépôt [les CINQ étapes du plan gelé en commandes du moteur PUIS le retour au coffre reconduit — le zip au /test recoupé byte-byte ; le garde COFFRE-ABSENT fail-fast AVANT la campagne ; un ROUGE arrête la marche] ; l'épreuve TOUT VERT au bac [structure + gardes fail-fast + la chaîne complète close en 11,3 s contre la maquette 8641 — le kit pristine du coffre, le gate GATE-VERT, le canari GATE-VERT ×4, le registre REJOUÉ TEL QUEL : l'instrument, jamais la mesure] ; l'atelier atelier-campagne-colab-v103/ enrichi (la cellule + les deux preuves-labo) ; le worklog Entrée 448 au coffre et au dépôt ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 449 — LE TERRAIN.8 DU KIT COLAB : LA LOI DU RUNTIME NOMMÉE — « Tout exécuter » ne s'arrête JAMAIS à la GUI [il court les cellules 1 → 9 d'un trait ; la campagne ne court qu'AU CLIC des boutons, jamais seule] ET LA GUI N'EXPIRE JAMAIS [les widgets sous la cellule 6 demeurent vivants tant que le runtime vit — remonter cliquer 1 → 2 → 3 → 4 → 5 marche APRÈS le passage, puis re-exécuter la cellule 8] ; le recoup au coffre : AUCUN preuves-campagne-*.zip au /test — LA CAMPAGNE N'A JAMAIS COURU, aucune panne, le kit v103 INTACT ; le garde ZIP-ABSENT de la cellule 8 = l'ordre nommé reconduit du terrain.7 ; le coût nommé du « Tout exécuter » : la cellule 7 (MODE-A, ~15 Gio au cache HF) court aussi ; LA SECOURS 5 demeure la voie sans aucun clic ; l'écart des copies racine soldé [worklog 441 → 449, OU-TROUVER et REPRISE 444 → 449, recoupés byte-byte] ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -768,3 +768,39 @@ jamais à la croyance.
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
   maître ; la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du
   maître ; la vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 449 (27/11/2026) — LE TERRAIN.8 : LA LOI DU RUNTIME NOMMÉE, LA CAMPAGNE JAMAIS COURUE, LES DEUX CHEMINS RE-NOMMÉS
+
+Le terrain rapporté par le maître au runtime Colab — « SystemExit: ZIP-ABSENT … le bouton 5 de
+la GUI d'abord » puis « il m'affiche le GUI puis il passe directement à la cellule suivante
+sans que je n'aie eu le temps de lancer la campagne » — n'est PAS une panne : c'est la même loi
+aux deux signaux, nommée à la présente.
+
+- **LA LOI DU RUNTIME** : une exécution d'un trait court les cellules 1 → 9 sans JAMAIS
+  s'arrêter à la GUI (la cellule 6 rend les widgets puis rend la main ; un clic n'est pas un
+  événement qu'elle attend) ; la campagne ne court qu'AU CLIC des boutons — les boutons sont
+  des lanceurs, ils ne courent jamais seuls. ET LA GUI N'EXPIRE JAMAIS : les widgets demeurent
+  vivants tant que le runtime vit, les boutons attendent le clic autant de temps qu'il faut.
+  Le garde ZIP-ABSENT de la cellule 8 (terrain.7, Entrée 447) fit exactement son office : la
+  cellule 8 courut avant la campagne, elle refusa (fail-closed). Le coût nommé du « Tout
+  exécuter » : la cellule 7 (MODE-A optionnel — snapshot_download ~15 Gio bf16 au cache HF)
+  court aussi, inutile au MODE-B conseillé au T4 ; les gestes du kit ne courent jamais la 7.
+- **LE RECOUP AU COFFRE** : le /test sans aucun preuves-campagne-*.zip (les pièces les plus
+  récentes portent le 25/11), le /instructions vide — LA CAMPAGNE N'A JAMAIS COURU (ni au clic,
+  ni à la secours 5 : elle aurait déposé le zip au /test). Le kit v103 INTACT byte-byte —
+  RIEN À RÉPARER.
+- **LES DEUX CHEMINS** : (a) LA GUI VIVANTE — remonter aux boutons sous la cellule 6, Mode
+  « B », cliquer 1 · 2 · 3 · 4 (LA CAMPAGNE — dizaines de minutes à ~2 h au MODE-B sur T4,
+  le journal en direct) · 5, puis re-exécuter la cellule 8 (VERTE alors) ; (b) LA SECOURS 5 —
+  la voie sans aucun clic : « Exécuter l'objet avant l'exécution » à la cellule 5 (les
+  cellules 1 → 5), coller atelier-campagne-colab-v103/cellule-secours-5.py en NOUVELLE
+  cellule, l'exécuter — les cinq étapes + le retour au coffre courent d'un trait, au terme le
+  zip vit au /test du coffre.
+- **LA CONSIGNATION** : l'Entrée 449 au worklog du coffre (append-only, recoupée à la
+  relecture) et au dépôt ; les TROIS miroirs locaux rafraîchis.
+- **L'ÉCART DES COPIES RACINE SOLDÉ** : le worklog racine (arrêté à l'Entrée 441 — préfixe
+  strict du coffre, recoupé caractère à caractère) et l'OU-TROUVER + REPRISE racine (arrêtés
+  à l'ère 444) rapportés au journal courant, recoupés byte-byte à la relecture.
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
+  maître ; la participation v1.3.0 à la commande ; la campagne au geste du maître au runtime ;
+  la vague 30 au /instructions quand le maître la déposera.
