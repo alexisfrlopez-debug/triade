@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 443 — LES DEUX KITS 1-CLIC DU POSTE RÉEL ET DE LA CÉRÉMONIE D'ÈRE LIVRÉS AU /livrables ET AU DÉPÔT : TRIADE_kit_campagne_poste_v100.zip [la campagne au geste compute — W29DECCO + W29FAMILLE : le masque llguidance côté client aux modes A transformers/B llama.cpp, les canari continus, l'éditer OPT-16 + l'ajouter D264 verbatims, la seconde famille aux deux sondes de récitation, le harnais aux 25 pièces gelées recoupées, l'autotest maquette TOUT VERT] + TRIADE_kit_ceremonie_ere_v100.zip [la cérémonie d'ère de couloir-vaes512.asm à la clé hors-ligne du maître — la dette nommée : la charge trois champs signée à l'outil du maître telle quelle, la continuité D163 à la clé publique I, le signeur autoporteur RFC 8032, l'autotest à la clé de test TOUT VERT — le labo ne signe jamais] ; les plans gelés PLAN-CAMPAGNE-POSTE.md + PLAN-CEREMONIE-ERE.md à EMPREINTES-PLANS-POSTE-V100.txt ; les ateliers atelier-campagne-poste-v100/ + atelier-ceremonie-ere-v100/ au dépôt ; les zips vérifiés au dézippage ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 444 — LE KIT DE CAMPAGNE AU POSTE RÉEL, VOIE GOOGLE COLAB LIVRÉ AU /livrables ET AU DÉPÔT : TRIADE_kit_campagne_colab_v100.zip [le même kit, la même loi, une autre voie — le notebook Campagne-Colab-v100.ipynb au geste compute du runtime : LE CLIC « Tout exécuter » ou LA GUI aux widgets, la cellule 6 aux CINQ BOUTONS du plan gelé ; il ne porte AUCUN moteur : il tire TRIADE_kit_campagne_poste_v100.zip du /livrables à l'ID et au sha256 ÉPINGLÉS (la porte fail-closed KIT-DIVERGENTE), l'extrait TEL QUEL et court son moteur byte-byte ; le MODE-B dès la T4 [llama-server prébâti + le GGUF bartowski Q4_K_M/Q6_K/Q8_0 au choix de la cellule], le MODE-A aux runtimes A100 [~31 Gio de VRAM au chargement fp32] ; le retour au coffre : le zip de preuves déposé au Triade/test par la cellule 8, recoupé byte-byte ; les épreuves de logique TOUT VERT au bac, la limite structurelle reconduite sur pièces (3,9 Gio / 2 vCPU / aucun GPU — le modèle ne court PAS au bac, la mesure au poste Colab)] ; l'atelier atelier-campagne-colab-v100/ au dépôt ; le worklog Entrée 444 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -565,3 +565,57 @@ sur la campagne au poste réel puis cérémonie, comme d'habitude avec GUI 1 cli
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1 (ET v0.33.0/v0.32.0) À LA COMMANDE du maître (le pousseur
   1-clic au lot v0.32.0 prêt au poste, le moteur v0330 : étendre publier_zenodo_v0320.py) ; la participation v1.3.0 à
   la commande ; la vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 444 (27/11/2026) — LE KIT CAMPAGNE, VOIE GOOGLE COLAB : LE MÊME KIT À LA VOIE DU RUNTIME
+
+La SUITE de l'Entrée 443, la commande du maître « pour le kit campagne poste, tu pourrais
+me le faire pour Google Colab ? » — le même kit, la même loi, une autre voie : LE POSTE
+RÉEL DEVIENT LE RUNTIME COLAB (il porte le geste compute — le GPU que le bac ne porte
+pas : 3,9 Gio / 2 vCPU / aucun GPU mesurés sur pièces à l'atelier).
+
+- **LE PRINCIPE** : le kit Colab NE PORTE AUCUN MOTEUR — le notebook tire
+  `TRIADE_kit_campagne_poste_v100.zip` du `/livrables` (l'ID Drive et le sha256 a8d9b96c…
+  ÉPINGLÉS à la cellule 2 — KIT-DIVERGENT le refus nommé, fail-closed), l'extrait TEL QUEL
+  et court SON MOTEUR byte-byte : les 25 pièces gelées recoupées au chargement, le juge
+  D264 INTACT, les cibles pré-inscrites JAMAIS re-tirées. AUCUNE pièce dupliquée — la
+  source unique demeure le coffre.
+- **LE NOTEBOOK** : `Campagne-Colab-v100.ipynb` (17 cellules : 8 code + 9 markdown,
+  nbformat 4.5 STRICT) — (1) le poste (le verdict de l'environnement ; le MODE-A exigeant
+  ~31 Gio de VRAM au chargement fp32 — les A100 seuls le portent, le MODE-B dès la T4) ;
+  (2) le kit au coffre (le Drive monté, la voie directe Triade/livrables, le repli à la
+  marche bornée ≤ 6, le repli final à l'API à l'ID épinglé, la porte sha256 ÉPINGLÉE) ;
+  (3) les dépendances (le pip du .bat reconduit : llguidance + tokenizers + keystone-engine
+  + capstone) ; (4) le kit vivant (manifeste + gate + autotest maquette TOUT VERT exigés
+  avant toute campagne) ; (5) le serving MODE-B (la release PRÉBATTIE des tags b — les
+  tags v n'en portent AUCUNE, vérifié au bac : 38 assets au b12810, 1 seul au v1.1.0 ; le
+  cudart CUDA-12 au GPU [le runtime embarqué, tolérant au driver], l'ubuntu-x64 nu au
+  CPU, le repli NOMMÉ à la source compilée si l'API, l'archive OU le binaire manque au
+  poste ; le GGUF du minter bartowski au choix de la cellule — les trois URLs vérifiées
+  HTTP 200 ; la porte /health) ; (6) LA GUI 1 CLIC (le patron de gui_campagne.py aux
+  widgets : les CINQ BOUTONS à l'ordre du plan, le journal du moteur EN DIRECT, la grille
+  verrouillée pendant l'étape, l'état VERT/ROUGE au code de sortie) ; (7) le MODE-A (le
+  modèle téléchargé ~15 Gio bf16, le chemin porté à la GUI, le masque aux LOGITS
+  ENTIERS) ; (8) le retour au coffre (le zip de preuves déposé au Triade/test du coffre
+  monté, RECOPÉ byte-byte par relecture).
+- **LES ÉPREUVES AU BAC, TOUT VERT** : la marche bornée + la porte sha256 (au faux arbre
+  Drive : la voie directe trouve le zip, la porte passe, 31 pièces extraites, la copie au
+  niveau 7 REFUSÉE par la borne) ; le sélecteur de release (au JSON réel du jour : CPU →
+  llama-b12810-bin-ubuntu-x64.tar.gz · GPU → cudart-llama-b12810-bin-ubuntu-cuda-12.8-
+  x64.tar.gz) ; LA GUI headless (les CINQ boutons bâtis, les arguments conformes au
+  moteur — --canari/--campagne/--mode B/A/--url/--nprobs/--modele). En sus : le binaire
+  prébâti b12810 épreuvé au bac même (version 1.1.0-dev build 12810, /health
+  {"status":"ok"} VERT), l'autotest maquette du kit poste TOUT VERT reconduit, les trois
+  GGUF vérifiés HTTP 200 au bord HF.
+- **LA LIMITE STRUCTURELLE RECONDUITE SUR PIÈCES** : le bac porte 3,9 Gio de RAM / 2 vCPU
+  / aucun GPU — le GGUF Q4_K_M (4,68 Go) NE PEUT PAS s'y charger : le modèle ne court
+  PAS au bac, la mesure appartient au poste Colab (le geste du maître), AUCUN chiffre de
+  campagne ne sort du bac.
+- **LA LIVRAISON** : le zip au `/livrables` du coffre au jeton relais (RECROPÉ byte-byte),
+  la section au LISEZMOI-livrables (recoupée à la relecture), l'Entrée 444 au worklog du
+  coffre ET du dépôt ; au dépôt : `atelier-campagne-colab-v100/` (le kit/ [le notebook +
+  le LISEZMOI], les preuves-labo/ [cinq pièces], le rapport.txt) ; le présent OU-TROUVER
+  + REPRISE_PROJET + SOURCES-PRESCRIPTIVES mis à jour.
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1 (ET v0.33.0/v0.32.0) À LA
+  COMMANDE du maître ; la participation v1.3.0 à la commande ; la campagne au runtime
+  Colab au geste du maître (le notebook est livré, la mesure lui appartient) ; la vague
+  30 au /instructions quand le maître la déposera.
