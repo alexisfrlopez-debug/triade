@@ -1,0 +1,110 @@
+ATELIER CAMPAGNE-COLAB-V103 — LE TERRAIN.7 DU 27/11 CORRIGÉ : LE GARDE
+ZIP-ABSENT PRIS POUR UNE PANNE, « LA WEB APP » CHERCHÉE AU LOCALHOST DE LA
+SESSION DEPUIS L'ORDI DU MAÎTRE — LA GUI VIT DANS LE NOTEBOOK, LE PONT DU
+POSTE PORTÉ (27/11/2026, le terrain rapporté par le maître au runtime Colab :
+« SystemExit: ZIP-ABSENT … le bouton 5 de la GUI d'abord » puis « la web app
+sort sur le localhost de la session, je ne peux y accéder de mon ordi »)
+
+1. LE TERRAIN RAPPORTÉ (la parole du maître, TELLE QUELLE) : DEUX
+   quiproquos, AUCUNE panne. (a) la cellule 8 (LE RETOUR AU COFFRE) nomma
+   ZIP-ABSENT — le maître courut « Tout exécuter » : la cellule 8 courut
+   AVANT le bouton 5 de la GUI, et le garde fit son office (le zip de
+   preuves ne vit qu'au BOUTON 5 — l'ordre du plan gelé : les boutons
+   1 → 2 → 3 → 4 → 5 de la cellule 6, PUIS la cellule 8) ; le refus nommé
+   fut pris pour une panne. (b) le maître chercha « la web app » AU
+   LOCALHOST DE LA SESSION depuis son ordi — IL N'Y EN A AUCUNE : LA GUI
+   1 CLIC vit DANS LE NOTEBOOK (les widgets ipywidgets SOUS la cellule 6
+   même), et l'URL http://127.0.0.1:PORT vit AU RUNTIME Colab (le serveur
+   du modèle, llama-server + la maquette 8641) — elle NE S'OUVRE PAS du
+   navigateur du maître : c'est la loi du runtime partagé, pas un écart
+   du kit. Le kit ne mentait pas — l'ordre et le lieu n'étaient pas
+   nommés aux markdown.
+
+2. LE CORRECTIF v103 (la même loi, LA PAROLE seule corrigée — la cellule
+   8, le garde, la GUI, l'endpoint demeurent INTACTS byte-byte) :
+   (a) LE GARDE NOMMÉ AU MARKDOWN : la cellule 8 markdown porte
+       « LE GARDE EST L'ORDRE, PAS UNE PANNE — ZIP-ABSENT = le bouton 5
+       n'a pas encore couru : les boutons 1 → 2 → 3 → 4 → 5, PUIS la
+       cellule 8 re-courue » ; le titre (MD_0) porte l'ordre aux NEUF
+       cellules, le garde nommé à la cellule 8 ;
+   (b) LA GUI-DANS-LE-NOTEBOOK NOMMÉE : la cellule 6 markdown porte
+       « LA GUI VIT DANS LE NOTEBOOK — le panneau vit SOUS la présente
+       cellule, ce n'est PAS une web app, il n'y a RIEN à ouvrir du
+       navigateur de ton ordi ; l'URL 127.0.0.1 vit AU RUNTIME (le
+       serveur du modèle) ; si le panneau ne paraît pas, RE-EXÉCUTE la
+       présente cellule (~1 s) » ;
+   (c) LA CELLULE 9 — LE PONT DU POSTE (optionnelle, NOUVELLE) : pour le
+       maître qui tient à voir le runtime DE SON ORDI, le proxy Colab
+       (google.colab.kernel.proxyPort) porte l'URL du runtime au
+       navigateur du maître (la même session Google ouverte, tant que la
+       session vit) ; la cellule lit l'endpoint PORTÉ par la cellule 5
+       (/content/endpoint_serving.txt), nomme PONT-ABSENT si la cellule 5
+       n'a pas couru, PONT-REFUSÉ hors de la voie colab.research.
+       google.com (l'écart nommé), vérifie /health AU RUNTIME (le verdict
+       nommé, l'injoignable nommé SANS lever), et NOMME la suite : la
+       campagne se mène AUX CINQ BOUTONS de la cellule 6, dans le
+       notebook même ;
+   (d) LE REPLI CLI NOMMÉ AU LISEZMOI (§ 6) : si les widgets ne
+       paraissent pas au poste, les CINQ BOUTONS deviennent les CINQ
+       COMMANDES exactes du moteur (courues au dossier du kit, l'ordre du
+       plan gelé, fail-closed au code non nul) — la cellule 8 re-courue
+       au terme.
+
+3. LES CINQ ÉPREUVES TOUT VERT AU BAC (preuves-labo/epreuves-notebook-
+   v103.txt) : (1) LA STRUCTURE — 19 cellules (9 code + 10 markdown),
+   chaque code compile, le JSON relu recoupé ; (2) LA CELLULE 9 DU PONT
+   au bac (google.colab MOCKÉ à sys.modules — l'URL du pont imprimée, le
+   proxyPort(18081) demandé, l'INJOIGNABLE au bac nommé SANS lever, la
+   GUI-dans-le-notebook nommée, la suite nommée aux CINQ boutons) + LA
+   PORTE PONT-ABSENT (l'endpoint absent → le refus nommé, fail-closed) ;
+   (3) LE CODE INTACT — les cellules de code 1, 2, 3, 4, 5, 7, 8
+   IDENTIQUES byte-byte au v102 (les épreuves v102 demeurent portées par
+   le code inchangé), la cellule 6 ne diffère QUE du titre (« kit v102 »
+   → « kit v103 ») ; (4) LE GARDE INTACT — la cellule 8 IDENTIQUE
+   byte-byte au v102, « le bouton 5 de la GUI d'abord » demeure nommé ;
+   (5) LES NOTES PARLÉES — le terrain.7 nommé aux markdown MD_0 (titre +
+   ordre), MD_6 (la GUI-dans-le-notebook + le re-exécute), MD_8 (le
+   garde-est-l'ordre + l'ordre 1 → 5), MD_9 (le pont, « vue de ton
+   ordi », « aucune web app »).
+
+4. TROIS COQUILLES DU HARNAIS DU BAC démasquées au passage (elles furent
+   des pièces, aucune au kit) : l'injection du faux google.colab devait
+   vivre à sys.modules (le « from google.colab import » lit le
+   mécanisme d'import, PAS l'espace de noms d'exec) ; les indices du
+   markdown étaient décalés d'un rang (MD_6 vit à l'index 6) ; l'unlink
+   du faux endpoint devait suivre l'existence. LES TROIS GGUF
+   re-vérifiés VIVANTS au bord HF au dépôt exact du kit
+   (gguf-urls-v103.txt : Q4_K_M/Q6_K/Q8_0 HTTP 200 — la première
+   sonde au mauvais dépôt [Qwen_Qwen2.5…, HTTP 401] fut une coquille du
+   bac, nommée : le dépôt du kit est REPO_GGUF =
+   bartowski/Qwen2.5-Coder-7B-Instruct-GGUF).
+
+5. LA GARDE : aucune cible re-tirée ; aucune graine re-tirée
+   (20261117/20261124 — les graines des plans gelés) ; le kit poste
+   v100 INTACT byte-byte (l'ID 1TT1zLRf1movZ69_cTzGhMLEcAV1Hi7CD et le
+   sha256 a8d9b96c…53642b ÉPINGLÉS inchangés — le kit Colab n'est que
+   la voie) ; le juge D264 INTACT ; aucun secret dans le kit ni
+   committé ; AUCUN chiffre de campagne fabriqué au bac ; le GGUF du
+   poste ne courut PAS au bac (le serving injoignable du bac fut la
+   mesure du bac, nommée telle quelle).
+
+6. LA LIVRAISON : TRIADE_kit_campagne_colab_v103.zip (20 729 o — le
+   notebook Campagne-Colab-v103.ipynb + le LISEZMOI-CAMPAGNE-COLAB.txt
+   v103) au /livrables du coffre au JETON RELAIS, RECROPÉ byte-byte par
+   re-téléchargement ; le LISEZMOI-livrables mis à jour de la section
+   v103 (recoupée à la relecture) ; l'Entrée 447 au worklog (coffre +
+   dépôt) ; au dépôt git : atelier-campagne-colab-v103/ (kit + preuves-
+   labo v103 + le présent rapport), OU-TROUVER + REPRISE + SOURCES-
+   PRESCRIPTIVES mis à jour, le tout vérifié à la relecture du bord.
+
+7. SUITE : AU MAÎTRE, AU RUNTIME COLAB DÉJÀ MONTÉ — le run v102 au poste
+   ne redemande RIEN : la CELLULE DE SECOURS 3 (portée à la réponse : le
+   verdict de l'ordre + le pont du poste) nomme les deux quiproquos,
+   vérifie /health, porte l'URL du pont à l'ordi du maître ; la CELLULE
+   DE SECOURS 4 (le repli CLI) mène les CINQ étapes en commandes si les
+   widgets ne paraissent pas ; PUIS les CINQ boutons de la GUI (ou la
+   secours 4), PUIS la cellule 8 re-courue — le zip de preuves au /test
+   du coffre. AU LABO ENSUITE : la lecture des preuves, les verdicts
+   portés TELS QUELS ; la publication Zenodo de v0.33.1/v0.33.0/
+   v0.32.0 À LA COMMANDE du maître ; la vague 30 au /instructions quand
+   le maître la déposera.

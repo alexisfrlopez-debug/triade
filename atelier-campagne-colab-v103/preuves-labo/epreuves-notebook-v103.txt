@@ -1,0 +1,12 @@
+[épreuve] VERT — LA STRUCTURE — 19 cellules, chaque code compile (la v103)
+           19 cellules (9 code + 10 markdown), chaque code compile, le JSON relu recoupé — 49830 o
+[épreuve] VERT — LA CELLULE 9 DU PONT au bac (google.colab mocké) + la porte PONT-ABSENT
+           google.colab mocké : l'URL du pont imprimée, le proxyPort(18081) demandé, l'INJOIGNABLE au bac nommé SANS lever, la GUI-dans-le-notebook nommée, la suite nommée aux CINQ boutons ; la porte PONT-ABSENT : l'endpoint absent → le refus nommé (fail-closed)
+[épreuve] VERT — LE CODE INTACT — les cellules 1-8 au v102, la cellule 6 au titre près
+           les cellules de code 1, 2, 3, 4, 5, 7, 8 IDENTIQUES byte-byte au v102 (les épreuves v102 demeurent portées par le code inchangé) ; la cellule 6 ne diffère QUE du titre — « (kit v102) » → « (kit v103) »
+[épreuve] VERT — LE GARDE INTACT — ZIP-ABSENT demeure nommé (la cellule 8)
+           la cellule 8 IDENTIQUE byte-byte au v102 — le garde ZIP-ABSENT demeure, « le bouton 5 de la GUI d'abord » nommé (fail-closed)
+[épreuve] VERT — LES NOTES PARLÉES — le terrain.7 nommé aux markdown
+           MD_0 porte le terrain.7 + la GUI-dans-le-notebook + l'ordre aux neuf cellules ; MD_6 porte la GUI-dans-le-notebook + le re-exécute si le panneau ne paraît pas ; MD_8 porte le garde-est-l'ordre + l'ordre 1 → 5 nommés ; MD_9 porte le pont — « vue de ton ordi », « aucune web app »
+
+[verdict] TOUT VERT — le notebook Colab v103 est vivant au bac
