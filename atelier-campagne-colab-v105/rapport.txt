@@ -1,0 +1,167 @@
+ATELIER CAMPAGNE-COLAB-V105 — LE NOTEBOOK DE LA REPRISE : LA COMMANDE DU MAÎTRE
+DU 27/11 AU SOIR PORTÉE À LA CONSÉQUENCE DE L'ENTRÉE 451 (la cause nommée —
+le prompt nu hors de l'enveloppe de chat du modèle instruct — l'enveloppe
+portée au TRANSPORT, la porte de parole au serving, la sonde des deux
+enveloppes au poste même ; les tests ratés du v104 repassent au même geste
+unique, les épreuves NOUVELLES pré-inscrites additives ; 27/11/2026, la
+commande du maître : « fais le notebook 105 afin de pouvoir repasser les
+tests ratés avec le 104 et rajoute des tests si tu as des idées pertinentes.
+la campagne gpu est en cours »)
+
+1. LA COMMANDE ET SA LOI (la parole du maître, TELLE QUELLE) : le v104 au
+   bord CPU avait mesuré 0/18 éditer · 0/18 ajouter · 0/128 famille — les 41
+   requêtes au vrai serveur TOUTES « BORD-FINI-SANS-ACCEPTATION » (l'Entrée
+   451 : le MODE-B envoyait le PROMPT NU à /completion — llama-server n'y
+   applique AUCUN gabarit ; Qwen2.5-Coder-7B-Instruct hors de son enveloppe
+   <|im_start|>…<|im_end|> finit son tour au premier jeton à température 0).
+   La campagne GPU du v104 COURT pendant que le présent naît (la même cause
+   y attend le bord GPU : le format n'est pas le compute) — LE V105 EST LA
+   REPRISE PRÊTE : les TESTS RATÉS repassent au MÊME GESTE UNIQUE (« Tout
+   exécuter », rien d'autre), avec le kit v101 (l'enveloppe au transport),
+   LA PORTE DE PAROLE (BORD-MUET : en ~30 secondes, pas en 27 minutes) et
+   LA SONDE DES DEUX ENVELOPPES (le diagnostic de l'Entrée 451 (a) porté au
+   poste même, AVANT la batterie) — et LES TESTS RAJOUTÉS que la commande
+   demandait : QUATRE épreuves nouvelles pré-inscrites (additives — aucune
+   cible gelée touchée).
+
+2. LE KIT POSTE v101 (l'Entrée 451 (b) portée à la conséquence — l'écart au
+   v100 NOMMÉ, jamais silencieux) : (i) L'ENVELOPPE DE CHAT AU TRANSPORT —
+   la fonction enveloppe() enrobe chaque payload des marqueurs du modèle
+   choisi (<|im_start|>user\n{payload VERBATIM}<|im_end|>\n<|im_start|>
+   assistant\n — 9 jetons [151644, 872, 198, …, 151645, 198, 151644, 77091,
+   198], comptés honnêtement au journal : le champ enveloppe_transport vit
+   à chaque ligne d'usage) appliquée dans appel_contraint : les QUATRE
+   constructeurs de prompt (tâche, ajouter, récitation, canari) demeurent
+   VERBATIM, les tours de réparation enrobés pareil, le MODE-A pareil (le
+   tokenizer porte les marqueurs aux ids spéciaux) ; (ii) LA SONDE DES
+   DEUX ENVELOPPES (--sonde-bords, CLI nouvelle) — la jambe NUE (la mesure :
+   MUET = la cause confirmée au poste ; PARLANT = nommé, jamais habillé),
+   la jambe ENROBÉE (le gardien : BORD-MUET le refus nommé, fail-closed —
+   la batterie ne court pas sur un bord muet), LA PAROLE-MATCHER (l'objet
+   du contrôle positif du gate répété sous contrainte : le matcher doit
+   l'accepter ET l'égalité JSON tenir — PAROLE-REFUSÉE le refus nommé) et
+   LE GREEDY-REPLAY (le même passage deux fois à température 0 : le
+   déterminisme nommé, TENU ou CASSÉ) ; le verdict vit à sonde-verdict.json
+   (au zip de preuves et embarqué au registre) ; (iii) LA MAQUETTE PAROLE —
+   le script parole (l'objet du gate au marqueur LA SONDE DE PAROLE), la
+   mémoire des prompts vus (a_vu_enveloppe : la preuve vivante que le
+   transport porte <|im_start|>user) et LE FORMAT MUET aux prompts
+   inconnus (le vrai llama-server ne renvoie JAMAIS 404 à /completion : un
+   prompt inconnu y rend la fin sans parole — la maquette honore le contrat
+   natif, le 404 d'avant déclenchait au moteur 30 secondes de réessai
+   réseau qui vivent pour le RÉSEAU, pas pour le protocole) ; (iv) le
+   restant du moteur RECONDUIT : le manifeste, le gate, le canari, les
+   phases, le juge, les cibles, le zip — le diff v100→v101 : moteur 224
+   lignes ajoutées · 9 modifiées, maquette 47 ajoutées · 2 modifiées ;
+   le harnais aux 26 pièces INTACT byte-byte (manifeste 25 pièces + la
+   table, recoupé au chargement — PIÈCE-DIVERGENTE le refus), gui_campagne.py
+   et COMMENCER-ICI.bat INTACTS (la GUI manuelle y gagne l'enveloppe sans
+   un geste).
+
+3. LE NOTEBOOK v105 (0 clic, le geste unique demeure) : les HUIT cellules
+   du v104 reconduites — (1) LE POSTE (le rapport du poste porte la ligne
+   kit v101, les gardes honnêtes inchangées) ; (2) LES DÉPENDANCES byte-
+   byte ; (3) LE KIT AU COFFRE tire TRIADE_kit_campagne_poste_v101.zip à
+   l'ID ÉPINGLÉ 1pa_FCF6GP5jkbCVEWg6BOtgAB2dW3T-Z, sha256 ÉPINGLÉ
+   3b78b544…d9f4f348 (KIT-DIVERGENT le refus) ; (4) LE KIT VIVANT
+   (manifeste + gate + autotest — l'autotest porte les DEUX épreuves
+   nouvelles : l'enveloppe au transport, la sonde à la maquette) ; (5) LE
+   SERVING + LA PORTE DE PAROLE (l'Entrée 451 (c)) : après /health, UNE
+   requête d'essai ENROBÉE — le modèle doit DIRE un mot avant que la
+   batterie ne coure (BORD-MUET le refus nommé : en secondes, pas en 27
+   minutes — la leçon du v104) ; le payload d'essai est celui de LA SONDE
+   DU KIT même (moteur_campagne.py importé — la pièce vivante, jamais une
+   copie) ; le restant de la cellule (les releases, le port, les replis)
+   reconduit byte-byte ; (6) LA BATTERIE — les SIX étapes d'un trait : 1
+   le manifeste · 2 le gate · 3 LA SONDE DES DEUX ENVELOPPES (l'Entrée 451
+   (a) : le diagnostic au poste même, AVANT le canari) · 4 le canari · 5
+   LA CAMPAGNE (les commandes du canari/campagne/zip reconduites byte-
+   byte) · 6 le zip ; (7) LE RETOUR AU COFFRE reconduit (rapport-poste-
+   v105-<ts>.txt, les SIX étapes à l'horloge) ; (8) LE BILAN.
+
+4. LES TESTS RAJOUTÉS (la demande du maître : « rajoute des tests si tu as
+   des idées pertinentes ») — QUATRE épreuves NOUVELLES pré-inscrites
+   (additives, la table SONDE_CIBLES au moteur, la source nommée à
+   chacune ; AUCUNE cible gelée de PLAN-W29DECCO/W29FAMILLE touchée) :
+   PORTE-BORD-MUET (la jambe enrobée parle) ; SONDE-CAUSE (le nu rend sa
+   fin ET l'enrobé parle — toute autre issue NOMMÉE) ; PAROLE-MATCHER
+   (l'objet répété passe le matcher et l'égalité JSON) ; GREEDY-REPLAY (le
+   même texte aux deux passages). Plus LA PORTE DE PAROLE au serving (la
+   garde pré-batterie) et les DEUX épreuves nouvelles de l'autotest
+   maquette. Le canari y gagne SA VÉRITÉ : au v104 le modèle était muet
+   (le refus fut le même BORD-FINI, le garde ne fut jamais mis à
+   l'épreuve) ; au v105 le modèle PARLE — le masque devra refuser la
+   violation AU VRAI BORD.
+
+5. LES QUATORZE ÉPREUVES TOUT VERT AU BAC (preuves-labo/epreuves-notebook-
+   v105.txt, les deux étages TEL QUE COURUS) : (1) LA STRUCTURE — 17
+   cellules (8 code + 9 markdown), chaque code compile (vivante + aveugle),
+   nbformat strict VALIDE, le JSON relu — 58 986 o (aveugle) · 59 219 o
+   (vivante) ; (2) LA LOI 0 CLIC — aucun widget/montage/autorisation/
+   input/tkinter/eval_js ; (3) CHAQUE CODE COMPILE ; (4) LA CELLULE 1 au
+   bac — le plan imprimé, le rapport né (kit v101 nommé), ET LA GARDE
+   HONNÊTE DU BAC A REFUSÉ (DISQUE-INSUFFISANT à 7,9 Gio réels —
+   fail-closed prouvé par le bac lui-même) ; (5) LA CELLULE 3 AVEUGLE —
+   IDENTIFIANTS-ABSENTS avant tout réseau ; (6) LA CELLULE 3 VIVANTE,
+   RÉELLE — le jeton frappé pour de vrai, le kit v101 TIRÉ du /livrables
+   (2 048 915 o) à l'ID épinglé, le sha256 recoupé VERT, extrait : le
+   moteur + la maquette + le harnais aux 26 pièces (31 pièces) ; (7) LA
+   CELLULE 4, RÉELLE — manifeste + gate + autotest POUR DE VRAI au bac
+   contre le kit TIRÉ : DIX épreuves VERT dont les DEUX NOUVELLES ; (8) LA
+   CELLULE 6 au bac — les SIX étapes d'un trait contre la maquette (codes
+   [0,0,0,0,0,0], l'horloge porte les six, le dernier appel --zip, le zip
+   né 34 187 o portant registre + sonde-verdict + journaux + gate +
+   cibles ; la sonde y rend SONDE-VERTE — SONDE-BORD-NU-PARLANT, l'attendu
+   nommé de la maquette, parole-matcher VERT, greedy-replay TENU) ; (8 bis)
+   LE ROUGE DE LA SONDE ARRÊTE LA MARCHE — contre le bord MUET simulé (la
+   pièce du v104 : des probs absentes), les étapes 1-2 VERTES, l'étape 3
+   REFUSE (code 3, BORD-MUET nommé), les étapes 4-5-6 NE COURENT PAS : le
+   poste saurait en UNE requête, pas en 27 minutes ; (9) LA CELLULE 7 au
+   bac — la garde ORDRE-ROMPU, le zip porte la sonde ; LE RETOUR RÉEL au
+   /test éprouvé POUR DE VRAI (la pièce de sonde sonde-bac-v105-
+   20261127T193813Z.txt téléversée, re-téléchargée, recoupée byte-byte
+   VERT — puis corbeillée par le labo) ; (10) LE CODE INTACT — le pip
+   byte-byte, la cellule 5 reconduite BYTE-BYTE hors le bloc de la porte,
+   le bloc ETAPES reconduit (canari/campagne/zip aux MÊMES commandes) +
+   l'étape 3 nouvelle ; (11) LES GGUF VIVANTS — Q6_K et Q4_K_M au dépôt
+   exact bartowski (l'API du dépôt recoupée) ; (12) LES NOTES PARLÉES ;
+   (13) L'ÉCART VIVANTE/AVEUGLE — la SEULE divergence vit à la cellule 3
+   (les TROIS constantes du relais) : l'invariant du dépôt public tenu.
+
+6. LA GARDE : aucune cible re-tirée, aucune graine re-tirée (les plans
+   PLAN-W29DECCO.md + PLAN-W29FAMILLE.md demeurent LA LOI — les cibles
+   NOUVELLES vivent à leur table propre, ADDITIVES, pré-inscrites AVANT
+   la campagne) ; le harnais aux 26 pièces INTACT byte-byte au manifeste ;
+   le kit poste v100 INTACT au coffre (l'ID 1TT1zLRf1movZ69_cTzGhMLEcAV1Hi7CD
+   et le sha256 a8d9b96c…53642b inchangés — la voie du v104 demeure) ; la
+   campagne GPU du v104 EN COURS ne fut touchée par AUCUN geste du présent
+   (les pièces montées au /test par son run y vivront seules) ; AUCUN
+   chiffre de campagne fabriqué au bac (les chiffres de la maquette ne
+   sont pas la mesure : l'instrument seul y court) ; aucun identifiant
+   committé au dépôt public (l'aveugle, l'invariant asserté à l'épreuve 13).
+
+7. LA LIVRAISON (au /livrables du coffre, chaque pièce RECOPÉE byte-byte
+   par re-téléchargement) : TRIADE_kit_campagne_poste_v101.zip (2 048 915
+   o, sha256 3b78b544…d9f4f348, id Drive 1pa_FCF6GP5jkbCVEWg6BOtgAB2dW3T-Z)
+   ; TRIADE_kit_campagne_colab_v105.zip (22 917 o, sha256 a6433049…66b72a60,
+   id 1PGQtkiZS-aJ6PwOg0_MLXGyDYJK9NPrF — le notebook vivant + le LISEZMOI-
+   CAMPAGNE-COLAB.txt v105) ; LA COPIE NUE Campagne-Colab-v105.ipynb
+   (59 219 o, sha256 c4924c4a…6ce6a9a6, id 1JiVxhzP8Op9aDLFPxoDHruAp3jd2aLCa
+   — l'usage direct : double-clic au Drive → Colab) ; le LISEZMOI-livrables
+   mis à jour de la section v105 ; l'Entrée 452 au worklog (coffre + dépôt)
+   ; au dépôt git : atelier-campagne-colab-v105/ (le kit AVEUGLE + les
+   preuves-labo v105 + le présent rapport — AUCUN identifiant), OU-TROUVER
+   + REPRISE + SOURCES-PRESCRIPTIVES mis à jour, le tout vérifié à la
+   relecture du bord.
+
+8. SUITE : AU MAÎTRE, AU RUNTIME COLAB — quand la campagne GPU du v104
+   rendra ses preuves au /test (la même cause l'y attend : le bord muet),
+   LE GESTE UNIQUE reconduit sur le notebook v105 du /livrables (T4 GPU
+   conseillé ; CPU marche) : « Exécution → Tout exécuter » — la PORTE DE
+   PAROLE tranchera en une requête, LA SONDE mesurera la cause au poste
+   même, la batterie repassera les tests ratés (l'enveloppe au transport,
+   les plans gelés intacts), le zip + le rapport monteront SEULS au /test.
+   AU LABO ENSUITE : la lecture des preuves TELLES QUELLES (tenue ou
+   manquée, jamais habillée) ; la publication Zenodo de v0.33.x À LA
+   COMMANDE du maître ; la vague 30 au /instructions quand le maître la
+   déposera.

@@ -1,0 +1,35 @@
+==============================================================================
+TRIADE — LES ÉPREUVES DU NOTEBOOK COLAB v105 (0 CLIC) AU BAC — 27/11/2026
+la commande du maître : « fais le notebook 105 afin de pouvoir repasser les
+tests ratés avec le 104 et rajoute des tests si tu as des idées pertinentes.
+la campagne gpu est en cours »
+==============================================================================
+[épreuve] VERT — (1) LA STRUCTURE — 17 cellules, nbformat strict
+           17 cellules (8 code + 9 markdown), nbformat strict VALIDE (vivante + aveugle), le JSON relu recoupé — 58986 o (aveugle) · 59219 o (vivante)
+[épreuve] VERT — (2) LA LOI 0 CLIC — aucun widget, aucun montage, aucun clic
+           AUCUN widget, AUCUN montage du Drive, AUCUNE autorisation, AUCUN input(), AUCUN tkinter/eval_js aux HUIT cellules (vivante + aveugle) — la cellule 6 court la batterie au moteur (subprocess.call), la GUI est retirée
+[épreuve] VERT — (3) CHAQUE CODE COMPILE (vivante + aveugle)
+[épreuve] VERT — (4) LA CELLULE 1 au bac — le plan du run + le rapport du poste
+           le plan du run imprimé selon le bord du bac, le rapport né (rapport-poste.txt, « kit Colab v105 » + le kit v101 nommés au rapport même), l'issue : refus nommé : DISQUE-INSUFFISANT : 7.9 Gio libres — le GGUF seul en prend ~5-8 ; change de runtime (le refus vient AVANT la marche, jamais deux heures après). — LA GARDE HONNÊTE DU BAC A REFUSÉ (fail-closed prouvé par le bac lui-même : le refus vient AVANT la marche, jamais deux heures après)
+[épreuve] VERT — (5) LA CELLULE 3 AVEUGLE — IDENTIFIANTS-ABSENTS avant tout réseau
+           les TROIS chaînes VIDES → le refus IDENTIFIANTS-ABSENTS nommé, la voie du recollage (/livrables du coffre, /Tokens) nommée, AUCUN geste réseau avant
+[épreuve] VERT — (6) LA CELLULE 3 VIVANTE, RÉELLE — le kit v101 tiré du coffre (aucune fenêtre)
+           le jeton relais frappé pour de vrai (AUCUNE fenêtre), le kit TIRÉ du /livrables à l'ID épinglé (2048915 o), le sha256 recoupé VERT, extrait : moteur_campagne.py + maquette_endpoint.py + le harnais aux 26 pièces (31 pièces au total) à /tmp/bac105/kit
+[épreuve] VERT — (7) LA CELLULE 4, RÉELLE — manifeste + gate + autotest au bac (le kit TIRÉ)
+           le manifeste (26 pièces gelées recoupées au chargement), le gate (GATE-VERT) et l'autotest maquette — DIX épreuves VERT dont les DEUX NOUVELLES (l'enveloppe au transport + la sonde des deux enveloppes) — courent POUR DE VRAI au bac contre le kit extrait de l'épreuve 6
+[épreuve] VERT — (8) LA CELLULE 6 au bac — les SIX étapes d'un trait contre la maquette
+           les SIX étapes d'un trait contre la maquette (codes [0, 0, 0, 0, 0, 0], l'horloge porte les six, le dernier appel du moteur est --zip, le zip né : preuves-campagne-20261127T192635Z.zip (34187 o) ; la sonde y rend SONDE-VERTE avec SONDE-BORD-NU-PARLANT (l'attendu nommé de la maquette), parole-matcher VERT, greedy-replay TENU — les chiffres de la maquette NE SONT PAS la mesure (l'instrument seul y court)
+
+[épreuve] VERT — (8 bis) LE ROUGE DE LA SONDE ARRÊTE LA MARCHE (BORD-MUET fail-closed)
+           contre le bord MUET simulé (la pièce du v104 : des probs absentes), les étapes 1-2 VERTES, l'étape 3 (LA SONDE) REFUSE (code 3, BORD-MUET nommé) — l'horloge porte l'étape fautive, les étapes 4-5-6 NE COURENT PAS : le poste saurait en UNE requête, pas en 27 minutes
+[épreuve] VERT — (9) LA CELLULE 7 au bac — les gardes + le zip porte la sonde
+           la garde ORDRE-ROMPU reconduite (les identifiants absents à l'aveugle → le refus nommé : ORDRE-ROMPU : les identifiants du relais vivent à la cellule 3 — re-cours « Tout) ; le zip de preuves porte les pièces du v101 — preuves-campagne-20261127T192635Z.zip (34187 o) : 9 pièces : registre-campagne.json + sonde-verdict.json (la pièce nouvelle) + les journaux + le gate + les cibles
+[épreuve] VERT — (10) LE CODE INTACT — les reconductions byte-byte au v104
+           le pip (cellule 2) TEL QUEL byte-byte ; la cellule 5 reconduite BYTE-BYTE au v104 hors LE BLOC NOUVEAU de LA PORTE DE PAROLE (le seul ajout, nommé) ; la cellule 6 : le bloc ETAPES reconduit (le canari, la campagne, le zip aux MÊMES commandes byte-byte) + L'ÉTAPE 3 NOUVELLE (la sonde --sonde-bords) ; la cellule 7 reconduite (au titre v105 et aux SIX étapes de l'horloge près)
+[épreuve] VERT — (11) LES GGUF VIVANTS — Q6_K et Q4_K_M au dépôt exact
+           Q6_K : Qwen2.5-Coder-7B-Instruct-Q6_K.gguf VIVANT au dépôt bartowski · Q4_K_M : Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf VIVANT au dépôt bartowski
+[épreuve] VERT — (12) LES NOTES PARLÉES — les markdown nomment la loi
+           MD_0 porte la cause de l'Entrée 451, le kit v101, la reprise des tests ratés, l'aveugle du dépôt public, le recoup byte-byte ; MD_5 porte LA PORTE DE PAROLE (BORD-MUET) ; MD_6 porte les SIX étapes (la sonde ouvre la marche)
+[épreuve] VERT — (13) L'ÉCART VIVANTE/AVEUGLE — les TROIS constantes seules
+           la SEULE divergence vit à la cellule 3 (les TROIS constantes du relais) : cellules divergentes [6] — l'invariant du dépôt public tenu
+[verdict] TOUT VERT — le notebook Colab v105 (0 clic) est vivant au bac (les QUATORZE épreuves : l'étage A [1-8] + l'étage B [8 bis-13] — les deux étages du bac, TEL QUE COURU)
