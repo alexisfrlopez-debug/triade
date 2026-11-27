@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 444 — LE KIT DE CAMPAGNE AU POSTE RÉEL, VOIE GOOGLE COLAB LIVRÉ AU /livrables ET AU DÉPÔT : TRIADE_kit_campagne_colab_v100.zip [le même kit, la même loi, une autre voie — le notebook Campagne-Colab-v100.ipynb au geste compute du runtime : LE CLIC « Tout exécuter » ou LA GUI aux widgets, la cellule 6 aux CINQ BOUTONS du plan gelé ; il ne porte AUCUN moteur : il tire TRIADE_kit_campagne_poste_v100.zip du /livrables à l'ID et au sha256 ÉPINGLÉS (la porte fail-closed KIT-DIVERGENTE), l'extrait TEL QUEL et court son moteur byte-byte ; le MODE-B dès la T4 [llama-server prébâti + le GGUF bartowski Q4_K_M/Q6_K/Q8_0 au choix de la cellule], le MODE-A aux runtimes A100 [~31 Gio de VRAM au chargement fp32] ; le retour au coffre : le zip de preuves déposé au Triade/test par la cellule 8, recoupé byte-byte ; les épreuves de logique TOUT VERT au bac, la limite structurelle reconduite sur pièces (3,9 Gio / 2 vCPU / aucun GPU — le modèle ne court PAS au bac, la mesure au poste Colab)] ; l'atelier atelier-campagne-colab-v100/ au dépôt ; le worklog Entrée 444 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 445 — LE TERRAIN.5 DU KIT COLAB CORRIGÉ : le port 8080 occupé au runtime Colab fut mal trié par le kit v100 [« couldn't bind » = le port, PAS le binaire — une compilation muette vaine lancée en repli] ; TRIADE_kit_campagne_colab_v101.zip livré au /livrables et au dépôt [l'hygiène du port : les orphelins du même runtime tués, le port libre choisi à la sonde au socket parmi 8080/8081/8090/18080/18081 ; le triage juste : le prébâti réessayé au port suivant, la source ne compile PAS pour un port pris ; le repli qui parle : la compilation ligne à ligne, la cible llama-server seule ; l'endpoint porté à la GUI par /content/endpoint_serving.txt] ; le prébâti b12810 disculpé sur pièces au bac même [le journal du terrain rejoué mot pour mot, le même binaire VERT au port libre], le vert muet de l'épreuve démasqué [le retour-chaîne truthy — l'échec lève désormais, jamais ne retourne], les QUATRE épreuves TOUT VERT, les trois GGUF re-vérifiés vivants ; le kit poste v100 INTACT byte-byte ; le run v100 bloqué se débloque à la cellule de secours ; l'atelier atelier-campagne-colab-v101/ au dépôt ; le worklog Entrée 445 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -619,3 +619,39 @@ pas : 3,9 Gio / 2 vCPU / aucun GPU mesurés sur pièces à l'atelier).
   COMMANDE du maître ; la participation v1.3.0 à la commande ; la campagne au runtime
   Colab au geste du maître (le notebook est livré, la mesure lui appartient) ; la vague
   30 au /instructions quand le maître la déposera.
+
+## Mise à jour 445 (27/11/2026) — LE TERRAIN.5 CORRIGÉ : LE PORT OCCUPÉ MAL TRIÉ, LE KIT COLAB v101
+
+Le terrain rapporté par le maître au runtime Colab (« ça n'avance pas depuis quelques minutes ») :
+la cellule 5 du kit v100 téléchargea le prébâti b12810 et le GGUF Q6_K, puis llama-server mourut à
+la naissance — « couldn't bind HTTP server socket, hostname: 127.0.0.1, port: 8080 » — et le kit
+tira la fausse conclusion : « le prébâti n'est pas sain au poste » → une compilation muette en
+repli. LE DIAGNOSTIC NOMMÉ : le port 8080 était OCCUPÉ (un squatteur au runtime), le prébâti était
+SAIN. La compilation était doublement vaine : le serveur compilé fût mort au même port.
+
+- **LE CORRECTIF v101** : l'hygiène du port (les orphelins du même runtime tués, le port LIBRE
+  choisi à la sonde au socket — SO_REUSEADDR, la tolérance de llama-server — parmi
+  8080/8081/8090/18080/18081) ; le triage juste (« couldn't bind » = le port, PAS le binaire : le
+  prébâti réessayé au port suivant, la source NE COMPILE PAS pour un port pris) ; le repli qui
+  PARLE (la compilation ligne à ligne au journal, la cible llama-server seule, -j$(nproc)) ;
+  l'endpoint PORTÉ à la GUI (le fichier /content/endpoint_serving.txt lu au champ « L'endpoint ») ;
+  le filtre tar data (la DeprecationWarning Python 3.14 du terrain tue).
+- **LE PRÉBÂTI DISCULPÉ SUR PIÈCES AU BAC MÊME** : le vrai binaire b12810 ubuntu-x64, le 8080 tenu
+  par un squatteur au bac → LE JOURNAL DU TERRAIN MOT POUR MOT ; le même binaire relancé au port
+  libre → /health {"status":"ok"} VERT (atelier-campagne-colab-v101/preuves-labo/
+  terrain-8080-rejoue-au-bac.txt — l'épreuve au modèle minuscule stories260K, la maquette
+  instrument : le GGUF du poste ne court pas au bac).
+- **LE VERT MUET DÉMASQUÉ** : le harnais v100 tenait le retour-chaîne pour un vert (« 31 pièces
+  (33 attendues) » imprimé sous un VERT — 33 = les entrées du zip, 31 = les fichiers) ; le harnais
+  v101 : l'échec LÈVE, jamais ne retourne ; les QUATRE épreuves TOUT VERT (la marche bornée + la
+  porte sha256 à 31 pièces ; le sélecteur de release au JSON du jour ; LA GUI headless au champ
+  porté ; LE TRIAGE DU PORT au vrai squatteur tenu au bac).
+- **LA LIVRAISON** : TRIADE_kit_campagne_colab_v101.zip (16 064 o) au /livrables (recoupé
+  byte-byte), le LISEZMOI-livrables mis à jour, l'Entrée 445 au worklog du coffre et du dépôt ;
+  au dépôt : atelier-campagne-colab-v101/ (kit + preuves-labo v101 + rapport).
+- **LE DÉBLOCAGE DU RUN v100** : LA CELLULE DE SECOURS (le ménage des orphelins + le port libre +
+  le prébâti relancé TEL QUEL — le GGUF déjà en cache, aucun re-téléchargement), puis la GUI
+  (l'endpoint au champ si le port bougea).
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du maître ;
+  la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du maître ; la
+  vague 30 au /instructions quand le maître la déposera.
