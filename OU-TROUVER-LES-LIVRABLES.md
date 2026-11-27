@@ -1,6 +1,6 @@
 # OÙ TROUVER LES LIVRABLES — TRIADE
 
-*Mise à jour : 27/11/2026 (Entrée 446 — LE TERRAIN.6 DU KIT COLAB CORRIGÉ : la cellule 2 se taisait aux DEUX seuils interactifs [la fenêtre d'autorisation du montage Drive, celle du repli API] et à la marche muette du MyDrive — le maître crut au blocage [« ça bloque à la cellule 2 »] ; TRIADE_kit_campagne_colab_v102.zip livré au /livrables et au dépôt [la cellule 2 qui PARLE : chaque seuil annoncé AVANT qu'il ne survienne, le montage déjà fait sauté à l'ismount, la marche BORNÉE à une bourse de 45 s au compte à voix haute, le repli API qui parle par morceaux] ; les CINQ épreuves TOUT VERT au bac, une coquille du harnais démasquée au passage [l'indentation du bloc else suivie, l'échec lève puis corrigé], les trois GGUF re-vérifiés vivants ; le kit poste v100 INTACT byte-byte ; le run bloqué à la cellule 2 se débloque à la cellule de secours 2 ; l'atelier atelier-campagne-colab-v102/ au dépôt ; le worklog Entrée 446 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
+*Mise à jour : 27/11/2026 (Entrée 447 — LE TERRAIN.7 DU KIT COLAB CORRIGÉ : le garde ZIP-ABSENT de la cellule 8 fut pris pour une panne et « la web app » fut cherchée au localhost de la session depuis l'ordi du maître — DEUX quiproquos, aucune panne : le zip de preuves ne vit qu'au BOUTON 5 de la GUI, et il n'y a AUCUNE web app [LA GUI vit DANS le notebook, les widgets de la cellule 6 ; l'URL 127.0.0.1 vit AU RUNTIME Colab] ; TRIADE_kit_campagne_colab_v103.zip livré au /livrables et au dépôt [le garde et l'ordre nommés aux markdown, la GUI-dans-le-notebook nommée à la cellule 6, LA CELLULE 9 — LE PONT DU POSTE (l'URL du runtime vue de ton ordi au proxy Colab), LE REPLI CLI nommé au LISEZMOI § 6] ; les CINQ épreuves TOUT VERT au bac [le code 1-8 INTACT byte-byte au v102, la cellule 6 au titre près], trois coquilles du harnais du bac démasquées au passage, les trois GGUF re-vérifiés vivants au dépôt exact du kit ; le kit poste v100 INTACT byte-byte ; le run v102 déjà monté ne redemande rien : les cellules de secours 3 [le verdict de l'ordre + le pont du poste] et 4 [le repli CLI] portées à la réponse, puis les CINQ boutons, puis la cellule 8 re-courue ; l'atelier atelier-campagne-colab-v103/ au dépôt ; le worklog Entrée 447 ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend TOUJOURS la commande du maître)*
 
 *Mise à jour : 27/11/2026 (Entrée 441 — W28CORRIGE : l'édition CORRECTIVE v0.33.1 au /livrables et à depot-zenodo-v0331/ [les quatre pièces reconduites byte-byte, la preuves régénérée portant les errata des trois résidus numériques ; la porte V1..V7 + L1..L32 zéro rouge, 23/23 mutations ; l'ancre RFC 3161 v0.33.1 vérifiée hors ligne] ; C32 RATIO-RECOMPOSE au linter [32 classes] : tout ratio canonique publié se recompose de ses opérandes non arrondis aux registres ; OPT-16 décomposé : le coût par changement validé, échecs amortis, 1 896 tokens (n=9/18) publié à côté de la médiane ; le set v0.33.0 supersédé au lot livrables_supersedes_20261126c ; la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 attend la commande du maître ; la vague 29 aux six prompts de l'évaluation au /instructions attend le geste du maître)*
 
@@ -692,3 +692,44 @@ il se taisait.
 - **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du maître ;
   la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du maître ; la
   vague 30 au /instructions quand le maître la déposera.
+
+## Mise à jour 447 (27/11/2026) — LE TERRAIN.7 CORRIGÉ : LE GARDE EST L'ORDRE, LA GUI VIT DANS LE NOTEBOOK, LE KIT COLAB v103
+
+Le terrain rapporté par le maître au runtime Colab (« SystemExit: ZIP-ABSENT … le bouton 5 de la
+GUI d'abord » puis « la web app sort sur le localhost de la session, je ne peux y accéder de mon
+ordi ») : DEUX quiproquos, AUCUNE panne. (a) « Tout exécuter » porta la cellule 8 AVANT le
+bouton 5 — le garde fail-closed fit son office : le zip de preuves ne vit qu'au BOUTON 5 de la
+GUI (l'ordre du plan gelé : les boutons 1 → 2 → 3 → 4 → 5 de la cellule 6, PUIS la cellule 8
+re-courue). (b) « La web app » fut cherchée au localhost de la session depuis l'ordi du maître
+— il n'y en a AUCUNE : LA GUI 1 CLIC vit DANS LE NOTEBOOK (les widgets ipywidgets sous la
+cellule 6 même), l'URL http://127.0.0.1:PORT vit AU RUNTIME Colab (le serveur du modèle) — elle
+ne s'ouvre pas du navigateur du maître.
+
+- **LE CORRECTIF v103** (la même loi, la parole seule corrigée — le code INTACT byte-byte) : le
+  garde et l'ordre NOMMÉS aux markdown (la cellule 8 : « LE GARDE EST L'ORDRE, PAS UNE PANNE —
+  le bouton 5 d'abord, puis la cellule 8 re-courue ») ; la GUI-dans-le-notebook NOMMÉE à la
+  cellule 6 (rien à ouvrir du navigateur du maître ; si le panneau ne paraît pas, re-exécuter
+  la cellule) ; LA CELLULE 9 — LE PONT DU POSTE (optionnelle, nouvelle : l'URL du runtime VUE
+  DE TON ORDI au proxy Colab, PONT-ABSENT/PONT-REFUSÉ nommés, /health vérifié au runtime,
+  l'injoignable nommé sans lever) ; LE REPLI CLI NOMMÉ au LISEZMOI § 6 (les CINQ boutons en
+  CINQ commandes exactes du moteur, fail-closed au code non nul).
+- **LES CINQ ÉPREUVES TOUT VERT AU BAC** (atelier-campagne-colab-v103/preuves-labo/
+  epreuves-notebook-v103.txt) : la structure 19 cellules (9 code + 10 markdown) ; le pont
+  mocké (google.colab à sys.modules) + la porte PONT-ABSENT ; le code 1-8 INTACT byte-byte au
+  v102 (la cellule 6 au titre près — les épreuves v102 demeurent portées par le code inchangé) ;
+  le garde intact (« le bouton 5 de la GUI d'abord ») ; les notes parlées. TROIS coquilles du
+  harnais du bac démasquées au passage (l'injection du faux google.colab devait vivre à
+  sys.modules, les indices du markdown décalés d'un rang, l'unlink sans l'existence — aucune au
+  kit). Les trois GGUF re-vérifiés vivants au DÉPÔT EXACT du kit (bartowski/Qwen2.5-Coder-7B-
+  Instruct-GGUF — la première sonde au mauvais dépôt fut une coquille du bac, nommée).
+- **LA LIVRAISON** : TRIADE_kit_campagne_colab_v103.zip (20 729 o) au /livrables (recoupé
+  byte-byte au jeton relais), le LISEZMOI-livrables mis à jour de la section v103, l'Entrée 447
+  au worklog du coffre et du dépôt ; au dépôt : atelier-campagne-colab-v103/ (kit + preuves-labo
+  v103 + rapport v103).
+- **LE DÉBLOCAGE DU RUN** : le run v102 déjà monté ne redemande RIEN — LA CELLULE DE SECOURS 3
+  (le verdict de l'ordre + le pont du poste) et LA CELLULE DE SECOURS 4 (le repli CLI, si les
+  widgets ne paraissent pas) portées à la réponse au maître ; PUIS les CINQ boutons de la GUI,
+  PUIS la cellule 8 re-courue — le zip de preuves au /test du coffre.
+- **CE QUI DEMEURE** : la publication Zenodo de v0.33.1/v0.33.0/v0.32.0 À LA COMMANDE du
+  maître ; la participation v1.3.0 à la commande ; la campagne au runtime Colab au geste du
+  maître ; la vague 30 au /instructions quand le maître la déposera.
