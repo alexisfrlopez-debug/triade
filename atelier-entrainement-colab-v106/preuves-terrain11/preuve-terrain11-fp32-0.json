@@ -1,0 +1,20 @@
+{
+ "passe": "fp32",
+ "exemple": 0,
+ "modele": "Qwen2 minuscule aléatoire (vocab 151936, dtype torch.float32) — le même chemin de perte que le 7B",
+ "marque": "le véritable extrait du corpus (UN tronçon)",
+ "P": 572,
+ "C": 223,
+ "L": 795,
+ "K": 224,
+ "V": 151936,
+ "troncons": 1,
+ "perteA": 11.932744026184082,
+ "perteB": 11.932743072509766,
+ "ecart_perte": 9.5367431640625e-07,
+ "ecart_grads": 5.960464477539063e-08,
+ "norme_grads": 0.22652886807918549,
+ "grads_identiques": true,
+ "nb_params_grad": 27,
+ "ok": true
+}

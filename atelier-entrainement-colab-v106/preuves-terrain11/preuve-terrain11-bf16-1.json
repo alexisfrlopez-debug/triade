@@ -1,0 +1,20 @@
+{
+ "passe": "bf16",
+ "exemple": 1,
+ "modele": "Qwen2 minuscule aléatoire (vocab 16384, dtype torch.bfloat16) — le même chemin de perte que le 7B",
+ "marque": "l'extrait ×5 (DEUX tronçons — le réordonnancement)",
+ "P": 572,
+ "C": 1111,
+ "L": 1683,
+ "K": 1112,
+ "V": 16384,
+ "troncons": 2,
+ "perteA": 9.696709632873535,
+ "perteB": 9.696707725524902,
+ "ecart_perte": 1.9073486328125e-06,
+ "ecart_grads": 2.384185791015625e-07,
+ "norme_grads": 0.26171875,
+ "grads_identiques": true,
+ "nb_params_grad": 27,
+ "ok": true
+}
