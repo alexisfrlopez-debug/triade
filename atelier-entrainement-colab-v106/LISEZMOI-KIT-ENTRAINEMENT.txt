@@ -1,0 +1,61 @@
+LE KIT D'ENTRAÎNEMENT COLAB v106 — LE LISEZMOI DU LABO
+(la campagne d'entraînement de Qwen2.5-Coder-7B avec TRIADE, la commande du
+maître du 28/11 : « ensuite la campagne d'entrainement de modèle Qwen Code
+2.5 7B avec Triade sur colab » — la suite de la campagne test 105, la
+ligne de base)
+
+1. POURQUOI — la 104/105 mesuraient le modèle NU (0/18 éditer · 0/18
+   ajouter · 0/128 famille au v104 ; la 105 porte l'enveloppe de chat au
+   transport — ses verdicts sont LA LIGNE DE BASE). La v106 est le premier
+   AFFINAGE : QLoRA SFT sur les 17 VERTS du corpus TRIADE (la recette du
+   gym 3x9cf4e5d), puis LA MÊME BATTERIE au modèle affiné — le delta
+   --lora sur le GGUF Q6_K byte-byte de la 105 (la SEULE différence du
+   bord). La comparaison pré/post se conduit AU LABO sur les pièces du
+   /test, les verdicts TELS QUELS.
+
+2. CE QUE LE KIT CONTIENT (TRIADE_kit_entrainement_v106.zip, au /livrables
+   du coffre, id 1U93jzav1XntOWp0wNFlUnpLwx5the1uE, sha256
+   07edabb05b051abcc0c4eeffbbdb6ca83158bacdfe086db02eff6dadc0da40ea) :
+   le plan gelé PLAN-ENTRAINEMENT-COLAB-V106.md (LA LOI du run, gelé
+   AVANT toute mesure — son sha au manifeste) ; le corpus de l'atelier
+   2i7iy3xmg byte-byte (train 78 / dev 16 / test 16 — les VERTS SEULS à
+   l'entraînement : 17 triples, 60 REFUS et 1 CANARI exclus) ;
+   RECETTES-GYM.md (les recettes SFT/DPO/RLVR, byte-byte du dépôt) ; le
+   MANIFESTE-KIT-ENTRAINEMENT.json (chaque pièce à son empreinte).
+
+3. LE NOTEBOOK (Entrainement-Colab-v106.ipynb, la copie vivante au
+   /livrables, id 1BRMQ0c92RQygXj7nATkXJXlhAPdVWW6O, sha256
+   56060d1f2fc9e09cff749bdf432fd3d9d6f8494b23b4f26c8d50d1f1d560336b) :
+   21 cellules (10 code + 11 markdown), la loi 0 clic (aucun widget,
+   aucun montage, aucune autorisation), l'instrument de la batterie est
+   LE KIT POSTE v101 TEL QUEL (l'ID épinglé au notebook — byte-byte la
+   105). Les DIX étapes : le poste (garde disque 40 Gio) · les deps
+   (peft/bitsandbytes/accelerate/gguf en sus du harnais) · LES DEUX KITS
+   au coffre (relais embarqué, empreintes épinglées) · le gate (le
+   manifeste recoupé, LE COMPTE DES VERTS = 17, l'enveloppe du moteur
+   importée) · L'ENTRAÎNEMENT QLoRA SFT (NF4 fp16, r16 α32, lr 1,5e-5,
+   3 époques, la perte sur la réponse seule, les longs exemples d'abord,
+   EXEMPLE-TROP-LONG/EXEMPLE-LONG-OOM les refus nommés) · LE
+   POST-ENTRAÎNEMENT (l'adapter converti au GGUF à la release du jour,
+   L'ŒUVRE TÉLÉVERSÉE AU COFFRE AVANT L'ÉVAL) · LE SERVING AFFINÉ (le
+   Q6_K byte-byte + --lora, la porte de parole BORD-MUET) · LA BATTERIE
+   (les SIX étapes du plan gelé, l'instrument intact) · LE RETOUR (le zip
+   d'entraînement — l'adapter + le registre + la mesure du moteur — au
+   /test, recopé byte-byte) · LE BILAN.
+
+4. LES ÉPREUVES DU BAC (assembler_kit_entrainement_v106.py, TOUT VERT) :
+   la structure (21 cellules, chaque code compile) · la loi 0 clic ·
+   l'invariant aveugle/vivante (la SEULE divergence = la cellule 6, les
+   TROIS constantes — aucun identifiant à l'aveugle) · les ONZE gardes
+   nommées présentes · les conventions du pilote (preuves-campagne-* au
+   kit, rapport-poste.txt). EN SUS, la voie de conversion éprouvée à la
+   source : convert_lora_to_gguf.py à b12826 compile, porte lora_alpha
+   au KV GGUF (l'échelle appliquée au CHARGEMENT par llama.cpp) ; le
+   drapeau --lora vit à common/arg.cpp:2951 ; l'arch-agnosticisme du
+   convertisseur (le Qwen2 vient de la base).
+
+5. LA LOI — aucune cible gelée touchée (l'instrument v101 byte-byte) ;
+   le plan gelé AVANT la mesure (sha au manifeste) ; les verdicts TELS
+   QUELS, jamais habillés ; les GAPS nommés au plan § 6 (17 exemples,
+   DPO différé, RLVR différé, --lora au Q6_K, la file T4) ; la copie du
+   dépôt public porte AUCUN identifiant (la loi du v104).
