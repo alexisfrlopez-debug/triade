@@ -91,3 +91,9 @@ scripts/campagne_d204/unite-01-C/epreuves/loupe-01-c.c
 scripts/vague7/pack-v195/
 atelier-sequestre-ou6wn6wlv/clone-test/
 lab/
+
+# La zone de travail locale du labo AU DÉPÔT (depot/work/ — le jeton Colab y
+# vit, les miroirs de passage) — JAMAIS committée (modèle bundles-*/,
+# Entrée 132 ; le motif étendu à l'Entrée 461 après l'inventaire : aucun
+# fichier suivi n'y vivait, le git add -A aveugle ne pourra plus l'avaler)
+work/
