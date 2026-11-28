@@ -1,0 +1,21 @@
+{
+ "passe": "reel",
+ "exemple": 0,
+ "modele": "Qwen2.5-0.5B-Instruct PRÉ-ENTRAÎNÉ + LoRA r16 α32 (le vrai chemin)",
+ "marque": "le véritable extrait du monstre (vocab réel 151 936)",
+ "P": 59,
+ "C": 223,
+ "L": 282,
+ "K": 224,
+ "V": 151936,
+ "adaptateurs_dtypes": [
+  "torch.float32"
+ ],
+ "perteA": 1.3976246118545532,
+ "perteB": 1.3976246118545532,
+ "ecart_perte_rel": 0.0,
+ "ecart_grads_rel_max": 0.004583456861940065,
+ "cosinus_grads": 0.9999977169104188,
+ "nb_params_grad": 336,
+ "ok": true
+}

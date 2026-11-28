@@ -1,0 +1,21 @@
+{
+ "passe": "reel",
+ "exemple": 1,
+ "modele": "Qwen2.5-0.5B-Instruct PRÉ-ENTRAÎNÉ + LoRA r16 α32 (le vrai chemin)",
+ "marque": "l'exemple le plus court du corpus (C=52, vocab réel)",
+ "P": 192,
+ "C": 52,
+ "L": 244,
+ "K": 53,
+ "V": 151936,
+ "adaptateurs_dtypes": [
+  "torch.float32"
+ ],
+ "perteA": 2.7355074882507324,
+ "perteB": 2.7355074882507324,
+ "ecart_perte_rel": 0.0,
+ "ecart_grads_rel_max": 0.005227764422285593,
+ "cosinus_grads": 0.9999975601056618,
+ "nb_params_grad": 336,
+ "ok": true
+}

@@ -1,0 +1,21 @@
+{
+ "passe": "bf16",
+ "exemple": 0,
+ "modele": "Qwen2 minuscule aléatoire (dtype torch.bfloat16) — le même chemin que le 7B",
+ "marque": "le véritable extrait du corpus",
+ "P": 260,
+ "C": 223,
+ "L": 483,
+ "K": 224,
+ "V": 16384,
+ "adaptateurs_dtypes": [
+  "torch.float32"
+ ],
+ "perteA": 9.698641777038574,
+ "perteB": 9.698619842529297,
+ "ecart_perte_rel": 2.2616062930866726e-06,
+ "ecart_grads_rel_max": 0.004050742101781453,
+ "cosinus_grads": 0.9999974725878197,
+ "nb_params_grad": 28,
+ "ok": true
+}

@@ -1,0 +1,25 @@
+{
+ "passe": "structure",
+ "exemple": 0,
+ "modele": "Qwen2 minuscule aléatoire (dtype torch.bfloat16) — le même chemin que le 7B",
+ "marque": "le véritable extrait du corpus",
+ "P": 260,
+ "C": 223,
+ "L": 483,
+ "K": 224,
+ "V": 16384,
+ "adaptateurs_dtypes": [
+  "torch.float32"
+ ],
+ "casts_voieA": 28,
+ "dtypes_voieA": [
+  "torch.float32"
+ ],
+ "perteA": 9.698619842529297,
+ "perteB": 9.698619842529297,
+ "replay_autocast": {
+  "forward": true,
+  "recompute": true
+ },
+ "ok": true
+}
