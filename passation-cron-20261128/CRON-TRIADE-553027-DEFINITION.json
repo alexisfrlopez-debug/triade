@@ -22,6 +22,10 @@
     "/home/z/my-project/triade/etat-reprise.log",
     "/home/z/my-project/triade/vm/"
   ],
+  "modification_a_distance": {
+    "constat_2811_soir": "IMPOSSIBLE — l'outil planifié refuse l'action update (« unsupported action: update ») ; supprimer puis recréer rerouterait la tâche vers la session qui la crée (routage automatique), donc vers un bac sans les fichiers TRIADE. NE PAS tenter le delete+create depuis une autre session tant que la sauvegarde des pièces du bac n'est pas faite.",
+    "voie_retenue": "le maître colle l'instruction de sauvegarde (PASSATION-20261128.md § 4) dans la session TRIADE ; voir ETAT-PASSATION-20261128.md"
+  },
   "recreation": {
     "outil": "cron (action create) — depuis la session qui doit posséder la tâche",
     "parametres": {
@@ -32,7 +36,7 @@
       "payload.kind": "agentTurn",
       "payload.message": "recopier VERBATIM le champ payload.message ci-dessus"
     },
-    "prealable": "le bac de la session doit contenir reprise_colab.sh et l'état triade/ (voir PASSATION-20261128.md § 6)"
+    "prealable": "le bac de la session doit contenir reprise_colab.sh et l'état triade/ (voir PASSATION-20261128.md § 6 ; variante « pièces non sauvées » : reconstruction selon l'Entrée 458 / REPRISE_PROJET.md § 3)"
   },
   "arret": {
     "outil": "cron (action delete)",
