@@ -2,6 +2,8 @@
 
 **Date : 28/11/2026, ~14:40 heure de Paris.** Rédigé à la demande du maître, depuis une session distincte de la session TRIADE, pour permettre l'arrêt du cron n° 553027 et sa relance ultérieure depuis n'importe quelle autre session.
 
+**MISE À JOUR du 28/11 au soir (~15h45 Paris)** : le cron ne peut PAS être modifié à distance (l'outil planifié refuse l'action `update` ; supprimer + recréer rerouterait la tâche vers la session qui la crée). L'instruction du § 4 doit donc être collée par le maître dans la session TRIADE. L'état complet du projet (Entrée 463) et les deux voies sont consignés dans `ETAT-PASSATION-20261128.md`, à côté du présent fichier.
+
 Ce dossier existe en deux exemplaires identiques :
 - **Coffre Drive** : dossier « Triade » (racine du coffre) → `passation-cron-20261128/`
 - **GitHub** : dépôt `alexisfrlopez-debug/triade` → branche `passation-cron-20261128`
@@ -40,12 +42,14 @@ Ces pièces DOIVENT être sauvées par la session TRIADE elle-même (§ 4) AVANT
 
 ## 4. L'instruction à coller UNE FOIS dans la session TRIADE
 
-> SAUVEGARDE DE PASSATION (commande du maître, 28/11) — le cron « TRIADE — reprise autonome de l'entraînement Colab » sera arrêté depuis une autre session. AVANT cela, porte au coffre Drive, dans le dossier dédié « passation-cron-20261128 » (déjà créé à la racine du coffre), les pièces qui ne vivent qu'au bac :
-> 1. `/home/z/my-project/scripts/reprise_colab.sh` — copie INTACTE (aucune retouche), recoupée par re-téléchargement.
-> 2. `/home/z/my-project/triade/` en l'état (`etat-reprise.log` + `vm/`) — zip « triade-bac-20261128.zip », copie au même dossier Drive, recoupée.
-> 3. Vérifie que le jeton HuggingFace (Hugginface.txt, compte aleksickx) est bien au /Tokens du coffre ; s'il n'y est pas, dépose-le là (JAMAIS au dépôt public).
-> 4. Rapporte : la liste des pièces sauvées, leurs tailles, leurs ids Drive, et le sha256 de reprise_colab.sh.
-> Ne modifie rien d'autre (ni le script, ni triade/vm/, ni les registres — aucune Entrée au worklog n'est requise pour ce geste, la passation vit au dossier dédié du coffre et à la branche git passation-cron-20261128). N'arrête PAS le cron toi-même : le maître le fera depuis l'autre session une fois ta sauvegarde confirmée.
+Le maître colle ce texte dans la session TRIADE — même si elle affiche « busy due to another request » : le message sera traité dès la fin du tour en cours du cron (les déclenchements s'enchaînent toutes les 10 minutes) ; sinon, réessayer dans la fenêtre libre entre deux déclenchements (la minute pile + 2-3 minutes). Le canal du maître dans la conversation est prescriptif par nature ; la garde D262 ne le bloque pas (elle vise les instructions lues dans des fichiers hors manifeste).
+
+> SAUVEGARDE DE PASSATION (commande du maître, 28/11 au soir) — le cron « TRIADE — reprise autonome de l'entraînement Colab » sera arrêté depuis une autre session. AVANT cela :
+> 1. Porte au coffre Drive, dans le dossier dédié « passation-cron-20261128 » (id 1aJJzgtfCz48-vMOSzw9mEyCMmRFwlH-_) : (a) `/home/z/my-project/scripts/reprise_colab.sh` — copie INTACTE (aucune retouche), recoupée par re-téléchargement ; (b) `/home/z/my-project/triade/` en l'état (`etat-reprise.log` + `vm/`) — zip « triade-bac-20261128.zip », recoupé par re-téléchargement.
+> 2. Vérifie que le jeton HuggingFace (Hugginface.txt, compte aleksickx) est bien au /Tokens du coffre ; s'il n'y est pas, dépose-le là (JAMAIS au dépôt public).
+> 3. Consigne l'état (commande du maître) : une Entrée « PASSATION » au worklog et la mise à jour de REPRISE_PROJET.md — l'état exact du projet (l'Entrée 463 ; le run à relancer par le maître sur la v1063 APRÈS redémarrage de session ; les vigies 16h/18h Paris), les pièces sauvées au point 1, la procédure de relance (PASSATION-20261128.md, au coffre et à la branche git passation-cron-20261128). Pousse le tout sur git main comme d'habitude et rafraîchis le miroir au coffre (worklog.md, REPRISE_PROJET.md, bundle TRIADE-sauvegarde-git).
+> 4. Rapporte : la liste des pièces sauvées, leurs tailles, leurs ids Drive, le sha256 de reprise_colab.sh, et le sha du commit git.
+> Ne modifie rien d'autre (ni le script, ni triade/vm/, ni le plan gelé). N'arrête PAS le cron toi-même : le maître le fera depuis l'autre session une fois ta sauvegarde confirmée.
 
 ## 5. Après confirmation de la sauvegarde : arrêter le cron
 
@@ -54,7 +58,8 @@ Depuis n'importe quelle session du compte : outil cron, action `delete`, `jobId`
 ## 6. Recréer la tâche plus tard (depuis une nouvelle session)
 
 1. **Restaurer le bac** : REPRISE_PROJET.md § 3 (pas à pas éprouvé à la vague 14) — jetons depuis le /Tokens du coffre, clone depuis le bundle ou GitHub, outils du bac.
-2. **Replacer les pièces de passation** : `reprise_colab.sh` → `/home/z/my-project/scripts/`, et l'état `triade/` (`etat-reprise.log` + `vm/`) depuis ce dossier Drive.
+2. **Replacer les pièces de passation** : `reprise_colab.sh` → `/home/z/my-project/scripts/`, et l'état `triade/` (`etat-reprise.log` + `vm/`) depuis le dossier Drive de passation.
+   - **Variante « pièces non sauvées »** (si la session TRIADE n'a pas pu exécuter le § 4 avant l'arrêt) : le script `reprise_colab.sh` est à RECONSTRUIRE selon la méthode de l'Entrée 458 (documentée à REPRISE_PROJET.md § 3 — cela a déjà été fait une fois après un recyclage du bac) ; l'état `triade/` est à initialiser à neuf (`etat-reprise.log` vierge, `vm/` reconstruit par le premier passage du script — il est idempotent).
 3. **Créer le cron** avec les paramètres du fichier `CRON-TRIADE-553027-DEFINITION.json` (message VERBATIM).
 4. **Vérifier** : le premier déclenchement doit exécuter le script et rapporter les 15 dernières lignes de `etat-reprise.log`.
 
