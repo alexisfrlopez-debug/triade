@@ -1,0 +1,77 @@
+{
+  "passe": "repli-0",
+  "terrain": "terrain.13",
+  "corpus_sha256": "39614077e5c6d9feb94eb528ae19d9f948d67c531a2ac26daa17229023bb3eb7",
+  "verts_17": 17,
+  "recoup_tableau_entree462": "byte-byte 17/17",
+  "exclusion_nommee": "ajouter-v3-i26111705-t1",
+  "exclu": {
+    "P": 8293,
+    "C": 4322,
+    "L": 12615
+  },
+  "retenus": 16,
+  "ordre": [
+    "ajouter-v3-i26111705-t3",
+    "ajouter-v3-i26111705-t2",
+    "ajouter-v4-i26111709-t1",
+    "ajouter-v3-i26111714-t0",
+    "ajouter-v4-i26111709-t0",
+    "ajouter-v4-i26111702-t0",
+    "ajouter-v4-i26111718-t0",
+    "ajouter-v3-i26111718-t0",
+    "ajouter-v3-i26111715-t0",
+    "ajouter-v4-i26111712-t0",
+    "ajouter-v4-i26111710-t0",
+    "ajouter-v3-i26111712-t0",
+    "ajouter-v3-i26111710-t0",
+    "ajouter-v4-i26111705-t0",
+    "ajouter-v3-i26111705-t0",
+    "ajouter-v4-i26111715-t0"
+  ],
+  "longueurs": {
+    "ajouter-v3-i26111705-t3": 12021,
+    "ajouter-v3-i26111705-t2": 12019,
+    "ajouter-v4-i26111709-t1": 6766,
+    "ajouter-v3-i26111714-t0": 5838,
+    "ajouter-v4-i26111709-t0": 5370,
+    "ajouter-v4-i26111702-t0": 5041,
+    "ajouter-v4-i26111718-t0": 4710,
+    "ajouter-v3-i26111718-t0": 4527,
+    "ajouter-v3-i26111715-t0": 4232,
+    "ajouter-v4-i26111712-t0": 4189,
+    "ajouter-v4-i26111710-t0": 4026,
+    "ajouter-v3-i26111712-t0": 3897,
+    "ajouter-v3-i26111710-t0": 3758,
+    "ajouter-v4-i26111705-t0": 3520,
+    "ajouter-v3-i26111705-t0": 3369,
+    "ajouter-v4-i26111715-t0": 3351
+  },
+  "marche": {
+    "pas": 48,
+    "pas_optimiseur": 12,
+    "exact_48_mod_4": true,
+    "horloge": "IDENTIQUE au 51-pas (12 steps, échauffement 1, lr égaux)",
+    "lr_premier": 1.5e-05,
+    "lr_dernier": 0.0
+  },
+  "totaux": {
+    "P_16": 70050,
+    "C_16": 16584,
+    "P_17": 78343,
+    "C_17": 20906,
+    "max_retenu": 12021,
+    "min_retenu": 3351,
+    "mediane_16": 4379.5,
+    "mediane_17": 4527
+  },
+  "garde_exemple_trop_long": "aucun retenu > 13000",
+  "fail_clos_eprouve": "EXCLUSION-NOMMÉE-DIVERGENTE (un nom absent = le refus)",
+  "pente_monstres_restants": {
+    "tampon_refuse_mio": 455.82,
+    "classe": "[12615 × 18944] fp16 — la moitié du pied fp32 du terrain.12",
+    "dL_t1_t3": 594,
+    "dpic_estime_gio": 0.15,
+    "statut": "ESTIMATION nommée estimation — la mesure seule dira ; le refus éventuel de t3/t2 reviendra AU LABO"
+  }
+}
