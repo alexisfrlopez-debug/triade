@@ -1,0 +1,41 @@
+{
+  "job_id": 553027,
+  "nom": "TRIADE — reprise autonome de l'entraînement Colab",
+  "etat_a_la_passation": "active",
+  "creee_le": "2026-11-28 02:45:16 (Paris) / 09:45:16 (Asia/Shanghai)",
+  "historique": {
+    "run_count": 70,
+    "derniere_execution": "2026-11-28 14:20 (Paris) / 21:20 (Asia/Shanghai)"
+  },
+  "schedule": {
+    "kind": "cron",
+    "expr": "0 */10 * * * ?",
+    "tz": "Europe/Paris",
+    "lecture": "toutes les 10 minutes, à la minute pile"
+  },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Tu pilotes le projet TRIADE (reprise autonome de l'entraînement Qwen2.5-Coder-7B sur Colab). Exécute : bash /home/z/my-project/scripts/reprise_colab.sh — puis lis les 15 dernières lignes de /home/z/my-project/triade/etat-reprise.log et rapporte-les brièvement. IMPORTANT : n'interagis avec la VM Colab QUE via ce script (il est idempotent) ; ne modifie aucun fichier sous /home/z/my-project/triade/vm/ ni /home/z/my-project/scripts/reprise_colab.sh. Si le log contient « LA MARCHE EST CLOSE » ou « LE TÉLÉCHARGEMENT CLOS », réponds simplement que le pipeline est clos et que la tâche planifiée peut être supprimée. S'il contient « UN ROUGE AU MARQUEUR », rapporte le texte complet des lignes du journal concernées."
+  },
+  "dependances_du_bac": [
+    "/home/z/my-project/scripts/reprise_colab.sh",
+    "/home/z/my-project/triade/etat-reprise.log",
+    "/home/z/my-project/triade/vm/"
+  ],
+  "recreation": {
+    "outil": "cron (action create) — depuis la session qui doit posséder la tâche",
+    "parametres": {
+      "name": "TRIADE — reprise autonome de l'entraînement Colab",
+      "schedule.kind": "cron",
+      "schedule.expr": "0 */10 * * * ?",
+      "schedule.tz": "Europe/Paris",
+      "payload.kind": "agentTurn",
+      "payload.message": "recopier VERBATIM le champ payload.message ci-dessus"
+    },
+    "prealable": "le bac de la session doit contenir reprise_colab.sh et l'état triade/ (voir PASSATION-20261128.md § 6)"
+  },
+  "arret": {
+    "outil": "cron (action delete)",
+    "jobId": 553027
+  }
+}
