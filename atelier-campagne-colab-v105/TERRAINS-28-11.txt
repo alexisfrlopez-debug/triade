@@ -1,0 +1,49 @@
+LES TERRAINS DU 28/11 — LA CHAÎNE v1051/v102/v1052 ET LE PILOTE ENCHAÎNÉ
+(le dossier des amendements nommés, la loi du labo : chaque terrain corrigé
+à la source, jamais habillé)
+
+TERRAIN.9 — L'EMBALLAGE DES RELEASES LLAMA.CPP A CHANGÉ
+  Le fait : l'asset « cudart-llama-b12823-bin-ubuntu-cuda-12.8-x64.tar.gz »
+  ne porte QUE TROIS LIBS (libcudart.so.12, libcublas.so.12, libcublasLt.so.12
+  — téléchargé et listé au bac, 594 379 197 o) ; les BINAIRES CUDA vivent à
+  « llama-b12823-bin-ubuntu-cuda-12.8-x64.tar.gz » (227 388 033 o, llama-server
+  + les .so frères). Le v105 pointait le cudart → AUCUN llama-server rendu →
+  la bascule MUETTE à la compilation source (25-40 min) → la mort dans les
+  runtimes recyclés (15-45 min de vie — mesuré trois fois).
+  L'amendement : amender_v1051.py — la cellule serving porte le choix
+  bin-ubuntu-cuda-12 + le cudart en accompagnement (LD_LIBRARY_PATH aux
+  deux), la source demeure le repli nommé. La SEULE cellule touchée (épreuve
+  assertée contre le v105).
+
+TERRAIN.10 — LE FORMAT DE LA RÉPONSE A CHANGÉ (b12810 → b12823)
+  Le fait (mesuré AU BORD, le diagnostic du 28/11) : le modèle PARLE à la
+  sonde enrobée (« ```json\n{" ») MAIS la réponse porte « top_logprobs » /
+  « logprob » là où le v101 attend « probs » / « prob » — la porte de parole
+  du premier run v1051 rendit un FAUX BORD-MUET (KeyError 'probs') et le
+  moteur eût lu TOUT pas terminal.
+  L'amendement : batir_kit_v102.py — le kit v102 (BordLlama.prochain
+  bivalent aux DEUX formats, la SEULE pièce divergente — épreuve assertée) ;
+  batir_v1052.py — le notebook v1052 (le pin v102 + la porte bivalente ; les
+  cellules divergentes = les kits + la serving, épreuve assertée).
+
+LE PILOTE ENCHAÎNÉ (pilote_enchaine.py)
+  Les deux lois mesurées au bac : (1) AUCUN processus du bac ne survit à la
+  frontière des appels (nohup/setsid/disown tous tués — le battement mesuré) ;
+  (2) le runtime Colab ne survit pas au pilote mort (l'endpoint change, le
+  /content vidé). LE REDRESSAMENT : le runtime exécute le notebook LUI-MÊME
+  (jupyter nbconvert --execute détaché au bord, start_new_session — la loi
+  0 clic INTACTE : le MÊME notebook, le MÊME ordre, aucune cellule touchée
+  par le conducteur) ; chaque appel du bac RENOUVELLE le bail (re-assignation
+  au MÊME nbh — le GET réconciliateur du patron) et OBSERVE (l'API Contents
+  en lecture seule) ; le runtime recyclé est détecté (journal du lanceur
+  absent) et le notebook relancé de zéro ; la pièce au /test CLOSE et rompt
+  le bail proprement.
+  La preuve vécue : LA CAMPAGNE 105 CLOSE au premier run complet — la
+  batterie 2,4 min au T4/Q6_K (la sonde 0,5 min), les verdicts au /test
+  (ÉDITER 17/18 · AJOUTER 14/18 · FAMILLE 64/128 — l'Entrée 459).
+
+LE DIAGNOSTIC AU BORD (diagnostic_bord.py)
+  Le serving relancé à la main au runtime vivant, les TROIS questions posées
+  au bord : la réponse BRUTE (les clés, la forme), la tokenization des
+  marqueurs spéciaux (151644 PARSÉ), l'essai par ids. C'est LUI qui nomma le
+  terrain.10 — le diagnostic avant l'amendement, jamais l'impression.
